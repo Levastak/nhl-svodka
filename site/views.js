@@ -105,15 +105,14 @@ function posterSec(){const mo=D.motd;if(!mo)return"";const m=(D.upcoming||[]).fi
   const p=modelOf(m);const L=liveOf(m);const [ca,ch]=pair(m.away,m.home);const pa=pB(p,"away"),ph=pB(p,"home");
   const lv=L&&L.state!=="pre";
   const side=(t,cls)=>`<button class="side ${cls}" data-team="${t}"><span class="lgw">${logo(t,64)}</span><span><b>${EN[t]}</b><small>${rec(t)}${TEAMS[t]&&TEAMS[t].gp?" · "+place(t)+"-е место":""}</small></span></button>`;
-  const pl=(t,cls)=>{const s=topScorer(t);return s?`<button class="pl ${cls}" data-player="${esc(s.name)}" data-pteam="${t}">${photo(s.name,t,58)}<span><b>${esc(s.name)} ${posTag(s.name,s.pos)}</b><small>${s.g} Г · ${s.a} П в сезоне · лидер ${EN[t]}</small></span></button>`:""};
+  const pl=(t,cls)=>{const s=topScorer(t);return s?`<button class="pl ${cls}" data-player="${esc(s.name)}" data-pteam="${t}">${photo(s.name,t,44)}<span><b>${esc(s.name)} ${posTag(s.name,s.pos)}</b><small>${s.g} Г · ${s.a} П в сезоне · лидер ${EN[t]}</small></span></button>`:""};
   const mid=lv?`<b>${L.as}:${L.hs}</b><small>${L.state==="in"?'<span class="dot"></span> '+esc(L.short):"финал"}</small>`:`<b>${kt(m.start)}</b><small>${esc(rel(m.start)||"")}</small>`;
-  return `<section class="poster" style="--a:${ca};--h:${ch}"><div class="bg"></div><div class="rink"></div><div class="in">
-    <div class="lab"><span>Матч дня</span><span>${esc(dLong(D.upcoming_date))}</span></div>
+  return `<section class="poster" style="--a:${ca};--h:${ch};--ta:${tcol(m.away)};--th:${tcol(m.home)}"><div class="bg"><span class="wm a">${logo(m.away,420)}</span><span class="wm h">${logo(m.home,420)}</span></div><div class="in">
+    <div class="lab"><span>Матч дня</span><span>${esc(dLong(D.upcoming_date))}</span><button class="go" data-go="games" data-open="${m.away}-${m.home}">Разбор матча →</button></div>
     <div class="vs">${side(m.away,"a")}<div class="mid">${mid}</div>${side(m.home,"h")}</div>
-    ${pa!=null&&!lv?`<div class="pb"><span>${pct(pa)}</span><span class="two"><i style="width:${pa*100}%;background:rgba(255,255,255,${pa>ph?.95:.45})"></i><i style="width:${ph*100}%;background:rgba(255,255,255,${ph>pa?.95:.45})"></i></span><span>${pct(ph)}</span></div>`:""}
+    ${pa!=null&&!lv?`<div class="pb"><span>${pct(pa)}</span><span class="two"><i style="width:${pa*100}%;background:var(--ta);opacity:${pa>ph?1:.5}"></i><i style="width:${ph*100}%;background:var(--th);opacity:${ph>pa?1:.5}"></i></span><span>${pct(ph)}</span></div>`:""}
     <div class="stars">${pl(m.away,"a")}${pl(m.home,"h")}</div>
-    ${mo.text?`<p>${esc(mo.text)}</p>`:""}
-    <button class="go" data-go="games" data-open="${m.away}-${m.home}">Разбор матча</button></div></section>`}
+    ${mo.text?`<p>${esc(mo.text)}</p>`:""}</div></section>`}
 function todaySec(){const u=todayGames();if(!u.length)return noGames();const mo=D.motd?u.find(x=>x.away===D.motd.away&&x.home===D.motd.home):null;
   return `<section class="sec"><div class="hd"><h2>Сегодня<small>${esc(dLong(D.upcoming_date))}, время по Кирову</small></h2><button class="lnk" data-go="games">Все матчи</button></div>
     <div class="box">${u.map(m=>gRow(m,{nav:true,mo:m===mo&&false})).join("")}</div>${confLine()}</section>`}
