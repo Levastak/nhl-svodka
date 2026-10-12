@@ -67,7 +67,7 @@ function liveBlock(m,L){const S=LSUM[L.id];const title=L.state==="in"?`<span cla
   const per={};S.goals.forEach(g=>(per[g.per]=per[g.per]||[]).push(g));
   const top=S.players.filter(p=>p.pts>0).slice(0,3);
   return `<div class="blk"><h4 style="display:flex;align-items:center;gap:8px;margin-top:0">${title}</h4>
-     ${S.goals.length?`<div class="goals">${Object.keys(per).sort().map(k=>`<div class="per">${perName(+k)}</div>${per[k].map(g=>`<div class="goal"><time>${esc(g.clock)}</time>${logo(g.team,26)}<span><b>${esc(g.who)}</b>${g.kind?`<em>${g.kind}</em>`:""}${g.as?` <span class="as">(${esc(g.as)})</span>`:""}</span></div>`).join("")}`).join("")}</div>`:'<p class="note">Голов пока нет.</p>'}</div>
+     ${S.goals.length?goalList(S.goals.map(g=>({per:g.per,time:g.clock,team:g.team,who:g.who,kind:g.kind,as:g.as})),m.away,m.home):'<p class="note">Голов пока нет.</p>'}</div>
    <div class="blk">${rows.length?`<div class="sbars">${rows.map(([l,v])=>sbar(l,v,m.away,m.home,parse)).join("")}</div>`:""}
      ${S.goalies.length?`<h4>Вратари</h4><ul class="ul">${S.goalies.map(g=>`<li><b>${esc(g.name)}</b> (${EN[g.team]||g.team}) — ${g.sv} из ${g.sa}${g.pct?`, ${esc(g.pct)}`:""}</li>`).join("")}</ul>`:""}
      ${top.length?`<h4>Лучшие в матче</h4>${top.map(p=>`<div class="lr" style="padding:6px 0;border:0;grid-template-columns:minmax(0,1fr) auto"><span class="who">${photo(p.name,p.team,46)}<span class="nm2"><span>${plink(p.name,p.team)}${posTag(p.name)}</span><small>${EN[p.team]||p.team} · бросков ${p.sog}${p.toi?` · ${esc(p.toi)} на льду`:""}</small></span></span><span class="v">${gaHtml(p.g,p.a)}</span></div>`).join("")}`:""}</div>`}

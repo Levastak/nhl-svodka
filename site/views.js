@@ -177,12 +177,19 @@ function staleBanner(){const f=freshness();return f.old?`<div class="banner">Д�
 function vHome(){return `${staleBanner()}<div class="home"><div class="col">${posterSec()}${todaySec()}${nightSec()}${heroesSec()}${newsSec()}</div><aside class="col">${accW()}${standW()}${leadersW()}</aside></div>`}
 
 /* ===================== итоги ===================== */
-function goalsBlock(g){if(!g.goals||!g.goals.length)return g.end==="SO"&&g.as+g.hs===1?'<p class="note">Голов в игре не было, победа в серии буллитов.</p>':"";const per={};g.goals.forEach(x=>(per[x[3]]=per[x[3]]||[]).push(x));
-  const pn=k=>k==4?"Овертайм":k==5?"Буллиты":`${k}-й период`;const st={pp:"бол.",sh:"мен.",en:"п.в."};
-  return `<div class="goals">${Object.keys(per).sort().map(k=>`<div class="per">${pn(+k)}</div>${per[k].map(x=>`<div class="goal"><time>${+k===5?"Б":esc(x[4])}</time>${logo(x[1],26)}<span><b>${esc(x[0])}</b>${st[x[2]]?`<em>${st[x[2]]}</em>`:""}${x[5]?` <span class="as">(${esc(String(x[5]).replace(/,/g,", "))})</span>`:""}</span></div>`).join("")}`).join("")}</div>`}
-function sbar(l,v,a,h,parse=x=>x){const x=parse(v[0]),y=parse(v[1]);const tot=(x+y)||1;const w=z=>Math.max(z/tot*100,z?0:3);
-  let ca=tcol(a),ch=tcol(h);if(String(ca).toLowerCase()===String(ch).toLowerCase())ch=shade(ch,.6);const seg=(z,o,c)=>`<i style="width:${w(z)}%;background:${c};opacity:${z>=o?1:.32}"></i>`;
-  return `<div class="sbar"><b>${esc(v[0])}</b><div class="mid"><small>${l}</small><div class="two">${seg(x,y,ca)}${seg(y,x,ch)}</div></div><b>${esc(v[1])}</b></div>`}
+/* голы: время · клуб · автор (ассистенты ниже) · счёт после гола */
+function goalList(items,away,home,so){if(!items.length)return"";let sa=0,sh=0;const pn=k=>k==4?"Овертайм":k==5?"Буллиты":`${k}-й период`;const ST={pp:"бол.",sh:"мен.",en:"п.в."};
+  const per={};items.forEach(x=>(per[x.per]=per[x.per]||[]).push(x));
+  return `<div class="goals">${Object.keys(per).sort().map(k=>`<div class="per">${pn(+k)}</div>${per[k].map(x=>{if(+k!==5){x.team===away?sa++:sh++}
+    const as=[...new Set(String(x.as||"").split(",").map(s=>s.trim()).filter(Boolean))];const kd=ST[x.kind]||(["бол.","мен.","п.в."].includes(x.kind)?x.kind:"");const left=x.team===away;
+    return `<div class="goal"><time>${+k===5?"Б":esc(x.time)}</time>${logo(x.team,28)}<span class="who"><b>${esc(x.who)}</b>${kd?`<em>${esc(kd)}</em>`:""}${as.length?`<small>${esc(as.join(", "))}</small>`:+k===5?"":`<small>без передач</small>`}</span>${+k===5?"":`<span class="gsc"><b class="${left?"on":""}">${sa}</b>:<b class="${left?"":"on"}">${sh}</b></span>`}</div>`}).join("")}`).join("")}</div>`}
+function goalsBlock(g){if(!g.goals||!g.goals.length)return g.end==="SO"&&g.as+g.hs===1?'<p class="note">Голов в игре не было, победа в серии буллитов.</p>':"";
+  return goalList(g.goals.map(x=>({per:x[3],time:x[4],team:x[1],who:x[0],kind:x[2],as:x[5]})),g.away,g.home)}
+/* статистика: значения по краям, полосы расходятся от центра; сторона и цвет команды постоянны */
+function sbar(l,v,a,h,parse=x=>x){const x=+parse(v[0])||0,y=+parse(v[1])||0;const mx=Math.max(x,y)||1;
+  let ca=tcol(a),ch=tcol(h);if(String(ca).toLowerCase()===String(ch).toLowerCase())ch=shade(ch,.6);
+  const half=(z,o,c,side)=>`<span class="hf ${side}"><i style="width:${z/mx*100}%;background:${c};opacity:${z>=o?1:.45}"></i></span>`;
+  return `<div class="sbar"><small>${l}</small><div class="ln"><b class="${x>y?"on":x<y?"lo":""}">${esc(v[0])}</b><span class="tr">${half(x,y,ca,"l")}${half(y,x,ch,"r")}</span><b class="${y>x?"on":y<x?"lo":""}">${esc(v[1])}</b></div></div>`}
 function sbars(g){const s=g.stats;const parse=v=>typeof v==="string"?+v.split("/")[0]:v;
   if(!s)return g.sog?`<div class="sbars">${sbar("Броски в створ",g.sog,g.away,g.home)}</div>`:"";
   const rows=[["Броски в створ",s.sog],["Большинство",s.pp],["Вбрасывания, %",s.fo],["Силовые",s.hits],["Блок-шоты",s.blk],["Штрафные минуты",s.pim]].filter(r=>r[1]);
