@@ -1251,9 +1251,20 @@ function pClaude(){const s=claudeStats(JF);const chips=[["all","Все"],["win",
   const ser=[{name:"Модель",color:"#5B8CFF",pts:series(s.list.filter(x=>x.result&&x.odds).map(x=>({...x,pl:plOf(x.result,x.odds,1)})),"date","pl")}];
   return `<div class="mini" role="group">${chips.map(([k,l])=>`<button data-jf="${k}" aria-pressed="${JF===k}">${l}</button>`).join("")}</div>
    <div class="sum"><div class="card"><b>${s.n?Math.round(s.hit/s.n*100)+"%":"—"}</b><small>точность</small></div><div class="card"><b>${s.hit}/${s.n}</b><small>угадано</small></div><div class="card"><b class="${sgn(s.roi)}">${s.roi==null?"—":(s.roi>0?"+":"")+Math.round(s.roi*100)+"%"}</b><small>условная доходность</small></div></div>
+   ${amPmBlock()}
    <div class="card pad">${lineChart(ser,"cl")}</div>
    <div class="card jr">${s.list.length?s.list.slice().reverse().map(x=>jRow({...x,src:null},{res:x.result,pl:null,score:x.score})).join(""):'<div class="empty">Пока пусто</div>'}</div>
    <p class="legend">Прогноз фиксируется до начала матча и задним числом не меняется. Условная доходность — если бы на каждый прогноз шла одна и та же единица по коэффициенту линии-ориентира. График — накопленный итог в таких единицах. Исход — победа с учётом ОТ и буллитов; тотал — все голы, включая ОТ (победа по буллитам считается одним голом); «уверенные исходы» засчитываются, только если сыграли все.</p>`}
+
+
+function amRes(x){if(!x.changed||!x.result||x.result==="void")return x.result;const t=x.type||"win";
+  if(t==="win")return (x.side_am||x.side)===x.side?x.result:(x.result==="hit"?"miss":"hit");
+  if(t==="total"){const m=String(x.score||"").match(/(\d+):(\d+)/);if(!m)return null;const tot=+m[1]+ +m[2];const L=+(x.line_am??x.line),sd=x.side_am||x.side;return tot===L?"void":((tot>L)===(sd==="over")?"hit":"miss")}
+  return null}
+function amPmBlock(){const ch=(D.journal||[]).filter(x=>x.changed&&x.result&&x.result!=="void"&&(x.type||"win")!=="express");
+  if(!ch.length)return `<p class="note">Утро против вечера: прогноз фиксируется утром и уточняется перед матчами (вратари, травмы, поздняя линия). Когда вечером модель передумает, здесь появится счёт — чей вариант оказался точнее.</p>`;
+  const pm=ch.filter(x=>x.result==="hit").length,am=ch.filter(x=>amRes(x)==="hit").length;
+  return `<div class="card pad"><span class="h3">Утро против вечера</span><p style="margin:6px 0 0">Вечером модель передумала ${ch.length} раз: вечерний вариант угадан ${pm} раз, утренний был бы угадан ${am}.</p></div>`}
 
 /* ---------- старт ---------- */
 document.body.insertAdjacentHTML("afterbegin",emblemSprite());

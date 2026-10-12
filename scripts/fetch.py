@@ -666,7 +666,26 @@ def pm():
     save(f"{SITE}/data.json", data)
 
 
+SNAP_KEYS = ("upcoming", "upcoming_date", "week", "standings", "skaters", "goalies", "teams", "team_stats", "team_xg",
+             "goalie_xg", "skater_xg", "coach_changes", "odds_updated")
+
+
+def snapshot(mode):
+    """Снимок входных данных и прогнозов на момент сбора — для честной проверки вариантов модели на живом сезоне."""
+    import gzip
+    data = load(f"{SITE}/data.json", {})
+    model = load(f"{SITE}/model.json", {})
+    snap = dict(t=iso(), mode=mode, data={k: data.get(k) for k in SNAP_KEYS},
+                model={k: model.get(k) for k in ("generated", "games", "horizon", "league")})
+    os.makedirs(f"{ROOT}/history", exist_ok=True)
+    day = now_utc().astimezone(ET).date().isoformat()
+    with gzip.open(f"{ROOT}/history/{day}_{mode}.json.gz", "wt", encoding="utf-8") as fh:
+        json.dump(snap, fh, ensure_ascii=False, separators=(",", ":"))
+    LOG["ok"].append("snapshot")
+
+
 if __name__ == "__main__":
     mode = sys.argv[1] if len(sys.argv) > 1 else "am"
     {"am": am, "pm": pm}[mode]()
+    snapshot(mode)
     print(json.dumps(LOG, ensure_ascii=False))

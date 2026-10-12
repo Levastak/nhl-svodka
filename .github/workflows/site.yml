@@ -59,7 +59,7 @@ jobs:
         run: |
           git config user.name "svodka-bot"
           git config user.email "svodka-bot@users.noreply.github.com"
-          git add site
+          git add site history
           git diff --cached --quiet && exit 0
           git commit -m "Данные: ${{ steps.mode.outputs.mode }} $(date -u +%Y-%m-%dT%H:%MZ)"
           for i in 1 2 3; do git pull --rebase -X theirs origin main && git push && break; sleep 5; done
