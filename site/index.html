@@ -1273,6 +1273,7 @@ document.body.insertAdjacentHTML("afterbegin",emblemSprite());
   const h=(location.hash||"").slice(1);if(h&&(NAV.some(n=>n[0]===h)||MORE.some(n=>n[0]===h)))VIEW=h;
   render();setInterval(()=>{if(["home","games"].includes(VIEW)&&$("#sheet").hidden&&!document.activeElement.closest?.("form"))render()},60000)})();
 </script>
+<script>if(/[?&]v=2\b/.test(location.search))document.write('<script src="home2.js"><\/script>')</script>
 
 </body>
 </html>
