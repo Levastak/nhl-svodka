@@ -211,7 +211,8 @@ def standings():
         out.append(dict(abbr=(x.get("teamAbbrev") or {}).get("default"), gp=x["gamesPlayed"], w=x["wins"], l=x["losses"],
                         otl=x["otLosses"], pts=x["points"], gf=x["goalFor"], ga=x["goalAgainst"],
                         l10=f'{x.get("l10Wins", 0)}-{x.get("l10Losses", 0)}-{x.get("l10OtLosses", 0)}',
-                        streak=f'{x.get("streakCode", "")}{x.get("streakCount", "")}', div=x.get("divisionName")))
+                        streak=f'{x.get("streakCode", "")}{x.get("streakCount", "")}', div=x.get("divisionName"),
+                        logo=x.get("teamLogo")))
     return out
 
 
@@ -528,12 +529,13 @@ def am():
         data["skaters"], data["goalies"], data["leaders"] = skaters, goalies, leaders(skaters)
         LOG["ok"].append("club-stats")
     box = update_archive(archive, yesterday, idname)
-    if not box and load(f"{SITE}/box.json", {}).get("date") != yesterday:
+    cur = load(f"{SITE}/box.json", {})
+    if not box and (cur.get("date") != yesterday or not cur.get("games")):
         for g in [g for g in archive["games"] if g["date"] == yesterday]:
             players = game_extras(g["id"], dict(g), idname)
             box.append(dict(id=g["id"], away=g["away"], home=g["home"], score=f'{g["as"]}:{g["hs"]}', end=g["end"],
                             stars=g.get("stars", []), players=players))
-    if box or load(f"{SITE}/box.json", {}).get("date") != yesterday:
+    if box or cur.get("date") != yesterday:
         save(f"{SITE}/box.json", dict(date=yesterday, games=box))
     LOG["ok"].append(f"archive +{len(box)}")
     data["results_date"] = yesterday
@@ -631,6 +633,10 @@ def pm():
             teams[t] = x
         time.sleep(0.5)
     data["teams"] = teams
+    if not any(x.get("logo") for x in data.get("standings") or []):
+        st = standings()
+        if st:
+            data["standings"] = st
     if not data.get("heads"):
         _, _, heads = rosters()
         if len(heads) > 500:
