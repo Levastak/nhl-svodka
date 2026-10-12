@@ -1189,7 +1189,7 @@ function mktTable(p){if(p.mkt_home==null)return"";const d=e=>`<td class="${sgn(e
   return `<div class="tbl-wrap"><table class="mtab"><thead><tr><th>Исход</th><th>Модель</th><th>Рынок</th><th>Итог*</th><th>±</th></tr></thead><tbody>
    ${[["away",p.away],["home",p.home]].map(([s,t])=>`<tr><td>${EN[t]}</td><td>${pct(p["p_"+s])}</td><td>${pct(p["mkt_"+s])}</td><td>${pct(p["p_"+s+"_blend"])}</td>${d(p["edge_"+s])}</tr>`).join("")}
    ${p.mkt_over!=null?`<tr><td>ТБ ${p.line}</td><td>${pct(p.p_over)}</td><td>${pct(p.mkt_over)}</td><td>${pct(p.p_over_blend)}</td>${d(p.edge_over)}</tr>`:""}</tbody></table></div>
-   <p class="note">* Итог — 60% рынка (Pinnacle без маржи) и 40% модели: на истории такая смесь точнее каждого по отдельности. ± — модель минус рынок, в процентных пунктах.</p>`}
+   <p class="note">* Итог — 60% рынка (линия-ориентир без маржи) и 40% модели: на истории такая смесь точнее каждого по отдельности. ± — модель минус рынок, в процентных пунктах.</p>`}
 function mRow({p,m,start}){const key="m"+(p.id||p.away+p.home),open=OPEN.has(key);const v=p.verdict||{};const [L,c]=VL[v.level]||["",""];const LS={bet:"Выше рынка",lean:"Чуть выше",pass:"Как рынок",noodds:"Без линии"}[v.level]||L;
   const ph=pB(p,"home"),pa=pB(p,"away");const fs=ph>=pa?"home":"away";
   const bs=(v.level==="bet"||v.level==="lean")&&v.bet&&v.bet.kind==="win"?v.bet.side:null;
@@ -1273,7 +1273,8 @@ document.body.insertAdjacentHTML("afterbegin",emblemSprite());
   const h=(location.hash||"").slice(1);if(h&&(NAV.some(n=>n[0]===h)||MORE.some(n=>n[0]===h)))VIEW=h;
   render();setInterval(()=>{if(["home","games"].includes(VIEW)&&$("#sheet").hidden&&!document.activeElement.closest?.("form"))render()},60000)})();
 </script>
-<script>if(/[?&]v=2\b/.test(location.search))document.write('<script src="home2.js"><\/script>')</script>
+<script src="home2.js"></script>
+<script src="tabs2.js"></script>
 
 </body>
 </html>
