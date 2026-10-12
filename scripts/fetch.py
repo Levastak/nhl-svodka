@@ -762,7 +762,13 @@ def hist():
             q = urllib.parse.quote(arg)
             url = ("https://commons.wikimedia.org/w/api.php?action=query&format=json&generator=search"
                    f"&gsrsearch={q}&gsrnamespace=6&gsrlimit=20&prop=imageinfo&iiprop=url%7Cextmetadata%7Csize&iiurlwidth=1400")
-            j, _ = get(url)
+            j, err = None, ""
+            try:
+                req = urllib.request.Request(url, headers={"User-Agent": "NHL-STATS.RU/1.0 (https://levastak.github.io/nhl-svodka/; GitHub Levastak/nhl-svodka) python-urllib"})
+                with urllib.request.urlopen(req, timeout=60) as r:
+                    j = json.loads(r.read().decode("utf-8", "replace"))
+            except Exception as e:
+                err = repr(e)[:200]
             res = []
             for pg in ((j or {}).get("query", {}).get("pages", {}) or {}).values():
                 ii = (pg.get("imageinfo") or [{}])[0]
@@ -777,7 +783,8 @@ def hist():
                                 author=val("Artist")[:120], license=lic, date=val("DateTimeOriginal")[:20],
                                 desc=val("ImageDescription")[:200], w=ii.get("width"), h=ii.get("height")))
             slug = re.sub(r"[^a-z0-9]+", "-", arg.lower()).strip("-")
-            save(f"{SITE}/hist/photos-{slug}.json", res)
+            npages = len(((j or {}).get("query", {}) or {}).get("pages", {}) or {})
+            save(f"{SITE}/hist/photos-{slug}.json", dict(query=arg, found=npages, error=err, photos=res))
             LOG["ok"].append(f"hist photos {arg}: {len(res)}")
 
 
