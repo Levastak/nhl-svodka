@@ -775,13 +775,12 @@ def hist():
                 md = ii.get("extmetadata", {})
                 val = lambda k: re.sub("<[^>]+>", "", (md.get(k) or {}).get("value", "")).strip()
                 lic = val("LicenseShortName")
-                if not re.search(r"CC|Public domain|PD", lic, re.I):
-                    continue
-                if ii.get("width", 0) < 800 or not re.search(r"\.(jpe?g|png)$", ii.get("url", ""), re.I):
-                    continue
-                res.append(dict(title=pg.get("title"), url=ii.get("thumburl") or ii.get("url"), page=ii.get("descriptionurl"),
+                ok = bool(re.search(r"CC|Public domain|PD|GFDL", lic, re.I)) and ii.get("width", 0) >= 700 \
+                    and bool(re.search(r"\.(jpe?g|png|webp|tiff?)$", ii.get("url", ""), re.I))
+                res.append(dict(ok=ok, title=pg.get("title"), url=ii.get("thumburl") or ii.get("url"), page=ii.get("descriptionurl"),
                                 author=val("Artist")[:120], license=lic, date=val("DateTimeOriginal")[:20],
                                 desc=val("ImageDescription")[:200], w=ii.get("width"), h=ii.get("height")))
+            res.sort(key=lambda x: (not x["ok"], -(x["w"] or 0)))
             slug = re.sub(r"[^a-z0-9]+", "-", arg.lower()).strip("-")
             npages = len(((j or {}).get("query", {}) or {}).get("pages", {}) or {})
             save(f"{SITE}/hist/photos-{slug}.json", dict(query=arg, found=npages, error=err, photos=res))
