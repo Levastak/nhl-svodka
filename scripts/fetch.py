@@ -525,7 +525,13 @@ def am():
         data["skaters"], data["goalies"], data["leaders"] = skaters, goalies, leaders(skaters)
         LOG["ok"].append("club-stats")
     box = update_archive(archive, yesterday, idname)
-    save(f"{SITE}/box.json", dict(date=yesterday, games=box))
+    if not box and load(f"{SITE}/box.json", {}).get("date") != yesterday:
+        for g in [g for g in archive["games"] if g["date"] == yesterday]:
+            players = game_extras(g["id"], dict(g), idname)
+            box.append(dict(id=g["id"], away=g["away"], home=g["home"], score=f'{g["as"]}:{g["hs"]}', end=g["end"],
+                            stars=g.get("stars", []), players=players))
+    if box or load(f"{SITE}/box.json", {}).get("date") != yesterday:
+        save(f"{SITE}/box.json", dict(date=yesterday, games=box))
     LOG["ok"].append(f"archive +{len(box)}")
     data["results_date"] = yesterday
 
