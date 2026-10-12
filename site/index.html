@@ -191,6 +191,8 @@ h4.sub{font-size:var(--fs-xs);font-weight:700;color:var(--mute);letter-spacing:.
 .mr{border-top:1px solid var(--line);position:relative}
 .mr:first-child{border-top:0}
 .mr::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:linear-gradient(var(--ca) 0 50%,var(--ch) 50% 100%);opacity:.9}
+.mr:has(>.rr)::before{width:4px;background:var(--ca)}
+.mr:has(>.rr)::after{content:"";position:absolute;right:0;top:0;bottom:0;width:4px;background:var(--ch);opacity:.9}
 .mr.mo::before{background:var(--gold);width:4px}
 .row{display:grid;grid-template-columns:72px minmax(0,1fr) 120px 220px 20px;gap:6px 16px;align-items:center;padding:14px 16px 14px 18px;width:100%}
 .row:hover{background:var(--soft)}
