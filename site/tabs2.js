@@ -95,6 +95,8 @@ const css=`
 .t2fold .t2ess{padding:0 16px 16px}
 .sum{grid-template-columns:repeat(3,minmax(0,1fr))!important}
 .sum .card b{font-size:26px}
+.bdg.lg.xs{--sz:22px}.bdg.lg.s{--sz:26px}
+.strip .bdg.lg{background:#fff;border-radius:50%;padding:2px;box-sizing:border-box}
 .bdg.lg picture,.bdg.lg img{width:100%;height:100%;display:block;object-fit:contain}
 .bdg.ph{border-radius:50%;overflow:hidden;background:var(--c1);box-shadow:0 0 0 2px var(--card),0 0 0 3px var(--c1)}
 .bdg.ph img{width:100%;height:100%;display:block;object-fit:cover;object-position:50% 10%;background:linear-gradient(180deg,rgba(255,255,255,.18),rgba(255,255,255,0))}
