@@ -73,7 +73,7 @@ let HEADN=null;
 function headOf(name){const H=(D&&D.heads)||{};if(H[name])return H[name];if(!HEADN){HEADN={};for(const k in H)HEADN[nrm(k)]=H[k]}return HEADN[nrm(name)]||null}
 window._phf=function(img){const s=img.closest(".ph");if(s){img.remove()}};
 function photo(name,team,s=44,cls=""){const h=headOf(name);const c=tdeep(team);const n=pnum(name);
-  return `<span class="ph ${cls}" style="--s:${s}px;--c:${c}" aria-hidden="true" title="${esc(name)}">${n?"#"+n:initials(name)}${h?`<img src="${MG}${h}.png" alt="" loading="lazy" decoding="async" onerror="_phf(this)">`:""}</span>`}
+  return `<span class="ph ${cls}" style="--s:${s}px;--c:${c}" aria-hidden="true" title="${esc(name)}"><span class="ph-t">${n?"#"+n:initials(name)}</span>${h?`<img src="${MG}${h}.png" alt="" loading="lazy" decoding="async" onerror="_phf(this)">`:""}</span>`}
 function plink(name,team,label){return `<button class="plink" data-player="${esc(name)}" data-pteam="${team}">${esc(label||name)}</button>`}
 
 /* ---------- расчёты по архиву ---------- */
