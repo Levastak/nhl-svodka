@@ -116,13 +116,13 @@ function gameRow2(m,isMotd){const p=modelOf(m);const s=state(m.start);
   const mo=isMotd&&D.motd&&D.motd.text?`<p class="h2mo"><b>Матч дня.</b> ${esc(D.motd.text)}</p>`:"";
   return `<button class="h2g${isMotd?" mo":""}" data-go="games" data-open="${m.away}-${m.home}"><span class="tm">${time}</span>
    <span class="teams"><span class="tr">${badge(m.away,"xs")}<b>${EN[m.away]}</b><span class="p ${fa?"fav":""}">${pa!=null?pct(pa):""}</span></span><span class="tr">${badge(m.home,"xs")}<b>${EN[m.home]}</b><span class="p ${fa?"":"fav"}">${ph!=null?pct(ph):""}</span></span></span>
-   ${v?`<span class="v ${v[1]}">${v[0]}</span>`:""}${bar}${mo}</button>`}
+   ${bar}${mo}</button>`}
 
 function todaySec(){const u=D.upcoming||[];if(!u.length)return "";
   const mo=D.motd?u.find(x=>x.away===D.motd.away&&x.home===D.motd.home):null;
   const list=[...u].sort((a,b)=>String(a.start).localeCompare(String(b.start)));
-  const ex=D.express&&D.express.legs&&D.express.date===(D.upcoming_date||D.express.date)?D.express:null;
-  const conf=ex?`<div class="h2conf">Самые уверенные исходы: ${ex.legs.map(l=>{const t=l.side?sideTeam(l,l.side):l.pick;return `<b>${EN[t]||esc(t)}</b>`}).join(" и ")}</div>`:"";
+  const ex=window.confLegs?confLegs():[];
+  const conf=ex.length?`<div class="h2conf">Самые уверенные исходы: ${ex.map(x=>`<b>${EN[x.t]}</b> ${pct(x.p)}`).join(", ")}</div>`:"";
   return `<section class="h2sec"><div class="h2hd"><h2>Сегодня<small>${esc(dLong(D.upcoming_date))}, время по Кирову</small></h2><button class="lnk" data-go="model">Все матчи вперёд</button></div>
    <div class="h2box">${list.map(m=>gameRow2(m,m===mo)).join("")}</div>${conf}</section>`}
 

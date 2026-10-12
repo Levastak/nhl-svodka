@@ -125,6 +125,9 @@ const plural=(n,a,b,c)=>{const m=n%10,k=n%100;return n+" "+(m===1&&k!==11?a:m>=2
 const tmLine=(a,p,f)=>`<span>${badge(a,"s")}<b>${EN[a]}</b><small>${rec(a)}</small>${formDots(a)}${p!=null?`<span class="p ${f?"f":""}">${pct(p)}</span>`:""}</span>`;
 const pcLine=(a,p,f)=>`<span class="${f?"f":""}" style="--c:${tcol(a)}"><i></i>${pct(p)}</span>`;
 
+/* прогноз матча: одна сторона — та же, что во вкладке «Матчи» */
+function fcOf(p,m){const pa=pB(p,"away"),ph=pB(p,"home");const side=(m&&m.pick_side)||(pa>ph?"away":"home");return {side,t:side==="home"?p.home:p.away,p:side==="home"?ph:pa}}
+window.confLegs=function(){return (D.upcoming||[]).filter(m=>state(m.start)!=="done").map(m=>{const p=modelOf(m);if(!p)return null;const f=fcOf(p,m);return f.p>=.6?f:null}).filter(Boolean).sort((a,b)=>b.p-a.p).slice(0,3)};
 /* ---------------- Матчи ---------------- */
 function gDetail(m,p){const tp=m.total_pick;const pickT=m.pick_side?sideTeam(m,m.pick_side):null;
   const po=m.odds?(m.pick_side==="home"?m.odds.home:m.odds.away):null;
@@ -145,7 +148,7 @@ function gRow(m,isMo){const key=`${m.away}-${m.home}`,open=OPEN.has(key);const p
   return `<div class="t2r${isMo?" mo":""}" id="g-${key}"><button class="t2row" data-tog="${key}" aria-expanded="${open}"><span class="t2t">${time}</span>
     <span class="t2tm">${tmLine(m.away,pa,fa)}${tmLine(m.home,ph,!fa)}</span>
     <span class="t2pc">${pa!=null?pcLine(m.away,pa,fa)+pcLine(m.home,ph,!fa):""}</span>
-    <span class="t2pk">${pickT?`<span class="pk"><small>Исход</small>${EN[pickT]}</span>`:""}${tp?`<span class="pk"><small>Тотал</small>${tp.side==="over"?"ТБ":"ТМ"} ${esc(tp.line)}</span>`:""}${v?`<span class="t2chip ${v[1]}">${v[0]}</span>`:""}</span>${chev}
+    <span class="t2pk">${pickT?`<span class="pk"><small>Исход</small>${EN[pickT]}</span>`:""}${tp?`<span class="pk"><small>Тотал</small>${tp.side==="over"?"ТБ":"ТМ"} ${esc(tp.line)}</span>`:""}</span>${chev}
     ${isMo&&D.motd.text?`<p class="t2mo"><b>Матч дня.</b> ${esc(D.motd.text)}</p>`:""}</button>${open?gDetail(m,p):""}</div>`}
 
 function weekList(){const w=(D.week||[]).filter(g=>g.date>(D.upcoming_date||""));if(!w.length)return"";const by={};w.forEach(g=>(by[g.date]=by[g.date]||[]).push(g));
@@ -154,43 +157,47 @@ function weekList(){const w=(D.week||[]).filter(g=>g.date>(D.upcoming_date||""))
 window.vGames=function(){const u=(D.upcoming||[]).slice().sort((a,b)=>String(a.start).localeCompare(String(b.start)));
   if(!u.length)return `<div class="t2">${weekList()||'<div class="card empty">Матчей в ближайший игровой день нет.</div>'}</div>`;
   const mo=D.motd?u.find(x=>x.away===D.motd.away&&x.home===D.motd.home):null;
-  const ex=D.express&&D.express.legs&&D.express.date===(D.upcoming_date||D.express.date)?D.express:null;
+  const ex=confLegs();
   return `<div class="t2"><section class="t2"><div class="t2hd"><h2>Матчи<small>${esc(dLong(D.upcoming_date))}, время по Кирову</small></h2></div>
-    ${ex?`<p class="t2note">Самые уверенные исходы: ${ex.legs.map(l=>`<b>${EN[l.side?sideTeam(l,l.side):l.pick]||esc(l.pick)}</b>`).join(" и ")}</p>`:""}
+    ${ex.length?`<p class="t2note">Самые уверенные исходы: ${ex.map(x=>`<b>${EN[x.t]}</b> ${pct(x.p)}`).join(", ")}</p>`:""}
     <div class="t2box">${u.map(m=>gRow(m,m===mo)).join("")}</div>
     <p class="t2note" style="font-size:12.5px;color:var(--mute)">Проценты — итог модели и рынка (60% рынка, 40% модели). Нажми на матч, чтобы открыть разбор.</p></section>${weekList()}</div>`};
 
 /* ---------------- Модель ---------------- */
 function mDetail(p,m){const hasOdds=m.odds||m.odds_1x||m.books||m.fonbet;
-  return `<div class="t2x"><div class="full">${verdictBox(p)}</div>
+  return `<div class="t2x">${fBox(p,m)}
     <div class="t2blk full"><div class="t2ess">${essayOf(p).map(x=>`<p>${esc(x)}</p>`).join("")}</div></div>
     <details class="t2more"><summary>Цифры: вероятности, рынок, линии</summary><div class="t2x" style="padding:0;border:0">
       <div class="t2blk">${probBar(p,p.away,p.home)}<div class="t2kv"><div><small>Ожидаемые голы</small><b>${nz(p.lam_away)} : ${nz(p.lam_home)}</b></div><div><small>Ничья в осн. время</small><b>${pct(p.p_ot)}</b></div><div><small>ТБ ${p.line}</small><b>${pct(p.p_over)}</b></div><div><small>ТМ ${p.line}</small><b>${pct(p.p_under)}</b></div></div>${mktTable(p)}</div>
       <div class="t2blk">${hasOdds?booksTable(m)+softBlock(p):'<p class="t2note">Кэфов пока нет: линия открывается примерно за сутки до матча.</p>'}<h4>Из чего складывается оценка</h4><ul class="t2ul">${modelWhy(p,p).map(x=>`<li>${x}</li>`).join("")}</ul></div></div></details>
     <div class="t2acts"><button class="btn ghost" data-team="${p.away}">${EN[p.away]}: карточка</button><button class="btn ghost" data-team="${p.home}">${EN[p.home]}: карточка</button></div></div>`}
-function mRow2({p,m,start}){const key="m"+(p.id||p.away+p.home),open=OPEN.has(key);const v=LV[(p.verdict||{}).level];
-  const ph=pB(p,"home"),pa=pB(p,"away");const fa=pa>ph;const b=p.verdict&&p.verdict.bet;const lvl=(p.verdict||{}).level;
-  const pk=(lvl==="bet"||lvl==="lean")&&b?`<span class="pk"><small>Где выше</small>${esc(b.kind==="win"?EN[sideTeam(p,b.side)]:betLine(p.verdict,p))}</span>`:`<span class="pk favpk"><small>Фаворит</small>${EN[fa?p.away:p.home]}</span>`;
+function fBox(p,m){const f=fcOf(p,m);const pa=pB(p,"away"),ph=pB(p,"home");const mk=p.mkt_home!=null;
+  const ms=f.side==="home"?p.mkt_home:p.mkt_away,mo=f.side==="home"?p.p_home:p.p_away;
+  const b=p.verdict&&p.verdict.bet&&p.verdict.bet.kind==="win"&&["bet","lean"].includes(p.verdict.level)?p.verdict.bet.side:null;
+  const other=b&&b!==f.side?(b==="home"?p.home:p.away):null;
+  const note=mk?`Модель без рынка — ${pct(mo)}, рынок — ${pct(ms)}.${other?` Модель оценивает шансы ${EN[other]} чуть выше рынка (${pct(b==="home"?p.p_home:p.p_away)} против ${pct(b==="home"?p.mkt_home:p.mkt_away)}), но фаворит всё равно ${EN[f.t]}.`:""}`:"Линии пока нет — это чистая оценка модели.";
+  const o=p.p_over_blend??p.p_over,u=p.p_under_blend??p.p_under;
+  return `<div class="t2pick full"><div><small>Прогноз</small><b>${EN[f.t]}<em>${pct(f.p)}</em></b><p>${note}</p></div>${o!=null?`<div><small>Тотал</small><b>${o>=u?"Больше":"Меньше"} ${p.line}<em>${pct(Math.max(o,u))}</em></b><p>Ожидаемые голы ${nz(p.lam_away)} : ${nz(p.lam_home)}, ничья в основное время — ${pct(p.p_ot)}.</p></div>`:""}</div>`}
+function mRow2({p,m,start}){const key="m"+(p.id||p.away+p.home),open=OPEN.has(key);
+  const ph=pB(p,"home"),pa=pB(p,"away");const f=fcOf(p,m);const fa=f.side==="away";
   return `<div class="t2r" id="${key}"><button class="t2row" data-tog="${key}" aria-expanded="${open}"><span class="t2t">${kt(start)}${rel2(start)?`<small>${rel2(start)}</small>`:""}</span>
     <span class="t2tm">${tmLine(p.away,pa,fa)}${tmLine(p.home,ph,!fa)}</span><span class="t2pc">${pcLine(p.away,pa,fa)}${pcLine(p.home,ph,!fa)}</span>
-    <span class="t2pk">${pk}${v&&lvl!=="noodds"?`<span class="t2chip ${v[1]}">${v[0]}</span>`:""}</span>${chev}</button>${open?mDetail(p,m):""}</div>`}
+    <span class="t2pk favpk"><span class="pk"><small>Прогноз</small>${EN[f.t]}</span></span>${chev}</button>${open?mDetail(p,m):""}</div>`}
 window.vModel=function(){const all=mGames();if(!all.length)return `<div class="card empty">Будущих матчей в расписании пока нет — модель посчитает их после ближайшего обновления.</div>`;
-  const list=all.filter(g=>MF==="all"||(MF==="bet"?["bet","lean"].includes((g.p.verdict||{}).level):g.p.mkt_home!=null));
+  const list=all;
   const by={};list.forEach(g=>(by[g.p.date]=by[g.p.date]||[]).push(g));
   const n=x=>all.filter(g=>(g.p.verdict||{}).level===x).length;const withOdds=all.filter(g=>g.p.mkt_home!=null).length;
   const mt=D.model_tab||{};const ess=Array.isArray(mt.essay)&&mt.essay.length?mt.essay:[];const upd=mt.updated||M.generated;
-  const seg=`<div class="t2seg">${[["all","Все матчи"],["bet","Модель выше рынка"],["odds","С линией"]].map(([k,l])=>`<button data-mf="${k}" aria-pressed="${MF===k}">${l}</button>`).join("")}</div>`;
+  const seg="";
   return `<div class="t2"><div class="t2hd"><h2>Модель<small>все матчи вперёд, время по Кирову</small></h2></div>
-   <div class="t2box"><div class="t2sum"><div><b>${all.length}</b><small>матчей вперёд</small></div><div><b>${withOdds}</b><small>с линией</small></div><div><b class="pos">${n("bet")}</b><small>модель выше рынка</small></div><div><b>${n("lean")}</b><small>чуть выше</small></div></div>
+   <div class="t2box"><div class="t2sum"><div><b>${all.length}</b><small>матчей вперёд</small></div><div><b>${withOdds}</b><small>уже с линией</small></div></div></div>
     ${ess.length?`<details class="t2fold"><summary>${esc(String(ess[0]).split(/(?<=[.!?])\s/)[0])}<span>Читать обзор</span></summary><div class="t2ess">${ess.map(x=>`<p>${esc(x)}</p>`).join("")}${upd?`<p style="font-size:12.5px;color:var(--mute)">Обновлено ${esc(new Date(upd).toLocaleString("ru-RU",{timeZone:"Europe/Kirov",day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"}))}</p>`:""}</div></details>`:""}</div>
    ${seg}
    ${Object.keys(by).length?Object.entries(by).map(([d,gs],k)=>`<details class="t2day" ${k<2?"open":""}><summary>${esc(dLong(d))}<small>${plural(gs.length,"матч","матча","матчей")}</small></summary><div class="t2box">${gs.map(mRow2).join("")}</div></details>`).join(""):'<div class="card empty">Под этот фильтр матчей нет.</div>'}
    <details class="t2box t2fold"><summary>Как читать оценку<span>Открыть</span></summary><div class="t2ess"><ul class="t2ul">
-    <li><b>Модель выше рынка</b> — модель оценивает исход на 5+ п.п. выше рынка, или одна из линий заметно расходится с рынком, или соперник устал (второй матч за два дня) при перевесе от 2 п.п.</li>
-    <li><b>Чуть выше рынка</b> — расхождение 3–5 п.п.</li>
-    <li><b>Согласна с рынком</b> — модель и рынок оценивают матч одинаково.</li>
-    <li><b>Линии пока нет</b> — линия открывается примерно за сутки до матча, проценты — чистая модель.</li>
-    <li>Проценты в строке — итог 60% рынка и 40% модели, когда линия есть, и чистая модель, когда её нет.</li></ul></div></details></div>`};
+    <li>Прогноз — сторона, у которой больше шансов. Проценты — итог: 60% рынка и 40% модели, когда линия есть, и чистая модель, когда её нет.</li>
+    <li>Линия открывается примерно за сутки до матча. Вечером, после объявления вратарей, прогноз уточняется.</li>
+    <li>Самыми уверенными считаем исходы с шансом от 60%. Если таких нет, в этот день их не называем.</li></ul></div></details></div>`};
 
 /* ---------------- Таблица ---------------- */
 const _vTable=window.vTable;
