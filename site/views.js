@@ -36,21 +36,28 @@ function timeCell(m,L){if(L&&L.state==="in")return `<span class="t lv">${esc(L.p
   const s=state(m.start);return `<span class="t">${kt(m.start)}${s==="pre"&&rel(m.start)?`<small>${rel(m.start)}</small>`:s!=="pre"?"<small>идёт</small>":""}</span>`}
 function gRow(m,{mo=false,nav=false}={}){const key=`${m.away}-${m.home}`,open=!nav&&OPEN.has(key);const p=modelOf(m);const L=liveOf(m);
   const pa=pB(p,"away"),ph=pB(p,"home");const fa=pa!=null&&pa>ph;
-  const pickT=m.pick_side?sideTeam(m,m.pick_side):(p?fcOf(p,m).t:null);const tp=m.total_pick;const po=oddsOf(m,m.pick_side);const a=altOf(p,m);
+  const pickT=m.pick_side?sideTeam(m,m.pick_side):(p?fcOf(p,m).t:null);const tp=m.total_pick;const po=oddsOf(m,m.pick_side);const vs=vsOf(p,m);
   const lv=L&&L.state!=="pre";const aw=lv&&L.as>L.hs;
   const [ca,ch]=[tcol(m.away),tcol(m.home)];
   const btn=nav?`data-go="games" data-open="${key}"`:`data-tog="${key}" aria-expanded="${open}"`;
   return `<div class="mr${mo?" mo":""}${L&&L.flash?" flash":""}" id="g-${key}" style="--ca:${ca};--ch:${ch};--fc:${L&&L.flash?tcol(L.flash)+"55":"transparent"}"><button class="row" ${btn}>${timeCell(m,L)}
     <span class="tms">${tmLine(m.away,{p:pa,f:fa,sc:lv?L.as:null,lo:lv&&L.state==="post"&&!aw})}${tmLine(m.home,{p:ph,f:!fa,sc:lv?L.hs:null,lo:lv&&L.state==="post"&&aw})}</span>
     <span class="pcs">${pa!=null?pcLine(m.away,pa,fa)+pcLine(m.home,ph,!fa):""}</span>
-    <span class="pk">${pickT?`<span class="k"><small>Прогноз</small>${RU[pickT]}${po?` · ${f2(po)}`:""}</span>`:""}${tp?`<span class="k"><small>Тотал</small>${tp.side==="over"?"Больше":"Меньше"} ${esc(tp.line)}${tp.odds?` · ${f2(tp.odds)}`:""}</span>`:""}${lv?liveChips(m,L):""}${a&&!lv?`<span class="chip gold">Недооценка: ${EN[a.t]}${a.odds?" · "+f2(a.odds):""}</span>`:""}</span>${IC.chev}
+    <span class="pk">${pickT?`<span class="k"><small>Модель</small>${RU[pickT]}${po?` · ${f2(po)}`:""}</span>`:""}${tp?`<span class="k"><small>Тотал</small>${tp.side==="over"?"Больше":"Меньше"} ${esc(tp.line)}${tp.odds?` · ${f2(tp.odds)}`:""}</span>`:""}${lv?liveChips(m,L):""}${vs&&!lv&&(vs.win||vs.tot)?`<span class="chip gold">Против рынка: ${[vs.win?"исход":"",vs.tot?"тотал":""].filter(Boolean).join(" и ")}</span>`:""}</span>${IC.chev}
     ${mo&&D.motd&&D.motd.text?`<span class="mo-t"><b>Матч дня.</b> ${esc(D.motd.text)}</span>`:""}</button>${open?gDetail(m,p,L):""}</div>`}
 function liveChips(m,L){const out=[];const ps=m.pick_side;const tp=m.total_pick;
   const st=(r,fin,lab)=>`<span class="chip ${r==="hit"?"win":r==="miss"?"loss":""}">${lab}: ${r==="hit"?(fin?"угадан":"заходит"):r==="miss"?(fin?"мимо":"не заходит"):"ничья"}</span>`;
   if(ps){const x=legLive(m.away,m.home,ps);if(x)out.push(st(x.r,x.fin,"Прогноз"))}
   if(tp){const x=liveRes({type:"total",away:m.away,home:m.home,side:tp.side,line:tp.line});if(x)out.push(st(x.r,x.fin,"Тотал"))}
   return out.join("")}
-function altBox(a){return a?`<div class="alt full"><small>Альтернативный взгляд</small><p>Фаворит — <b>${RU[a.fav]}</b>, но модель оценивает шансы команды «${RU[a.t]}» выше рынка: ${pct(a.pm)} против ${pct(a.pk)}${a.odds?`. По линии-ориентиру — <b>${f2(a.odds)}</b>, рынок их недооценивает`:""}. Это более рискованный вариант.</p></div>`:""}
+function vsBox(p,m){const vs=vsOf(p,m);if(!vs)return"";const tl=m.total_pick?m.total_pick.line:(m.odds||{}).total;const TL=s=>`${s==="over"?"Больше":"Меньше"}${tl!=null?" "+esc(tl):""}`;
+  const mt=modTot(p);const mtp=vs.ts?(vs.ts==="over"?p.p_over:p.p_under):null;
+  const row=(lab,a,b,diff)=>`<div class="vr${diff?" df":""}"><small>${lab}</small><span>${a}</span><span>${b}</span></div>`;
+  const msg=vs.win&&vs.tot?"Модель против рынка и в исходе, и в тотале.":vs.win?`Модель против рынка: рынок за «${RU[vs.mk.t]}», модель — за «${RU[vs.f.t]}».`:vs.tot?`В исходе модель с рынком согласна, а в тотале — нет.`:"Модель согласна с рынком.";
+  return `<div class="vsb full"><div class="vr hd"><small></small><b>Модель</b><b>Рынок</b></div>
+   ${vs.f?row("Исход",`${EN[vs.f.t]} <em>${pct(vs.f.p)}</em>`,vs.mk?`${EN[vs.mk.t]} <em>${pct(vs.mk.p)}</em>`:"—",vs.win):""}
+   ${vs.ts?row("Тотал",`${TL(vs.ts)} <em>${pct(mtp)}</em>`,vs.mt?`${TL(vs.mt.side)} <em>${pct(vs.mt.p)}</em>`:"—",vs.tot):""}
+   <p>${msg}</p></div>`}
 function booksTable(m){const o=m.odds,x=m.odds_1x,bk=m.books||{};if(!o&&!x&&!Object.keys(bk).length)return"";
   const r=(name,note,a,h,t)=>`<tr><td>${name}<small>${note}</small></td><td>${f2(a)}</td><td>${f2(h)}</td><td>${t&&t.total!=null?`${t.total}: ${f2(t.over)} / ${f2(t.under)}`:"—"}</td></tr>`;
   const BN={marathonbet:"Линия 3",onexbet:"Линия 2"};
@@ -61,24 +68,24 @@ function injOut(a){return (((D.teams||{})[a]||{}).injuries||[]).filter(x=>/IR|Ou
 function modelBlk(p,m,openIt){if(!p)return"";const es=essayOf(p);const h2h=p.h2h||[];
   return `<details class="more"${openIt?" open":""}><summary>Как считала модель</summary><div class="in">
     <div class="blk">${es.length?`<div class="ess">${es.map(x=>`<p>${esc(x)}</p>`).join("")}</div>`:""}
-     <div class="kv"><div><small>Модель без рынка</small><b>${pct(p.p_away)} : ${pct(p.p_home)}</b></div>${p.mkt_home!=null?`<div><small>Рынок</small><b>${pct(p.mkt_away)} : ${pct(p.mkt_home)}</b></div>`:""}<div><small>Ожидаемые голы</small><b>${nz(p.lam_away)} : ${nz(p.lam_home)}</b></div><div><small>Ничья в осн. время</small><b>${pct(p.p_ot)}</b></div></div></div>
+     <div class="kv"><div><small>Модель</small><b>${pct(p.p_away)} : ${pct(p.p_home)}</b></div>${p.mkt_home!=null?`<div><small>Рынок</small><b>${pct(p.mkt_away)} : ${pct(p.mkt_home)}</b></div>`:""}<div><small>Ожидаемые голы</small><b>${nz(p.lam_away)} : ${nz(p.lam_home)}</b></div><div><small>Ничья в осн. время</small><b>${pct(p.p_ot)}</b></div></div></div>
     <div class="blk"><h4 style="margin-top:0">Из чего складывается оценка</h4><ul class="ul">${modelWhy(m||p,p).map(x=>`<li>${x}</li>`).join("")}</ul>
      ${h2h.length?`<h4>Личные встречи в сезоне</h4><ul class="ul">${h2h.map(g=>`<li>${esc(dShort(g.date))}: ${EN[g.away]} — ${EN[g.home]} <b>${esc(g.score)}</b>${g.end&&g.end!=="REG"?" "+endTag(g.end):""}</li>`).join("")}</ul>`:""}</div></div></details>`}
 function gDetail(m,p,L){const tp=m.total_pick;const pickT=m.pick_side?sideTeam(m,m.pick_side):(p?fcOf(p,m).t:null);const po=oddsOf(m,m.pick_side);
   const ga=m.goalies||[];const injA=injOut(m.away),injH=injOut(m.home);
-  const pick=pickT||tp?`<div class="picks full">${pickT?`<div><small>Прогноз на исход</small><b>${RU[pickT]}${po?`<em>${f2(po)}</em>`:""}</b>${m.lean?`<p>${esc(m.lean)}</p>`:""}</div>`:""}${tp?`<div><small>Тотал</small><b>${tp.side==="over"?"Больше":"Меньше"} ${esc(tp.line)}${tp.odds?`<em>${f2(tp.odds)}</em>`:""}</b>${tp.lean?`<p>${esc(tp.lean)}</p>`:""}</div>`:""}</div>`:"";
+  const pick=pickT||tp?`<div class="picks full">${pickT?`<div><small>Прогноз модели на исход</small><b>${RU[pickT]}${po?`<em>${f2(po)}</em>`:""}</b>${m.lean?`<p>${esc(m.lean)}</p>`:""}</div>`:""}${tp?`<div><small>Прогноз модели на тотал</small><b>${tp.side==="over"?"Больше":"Меньше"} ${esc(tp.line)}${tp.odds?`<em>${f2(tp.odds)}</em>`:""}</b>${tp.lean?`<p>${esc(tp.lean)}</p>`:""}</div>`:""}</div>`:"";
   const fac=(m.factors||[]).length?`<div class="blk"><h4>Почему так</h4><ul class="ul">${m.factors.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div>`:"";
   const gl=`<div class="blk"><h4>Вратари</h4><div class="kv">${[0,1].map(i=>{const t=i?m.home:m.away;const gp=p&&(i?p.goalie_home:p.goalie_away);const nm=String(ga[i]||"").split(" (")[0];
       return `<div><small>${EN[t]}</small><span style="display:flex;align-items:center;gap:8px">${nm&&nm!=="не объявлен"?photo(nm,t,44):""}<b style="font-family:var(--f-body);font-size:var(--fs-s)">${esc(ga[i]||"не объявлен")}</b></span>${gp&&gp.sv?`<small>${nz(gp.sv*100)}% отражённых · ${gp.gp} и.</small>`:""}</div>`}).join("")}</div>
     ${(injA.length||injH.length)?`<h4>Без кого играют</h4><ul class="ul">${[[m.away,injA],[m.home,injH]].filter(x=>x[1].length).map(([t,l])=>`<li><b>${EN[t]}:</b> ${l.map(x=>esc(x.name)).join(", ")}</li>`).join("")}</ul>`:""}</div>`;
   const lines=(m.odds||m.books||m.odds_1x)?`<div class="blk full"><h4>Линии</h4>${booksTable(m)}</div>`:"";
   const live=L&&L.state!=="pre"?liveBlock(m,L):"";
-  return `<div class="x">${live}${pick}${live?"":altBox(altOf(p,m))}${fac}${gl}${lines}${modelBlk(p,m)}<div class="acts full"><button class="btn" data-team="${m.away}">${logo(m.away,24)}${EN[m.away]}</button><button class="btn" data-team="${m.home}">${logo(m.home,24)}${EN[m.home]}</button></div></div>`}
+  return `<div class="x">${live}${pick}${live?"":vsBox(p,m)}${fac}${gl}${lines}${modelBlk(p,m)}<div class="acts full"><button class="btn" data-team="${m.away}">${logo(m.away,24)}${EN[m.away]}</button><button class="btn" data-team="${m.home}">${logo(m.home,24)}${EN[m.home]}</button></div></div>`}
 function wRow({p,m,start}){const key="w"+(p.id||p.away+p.home),open=OPEN.has(key);const pa=pB(p,"away"),ph=pB(p,"home");const fa=pa>ph;
   const b2b=[p.b2b_away&&RU[p.away],p.b2b_home&&RU[p.home]].filter(Boolean);
   return `<div class="mr" id="${key}" style="--ca:${tcol(p.away)};--ch:${tcol(p.home)}"><button class="row" data-tog="${key}" aria-expanded="${open}"><span class="t">${kt(start)}</span>
     <span class="tms">${tmLine(p.away,{p:pa,f:fa})}${tmLine(p.home,{p:ph,f:!fa})}</span><span class="pcs">${pcLine(p.away,pa,fa)}${pcLine(p.home,ph,!fa)}</span>
-    <span class="pk"><span class="k"><small>Фаворит</small>${RU[fa?p.away:p.home]}</span>${b2b.length?`<span class="k"><small>Второй матч подряд</small>${b2b.join(", ")}</span>`:""}</span>${IC.chev}</button>${open?`<div class="x">${modelBlk(p,m,true)}</div>`:""}</div>`}
+    <span class="pk"><span class="k"><small>Модель</small>${RU[fa?p.away:p.home]}</span>${b2b.length?`<span class="k"><small>Второй матч подряд</small>${b2b.join(", ")}</span>`:""}</span>${IC.chev}</button>${open?`<div class="x">${modelBlk(p,m,true)}</div>`:""}</div>`}
 function weekList(){const ids=new Set((D.upcoming||[]).map(x=>x.away+x.home));const all=mGames().filter(g=>(g.p.date||g.m.date)>(D.upcoming_date||"")&&!ids.has(g.p.away+g.p.home));if(!all.length)return"";
   const by={};all.forEach(g=>{const d=g.p.date||g.m.date;(by[d]=by[d]||[]).push(g)});
   return `<section class="sec"><div class="hd"><h2>Дальше на неделе<small>предварительно, по модели без линии</small></h2></div>${Object.entries(by).map(([d,gs],k)=>`<details class="day" ${k?"":"open"}><summary>${esc(dLong(d))}<small>${plural(gs.length,"матч","матча","матчей")}</small></summary><div class="box">${gs.map(wRow).join("")}</div></details>`).join("")}</section>`}
@@ -88,7 +95,7 @@ function vGames(){const u=todayGames();const mo=D.motd?u.find(x=>x.away===D.motd
   if(!u.length)return `<div class="col">${noGames()}${weekList()}</div>`;
   return `<div class="col"><section class="sec"><div class="hd"><h1>Матчи<small>${esc(dLong(D.upcoming_date))}, время по Кирову</small></h1></div>${confLine()}
     <div class="box">${u.map(m=>gRow(m,{mo:m===mo})).join("")}</div>
-    <p class="note">Проценты — итог модели и рынка (60% рынка, 40% модели), кэфы — линия-ориентир. «Недооценка» — модель оценивает аутсайдера заметно выше рынка. Во время матча счёт обновляется сам.</p></section>${weekList()}</div>`}
+    <p class="note">Проценты и прогнозы — собственная оценка модели, без подмешивания рынка; кэфы — линия-ориентир. «Против рынка» — модель выбрала не ту сторону, что фаворит линии: это самые интересные прогнозы, их счёт ведётся отдельно в «Прогнозах». Во время матча счёт обновляется сам.</p></section>${weekList()}</div>`}
 function noGames(){const nx=(D.week||[]).filter(g=>state(g.start)==="pre").sort((a,b)=>a.start<b.start?-1:1)[0];
   return `<section class="sec"><div class="hd"><h1>Матчи</h1></div><div class="box empty">Сегодня матчей нет.${nx?` Следующий игровой день — ${esc(dLong(nx.date||nhlDate(nx.start)))}, первый матч в ${kt(nx.start)} по Кирову.`:""}</div></section>`}
 
@@ -207,7 +214,12 @@ function vTable(){const modes=[["div","Дивизионы"],["conf","Конфе�
 function jRow(x){const t=x.type||"win";const TY={win:"Исход",total:"Тотал",express:"Уверенные"};const lv=liveRes(x);const r=x.result||(lv&&lv.fin?lv.r:null);
   const rs=r==="hit"?'<span class="res hit">Угадан</span>':r==="miss"?'<span class="res miss">Мимо</span>':r==="void"?'<span class="res void">Возврат</span>':lv?`<span class="res ${lv.r==="hit"?"hit":lv.r==="miss"?"miss":"wait"}"><span class="dot"></span> ${lv.r==="hit"?"заходит":lv.r==="miss"?"не заходит":esc(lv.txt||"идёт")}</span>`:'<span class="res wait">ждём</span>';
   const legs=t==="express"?(x.legs||[]):[x];
-  return `<div class="jr"><div class="l"><span class="ty"><span class="chip">${TY[t]||t}</span><small>${esc(dShort(x.date))}${x.changed?" · прогноз уточнён":""}</small></span><b>${pickLabel(x)}${x.odds?` · ${f2(x.odds)}`:""}</b><small>${esc(matchLabel(x))}${x.score?` · <b>${esc(x.score)}</b>`:""}</small></div>${rs}</div>`}
+  return `<div class="jr"><div class="l"><span class="ty"><span class="chip">${TY[t]||t}</span><small>${esc(dShort(x.date))}${x.changed?" · прогноз уточнён":""}</small>${x.mkt_side&&x.mkt_side!==x.side?'<span class="chip gold">против рынка</span>':""}</span><b>${pickLabel(x)}${x.odds?` · ${f2(x.odds)}`:""}</b><small>${esc(matchLabel(x))}${x.score?` · <b>${esc(x.score)}</b>`:""}</small></div>${rs}</div>`}
+function mRes(x){if(!x.result||x.result==="void"||!x.mkt_side)return x.result;return x.mkt_side===x.side?x.result:x.result==="hit"?"miss":"hit"}
+function vsJournal(all){const xs=all.filter(x=>x.mkt_side&&(x.type||"win")!=="express"&&x.result&&x.result!=="void");
+  if(!xs.length)return `<div class="box pad"><h4 class="sub">Модель против рынка</h4><p class="txt" style="margin-top:6px">С 13 октября прогноз — чистое мнение модели, а фаворит рынка записывается рядом. Здесь будет видно, кто точнее, и отдельно — как сыграли прогнозы, где модель пошла против рынка.</p></div>`;
+  const mh=xs.filter(x=>x.result==="hit").length,kh=xs.filter(x=>mRes(x)==="hit").length;const ag=xs.filter(x=>x.mkt_side!==x.side);const ah=ag.filter(x=>x.result==="hit").length;
+  return `<div class="box pad"><h4 class="sub">Модель против рынка</h4><div class="sum"><div><b>${mh}/${xs.length}</b><small>угадала модель</small></div><div><b>${kh}/${xs.length}</b><small>угадал фаворит рынка</small></div><div><b>${ag.length?ah+"/"+ag.length:"—"}</b><small>модель против рынка</small></div></div><p class="note" style="margin:8px 0 0">Считаются прогнозы с 13 октября, исходы и тоталы. Последняя цифра — только матчи, где модель выбрала другую сторону: в них и видно, умеет ли она больше рынка.</p></div>`}
 function vPicks(){const all=(D.journal||[]).map(x=>{const lv=liveRes(x);return lv&&lv.fin&&!x.result?{...x,result:lv.r}:x});const list=all.filter(x=>JF==="all"||(x.type||"win")===JF);const done=list.filter(x=>x.result&&x.result!=="void");
   const hit=done.filter(x=>x.result==="hit").length;const withOdds=done.filter(x=>x.odds);const roi=withOdds.length?withOdds.reduce((s,x)=>s+plOf(x.result,x.odds),0)/withOdds.length:null;
   const ch=all.filter(x=>x.changed&&x.result&&x.result!=="void"&&(x.type||"win")!=="express");
@@ -215,6 +227,7 @@ function vPicks(){const all=(D.journal||[]).map(x=>{const lv=liveRes(x);return l
   return `<div class="col"><section class="sec"><div class="hd"><h1>Прогнозы<small>что прогнозировали и что вышло</small></h1></div>
    <div class="pills">${[["all","Все"],["win","Исходы"],["total","Тоталы"],["express","Уверенные исходы"]].map(([k,l])=>`<button data-jf="${k}" aria-pressed="${JF===k}">${l}</button>`).join("")}</div>
    <div class="box"><div class="sum"><div><b>${done.length?Math.round(hit/done.length*100)+"%":"—"}</b><small>точность</small></div><div><b>${hit}/${done.length}</b><small>угадано</small></div><div><b class="${sgn(roi)}">${roi==null?"—":(roi>0?"+":"")+Math.round(roi*100)+"%"}</b><small>условная доходность</small></div></div></div>
+   ${vsJournal(all)}
    ${am}
    <div class="box">${list.length?list.slice().reverse().map(x=>jRow((D.journal||[]).find(y=>y.date===x.date&&y.type===x.type&&y.pick===x.pick&&y.away===x.away)||x)).join(""):'<div class="empty">Пока пусто.</div>'}</div>
    <p class="note">Прогноз фиксируется до начала матча и задним числом не меняется. Условная доходность — если бы на каждый прогноз шла одна и та же единица по коэффициенту линии-ориентира. Исход — победа с учётом овертайма и буллитов; тотал — все голы, включая овертайм; «уверенные исходы» засчитываются, только если сыграли все.</p></section></div>`}

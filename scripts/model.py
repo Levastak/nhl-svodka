@@ -100,6 +100,11 @@
    5+ п.п., либо «выгодный кэф» у российской конторы 5%+, либо усталость в пользу отдохнувших при перевесе
    2+ п.п.; lean — перевес 3–5 п.п. или выгодный кэф 3–5%; pass — кэф справедливый; noodds — кэфов ещё нет.
    bet — конкретная ставка (сторона с перевесом может быть и андердогом). total — сторона тотала по смеси.
+14. Версия 4.2 (13.10.2026): модель и рынок разделены. Прогноз сайта (verdict.fav, verdict.total.side)
+   берётся из чистой модели p_* / p_over, а не из смеси p_*_blend. Рынок пишется рядом: verdict.mkt_fav,
+   verdict.total.mkt_side и флаги vs_market. Смесь p_*_blend по-прежнему считается — для сравнения и
+   оценок «честной вероятности», но прогноз не определяет. Журнал хранит mkt_side, чтобы вести два
+   счёта: модель и фаворит рынка, плюс отдельно матчи, где модель пошла против рынка.
 """
 import json, math, sys, datetime
 from collections import defaultdict
@@ -371,8 +376,10 @@ def main(ap, dp, pp, gp_=None):
     # --- новый тренер: первые COACH_N матчей после смены (data.coach_changes = [{"team","date"}])
     def verdict(r, odds):
         """Вердикт модели (п. 13): кто вероятнее и есть ли ставка с перевесом."""
-        fav = "home" if r.get("p_home_blend", r["p_home"]) >= 0.5 else "away"
-        v = dict(fav=fav, p_fav=r.get(f"p_{fav}_blend", r[f"p_{fav}"]))
+        fav = "home" if r["p_home"] >= 0.5 else "away"   # v4.2: прогноз — чистая модель, рынок отдельно
+        v = dict(fav=fav, p_fav=r[f"p_{fav}"])
+        if "mkt_home" in r:
+            v["mkt_fav"] = "home" if r["mkt_home"] >= 0.5 else "away"; v["vs_market"] = v["mkt_fav"] != fav
         if "mkt_home" not in r:
             v.update(level="noodds"); return v
         es = "home" if r["edge_home"] >= r["edge_away"] else "away"; edge = r[f"edge_{es}"]
@@ -390,8 +397,8 @@ def main(ap, dp, pp, gp_=None):
             elif sb:
                 v["bet"] = dict(kind="soft", **sb)
         if r.get("mkt_over") is not None:
-            eo = r["edge_over"]; ts = "over" if r["p_over_blend"] >= 0.5 else "under"
-            v["total"] = dict(side=ts, line=r["line"], p=r["p_over_blend"] if ts == "over" else r["p_under_blend"],
+            eo = r["edge_over"]; ts = "over" if r["p_over"] >= 0.5 else "under"; ms = "over" if r["mkt_over"] >= 0.5 else "under"
+            v["total"] = dict(side=ts, line=r["line"], p=r["p_over"] if ts == "over" else r["p_under"], mkt_side=ms, vs_market=ms != ts,
                               value=("over" if eo >= VALUE_EDGE else "under" if -eo >= VALUE_EDGE else None))
         return v
 

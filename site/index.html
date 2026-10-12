@@ -526,6 +526,14 @@ table.st tbody tr:hover td{background:var(--soft);cursor:pointer}
 .lead:has(.cover) .cover{aspect-ratio:auto;height:100%;min-height:260px}
 .lead:has(.cover) .tx{padding:20px 22px;justify-content:center}
 }
+/* модель против рынка */
+.vsb{border:1px solid var(--line);border-radius:12px;padding:10px 14px;background:var(--soft)}
+.vsb .vr{display:grid;grid-template-columns:64px minmax(0,1fr) minmax(0,1fr);gap:10px;align-items:baseline;padding:6px 0;border-top:1px solid var(--line)}
+.vsb .vr.hd{border-top:0;padding-top:0}.vsb .vr.hd b{font-size:var(--fs-xs);color:var(--mute);font-weight:700}
+.vsb .vr>small{color:var(--mute);font-size:var(--fs-xs)}
+.vsb .vr>span{font-weight:700;font-size:var(--fs-s)}.vsb .vr em{font-style:normal;color:var(--mute);font-weight:600;margin-left:4px}
+.vsb .vr.df{background:var(--goldbg);margin:0 -14px;padding:6px 14px}.vsb .vr.df>span:nth-of-type(1){color:var(--gold)}
+.vsb p{margin:8px 0 0;font-size:var(--fs-s);color:var(--ink2)}
 </style>
 </head>
 <body>

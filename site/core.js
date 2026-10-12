@@ -108,14 +108,17 @@ const goalie=n=>(D.goalies||[]).find(s=>s.name===n);
 
 /* ---------- модель ---------- */
 function modelOf(m){return (M.games||[]).find(x=>x.away===m.away&&x.home===m.home)||(M.horizon||[]).find(x=>(m.id&&x.id===m.id)||(x.away===m.away&&x.home===m.home&&x.date===m.date))}
-const pB=(p,s)=>p?(p["p_"+s+"_blend"]??p["p_"+s]):null;
+/* Модель и рынок разделены: pB — чистая модель, pM — рынок (линия-ориентир без маржи) */
+const pB=(p,s)=>p?p["p_"+s]:null;
+const pM=(p,s)=>p&&p["mkt_"+s]!=null?p["mkt_"+s]:null;
 function fcOf(p,m){const pa=pB(p,"away"),ph=pB(p,"home");const side=(m&&m.pick_side)||(pa>ph?"away":"home");return {side,t:side==="home"?p.home:p.away,p:side==="home"?ph:pa}}
 function oddsOf(m,side){const o=m&&m.odds;if(!o)return null;return side==="home"?o.home:side==="away"?o.away:side==="over"?o.over:side==="under"?o.under:null}
-function altOf(p,m){if(!p||p.mkt_home==null)return null;const v=p.verdict||{};const b=v.bet;const f=fcOf(p,m);
-  let side=b&&b.kind==="win"&&["bet","lean"].includes(v.level)?b.side:null;
-  if(!side){const ea=p.p_away-p.mkt_away,eh=p.p_home-p.mkt_home;if(Math.max(ea,eh)>=.03)side=ea>eh?"away":"home"}
-  if(!side||side===f.side)return null;
-  return {side,t:side==="home"?p.home:p.away,pm:side==="home"?p.p_home:p.p_away,pk:side==="home"?p.mkt_home:p.mkt_away,odds:oddsOf(m,side)||(b&&b.odds),fav:f.t}}
+function mktOf(p){if(!p||p.mkt_home==null)return null;const side=p.mkt_home>=p.mkt_away?"home":"away";return {side,t:p[side],p:p["mkt_"+side]}}
+function mktTot(p){if(!p||p.mkt_over==null)return null;const side=p.mkt_over>=.5?"over":"under";return {side,p:side==="over"?p.mkt_over:1-p.mkt_over}}
+function modTot(p){if(!p||p.p_over==null)return null;const side=p.p_over>=.5?"over":"under";return {side,p:side==="over"?p.p_over:p.p_under}}
+/* против рынка: исход и/или тотал модели расходятся с рынком */
+function vsOf(p,m){const mk=mktOf(p),mt=mktTot(p);if(!mk&&!mt)return null;const f=p?fcOf(p,m):null;const ts=(m&&m.total_pick&&m.total_pick.side)||(modTot(p)||{}).side;
+  return {win:!!(mk&&f&&mk.side!==f.side),tot:!!(mt&&ts&&mt.side!==ts),mk,mt,f,ts}}
 function confLegs(){return (D.upcoming||[]).filter(m=>state(m.start)==="pre").map(m=>{const p=modelOf(m);if(!p)return null;const f=fcOf(p,m);return f.p>=.6?{...f,m}:null}).filter(Boolean).sort((a,b)=>b.p-a.p).slice(0,3)}
 function srcOf(p){return (D.upcoming||[]).find(x=>x.away===p.away&&x.home===p.home)||(D.week||[]).find(x=>(p.id&&x.id===p.id)||(x.away===p.away&&x.home===p.home&&x.date===p.date))||{away:p.away,home:p.home,start:p.start,date:p.date}}
 function mGames(){const seen=new Set();return [...(M.games||[]),...(M.horizon||[])].map(p=>{const m=srcOf(p);return {p,m,start:p.start||m.start}}).filter(({p,start})=>{const k=p.id||p.away+p.home+p.date;if(seen.has(k)||!start)return false;seen.add(k);return state(start)==="pre"}).sort((a,b)=>a.start<b.start?-1:a.start>b.start?1:0)}
