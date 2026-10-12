@@ -12,7 +12,7 @@ function parseEvent(ev){const c=(ev.competitions||[])[0];if(!c)return null;const
   if(!tm.away||!tm.home)return null;const per=st.period||0;const detail=String(ty.detail||ty.shortDetail||"");
   const inter=/end of|intermission/i.test(detail);
   return {id:ev.id,key:`${tm.away.a}-${tm.home.a}`,away:tm.away.a,home:tm.home.a,ida:tm.away.id,idh:tm.home.id,state:ty.state,as:tm.away.s,hs:tm.home.s,
-    per:perName(per),clock:inter?"перерыв":(st.displayClock||""),short:inter?`перерыв после ${perShort(per)}`:`${perShort(per)} · ${st.displayClock||""}`,end:ty.state==="post"?(per===4?"ОТ":per>=5?"Б":""):""}}
+    per:perName(per),ps:per<=3?`${per}-й пер.`:per===4?"ОТ":"Буллиты",clock:inter?"перерыв":(st.displayClock||""),short:inter?`перерыв после ${perShort(per)}`:`${perShort(per)} · ${st.displayClock||""}`,end:ty.state==="post"?(per===4?"ОТ":per>=5?"Б":""):""}}
 function needLive(){const u=D&&D.upcoming||[];const now=Date.now();
   return u.some(m=>{const t=new Date(m.start).getTime();const L=liveOf(m);if(L&&L.state==="post")return false;return now>t-10*6e4&&now<t+5*36e5})}
 async function poll(force){if(!D||!LIVE_OK)return;if(document.hidden&&!force)return;if(!needLive()&&!force)return;

@@ -699,8 +699,37 @@ def snapshot(mode):
     LOG["ok"].append("snapshot")
 
 
+def news_images(data=None):
+    """Главное фото статьи-источника (og:image) для новостей без картинки — показываем со ссылкой и подписью источника."""
+    import html as _h
+    own = data is None
+    data = data if data is not None else load(f"{SITE}/data.json", {})
+    n = 0
+    for x in data.get("news") or []:
+        if x.get("image") or not x.get("url"):
+            continue
+        page, _ = get(x["url"], kind="text", tries=2, label=f"og:image {x['url'][:60]}")
+        if not page:
+            continue
+        m = re.search(r'<meta[^>]+(?:property|name)=["\'](?:og:image|twitter:image)["\'][^>]*content=["\']([^"\']+)', page, re.I) or \
+            re.search(r'<meta[^>]+content=["\']([^"\']+)["\'][^>]*(?:property|name)=["\'](?:og:image|twitter:image)', page, re.I)
+        if m:
+            x["image"] = _h.unescape(m.group(1))
+            x.setdefault("image_source", x.get("source"))
+            n += 1
+    if own and n:
+        save(f"{SITE}/data.json", data)
+    LOG["ok"].append(f"news images +{n}")
+    return n
+
+
 if __name__ == "__main__":
     mode = sys.argv[1] if len(sys.argv) > 1 else "am"
+    if mode == "img":
+        news_images()
+        print(json.dumps(LOG, ensure_ascii=False))
+        sys.exit(0)
     {"am": am, "pm": pm}[mode]()
+    news_images()
     snapshot(mode)
     print(json.dumps(LOG, ensure_ascii=False))

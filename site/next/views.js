@@ -31,7 +31,7 @@ function stripHtml(){if(!D)return"";const d=lastDate();const gs=A.games.filter(g
 /* ===================== матчи: строка и разбор ===================== */
 function tmLine(a,{p,f,sc,lo}){return `<span class="tm ${lo?"lo":""}">${logo(a,28)}<b>${EN[a]}</b><span class="rec">${rec(a)}</span>${sc!=null?`<span class="sc">${sc}</span>`:`${formDots(a)}${p!=null?`<span class="p ${f?"f":""}">${pct(p)}</span>`:""}`}</span>`}
 function pcLine(a,p,f){return `<span class="${f?"f":""}" style="--c:${tcol(a)}"><span class="bar2"><i style="--w:${Math.round(p*100)}%"></i></span>${pct(p)}</span>`}
-function timeCell(m,L){if(L&&L.state==="in")return `<span class="t">${esc(L.per)}<small class="live"><span class="dot"></span>${esc(L.clock||"идёт")}</small></span>`;
+function timeCell(m,L){if(L&&L.state==="in")return `<span class="t">${esc(L.ps||L.per)}<small class="live"><span class="dot"></span>${esc(L.clock||"идёт")}</small></span>`;
   if(L&&L.state==="post")return `<span class="t">Финал<small>${L.end?endLong(L.end):kt(m.start)}</small></span>`;
   const s=state(m.start);return `<span class="t">${kt(m.start)}${s==="pre"&&rel(m.start)?`<small>${rel(m.start)}</small>`:s!=="pre"?"<small>идёт</small>":""}</span>`}
 function gRow(m,{mo=false,nav=false}={}){const key=`${m.away}-${m.home}`,open=!nav&&OPEN.has(key);const p=modelOf(m);const L=liveOf(m);
