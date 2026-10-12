@@ -43,6 +43,8 @@ jobs:
             echo "mode=$M" >> $GITHUB_OUTPUT
           elif [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
             echo "mode=${{ github.event.inputs.mode }}" >> $GITHUB_OUTPUT
+          elif git diff --name-only HEAD~1 HEAD | grep -q '^trigger/hist$'; then
+            echo "mode=hist" >> $GITHUB_OUTPUT
           elif git diff --name-only HEAD~1 HEAD | grep -q '^trigger/mode$'; then
             echo "mode=$(tr -d '[:space:]' < trigger/mode)" >> $GITHUB_OUTPUT
           else
