@@ -37,7 +37,10 @@ jobs:
         id: mode
         run: |
           if [ "${{ github.event_name }}" = "schedule" ]; then
-            if [ "${{ github.event.schedule }}" = "17 8 * * *" ]; then echo "mode=am" >> $GITHUB_OUTPUT; else echo "mode=pm" >> $GITHUB_OUTPUT; fi
+            if [ "${{ github.event.schedule }}" = "17 8 * * *" ]; then M=am; else M=pm; fi
+            # trigger/skip: «дата режим» — пропустить один плановый сбор (например «2026-10-12 pm»)
+            if grep -qx "$(date -u +%F) $M" trigger/skip 2>/dev/null; then M=deploy; fi
+            echo "mode=$M" >> $GITHUB_OUTPUT
           elif [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
             echo "mode=${{ github.event.inputs.mode }}" >> $GITHUB_OUTPUT
           elif git diff --name-only HEAD~1 HEAD | grep -q '^trigger/mode$'; then

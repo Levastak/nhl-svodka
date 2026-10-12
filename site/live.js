@@ -62,11 +62,6 @@ function liveBlock(m,L){const S=LSUM[L.id];const title=L.state==="in"?`<span cla
 function liveLoop(){clearInterval(LTIMER);LTIMER=setInterval(()=>poll(false),25000);poll(false)}
 document.addEventListener("visibilitychange",()=>{if(!document.hidden&&Date.now()-LAST_POLL>20000)poll(false)});
 
-/* ---------- шрифты: ?f=a|b|c ---------- */
-(function(){const m=/[?&]f=([abc])\b/.exec(location.search);const f=m?m[1]:ls("font");if(m)ls("font",m[1]);
-  if(f&&f!=="a"){document.documentElement.dataset.font=f;
-    if(f==="c"){const l=document.createElement("link");l.rel="stylesheet";l.href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&family=Tektur:wght@500;700&display=swap";document.head.appendChild(l)}}})();
-
 /* ---------- запуск ---------- */
 (async function(){
   const v="?v="+Math.floor(Date.now()/6e4);
