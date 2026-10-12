@@ -79,4 +79,4 @@ document.addEventListener("visibilitychange",()=>{if(!document.hidden&&Date.now(
   liveLoop();
   setInterval(()=>{if(["home","games"].includes(VIEW)&&$("#sheet").hidden&&!needLive())rerenderKeep()},60000);
 })();
-window.addEventListener("hashchange",()=>{const h=(location.hash||"").slice(1);if(VIEWS[h]&&h!==VIEW){VIEW=h;render();window.scrollTo(0,0)}});
+window.addEventListener("hashchange",()=>{const h=(location.hash||"").slice(1);closeSheet();if(VIEWS[h]&&h!==VIEW){VIEW=h;render();window.scrollTo(0,0)}});

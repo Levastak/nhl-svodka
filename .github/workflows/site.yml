@@ -65,7 +65,7 @@ jobs:
           git commit -m "Данные: ${{ steps.mode.outputs.mode }} $(date -u +%Y-%m-%dT%H:%MZ)"
           for i in 1 2 3; do git pull --rebase -X theirs origin main && git push && break; sleep 5; done
       - name: Версия скриптов
-        run: sed -i -E "s/(home2|tabs2|core|views|live)\.js(\?v=[0-9]+)?\"/\1.js?v=${{ github.run_id }}\"/g" site/index.html site/next/index.html
+        run: sed -i -E "s/(home2|tabs2|core|views|live)\.js(\?v=[0-9]+)?\"/\1.js?v=${{ github.run_id }}\"/g" site/index.html
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
