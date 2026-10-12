@@ -27,11 +27,23 @@ async function poll(force){if(!D||!LIVE_OK)return;if(document.hidden&&!force)ret
   /* подробности для раскрытых идущих матчей */
   for(const k in LIVE){const L=LIVE[k];if(L.state==="pre"||!OPEN.has(k))continue;if(LSUMT[L.id]&&Date.now()-LSUMT[L.id]<20000&&!force)continue;
     try{const r=await fetch(`${ESPN}summary?event=${L.id}`,{cache:"no-store"});if(r.ok){LSUM[L.id]=parseSummary(await r.json(),L);LSUMT[L.id]=Date.now();changed=true}}catch(e){}}
-  if(changed&&["home","games"].includes(VIEW)&&$("#sheet").hidden)rerenderKeep();
+  if(changed&&["home","games","picks"].includes(VIEW)&&$("#sheet").hidden)rerenderKeep();
   else if(changed)renderChrome();
   for(const k in LIVE)delete LIVE[k].flash}
 function rerenderKeep(){const y=window.scrollY;render();window.scrollTo(0,y)}
 function liveTouch(){poll(true)}
+/* расчёт прогнозов по живому счёту: до утреннего сбора результат ставит сайт, утром — скрипт */
+function legLive(away,home,side){const L=LIVE[`${away}-${home}`];if(!L||L.state==="pre")return null;const fin=L.state==="post";
+  const w=L.as===L.hs?null:(L.as>L.hs?"away":"home");if(!w)return {r:null,fin,txt:"ничья"};return {r:w===side?"hit":"miss",fin}}
+function liveRes(j){if(j.result)return null;const t=j.type||"win";
+  if(t==="win")return legLive(j.away,j.home,j.side);
+  if(t==="total"){const L=LIVE[`${j.away}-${j.home}`];if(!L||L.state==="pre")return null;const tot=L.as+L.hs,line=+j.line,fin=L.state==="post";
+    if(tot>line)return {r:j.side==="over"?"hit":"miss",fin:true};
+    if(fin)return {r:tot===line?"void":(j.side==="under"?"hit":"miss"),fin};
+    return {r:j.side==="under"?"hit":"miss",fin:false}}
+  if(t==="express"){const rs=(j.legs||[]).map(l=>legLive(l.away,l.home,l.side));if(rs.some(x=>!x))return rs.some(x=>x&&x.fin&&x.r==="miss")?{r:"miss",fin:true}:null;
+    if(rs.some(x=>x.fin&&x.r==="miss"))return {r:"miss",fin:true};return {r:rs.every(x=>x.r==="hit")?"hit":"miss",fin:rs.every(x=>x.fin)}}
+  return null}
 function statOf(t,label){const s=(t.statistics||[]).find(x=>x.label===label||x.name===label);return s?s.displayValue:null}
 function parseSummary(s,L){const out={goals:[],teams:{},players:[],goalies:[]};
   const idA={};for(const c of ((s.header||{}).competitions||[{}])[0].competitors||[])idA[c.team&&c.team.id]=ab(c.team&&c.team.abbreviation);
@@ -55,10 +67,10 @@ function liveBlock(m,L){const S=LSUM[L.id];const title=L.state==="in"?`<span cla
   const per={};S.goals.forEach(g=>(per[g.per]=per[g.per]||[]).push(g));
   const top=S.players.filter(p=>p.pts>0).slice(0,3);
   return `<div class="blk"><h4 style="display:flex;align-items:center;gap:8px;margin-top:0">${title}</h4>
-     ${S.goals.length?`<div class="goals">${Object.keys(per).sort().map(k=>`<div class="per">${perName(+k)}</div>${per[k].map(g=>`<div class="goal"><time>${esc(g.clock)}</time>${logo(g.team,20)}<span><b>${esc(g.who)}</b>${g.kind?`<em>${g.kind}</em>`:""}${g.as?` <span class="as">(${esc(g.as)})</span>`:""}</span></div>`).join("")}`).join("")}</div>`:'<p class="note">Голов пока нет.</p>'}</div>
+     ${S.goals.length?`<div class="goals">${Object.keys(per).sort().map(k=>`<div class="per">${perName(+k)}</div>${per[k].map(g=>`<div class="goal"><time>${esc(g.clock)}</time>${logo(g.team,26)}<span><b>${esc(g.who)}</b>${g.kind?`<em>${g.kind}</em>`:""}${g.as?` <span class="as">(${esc(g.as)})</span>`:""}</span></div>`).join("")}`).join("")}</div>`:'<p class="note">Голов пока нет.</p>'}</div>
    <div class="blk">${rows.length?`<div class="sbars">${rows.map(([l,v])=>sbar(l,v,m.away,m.home,parse)).join("")}</div>`:""}
      ${S.goalies.length?`<h4>Вратари</h4><ul class="ul">${S.goalies.map(g=>`<li><b>${esc(g.name)}</b> (${EN[g.team]||g.team}) — ${g.sv} из ${g.sa}${g.pct?`, ${esc(g.pct)}`:""}</li>`).join("")}</ul>`:""}
-     ${top.length?`<h4>Лучшие в матче</h4>${top.map(p=>`<div class="lr" style="padding:6px 0;border:0;grid-template-columns:minmax(0,1fr) auto"><span class="who">${photo(p.name,p.team,34)}<span class="nm2">${plink(p.name,p.team)}<small>${EN[p.team]||p.team} · бросков ${p.sog}${p.toi?` · ${esc(p.toi)} на льду`:""}</small></span></span><span class="v">${p.g}+${p.a}</span></div>`).join("")}`:""}</div>`}
+     ${top.length?`<h4>Лучшие в матче</h4>${top.map(p=>`<div class="lr" style="padding:6px 0;border:0;grid-template-columns:minmax(0,1fr) auto"><span class="who">${photo(p.name,p.team,46)}<span class="nm2">${plink(p.name,p.team)}<small>${EN[p.team]||p.team} · бросков ${p.sog}${p.toi?` · ${esc(p.toi)} на льду`:""}</small></span></span><span class="v">${p.g}+${p.a}</span></div>`).join("")}`:""}</div>`}
 function liveLoop(){clearInterval(LTIMER);LTIMER=setInterval(()=>poll(false),25000);poll(false)}
 document.addEventListener("visibilitychange",()=>{if(!document.hidden&&Date.now()-LAST_POLL>20000)poll(false)});
 

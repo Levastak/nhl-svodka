@@ -9,7 +9,8 @@
 <meta property="og:description" content="Итоги ночи, три звезды, живой счёт и прогнозы модели с честным журналом точности.">
 <meta property="og:type" content="website">
 <meta name="theme-color" content="#121418">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2314171C'/%3E%3Crect x='3.5' y='7' width='25' height='18' rx='8' fill='none' stroke='white' stroke-width='2.2'/%3E%3Cpath d='M11 8v16M21 8v16' stroke='%233D7BD9' stroke-width='1.8'/%3E%3Cpath d='M16 8v16' stroke='%23E0262F' stroke-width='2.2'/%3E%3Ccircle cx='16' cy='16' r='3.2' fill='none' stroke='white' stroke-width='1.4'/%3E%3C/svg%3E">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon-180.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://assets.nhle.com" crossorigin>
@@ -62,7 +63,7 @@ img{display:block}
 @media (min-width:900px){.top{position:sticky;top:0}}
 .top .wrap{display:flex;align-items:center;gap:24px;height:58px}
 .mark{display:flex;align-items:center;gap:10px;color:var(--barink);flex:none}
-.mark svg{width:40px;height:27px;flex:none}
+.mark svg{width:38px;height:36px;flex:none}
 .mark b{font-family:"Unbounded",var(--f-body);font-weight:700;font-size:20px;letter-spacing:-.01em;line-height:1}
 .mark b span{font-weight:400;color:var(--barmute);margin-left:.28em}
 .tnav{display:none}
@@ -89,7 +90,7 @@ img{display:block}
 .sg .r{display:flex;align-items:center;gap:8px;font-weight:600;font-size:var(--fs-s)}
 .sg .r b{margin-left:auto;font-family:var(--f-disp);font-size:18px;font-weight:700}
 .sg .r.lo{opacity:.55}
-.strip .lg{background:#fff;border-radius:50%;padding:2px}
+.strip .lg{background:#fff;border-radius:50%;padding:3px}
 
 /* нижняя навигация */
 .dock{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line);z-index:45;padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -146,7 +147,7 @@ h4.sub{font-size:var(--fs-xs);font-weight:700;color:var(--mute);letter-spacing:.
 .lg img,.lg picture{width:100%;height:100%;object-fit:contain;display:block}
 .lg svg{width:100%;height:100%}
 .ph{--s:44px;--c:#556;width:var(--s);height:var(--s);flex:none;border-radius:50%;overflow:hidden;background:var(--c);position:relative;display:inline-flex;align-items:center;justify-content:center;color:#fff;font-family:var(--f-disp);font-weight:800;font-size:calc(var(--s)*.38)}
-.ph img{width:100%;height:100%;object-fit:cover;object-position:50% 12%;position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,.2),rgba(255,255,255,0))}
+.ph img{width:132%;height:132%;max-width:none;object-fit:cover;object-position:50% 0;position:absolute;left:-16%;top:-3%;background:linear-gradient(180deg,rgba(255,255,255,.2),rgba(255,255,255,0))}
 .ph:has(img) .ph-t{visibility:hidden}
 .ph.ring{box-shadow:0 0 0 2px var(--card),0 0 0 3.5px var(--c)}
 .plink{font-weight:700;color:inherit;text-align:left}
@@ -316,7 +317,7 @@ table.mt td small{display:block;color:var(--mute);font-size:var(--fs-xs)}
 .card3 .wm{position:absolute;right:-18px;top:-18px;opacity:.18}
 .card3 .wm .lg{--s:120px}
 .card3 .ph{--s:118px;border-radius:0;background:transparent;position:relative;z-index:1;align-self:flex-end}
-.card3 .ph img{object-position:50% 0;background:none}
+.card3 .ph img{width:100%;height:100%;left:0;top:0;object-position:50% 0;background:none}
 .card3 .rk{position:relative;z-index:1;align-self:flex-start;font-family:var(--f-disp);font-weight:800;font-size:40px;line-height:1;color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.3)}
 .card3 .rk i{font-style:normal;font-size:20px;color:#FFD66B;margin-left:2px}
 .card3 .num3{position:absolute;left:14px;bottom:10px;z-index:1;font-family:var(--f-disp);font-weight:800;font-size:15px;opacity:.85}
@@ -351,7 +352,7 @@ table.mt td small{display:block;color:var(--mute);font-size:var(--fs-xs)}
 /* новости */
 .lead{display:flex;flex-direction:column;width:100%}
 .lead:hover h3{color:var(--link)}
-.cover{position:relative;aspect-ratio:16/8;background:var(--c1,#20242B);overflow:hidden}
+.cover{position:relative;aspect-ratio:16/7;max-height:300px;width:100%;background:var(--c1,#20242B);overflow:hidden}
 .cover img{width:100%;height:100%;object-fit:cover}
 .cover .cap{position:absolute;right:8px;bottom:8px;font-size:11px;color:#fff;background:rgba(0,0,0,.55);padding:2px 8px;border-radius:999px}
 .cover.art{aspect-ratio:16/6;background:linear-gradient(120deg,var(--c1) 0 50%,var(--c2) 50% 100%);display:flex;align-items:center;justify-content:center;gap:12%}
@@ -362,7 +363,6 @@ table.mt td small{display:block;color:var(--mute);font-size:var(--fs-xs)}
 .lead p{font-size:var(--fs-m);line-height:1.5;color:var(--ink2);max-width:70ch}
 .meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:var(--fs-xs);color:var(--mute);font-weight:600}
 .meta .k{color:var(--red)}
-.meta .lg{--s:20px}
 .nr{display:grid;grid-template-columns:minmax(0,1fr) 112px;gap:6px 14px;padding:14px 16px;border-top:1px solid var(--line);width:100%;align-items:start}
 .nr:hover h4{color:var(--link)}
 .nr h4{font-size:var(--fs-m);line-height:1.3;font-weight:700}
@@ -372,7 +372,7 @@ table.mt td small{display:block;color:var(--mute);font-size:var(--fs-xs)}
 .nr .th.art{background:linear-gradient(120deg,var(--c1) 0 50%,var(--c2) 50% 100%);display:flex;align-items:center;justify-content:center;gap:8%}
 .nr .th.art .lgw{width:38%;aspect-ratio:1;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center}
 .nr .th.art .lgw .lg{--s:74%}
-@media (max-width:640px){.nr{grid-template-columns:minmax(0,1fr) 92px}.lead h3{font-size:calc(24px*var(--disp-k))}}
+@media (max-width:640px){.cover{aspect-ratio:16/8;max-height:200px}.nr{grid-template-columns:minmax(0,1fr) 92px}.lead h3{font-size:calc(24px*var(--disp-k))}}
 .colm{border-left:4px solid var(--red)}
 /* правая колонка */
 .wg-h{display:flex;justify-content:space-between;align-items:center;padding:14px 16px 10px}
@@ -393,7 +393,6 @@ table.mt td small{display:block;color:var(--mute);font-size:var(--fs-xs)}
 .lr .n{color:var(--mute);font-weight:700;font-size:var(--fs-s)}
 .lr .who{display:flex;align-items:center;gap:10px;min-width:0}
 .lr .who>small{font-size:var(--fs-xs);white-space:nowrap}
-.lr .who .ph{--s:38px}
 .lr .v{font-family:var(--f-disp);font-size:22px}
 .wg-pills{padding:0 16px 10px}
 
@@ -451,6 +450,7 @@ table.st tbody tr:hover td{background:var(--soft);cursor:pointer}
 .jr .l small{font-size:var(--fs-xs);color:var(--mute)}
 .jr .ty{display:flex;gap:8px;align-items:center}
 .res{font-weight:800;font-size:var(--fs-s)}
+.res{display:flex;flex-direction:column;align-items:flex-end;text-align:right}.res small{font-size:11px;font-weight:600;opacity:.8}.res .dot{display:inline-block;margin-right:4px}
 .res.hit{color:var(--win)}.res.miss{color:var(--loss)}.res.void,.res.wait{color:var(--mute);font-weight:600}
 .pos{color:var(--win)}.neg{color:var(--loss)}
 
@@ -498,7 +498,7 @@ table.st tbody tr:hover td{background:var(--soft);cursor:pointer}
 .spark i.z{background:var(--soft2);height:4px!important}
 @keyframes growh{from{height:0}}
 /* читалка */
-.reader .cover{aspect-ratio:16/9}
+.reader .cover{aspect-ratio:16/8;max-height:360px}
 .reader .rb{padding:18px 20px 30px;display:flex;flex-direction:column;gap:14px}
 .reader h1{font-family:var(--f-disp);font-size:calc(32px*var(--disp-k));line-height:1.08}
 .reader .dek{font-size:var(--fs-l);line-height:1.45;color:var(--ink2)}
@@ -511,7 +511,7 @@ table.st tbody tr:hover td{background:var(--soft);cursor:pointer}
 </head>
 <body>
 <header class="top"><div class="wrap">
-  <a class="mark" href="#home" aria-label="Сводка НХЛ — на главную"><svg viewBox="0 0 38 26" aria-hidden="true"><rect x="1.25" y="1.25" width="35.5" height="23.5" rx="10" fill="none" stroke="currentColor" stroke-width="2.5"/><path d="M13 2.5v21M25 2.5v21" stroke="#3D7BD9" stroke-width="2"/><path d="M19 2.5v21" stroke="#E0262F" stroke-width="2.5"/><circle cx="19" cy="13" r="4.2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M5.5 8v10M32.5 8v10" stroke="#E0262F" stroke-width="1.2"/></svg><b>Сводка<span>НХЛ</span></b></a>
+  <a class="mark" href="#home" aria-label="Сводка НХЛ — на главную"><svg viewBox="0 -4 70 68" aria-hidden="true"><path d="M12.5 44.2 V35.6 Q12.5 34.0 14.1 34.0 H18.1 Q19.7 34.0 19.7 35.6 V44.2 Z" fill="#fff"/><path d="M22.5 44.2 V26.6 Q22.5 25.0 24.1 25.0 H28.1 Q29.7 25.0 29.7 26.6 V44.2 Z" fill="#fff"/><path d="M32.5 44.2 V16.1 Q32.5 14.5 34.1 14.5 H38.1 Q39.7 14.5 39.7 16.1 V44.2 Z" fill="#FF4A55"/><path d="M11.2 46.6 L42.0 46.6 L62.20 6.00 C63.10 3.80 67.93 5.81 67.03 8.41 L45.54 51.6 C44.54 54.800000000000004 42.94 55.2 40.34 55.2 L13.5 55.2 C7.4 55.2 3.6 53.6 3.2 50.6 C2.9 48.2 4.8 46.6 7.4 46.6 Z" fill="#fff"/><path d="M30 46.6V55.2M34 46.6V55.2" stroke="#121418" stroke-width="1.1"/></svg><b>Сводка<span>НХЛ</span></b></a>
   <nav class="tnav" id="tnav" aria-label="Разделы"></nav>
   <div class="upd" id="upd"></div>
 </div></header>
