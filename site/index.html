@@ -325,7 +325,8 @@ table.mt td small{display:block;color:var(--mute);font-size:var(--fs-xs)}
 .card3 .bd{padding:12px 14px 14px;display:flex;flex-direction:column;gap:6px}
 .card3 .nm{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
 .card3 .nm .plink{font-size:var(--fs-m);line-height:1.25}
-.card3 .nm b.v{font-family:var(--f-disp);font-size:24px;white-space:nowrap}
+.card3 .nm b.v{font-family:var(--f-disp);font-size:21px;white-space:nowrap;flex:none}
+.card3 .ga>em{margin:0 .18em}
 .card3 .nm>span>small{display:block;font-size:var(--fs-xs);color:var(--mute);font-weight:500}
 .card3 p{font-size:var(--fs-s);line-height:1.5;color:var(--ink2)}
 @media (max-width:760px){.cards{grid-template-columns:minmax(0,1fr)}.card3{flex-direction:row}.card3 .top3{min-height:0;width:112px;flex:none;padding:10px 0 0;justify-content:center}.card3 .ph{--s:100px}.card3 .rk{position:absolute;left:8px;top:6px;font-size:30px}.card3 .num3{display:none}.card3 .wm .lg{--s:90px}}
@@ -494,6 +495,13 @@ table.st tbody tr:hover td{background:var(--soft);cursor:pointer}
 .lines{display:flex;flex-direction:column;gap:6px;font-size:var(--fs-s)}
 .lines>div{display:flex;flex-wrap:wrap;gap:4px 10px;align-items:center}
 .lines .k{font-weight:700;color:var(--mute);width:38px;flex:none;font-size:var(--fs-xs)}
+.spk{display:flex;gap:6px;align-items:stretch}
+.spk .c{flex:1;max-width:44px;display:flex;flex-direction:column;align-items:center;gap:4px;min-width:0}
+.spk .c>b{font-size:var(--fs-xs);font-weight:700;height:14px;line-height:14px}
+.spk .bar{height:64px;width:100%;display:flex;align-items:flex-end;justify-content:center}
+.spk .bar i{width:70%;max-width:26px;background:var(--c,var(--blue));border-radius:4px 4px 0 0;animation:growh .5s ease-out both}
+.spk .bar i.z{background:var(--soft2);height:4px!important}
+.spk .c>small{font-size:10px;color:var(--mute);height:12px;line-height:12px}
 .spark{display:flex;align-items:flex-end;gap:3px;height:56px}
 .spark i{flex:1;min-width:4px;max-width:18px;background:var(--c,var(--blue));border-radius:3px 3px 0 0;animation:growh .5s ease-out both}
 .spark i.z{background:var(--soft2);height:4px!important}
@@ -511,7 +519,7 @@ table.st tbody tr:hover td{background:var(--soft);cursor:pointer}
 /* позиции и G/A */
 .poster .pp{background:rgba(255,255,255,.18);color:inherit}
 .pp{display:inline-block;font-family:var(--f-body);font-size:10.5px;font-weight:700;line-height:1.5;padding:0 5px;border-radius:4px;background:var(--soft2);color:var(--ink2);margin-left:6px;vertical-align:2px;letter-spacing:.02em}
-.ga{white-space:nowrap}.ga>small{display:inline!important;margin:0 0 0 1px!important;font-size:.62em;font-weight:700;color:var(--mute);margin-left:1px;letter-spacing:.02em}
+.ga{white-space:nowrap}.ga>i{font-style:normal;color:var(--mute);margin-left:.12em}.ga>em{font-style:normal;color:var(--mute);margin:0 .3em;font-weight:400}.poster .ga>i,.poster .ga>em{color:inherit;opacity:.7}
 /* главная новость: на широком экране картинка сбоку */
 @media (min-width:900px){
 .lead:has(.cover){display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:stretch}

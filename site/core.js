@@ -79,7 +79,7 @@ function photo(name,team,s=44,cls=""){const h=headOf(name);const c=tdeep(team);c
 const POS1={C:"C",L:"LW",R:"RW",D:"D",G:"G",LW:"LW",RW:"RW",LD:"LD",RD:"RD"};
 function posOf(name,pos){const P=(D&&D.ppos)||{};return P[name]||POS1[pos]||(goalie(name)?"G":(skater(name)&&POS1[skater(name).pos]))||""}
 function posTag(name,pos){const p=posOf(name,pos);return p?`<span class="pp">${p}</span>`:""}
-function gaHtml(g,a){g=+g||0;a=+a||0;if(!g&&!a)return "0";return `<span class="ga">${[g?`${g}<small>G</small>`:"",a?`${a}<small>A</small>`:""].filter(Boolean).join(" ")}</span>`}
+function gaHtml(g,a){g=+g||0;a=+a||0;if(!g&&!a)return "0";return `<span class="ga">${[g?`${g}<i>Г</i>`:"",a?`${a}<i>П</i>`:""].filter(Boolean).join(`<em>·</em>`)}</span>`}
 function lineHtml(line){const m=/^\s*(\d+)\s*\+\s*(\d+)\s*$/.exec(String(line||""));return m?gaHtml(m[1],m[2]):esc(line||"")}
 function plink(name,team,label){return `<button class="plink" data-player="${esc(name)}" data-pteam="${team}">${esc(label||name)}</button>`}
 
