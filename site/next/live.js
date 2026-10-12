@@ -35,15 +35,17 @@ function liveTouch(){poll(true)}
 function statOf(t,label){const s=(t.statistics||[]).find(x=>x.label===label||x.name===label);return s?s.displayValue:null}
 function parseSummary(s,L){const out={goals:[],teams:{},players:[],goalies:[]};
   const idA={};for(const c of ((s.header||{}).competitions||[{}])[0].competitors||[])idA[c.team&&c.team.id]=ab(c.team&&c.team.abbreviation);
-  for(const p of s.plays||[]){if(!p.scoringPlay)continue;const txt=String(p.text||"");const sc=txt.split(/ Goal\b/)[0];const as=(txt.split(/assists?:/i)[1]||"").replace(/\(\d+\)/g,"").trim();
-    out.goals.push({per:(p.period||{}).number||0,clock:(p.clock||{}).displayValue||"",team:idA[(p.team||{}).id]||"",who:sc.trim(),as,kind:/power play/i.test(p.strength&&p.strength.text||txt)?"бол.":/short/i.test(p.strength&&p.strength.text||"")?"мен.":/empty net/i.test(txt)?"п.в.":""})}
+  for(const p of s.plays||[]){if(!p.scoringPlay)continue;const pt=p.participants||[];const nm=x=>(x.athlete||{}).displayName||"";
+    const sc=pt.find(x=>x.type==="scorer");const as=pt.filter(x=>x.type==="assister").map(nm).join(", ");const txt=String(p.text||"");const sa=((p.strength||{}).abbreviation)||"";
+    out.goals.push({per:(p.period||{}).number||0,clock:(p.clock||{}).displayValue||"",team:idA[(p.team||{}).id]||"",who:sc?nm(sc):txt.split(/ Goal\b/)[0].replace(/^,.*$/,"гол"),as,kind:/empty/i.test(txt)||p.emptyNet?"п.в.":sa==="power-play"?"бол.":sa==="short-handed"?"мен.":""})}
   for(const t of ((s.boxscore||{}).teams||[])){const a=ab(t.team&&t.team.abbreviation);
     out.teams[a]={sog:statOf(t,"Shots"),ppg:statOf(t,"Power Play Goals"),ppo:statOf(t,"Power Play Opportunities"),fo:statOf(t,"Faceoff Win Percent"),hits:statOf(t,"Hits"),blk:statOf(t,"Blocked Shots"),pim:statOf(t,"Penalty Minutes"),give:statOf(t,"Giveaways"),take:statOf(t,"Takeaways")}}
   for(const g of ((s.boxscore||{}).players||[])){const a=ab(g.team&&g.team.abbreviation);
     for(const grp of g.statistics||[]){const lab=grp.labels||[];const ix=k=>lab.indexOf(k);
-      for(const x of grp.athletes||[]){const st=x.stats||[];const v=k=>{const i=ix(k);return i<0?null:st[i]};const nm=(x.athlete||{}).displayName||"";
-        if(/goal/i.test(grp.name||"")){if(v("SA")&&+v("SA")>0)out.goalies.push({name:nm,team:a,sa:+v("SA"),sv:+v("SV"),pct:v("SV%")})}
-        else{const G=+v("G")||0,As=+v("A")||0;out.players.push({name:nm,team:a,g:G,a:As,pts:G+As,sog:+v("SOG")||0,pm:v("+/-"),toi:v("TOI")})}}}}
+      const keys=grp.keys||[];const kx=k=>keys.indexOf(k);
+      for(const x of grp.athletes||[]){const st=x.stats||[];const v=k=>{const i=kx(k)>=0?kx(k):ix(k);return i<0?null:st[i]};const nm=(x.athlete||{}).displayName||"";
+        if(/goal/i.test(grp.name||"")){const SA=+(v("shotsAgainst")??v("SA"))||0;if(SA>0)out.goalies.push({name:nm,team:a,sa:SA,sv:+(v("saves")??v("SV"))||0,pct:v("savePct")??v("SV%")})}
+        else{const G=+(v("goals")??v("G"))||0,As=+(v("assists")??v("A"))||0;out.players.push({name:nm,team:a,g:G,a:As,pts:G+As,sog:+(v("shotsTotal")??v("S"))||0,pm:v("plusMinus"),toi:v("timeOnIce")})}}}}
   out.players.sort((x,y)=>y.pts-x.pts||y.g-x.g||y.sog-x.sog);return out}
 function liveBlock(m,L){const S=LSUM[L.id];const title=L.state==="in"?`<span class="dot"></span> Идёт: ${esc(L.per)}${L.clock?", "+esc(L.clock):""}`:`Финал${L.end?" ("+endLong(L.end)+")":""}`;
   if(!S)return `<div class="blk full"><h4 style="display:flex;align-items:center;gap:8px">${title}</h4><p class="note">Загружаю статистику матча…</p></div>`;
