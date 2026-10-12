@@ -50,14 +50,14 @@ function liveChips(m,L){const out=[];const ps=m.pick_side;const tp=m.total_pick;
   if(ps){const x=legLive(m.away,m.home,ps);if(x)out.push(st(x.r,x.fin,"Прогноз"))}
   if(tp){const x=liveRes({type:"total",away:m.away,home:m.home,side:tp.side,line:tp.line});if(x)out.push(st(x.r,x.fin,"Тотал"))}
   return out.join("")}
-function vsBox(p,m){const vs=vsOf(p,m);if(!vs)return"";const tl=m.total_pick?m.total_pick.line:(m.odds||{}).total;const TL=s=>`${s==="over"?"Больше":"Меньше"}${tl!=null?" "+esc(tl):""}`;
-  const mt=modTot(p);const mtp=vs.ts?(vs.ts==="over"?p.p_over:p.p_under):null;
-  const row=(lab,a,b,diff)=>`<div class="vr${diff?" df":""}"><small>${lab}</small><span>${a}</span><span>${b}</span></div>`;
+/* полоса вероятностей: подпись · левое % · полоса · правое % */
+function pbar(lab,l,r,cl,cr,ll="",rl=""){if(l==null||r==null)return"";return `<div class="pbr"><small>${lab}</small><b class="${l>=r?"on":""}">${ll?`<i>${ll}</i> `:""}${pct(l)}</b><span class="two"><i style="width:${l*100}%;background:${cl};opacity:${l>=r?1:.45}"></i><i style="width:${r*100}%;background:${cr};opacity:${r>l?1:.45}"></i></span><b class="${r>l?"on":""}">${pct(r)}${rl?` <i>${rl}</i>`:""}</b></div>`}
+function vsBox(p,m){const vs=vsOf(p,m);if(!vs)return"";const tl=m.total_pick?m.total_pick.line:(m.odds||{}).total;
+  const ca=tcol(m.away),ch=tcol(m.home);const TU="var(--mute)",TO="var(--gold)";
   const msg=vs.win&&vs.tot?"Модель против рынка и в исходе, и в тотале.":vs.win?`Модель против рынка: рынок за «${RU[vs.mk.t]}», модель — за «${RU[vs.f.t]}».`:vs.tot?`В исходе модель с рынком согласна, а в тотале — нет.`:"Модель согласна с рынком.";
-  return `<div class="vsb full"><div class="vr hd"><small></small><b>Модель</b><b>Рынок</b></div>
-   ${vs.f?row("Исход",`${EN[vs.f.t]} <em>${pct(vs.f.p)}</em>`,vs.mk?`${EN[vs.mk.t]} <em>${pct(vs.mk.p)}</em>`:"—",vs.win):""}
-   ${vs.ts?row("Тотал",`${TL(vs.ts)} <em>${pct(mtp)}</em>`,vs.mt?`${TL(vs.mt.side)} <em>${pct(vs.mt.p)}</em>`:"—",vs.tot):""}
-   <p>${msg}</p></div>`}
+  return `<div class="vsb full"><h4>Исход</h4>${pbar("Модель",p.p_away,p.p_home,ca,ch,m.away,m.home)}${pbar("Рынок",p.mkt_away,p.mkt_home,ca,ch,m.away,m.home)}
+   ${p.p_over!=null?`<h4>Тотал${tl!=null?" "+esc(tl):""}</h4>${pbar("Модель",p.p_under,p.p_over,TU,TO,"М","Б")}${p.mkt_over!=null?pbar("Рынок",1-p.mkt_over,p.mkt_over,TU,TO,"М","Б"):""}`:""}
+   <p class="${vs.win||vs.tot?"df":""}">${msg}</p></div>`}
 function booksTable(m){const o=m.odds,x=m.odds_1x,bk=m.books||{};if(!o&&!x&&!Object.keys(bk).length)return"";
   const r=(name,note,a,h,t)=>`<tr><td>${name}<small>${note}</small></td><td>${f2(a)}</td><td>${f2(h)}</td><td>${t&&t.total!=null?`${t.total}: ${f2(t.over)} / ${f2(t.under)}`:"—"}</td></tr>`;
   const BN={marathonbet:"Линия 3",onexbet:"Линия 2"};
@@ -110,7 +110,8 @@ function posterSec(){const mo=D.motd;if(!mo)return"";const m=(D.upcoming||[]).fi
   return `<section class="poster" style="--a:${ca};--h:${ch};--ta:${tcol(m.away)};--th:${tcol(m.home)}"><div class="bg"><span class="wm a">${logo(m.away,420)}</span><span class="wm h">${logo(m.home,420)}</span></div><div class="in">
     <div class="lab"><span>Матч дня</span><span>${esc(dLong(D.upcoming_date))}</span><button class="go" data-go="games" data-open="${m.away}-${m.home}">Разбор матча →</button></div>
     <div class="vs">${side(m.away,"a")}<div class="mid">${mid}</div>${side(m.home,"h")}</div>
-    ${pa!=null&&!lv?`<div class="pb"><span>${pct(pa)}</span><span class="two"><i style="width:${pa*100}%;background:var(--ta);opacity:${pa>ph?1:.5}"></i><i style="width:${ph*100}%;background:var(--th);opacity:${ph>pa?1:.5}"></i></span><span>${pct(ph)}</span></div>`:""}
+    ${pa!=null&&!lv?`<div class="pbs">${pbar("Модель",pa,ph,"var(--ta)","var(--th)")}${p.mkt_home!=null?pbar("Рынок",p.mkt_away,p.mkt_home,"var(--ta)","var(--th)"):""}${(()=>{const mt=modTot(p),kt2=mktTot(p);const tl=(m.total_pick||{}).line??(m.odds||{}).total;if(!mt||tl==null)return"";const S=s=>s==="over"?"больше":"меньше";
+      return `<div class="ptot">Тотал ${esc(tl)}: модель за ${S(mt.side)} (${pct(mt.p)})${kt2?`, рынок ${kt2.side===mt.side?"тоже":"за "+S(kt2.side)} (${pct(kt2.p)})`:""}</div>`})()}</div>`:""}
     <div class="stars">${pl(m.away,"a")}${pl(m.home,"h")}</div>
     ${mo.text?`<p>${esc(mo.text)}</p>`:""}</div></section>`}
 function todaySec(){const u=todayGames();if(!u.length)return noGames();const mo=D.motd?u.find(x=>x.away===D.motd.away&&x.home===D.motd.home):null;
