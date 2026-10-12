@@ -1,0 +1,80 @@
+/* Сводка НХЛ — живой счёт (табло ESPN из браузера) и запуск */
+"use strict";
+const ESPN="https://site.api.espn.com/apis/site/v2/sports/hockey/nhl/";
+const EAB={NJ:"NJD",TB:"TBL",LA:"LAK",SJ:"SJS",UTAH:"UTA",MON:"MTL",WAS:"WSH",VEG:"VGK",CLB:"CBJ",NAS:"NSH",WIN:"WPG",ARI:"UTA"};
+const ab=x=>EAB[x]||x;
+const LIVE={},LSUM={},LSUMT={};let LIVE_OK=true,LTIMER=null,LAST_POLL=0;
+function liveOf(m){const L=LIVE[`${m.away}-${m.home}`];return L||null}
+function perName(n){return n<=3?`${n}-й период`:n===4?"Овертайм":"Буллиты"}
+function perShort(n){return n<=3?`${n}-й`:n===4?"ОТ":"Б"}
+function parseEvent(ev){const c=(ev.competitions||[])[0];if(!c)return null;const st=ev.status||c.status||{};const ty=st.type||{};
+  const tm={};for(const x of c.competitors||[])tm[x.homeAway]={a:ab(x.team&&x.team.abbreviation),s:+x.score||0,id:x.team&&x.team.id};
+  if(!tm.away||!tm.home)return null;const per=st.period||0;const detail=String(ty.detail||ty.shortDetail||"");
+  const inter=/end of|intermission/i.test(detail);
+  return {id:ev.id,key:`${tm.away.a}-${tm.home.a}`,away:tm.away.a,home:tm.home.a,ida:tm.away.id,idh:tm.home.id,state:ty.state,as:tm.away.s,hs:tm.home.s,
+    per:perName(per),clock:inter?"перерыв":(st.displayClock||""),short:inter?`перерыв после ${perShort(per)}`:`${perShort(per)} · ${st.displayClock||""}`,end:ty.state==="post"?(per===4?"ОТ":per>=5?"Б":""):""}}
+function needLive(){const u=D&&D.upcoming||[];const now=Date.now();
+  return u.some(m=>{const t=new Date(m.start).getTime();const L=liveOf(m);if(L&&L.state==="post")return false;return now>t-10*6e4&&now<t+5*36e5})}
+async function poll(force){if(!D||!LIVE_OK)return;if(document.hidden&&!force)return;if(!needLive()&&!force)return;
+  const d=(D.upcoming_date||"").replace(/-/g,"");let sb;
+  try{const r=await fetch(`${ESPN}scoreboard${d?`?dates=${d}`:""}`,{cache:"no-store"});if(!r.ok)throw 0;sb=await r.json()}catch(e){return}
+  LAST_POLL=Date.now();let changed=false;
+  for(const ev of sb.events||[]){const L=parseEvent(ev);if(!L)continue;const old=LIVE[L.key];
+    if(!(D.upcoming||[]).some(m=>m.away===L.away&&m.home===L.home))continue;
+    if(old&&L.state==="in"&&(L.as!==old.as||L.hs!==old.hs))L.flash=L.as>old.as?L.away:L.home;
+    if(!old||JSON.stringify({...old,flash:0})!==JSON.stringify({...L,flash:0}))changed=true;
+    LIVE[L.key]=L}
+  /* подробности для раскрытых идущих матчей */
+  for(const k in LIVE){const L=LIVE[k];if(L.state==="pre"||!OPEN.has(k))continue;if(LSUMT[L.id]&&Date.now()-LSUMT[L.id]<20000&&!force)continue;
+    try{const r=await fetch(`${ESPN}summary?event=${L.id}`,{cache:"no-store"});if(r.ok){LSUM[L.id]=parseSummary(await r.json(),L);LSUMT[L.id]=Date.now();changed=true}}catch(e){}}
+  if(changed&&["home","games"].includes(VIEW)&&$("#sheet").hidden)rerenderKeep();
+  else if(changed)renderChrome();
+  for(const k in LIVE)delete LIVE[k].flash}
+function rerenderKeep(){const y=window.scrollY;render();window.scrollTo(0,y)}
+function liveTouch(){poll(true)}
+function statOf(t,label){const s=(t.statistics||[]).find(x=>x.label===label||x.name===label);return s?s.displayValue:null}
+function parseSummary(s,L){const out={goals:[],teams:{},players:[],goalies:[]};
+  const idA={};for(const c of ((s.header||{}).competitions||[{}])[0].competitors||[])idA[c.team&&c.team.id]=ab(c.team&&c.team.abbreviation);
+  for(const p of s.plays||[]){if(!p.scoringPlay)continue;const txt=String(p.text||"");const sc=txt.split(/ Goal\b/)[0];const as=(txt.split(/assists?:/i)[1]||"").replace(/\(\d+\)/g,"").trim();
+    out.goals.push({per:(p.period||{}).number||0,clock:(p.clock||{}).displayValue||"",team:idA[(p.team||{}).id]||"",who:sc.trim(),as,kind:/power play/i.test(p.strength&&p.strength.text||txt)?"бол.":/short/i.test(p.strength&&p.strength.text||"")?"мен.":/empty net/i.test(txt)?"п.в.":""})}
+  for(const t of ((s.boxscore||{}).teams||[])){const a=ab(t.team&&t.team.abbreviation);
+    out.teams[a]={sog:statOf(t,"Shots"),ppg:statOf(t,"Power Play Goals"),ppo:statOf(t,"Power Play Opportunities"),fo:statOf(t,"Faceoff Win Percent"),hits:statOf(t,"Hits"),blk:statOf(t,"Blocked Shots"),pim:statOf(t,"Penalty Minutes"),give:statOf(t,"Giveaways"),take:statOf(t,"Takeaways")}}
+  for(const g of ((s.boxscore||{}).players||[])){const a=ab(g.team&&g.team.abbreviation);
+    for(const grp of g.statistics||[]){const lab=grp.labels||[];const ix=k=>lab.indexOf(k);
+      for(const x of grp.athletes||[]){const st=x.stats||[];const v=k=>{const i=ix(k);return i<0?null:st[i]};const nm=(x.athlete||{}).displayName||"";
+        if(/goal/i.test(grp.name||"")){if(v("SA")&&+v("SA")>0)out.goalies.push({name:nm,team:a,sa:+v("SA"),sv:+v("SV"),pct:v("SV%")})}
+        else{const G=+v("G")||0,As=+v("A")||0;out.players.push({name:nm,team:a,g:G,a:As,pts:G+As,sog:+v("SOG")||0,pm:v("+/-"),toi:v("TOI")})}}}}
+  out.players.sort((x,y)=>y.pts-x.pts||y.g-x.g||y.sog-x.sog);return out}
+function liveBlock(m,L){const S=LSUM[L.id];const title=L.state==="in"?`<span class="dot"></span> Идёт: ${esc(L.per)}${L.clock?", "+esc(L.clock):""}`:`Финал${L.end?" ("+endLong(L.end)+")":""}`;
+  if(!S)return `<div class="blk full"><h4 style="display:flex;align-items:center;gap:8px">${title}</h4><p class="note">Загружаю статистику матча…</p></div>`;
+  const ta=S.teams[m.away]||{},th=S.teams[m.home]||{};const pr=(x,y)=>[x,y];
+  const rows=[["Броски в створ",pr(ta.sog,th.sog)],["Большинство",pr(ta.ppg!=null?`${ta.ppg}/${ta.ppo}`:null,th.ppg!=null?`${th.ppg}/${th.ppo}`:null)],["Вбрасывания, %",pr(ta.fo,th.fo)],["Силовые",pr(ta.hits,th.hits)],["Блок-шоты",pr(ta.blk,th.blk)],["Штрафные минуты",pr(ta.pim,th.pim)]].filter(r=>r[1][0]!=null&&r[1][1]!=null);
+  const parse=v=>typeof v==="string"?parseFloat(v.split("/")[0])||0:+v||0;
+  const per={};S.goals.forEach(g=>(per[g.per]=per[g.per]||[]).push(g));
+  const top=S.players.filter(p=>p.pts>0).slice(0,3);
+  return `<div class="blk"><h4 style="display:flex;align-items:center;gap:8px;margin-top:0">${title}</h4>
+     ${S.goals.length?`<div class="goals">${Object.keys(per).sort().map(k=>`<div class="per">${perName(+k)}</div>${per[k].map(g=>`<div class="goal"><time>${esc(g.clock)}</time>${logo(g.team,20)}<span><b>${esc(g.who)}</b>${g.kind?`<em>${g.kind}</em>`:""}${g.as?` <span class="as">(${esc(g.as)})</span>`:""}</span></div>`).join("")}`).join("")}</div>`:'<p class="note">Голов пока нет.</p>'}</div>
+   <div class="blk">${rows.length?`<div class="sbars">${rows.map(([l,v])=>sbar(l,v,m.away,m.home,parse)).join("")}</div>`:""}
+     ${S.goalies.length?`<h4>Вратари</h4><ul class="ul">${S.goalies.map(g=>`<li><b>${esc(g.name)}</b> (${EN[g.team]||g.team}) — ${g.sv} из ${g.sa}${g.pct?`, ${esc(g.pct)}`:""}</li>`).join("")}</ul>`:""}
+     ${top.length?`<h4>Лучшие в матче</h4>${top.map(p=>`<div class="lr" style="padding:6px 0;border:0;grid-template-columns:minmax(0,1fr) auto"><span class="who">${photo(p.name,p.team,34)}<span class="nm2">${plink(p.name,p.team)}<small>${EN[p.team]||p.team} · бросков ${p.sog}${p.toi?` · ${esc(p.toi)} на льду`:""}</small></span></span><span class="v">${p.g}+${p.a}</span></div>`).join("")}`:""}</div>`}
+function liveLoop(){clearInterval(LTIMER);LTIMER=setInterval(()=>poll(false),25000);poll(false)}
+document.addEventListener("visibilitychange",()=>{if(!document.hidden&&Date.now()-LAST_POLL>20000)poll(false)});
+
+/* ---------- шрифты: ?f=a|b|c ---------- */
+(function(){const m=/[?&]f=([abc])\b/.exec(location.search);const f=m?m[1]:ls("font");if(m)ls("font",m[1]);
+  if(f&&f!=="a"){document.documentElement.dataset.font=f;
+    if(f==="c"){const l=document.createElement("link");l.rel="stylesheet";l.href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&family=Tektur:wght@500;700&display=swap";document.head.appendChild(l)}}})();
+
+/* ---------- запуск ---------- */
+(async function(){
+  const v="?v="+Math.floor(Date.now()/6e4);
+  const h=(location.hash||"").slice(1);if(h==="model")VIEW="games";else if(VIEWS[h])VIEW=h;
+  try{const [d,m]=await Promise.all([fetch(DATA+"data.json"+v).then(r=>r.json()),fetch(DATA+"model.json"+v).then(r=>r.json()).catch(()=>({games:[],teams:{}}))]);D=d;M=m}
+  catch(e){$("#app").innerHTML='<div class="box empty">Не удалось загрузить данные. Обнови страницу.</div>';return}
+  for(const s of D.standings||[])if(s.logo)LOGO[s.abbr]=s.logo;
+  buildTeams();render();
+  try{A=await fetch(DATA+"archive.json"+v).then(r=>r.json());buildTeams();rerenderKeep()}catch(e){}
+  liveLoop();
+  setInterval(()=>{if(["home","games"].includes(VIEW)&&$("#sheet").hidden&&!needLive())rerenderKeep()},60000);
+})();
+window.addEventListener("hashchange",()=>{const h=(location.hash||"").slice(1);if(VIEWS[h]&&h!==VIEW){VIEW=h;render();window.scrollTo(0,0)}});
