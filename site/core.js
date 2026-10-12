@@ -1,8 +1,10 @@
-/* Сводка НХЛ — ядро: справочники, данные, утилиты, общие компоненты */
+/* NHL-STATS.RU — ядро: справочники, данные, утилиты, общие компоненты */
 "use strict";
 const DATA="./";
-const EN={ANA:"Анахайм",BOS:"Бостон",BUF:"Баффало",CGY:"Калгари",CAR:"Каролина",CHI:"Чикаго",COL:"Колорадо",CBJ:"Коламбус",DAL:"Даллас",DET:"Детройт",EDM:"Эдмонтон",FLA:"Флорида",LAK:"Лос-Анджелес",MIN:"Миннесота",MTL:"Монреаль",NSH:"Нэшвилл",NJD:"Нью-Джерси",NYI:"Айлендерс",NYR:"Рейнджерс",OTT:"Оттава",PHI:"Филадельфия",PIT:"Питтсбург",SJS:"Сан-Хосе",SEA:"Сиэтл",STL:"Сент-Луис",TBL:"Тампа",TOR:"Торонто",UTA:"Юта",VAN:"Ванкувер",VGK:"Вегас",WSH:"Вашингтон",WPG:"Виннипег"};
-const FULL={ANA:"Анахайм Дакс",BOS:"Бостон Брюинз",BUF:"Баффало Сейбрз",CGY:"Калгари Флэймз",CAR:"Каролина Харрикейнз",CHI:"Чикаго Блэкхокс",COL:"Колорадо Эвеланш",CBJ:"Коламбус Блю Джекетс",DAL:"Даллас Старз",DET:"Детройт Ред Уингз",EDM:"Эдмонтон Ойлерз",FLA:"Флорида Пантерз",LAK:"Лос-Анджелес Кингз",MIN:"Миннесота Уайлд",MTL:"Монреаль Канадиенс",NSH:"Нэшвилл Предаторз",NJD:"Нью-Джерси Девилз",NYI:"Нью-Йорк Айлендерс",NYR:"Нью-Йорк Рейнджерс",OTT:"Оттава Сенаторз",PHI:"Филадельфия Флайерз",PIT:"Питтсбург Пингвинз",SJS:"Сан-Хосе Шаркс",SEA:"Сиэтл Кракен",STL:"Сент-Луис Блюз",TBL:"Тампа-Бэй Лайтнинг",TOR:"Торонто Мэйпл Лифс",UTA:"Юта Мамонт",VAN:"Ванкувер Кэнакс",VGK:"Вегас Голден Найтс",WSH:"Вашингтон Кэпиталз",WPG:"Виннипег Джетс"};
+/* названия: EN — интерфейс (английский), RU — прогнозы и тексты */
+const EN={ANA:"Anaheim",BOS:"Boston",BUF:"Buffalo",CGY:"Calgary",CAR:"Carolina",CHI:"Chicago",COL:"Colorado",CBJ:"Columbus",DAL:"Dallas",DET:"Detroit",EDM:"Edmonton",FLA:"Florida",LAK:"Los Angeles",MIN:"Minnesota",MTL:"Montréal",NSH:"Nashville",NJD:"New Jersey",NYI:"NY Islanders",NYR:"NY Rangers",OTT:"Ottawa",PHI:"Philadelphia",PIT:"Pittsburgh",SJS:"San Jose",SEA:"Seattle",STL:"St. Louis",TBL:"Tampa Bay",TOR:"Toronto",UTA:"Utah",VAN:"Vancouver",VGK:"Vegas",WSH:"Washington",WPG:"Winnipeg"};
+const RU={ANA:"Анахайм",BOS:"Бостон",BUF:"Баффало",CGY:"Калгари",CAR:"Каролина",CHI:"Чикаго",COL:"Колорадо",CBJ:"Коламбус",DAL:"Даллас",DET:"Детройт",EDM:"Эдмонтон",FLA:"Флорида",LAK:"Лос-Анджелес",MIN:"Миннесота",MTL:"Монреаль",NSH:"Нэшвилл",NJD:"Нью-Джерси",NYI:"Айлендерс",NYR:"Рейнджерс",OTT:"Оттава",PHI:"Филадельфия",PIT:"Питтсбург",SJS:"Сан-Хосе",SEA:"Сиэтл",STL:"Сент-Луис",TBL:"Тампа",TOR:"Торонто",UTA:"Юта",VAN:"Ванкувер",VGK:"Вегас",WSH:"Вашингтон",WPG:"Виннипег"};
+const FULL={ANA:"Anaheim Ducks",BOS:"Boston Bruins",BUF:"Buffalo Sabres",CGY:"Calgary Flames",CAR:"Carolina Hurricanes",CHI:"Chicago Blackhawks",COL:"Colorado Avalanche",CBJ:"Columbus Blue Jackets",DAL:"Dallas Stars",DET:"Detroit Red Wings",EDM:"Edmonton Oilers",FLA:"Florida Panthers",LAK:"Los Angeles Kings",MIN:"Minnesota Wild",MTL:"Montréal Canadiens",NSH:"Nashville Predators",NJD:"New Jersey Devils",NYI:"New York Islanders",NYR:"New York Rangers",OTT:"Ottawa Senators",PHI:"Philadelphia Flyers",PIT:"Pittsburgh Penguins",SJS:"San Jose Sharks",SEA:"Seattle Kraken",STL:"St. Louis Blues",TBL:"Tampa Bay Lightning",TOR:"Toronto Maple Leafs",UTA:"Utah Mammoth",VAN:"Vancouver Canucks",VGK:"Vegas Golden Knights",WSH:"Washington Capitals",WPG:"Winnipeg Jets"};
 const COLORS={ANA:["#F47A38","#B9975B"],BOS:["#FFB81C","#000000"],BUF:["#003087","#FFB81C"],CGY:["#C8102E","#F1BE48"],CAR:["#CE1126","#000000"],CHI:["#CF0A2C","#000000"],COL:["#6F263D","#236192"],CBJ:["#002654","#CE1126"],DAL:["#006847","#8F8F8C"],DET:["#CE1126","#FFFFFF"],EDM:["#041E42","#FF4C00"],FLA:["#041E42","#C8102E"],LAK:["#111111","#A2AAAD"],MIN:["#154734","#A6192E"],MTL:["#AF1E2D","#192168"],NSH:["#FFB81C","#041E42"],NJD:["#CE1126","#000000"],NYI:["#00539B","#F47D30"],NYR:["#0038A8","#CE1126"],OTT:["#C52032","#C2912C"],PHI:["#F74902","#000000"],PIT:["#000000","#FCB514"],SJS:["#006D75","#EA7200"],SEA:["#001628","#99D9D9"],STL:["#002F87","#FCB514"],TBL:["#002868","#FFFFFF"],TOR:["#00205B","#FFFFFF"],UTA:["#6CACE4","#010101"],VAN:["#00205B","#00843D"],VGK:["#B4975A","#333F42"],WSH:["#C8102E","#041E42"],WPG:["#041E42","#004C97"]};
 const DIVS=[["Восток","Атлантический",["BOS","BUF","DET","FLA","MTL","OTT","TBL","TOR"]],["Восток","Столичный",["CAR","CBJ","NJD","NYI","NYR","PHI","PIT","WSH"]],["Запад","Центральный",["CHI","COL","DAL","MIN","NSH","STL","UTA","WPG"]],["Запад","Тихоокеанский",["ANA","CGY","EDM","LAK","SJS","SEA","VAN","VGK"]]];
 const ALL=DIVS.flatMap(d=>d[2]);
@@ -74,6 +76,11 @@ function headOf(name){const H=(D&&D.heads)||{};if(H[name])return H[name];if(!HEA
 window._phf=function(img){const s=img.closest(".ph");if(s){img.remove()}};
 function photo(name,team,s=44,cls=""){const h=headOf(name);const c=tdeep(team);const n=pnum(name);
   return `<span class="ph ${cls}" style="--s:${s}px;--c:${c}" aria-hidden="true" title="${esc(name)}"><span class="ph-t">${n?"#"+n:initials(name)}</span>${h?`<img src="${MG}${h}.png" alt="" loading="lazy" decoding="async" onerror="_phf(this)">`:""}</span>`}
+const POS1={C:"C",L:"LW",R:"RW",D:"D",G:"G",LW:"LW",RW:"RW",LD:"LD",RD:"RD"};
+function posOf(name,pos){const P=(D&&D.ppos)||{};return P[name]||POS1[pos]||(goalie(name)?"G":(skater(name)&&POS1[skater(name).pos]))||""}
+function posTag(name,pos){const p=posOf(name,pos);return p?`<span class="pp">${p}</span>`:""}
+function gaHtml(g,a){g=+g||0;a=+a||0;if(!g&&!a)return "0";return `<span class="ga">${[g?`${g}<small>G</small>`:"",a?`${a}<small>A</small>`:""].filter(Boolean).join(" ")}</span>`}
+function lineHtml(line){const m=/^\s*(\d+)\s*\+\s*(\d+)\s*$/.exec(String(line||""));return m?gaHtml(m[1],m[2]):esc(line||"")}
 function plink(name,team,label){return `<button class="plink" data-player="${esc(name)}" data-pteam="${team}">${esc(label||name)}</button>`}
 
 /* ---------- расчёты по архиву ---------- */
@@ -114,22 +121,22 @@ function srcOf(p){return (D.upcoming||[]).find(x=>x.away===p.away&&x.home===p.ho
 function mGames(){const seen=new Set();return [...(M.games||[]),...(M.horizon||[])].map(p=>{const m=srcOf(p);return {p,m,start:p.start||m.start}}).filter(({p,start})=>{const k=p.id||p.away+p.home+p.date;if(seen.has(k)||!start)return false;seen.add(k);return state(start)==="pre"}).sort((a,b)=>a.start<b.start?-1:a.start>b.start?1:0)}
 function essayOf(p){const g=((D.model_tab||{}).games||{})[p.id];if(g)return Array.isArray(g)?g:String(g).split(/\n\n+/);return []}
 function modelWhy(m,p){const out=[];const ra=p.rating_away,rh=p.rating_home;const nm=x=>String(x||"").split("(")[0].trim();
-  if(ra&&rh)out.push(`Сила по матчам сезона с поправкой на прошлый: ${EN[m.away]} — атака ${Math.round(ra.att*100)}, оборона ${Math.round(100/ra.dfn)}; ${EN[m.home]} — атака ${Math.round(rh.att*100)}, оборона ${Math.round(100/rh.dfn)}. 100 — средний уровень лиги.`);
+  if(ra&&rh)out.push(`Сила по матчам сезона с поправкой на прошлый: ${RU[m.away]} — атака ${Math.round(ra.att*100)}, оборона ${Math.round(100/ra.dfn)}; ${RU[m.home]} — атака ${Math.round(rh.att*100)}, оборона ${Math.round(100/rh.dfn)}. 100 — средний уровень лиги.`);
   if(M.league&&M.league.home_adv!=null)out.push(`Своя площадка: в этом сезоне хозяева забивают в среднем на ${Math.round(M.league.home_adv*100)}% больше гостей.`);
-  for(const [t,g,o] of [[m.away,p.goalie_away,m.home],[m.home,p.goalie_home,m.away]])if(g&&g.name&&g.factor&&Math.abs(g.factor-1)>=.02)out.push(`${nm(g.name)} (${EN[t]}) по сейвам сверх ожидаемого ${g.factor>1?"ниже":"выше"} среднего вратаря лиги: ожидаемые голы ${EN[o]} ${g.factor>1?"+":"−"}${Math.round(Math.abs(1-g.factor)*100)}%.`);
-  for(const [t,l,adj,def] of [[m.away,p.inj_away,p.inj_adj_away,p.inj_def_away],[m.home,p.inj_home,p.inj_adj_home,p.inj_def_home]])if(l&&l.length)out.push(`Без ${l.map(x=>x.name).join(", ")}: атака ${EN[t]} −${Math.round((adj||0)*100)}%${def?`, соперник забивает +${Math.round(def*100)}%`:""}.`);
-  if(p.b2b_away||p.b2b_home)out.push(`Второй матч за два дня: ${[p.b2b_away&&EN[m.away],p.b2b_home&&EN[m.home]].filter(Boolean).join(" и ")}. Самый надёжный фактор на истории: модель снимает уставшей команде 5% голов.`);
-  for(const [t,f] of [[m.away,p.new_coach_away],[m.home,p.new_coach_home]])if(f)out.push(`У ${EN[t]} новый главный тренер: первые 10 матчей после смены обычно лучше ожиданий, модель добавляет 5%.`);
-  if(p.p_ot_home!=null&&p.p_ot>=.2)out.push(`Шанс ничьей в основное время ${pct(p.p_ot)}. После ничьей модель даёт ${EN[m.home]} ${pct(p.p_ot_home)}.`);
+  for(const [t,g,o] of [[m.away,p.goalie_away,m.home],[m.home,p.goalie_home,m.away]])if(g&&g.name&&g.factor&&Math.abs(g.factor-1)>=.02)out.push(`${nm(g.name)} (${RU[t]}) по сейвам сверх ожидаемого ${g.factor>1?"ниже":"выше"} среднего вратаря лиги: ожидаемые голы ${RU[o]} ${g.factor>1?"+":"−"}${Math.round(Math.abs(1-g.factor)*100)}%.`);
+  for(const [t,l,adj,def] of [[m.away,p.inj_away,p.inj_adj_away,p.inj_def_away],[m.home,p.inj_home,p.inj_adj_home,p.inj_def_home]])if(l&&l.length)out.push(`Без ${l.map(x=>x.name).join(", ")}: атака ${RU[t]} −${Math.round((adj||0)*100)}%${def?`, соперник забивает +${Math.round(def*100)}%`:""}.`);
+  if(p.b2b_away||p.b2b_home)out.push(`Второй матч за два дня: ${[p.b2b_away&&RU[m.away],p.b2b_home&&RU[m.home]].filter(Boolean).join(" и ")}. Самый надёжный фактор на истории: модель снимает уставшей команде 5% голов.`);
+  for(const [t,f] of [[m.away,p.new_coach_away],[m.home,p.new_coach_home]])if(f)out.push(`У ${RU[t]} новый главный тренер: первые 10 матчей после смены обычно лучше ожиданий, модель добавляет 5%.`);
+  if(p.p_ot_home!=null&&p.p_ot>=.2)out.push(`Шанс ничьей в основное время ${pct(p.p_ot)}. После ничьей модель даёт ${RU[m.home]} ${pct(p.p_ot_home)}.`);
   return out.map(esc)}
 
 /* ---------- журнал ---------- */
 function pickLabel(j){const t=j.type||"win";
-  if(t==="win")return j.side?EN[sideTeam(j,j.side)]:esc(j.pick);
+  if(t==="win")return j.side?RU[sideTeam(j,j.side)]:esc(j.pick);
   if(t==="total")return `${(j.side==="over")?"Больше":"Меньше"} ${j.line}`;
-  if(t==="express")return (j.legs||[]).map(l=>l.side?EN[sideTeam(l,l.side)]:l.pick).join(" + ");
+  if(t==="express")return (j.legs||[]).map(l=>l.side?RU[sideTeam(l,l.side)]:l.pick).join(" + ");
   return esc(j.pick||"")}
-function matchLabel(j){if((j.type)==="express")return (j.legs||[]).map(l=>`${EN[l.away]} — ${EN[l.home]}`).join(" · ");return j.away?`${EN[j.away]} — ${EN[j.home]}`:""}
+function matchLabel(j){if((j.type)==="express")return (j.legs||[]).map(l=>`${RU[l.away]} — ${RU[l.home]}`).join(" · ");return j.away?`${RU[j.away]} — ${RU[j.home]}`:""}
 const plOf=(res,odds)=>res==="hit"?odds-1:res==="miss"?-1:res==="void"?0:null;
 function amRes(x){if(!x.changed||!x.result||x.result==="void")return x.result;const t=x.type||"win";
   if(t==="win")return (x.side_am||x.side)===x.side?x.result:(x.result==="hit"?"miss":"hit");

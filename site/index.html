@@ -3,9 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Сводка НХЛ</title>
+<title>NHL-STATS.RU — итоги, живой счёт и прогнозы НХЛ</title>
 <meta name="description" content="Итоги ночи НХЛ, живой счёт, таблица, лидеры и прогнозы модели на каждый матч — по-русски, обновляется дважды в день.">
-<meta property="og:title" content="Сводка НХЛ">
+<meta property="og:title" content="NHL-STATS.RU">
+<meta property="og:site_name" content="NHL-STATS.RU">
 <meta property="og:description" content="Итоги ночи, три звезды, живой счёт и прогнозы модели с честным журналом точности.">
 <meta property="og:type" content="website">
 <meta name="theme-color" content="#121418">
@@ -14,7 +15,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://assets.nhle.com" crossorigin>
-<link id="fontcss" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700&family=Fira+Sans+Extra+Condensed:wght@600;700;800&family=Unbounded:wght@700&display=swap">
+<link id="fontcss" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700&family=Fira+Sans+Extra+Condensed:wght@600;700;800&display=swap">
 <style>
 /* ===== токены ===== */
 :root{
@@ -64,8 +65,8 @@ img{display:block}
 .top .wrap{display:flex;align-items:center;gap:24px;height:58px}
 .mark{display:flex;align-items:center;gap:10px;color:var(--barink);flex:none}
 .mark svg{width:38px;height:36px;flex:none}
-.mark b{font-family:"Unbounded",var(--f-body);font-weight:700;font-size:20px;letter-spacing:-.01em;line-height:1}
-.mark b span{font-weight:400;color:var(--barmute);margin-left:.28em}
+.mark b{font-family:var(--f-disp);font-weight:800;font-size:26px;letter-spacing:.02em;line-height:1}
+.mark b span{color:#FF4A55}
 .tnav{display:none}
 @media (min-width:900px){
   .tnav{display:flex;height:100%;gap:2px}
@@ -292,9 +293,9 @@ table.mt td small{display:block;color:var(--mute);font-size:var(--fs-xs)}
 .poster .pl{display:flex;align-items:center;gap:10px;background:rgba(0,0,0,.22);border-radius:10px;padding:8px 10px;min-width:0}
 .poster .pl.h{flex-direction:row-reverse;text-align:right}
 .poster .pl .ph{--s:48px;border:2px solid rgba(255,255,255,.7)}
-.poster .pl span{display:flex;flex-direction:column;min-width:0}
+.poster .pl>span{display:flex;flex-direction:column;min-width:0}
 .poster .pl b{font-size:var(--fs-s);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.poster .pl small{font-size:var(--fs-xs);opacity:.85}
+.poster .pl>span>small{font-size:var(--fs-xs);opacity:.85}
 .poster .pb{display:flex;align-items:center;gap:10px;font-weight:700;font-size:var(--fs-s)}
 .poster .pb .two{flex:1;display:flex;height:6px;border-radius:3px;overflow:hidden;background:rgba(255,255,255,.2)}
 .poster .pb .two i{height:100%;animation:grow .7s ease-out both}
@@ -325,13 +326,13 @@ table.mt td small{display:block;color:var(--mute);font-size:var(--fs-xs)}
 .card3 .nm{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
 .card3 .nm .plink{font-size:var(--fs-m);line-height:1.25}
 .card3 .nm b.v{font-family:var(--f-disp);font-size:24px;white-space:nowrap}
-.card3 .nm small{display:block;font-size:var(--fs-xs);color:var(--mute);font-weight:500}
+.card3 .nm>span>small{display:block;font-size:var(--fs-xs);color:var(--mute);font-weight:500}
 .card3 p{font-size:var(--fs-s);line-height:1.5;color:var(--ink2)}
 @media (max-width:760px){.cards{grid-template-columns:minmax(0,1fr)}.card3{flex-direction:row}.card3 .top3{min-height:0;width:112px;flex:none;padding:10px 0 0;justify-content:center}.card3 .ph{--s:100px}.card3 .rk{position:absolute;left:8px;top:6px;font-size:30px}.card3 .num3{display:none}.card3 .wm .lg{--s:90px}}
 .feat{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:10px 16px;align-items:center;padding:18px 16px}
 .feat .ph{--s:72px}
 .feat .big{font-family:var(--f-disp);font-size:32px;line-height:1;text-align:right}
-.feat .big small{display:block;font-family:var(--f-body);font-size:var(--fs-xs);color:var(--mute);font-weight:600;margin-top:4px}
+.feat .big>small{display:block;font-family:var(--f-body);font-size:var(--fs-xs);color:var(--mute);font-weight:600;margin-top:4px}
 .feat p{grid-column:1/-1;font-size:var(--fs-s);color:var(--ink2);line-height:1.5}
 .nm2{display:flex;flex-direction:column;min-width:0}
 .nm2 .plink{font-size:var(--fs-m)}
@@ -352,8 +353,8 @@ table.mt td small{display:block;color:var(--mute);font-size:var(--fs-xs)}
 /* новости */
 .lead{display:flex;flex-direction:column;width:100%}
 .lead:hover h3{color:var(--link)}
-.cover{position:relative;aspect-ratio:16/7;max-height:300px;width:100%;background:var(--c1,#20242B);overflow:hidden}
-.cover img{width:100%;height:100%;object-fit:cover}
+.cover{position:relative;aspect-ratio:16/9;width:100%;background:var(--c1,#20242B);overflow:hidden}
+.cover img{width:100%;height:100%;object-fit:cover;object-position:50% 30%}
 .cover .cap{position:absolute;right:8px;bottom:8px;font-size:11px;color:#fff;background:rgba(0,0,0,.55);padding:2px 8px;border-radius:999px}
 .cover.art{aspect-ratio:16/6;background:linear-gradient(120deg,var(--c1) 0 50%,var(--c2) 50% 100%);display:flex;align-items:center;justify-content:center;gap:12%}
 .cover.art .lgw{width:24%;max-width:130px;aspect-ratio:1;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(0,0,0,.25)}
@@ -372,7 +373,7 @@ table.mt td small{display:block;color:var(--mute);font-size:var(--fs-xs)}
 .nr .th.art{background:linear-gradient(120deg,var(--c1) 0 50%,var(--c2) 50% 100%);display:flex;align-items:center;justify-content:center;gap:8%}
 .nr .th.art .lgw{width:38%;aspect-ratio:1;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center}
 .nr .th.art .lgw .lg{--s:74%}
-@media (max-width:640px){.cover{aspect-ratio:16/8;max-height:200px}.nr{grid-template-columns:minmax(0,1fr) 92px}.lead h3{font-size:calc(24px*var(--disp-k))}}
+@media (max-width:640px){.nr{grid-template-columns:minmax(0,1fr) 92px}.lead h3{font-size:calc(24px*var(--disp-k))}}
 .colm{border-left:4px solid var(--red)}
 /* правая колонка */
 .wg-h{display:flex;justify-content:space-between;align-items:center;padding:14px 16px 10px}
@@ -498,7 +499,7 @@ table.st tbody tr:hover td{background:var(--soft);cursor:pointer}
 .spark i.z{background:var(--soft2);height:4px!important}
 @keyframes growh{from{height:0}}
 /* читалка */
-.reader .cover{aspect-ratio:16/8;max-height:360px}
+.reader .cover{aspect-ratio:16/9}
 .reader .rb{padding:18px 20px 30px;display:flex;flex-direction:column;gap:14px}
 .reader h1{font-family:var(--f-disp);font-size:calc(32px*var(--disp-k));line-height:1.08}
 .reader .dek{font-size:var(--fs-l);line-height:1.45;color:var(--ink2)}
@@ -507,17 +508,27 @@ table.st tbody tr:hover td{background:var(--soft);cursor:pointer}
 .reader .who button{display:flex;align-items:center;gap:8px;padding:6px 12px 6px 6px;border-radius:999px;background:var(--card);border:1px solid var(--line);font-weight:600;font-size:var(--fs-s)}
 .reader .who .ph{--s:30px}
 .reader .who .lg{--s:26px}
+/* позиции и G/A */
+.poster .pp{background:rgba(255,255,255,.18);color:inherit}
+.pp{display:inline-block;font-family:var(--f-body);font-size:10.5px;font-weight:700;line-height:1.5;padding:0 5px;border-radius:4px;background:var(--soft2);color:var(--ink2);margin-left:6px;vertical-align:2px;letter-spacing:.02em}
+.ga{white-space:nowrap}.ga>small{display:inline!important;margin:0 0 0 1px!important;font-size:.62em;font-weight:700;color:var(--mute);margin-left:1px;letter-spacing:.02em}
+/* главная новость: на широком экране картинка сбоку */
+@media (min-width:900px){
+.lead:has(.cover){display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:stretch}
+.lead:has(.cover) .cover{aspect-ratio:auto;height:100%;min-height:260px}
+.lead:has(.cover) .tx{padding:20px 22px;justify-content:center}
+}
 </style>
 </head>
 <body>
 <header class="top"><div class="wrap">
-  <a class="mark" href="#home" aria-label="Сводка НХЛ — на главную"><svg viewBox="0 -4 70 68" aria-hidden="true"><path d="M12.5 44.2 V35.6 Q12.5 34.0 14.1 34.0 H18.1 Q19.7 34.0 19.7 35.6 V44.2 Z" fill="#fff"/><path d="M22.5 44.2 V26.6 Q22.5 25.0 24.1 25.0 H28.1 Q29.7 25.0 29.7 26.6 V44.2 Z" fill="#fff"/><path d="M32.5 44.2 V16.1 Q32.5 14.5 34.1 14.5 H38.1 Q39.7 14.5 39.7 16.1 V44.2 Z" fill="#FF4A55"/><path d="M11.2 46.6 L42.0 46.6 L62.20 6.00 C63.10 3.80 67.93 5.81 67.03 8.41 L45.54 51.6 C44.54 54.800000000000004 42.94 55.2 40.34 55.2 L13.5 55.2 C7.4 55.2 3.6 53.6 3.2 50.6 C2.9 48.2 4.8 46.6 7.4 46.6 Z" fill="#fff"/><path d="M30 46.6V55.2M34 46.6V55.2" stroke="#121418" stroke-width="1.1"/></svg><b>Сводка<span>НХЛ</span></b></a>
+  <a class="mark" href="#home" aria-label="NHL-STATS.RU — на главную"><svg viewBox="0 -4 70 68" aria-hidden="true"><path d="M12.5 44.2 V35.6 Q12.5 34.0 14.1 34.0 H18.1 Q19.7 34.0 19.7 35.6 V44.2 Z" fill="#fff"/><path d="M22.5 44.2 V26.6 Q22.5 25.0 24.1 25.0 H28.1 Q29.7 25.0 29.7 26.6 V44.2 Z" fill="#fff"/><path d="M32.5 44.2 V16.1 Q32.5 14.5 34.1 14.5 H38.1 Q39.7 14.5 39.7 16.1 V44.2 Z" fill="#FF4A55"/><path d="M11.2 46.6 L42.0 46.6 L62.20 6.00 C63.10 3.80 67.93 5.81 67.03 8.41 L45.54 51.6 C44.54 54.800000000000004 42.94 55.2 40.34 55.2 L13.5 55.2 C7.4 55.2 3.6 53.6 3.2 50.6 C2.9 48.2 4.8 46.6 7.4 46.6 Z" fill="#fff"/><path d="M30 46.6V55.2M34 46.6V55.2" stroke="#121418" stroke-width="1.1"/></svg><b>NHL-STATS<span>.RU</span></b></a>
   <nav class="tnav" id="tnav" aria-label="Разделы"></nav>
   <div class="upd" id="upd"></div>
 </div></header>
 <div class="strip" id="strip" aria-label="Счета и расписание"><div class="wrap"></div></div>
 <main class="wrap" id="app"><div class="skel" aria-label="Загружаю"><i></i><i></i><i></i><i></i></div></main>
-<footer class="foot">Сводка НХЛ — любительский проект. Данные: NHL, MoneyPuck, DailyFaceoff, живой счёт — ESPN. Логотипы и фото игроков — НХЛ и клубов, фото к новостям — издания-источники. Прогнозы — мнение модели, а не рекомендация делать ставки.</footer>
+<footer class="foot">NHL-STATS.RU — любительский проект, не связан с НХЛ. Данные: NHL, MoneyPuck, DailyFaceoff, живой счёт — ESPN. Логотипы и фото игроков — НХЛ и клубов, фото к новостям — издания-источники. Прогнозы — мнение модели, а не рекомендация делать ставки.</footer>
 <nav class="dock" aria-label="Разделы"><div class="wrap" id="dock"></div></nav>
 <div class="sheet" id="sheet" hidden><div class="panel" id="panel" role="dialog" aria-modal="true"></div></div>
 <script src="core.js?v=1"></script>
