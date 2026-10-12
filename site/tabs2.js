@@ -14,7 +14,7 @@ const css=`
 .t2r{border-top:1px solid var(--line)}
 .t2r:first-child{border-top:0}
 .t2r.mo{box-shadow:inset 3px 0 0 var(--gold)}
-.t2row{display:grid;grid-template-columns:70px minmax(0,1fr) 150px 170px 22px;gap:6px 16px;align-items:center;padding:14px 16px;width:100%;background:none;border:0;text-align:left;color:inherit;font:inherit;cursor:pointer}
+.t2row{display:grid;grid-template-columns:70px minmax(0,1fr) 140px 230px 22px;gap:6px 16px;align-items:center;padding:14px 16px;width:100%;background:none;border:0;text-align:left;color:inherit;font:inherit;cursor:pointer}
 .t2row:hover{background:var(--soft)}
 .t2t{font-family:var(--display);font-size:20px;font-weight:700;line-height:1;display:flex;flex-direction:column}
 .t2t small{font-family:var(--body,inherit);font-size:11.5px;font-weight:600;color:var(--mute);margin-top:4px;white-space:nowrap}
@@ -59,6 +59,10 @@ const css=`
 .t2more summary::-webkit-details-marker{display:none}
 .t2more[open] summary{margin-bottom:12px}
 .t2more .mtab{width:100%}
+.t2alt{background:var(--goldbg);border-radius:8px;padding:12px 14px;display:flex;flex-direction:column;gap:4px}
+.t2alt small{font-size:12.5px;font-weight:700;color:var(--gold)}
+.t2alt p{margin:0;font-size:14px;line-height:1.5;color:var(--ink2)}
+.t2alt b{color:var(--ink)}
 .t2acts{grid-column:1/-1;display:flex;gap:8px;flex-wrap:wrap}
 /* неделя */
 .t2wk{display:grid;grid-template-columns:70px minmax(0,240px) minmax(0,240px);gap:10px 16px;align-items:center;padding:10px 16px;border-top:1px solid var(--line);font-size:15px}
@@ -108,6 +112,7 @@ table.st td.l b{white-space:nowrap}
  .t2pk{grid-column:2/3;flex-direction:row;flex-wrap:wrap;gap:6px 10px;align-items:center}
  .t2chev{grid-column:3;grid-row:1}
  .t2tm .fd,.t2tm small,.t2pk .favpk{display:none}
+ .t2pick{grid-template-columns:minmax(0,1fr)}
  .t2x{grid-template-columns:minmax(0,1fr);padding:4px 12px 16px}
  .t2mo{grid-column:1/-1}
  .t2wk{grid-template-columns:52px minmax(0,1fr);padding:10px 12px}
@@ -129,30 +134,45 @@ const pcLine=(a,p,f)=>`<span class="${f?"f":""}" style="--c:${tcol(a)}"><i></i>$
 function fcOf(p,m){const pa=pB(p,"away"),ph=pB(p,"home");const side=(m&&m.pick_side)||(pa>ph?"away":"home");return {side,t:side==="home"?p.home:p.away,p:side==="home"?ph:pa}}
 window.confLegs=function(){return (D.upcoming||[]).filter(m=>state(m.start)!=="done").map(m=>{const p=modelOf(m);if(!p)return null;const f=fcOf(p,m);return f.p>=.6?f:null}).filter(Boolean).sort((a,b)=>b.p-a.p).slice(0,3)};
 /* ---------------- Матчи ---------------- */
+/* альтернативный взгляд: модель оценивает аутсайдера выше рынка */
+function altOf(p,m){if(!p||p.mkt_home==null)return null;const v=p.verdict||{};const b=v.bet;
+  const f=fcOf(p,m);let side=b&&b.kind==="win"&&["bet","lean"].includes(v.level)?b.side:null;
+  if(!side){const ea=p.p_away-p.mkt_away,eh=p.p_home-p.mkt_home;const s=ea>eh?"away":"home";if(Math.max(ea,eh)>=.03)side=s}
+  if(!side||side===f.side)return null;const o=m&&m.odds?(side==="home"?m.odds.home:m.odds.away):(b&&b.odds);
+  return {side,t:side==="home"?p.home:p.away,pm:side==="home"?p.p_home:p.p_away,pk:side==="home"?p.mkt_home:p.mkt_away,odds:o,fav:f.t}}
+function oddsOf(m,side){return m&&m.odds?(side==="home"?m.odds.home:side==="away"?m.odds.away:side==="over"?m.odds.over:m.odds.under):null}
+function modelBlk(p,m){if(!p)return "";const es=essayOf(p)||[];
+  return `<details class="t2more"><summary>Как считала модель</summary><div class="t2x" style="padding:0;border:0">
+    <div class="t2blk">${es.length?`<div class="t2ess">${es.map(x=>`<p>${esc(x)}</p>`).join("")}</div>`:""}${probBar(p,p.away,p.home)}<div class="t2kv"><div><small>Модель без рынка</small><b>${pct(p.p_away)} : ${pct(p.p_home)}</b></div><div><small>Ожидаемые голы</small><b>${nz(p.lam_away)} : ${nz(p.lam_home)}</b></div><div><small>Ничья в осн. время</small><b>${pct(p.p_ot)}</b></div>${p.mkt_home!=null?`<div><small>Рынок</small><b>${pct(p.mkt_away)} : ${pct(p.mkt_home)}</b></div>`:""}</div></div>
+    <div class="t2blk"><h4 style="margin-top:0">Из чего складывается оценка</h4><ul class="t2ul">${modelWhy(m||p,p).map(x=>`<li>${x}</li>`).join("")}</ul>${(p.h2h||[]).length?`<h4>Личные встречи в сезоне</h4><ul class="t2ul">${p.h2h.map(g=>`<li>${esc(dShort(g.date))}: ${EN[g.away]} — ${EN[g.home]} <b>${esc(g.score)}</b>${g.end&&g.end!=="REG"?" "+endTag(g.end):""}</li>`).join("")}</ul>`:""}</div></div></details>`}
+function altBox(a){return a?`<div class="t2alt full"><small>Альтернативный взгляд</small><p>Фаворит — <b>${EN[a.fav]}</b>, но модель оценивает шансы <b>${EN[a.t]}</b> выше рынка: ${pct(a.pm)} против ${pct(a.pk)}${a.odds?`. По линии-ориентиру — <b>${f2(a.odds)}</b>, рынок их недооценивает`:""}. Это более рискованный вариант.</p></div>`:""}
 function gDetail(m,p){const tp=m.total_pick;const pickT=m.pick_side?sideTeam(m,m.pick_side):null;
-  const po=m.odds?(m.pick_side==="home"?m.odds.home:m.odds.away):null;
-  const ga=m.goalies||[];const injA=injOut(m.away),injH=injOut(m.home);const h2h=(p&&p.h2h)||[];
-  const pick=pickT||tp?`<div class="t2pick full">${pickT?`<div><small>Исход</small><b>${EN[pickT]}${po?`<em>${f2(po)}</em>`:""}</b>${m.lean?`<p>${esc(m.lean)}</p>`:""}</div>`:""}${tp?`<div><small>Тотал</small><b>${tp.side==="over"?"Больше":"Меньше"} ${esc(tp.line)}${tp.odds?`<em>${f2(tp.odds)}</em>`:""}</b>${tp.lean?`<p>${esc(tp.lean)}</p>`:""}</div>`:""}</div>`:"";
+  const po=oddsOf(m,m.pick_side);const ga=m.goalies||[];const injA=injOut(m.away),injH=injOut(m.home);
+  const pick=pickT||tp?`<div class="t2pick full">${pickT?`<div><small>Прогноз на исход</small><b>${EN[pickT]}${po?`<em>${f2(po)}</em>`:""}</b>${m.lean?`<p>${esc(m.lean)}</p>`:""}</div>`:""}${tp?`<div><small>Тотал</small><b>${tp.side==="over"?"Больше":"Меньше"} ${esc(tp.line)}${tp.odds?`<em>${f2(tp.odds)}</em>`:""}</b>${tp.lean?`<p>${esc(tp.lean)}</p>`:""}</div>`:""}</div>`:"";
   const fac=(m.factors||[]).length?`<div class="t2blk"><h4>Почему так</h4><ul class="t2ul">${m.factors.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div>`:"";
   const gl=`<div class="t2blk"><h4>Вратари</h4><div class="t2kv">${[0,1].map(i=>{const t=i?m.home:m.away;const gp=p&&(i?p.goalie_home:p.goalie_away);return `<div><small>${EN[t]}</small><b>${esc(ga[i]||"не объявлен")}</b>${gp&&gp.sv?`<small>${(gp.sv*100).toFixed(1).replace(".",",")}% отражённых · ${gp.gp} и.</small>`:""}</div>`}).join("")}</div>
     ${(injA.length||injH.length)?`<h4>Без кого играют</h4><ul class="t2ul">${[[m.away,injA],[m.home,injH]].filter(x=>x[1].length).map(([t,l])=>`<li><b>${EN[t]}:</b> ${l.map(x=>esc(x.name)).join(", ")}</li>`).join("")}</ul>`:""}</div>`;
-  const more=`<details class="t2more"><summary>Линии, модель и личные встречи</summary><div class="t2x" style="padding:0;border:0">
-     <div class="t2blk">${oddsRow(m)}${booksTable(m)}${softBlock(p)}${p?`<h4>Модель</h4>${probBar(p,m.away,m.home)}<div class="t2kv"><div><small>Ожидаемые голы</small><b>${p.lam_away.toFixed(1)} : ${p.lam_home.toFixed(1)}</b></div><div><small>Ничья в осн. время</small><b>${pct(p.p_ot)}</b></div></div>`:""}</div>
-     <div class="t2blk">${p?`<h4>Из чего складывается оценка</h4><ul class="t2ul">${modelWhy(m,p).map(x=>`<li>${x}</li>`).join("")}</ul>`:""}<h4>Личные встречи в сезоне</h4>${h2h.length?`<ul class="t2ul">${h2h.map(g=>`<li>${esc(dShort(g.date))}: ${EN[g.away]} — ${EN[g.home]} <b>${esc(g.score)}</b>${g.end&&g.end!=="REG"?" "+endTag(g.end):""}</li>`).join("")}</ul>`:'<p class="t2note">В этом сезоне ещё не встречались.</p>'}</div></div></details>`;
-  return `<div class="t2x">${pick}${fac}${gl}${more}<div class="t2acts"><button class="btn ghost" data-team="${m.away}">${EN[m.away]}: карточка</button><button class="btn ghost" data-team="${m.home}">${EN[m.home]}: карточка</button></div></div>`}
+  const lines=(m.odds||m.books||m.odds_1x)?`<div class="t2blk full"><h4>Линии</h4>${booksTable(m)}</div>`:"";
+  return `<div class="t2x">${pick}${altBox(altOf(p,m))}${fac}${gl}${lines}${modelBlk(p,m)}<div class="t2acts"><button class="btn ghost" data-team="${m.away}">${EN[m.away]}: карточка</button><button class="btn ghost" data-team="${m.home}">${EN[m.home]}: карточка</button></div></div>`}
 
 function gRow(m,isMo){const key=`${m.away}-${m.home}`,open=OPEN.has(key);const p=modelOf(m);const s=state(m.start);
   const pa=p?(p.p_away_blend??p.p_away):null,ph=p?(p.p_home_blend??p.p_home):null;const fa=pa!=null&&pa>ph;
-  const v=p&&p.verdict?LV[p.verdict.level]:null;const pickT=m.pick_side?sideTeam(m,m.pick_side):null;const tp=m.total_pick;
+  const pickT=m.pick_side?sideTeam(m,m.pick_side):null;const tp=m.total_pick;const po=oddsOf(m,m.pick_side);const a=altOf(p,m);
   const time=s==="live"?'<span class="chip live">LIVE</span>':s==="done"?`${kt(m.start)}<small>завершён</small>`:`${kt(m.start)}${rel2(m.start)?`<small>${rel2(m.start)}</small>`:""}`;
   return `<div class="t2r${isMo?" mo":""}" id="g-${key}"><button class="t2row" data-tog="${key}" aria-expanded="${open}"><span class="t2t">${time}</span>
     <span class="t2tm">${tmLine(m.away,pa,fa)}${tmLine(m.home,ph,!fa)}</span>
     <span class="t2pc">${pa!=null?pcLine(m.away,pa,fa)+pcLine(m.home,ph,!fa):""}</span>
-    <span class="t2pk">${pickT?`<span class="pk"><small>Исход</small>${EN[pickT]}</span>`:""}${tp?`<span class="pk"><small>Тотал</small>${tp.side==="over"?"ТБ":"ТМ"} ${esc(tp.line)}</span>`:""}</span>${chev}
+    <span class="t2pk">${pickT?`<span class="pk"><small>Исход</small>${EN[pickT]}${po?` · ${f2(po)}`:""}</span>`:""}${tp?`<span class="pk"><small>Тотал</small>${tp.side==="over"?"ТБ":"ТМ"} ${esc(tp.line)}${tp.odds?` · ${f2(tp.odds)}`:""}</span>`:""}${a?`<span class="t2chip gold">Недооценка: ${EN[a.t]}${a.odds?` · ${f2(a.odds)}`:""}</span>`:""}</span>${chev}
     ${isMo&&D.motd.text?`<p class="t2mo"><b>Матч дня.</b> ${esc(D.motd.text)}</p>`:""}</button>${open?gDetail(m,p):""}</div>`}
 
-function weekList(){const w=(D.week||[]).filter(g=>g.date>(D.upcoming_date||""));if(!w.length)return"";const by={};w.forEach(g=>(by[g.date]=by[g.date]||[]).push(g));
-  return `<section class="t2"><div class="t2hd"><h3>Дальше на неделе<small>прогнозы появятся накануне</small></h3></div>${Object.entries(by).map(([d,gs],k)=>`<details class="t2day" ${k?"":"open"}><summary>${esc(dLong(d))}<small>${plural(gs.length,"матч","матча","матчей")}</small></summary><div class="t2box">${gs.slice().sort((a,b)=>String(a.start).localeCompare(String(b.start))).map(g=>`<div class="t2wk"><time>${kt(g.start)}</time><span>${badge(g.away,"s")}${EN[g.away]}</span><span>${badge(g.home,"s")}${EN[g.home]}</span></div>`).join("")}</div></details>`).join("")}</section>`}
+function wRow({p,m,start}){const key="w"+(p.id||p.away+p.home),open=OPEN.has(key);const pa=pB(p,"away"),ph=pB(p,"home");const fa=pa>ph;
+  const b2b=[p.b2b_away&&EN[p.away],p.b2b_home&&EN[p.home]].filter(Boolean);
+  return `<div class="t2r" id="${key}"><button class="t2row" data-tog="${key}" aria-expanded="${open}"><span class="t2t">${kt(start)}</span>
+    <span class="t2tm">${tmLine(p.away,pa,fa)}${tmLine(p.home,ph,!fa)}</span><span class="t2pc">${pcLine(p.away,pa,fa)}${pcLine(p.home,ph,!fa)}</span>
+    <span class="t2pk"><span class="pk"><small>Фаворит</small>${EN[fa?p.away:p.home]}</span>${b2b.length?`<span class="pk"><small>Второй матч подряд</small>${b2b.join(", ")}</span>`:""}</span>${chev}</button>${open?`<div class="t2x">${modelBlk(p,m).replace('<details class="t2more">','<details class="t2more" open>')}</div>`:""}</div>`}
+function weekList(){const ids=new Set((D.upcoming||[]).map(x=>x.away+x.home));const all=mGames().filter(g=>g.p.date>(D.upcoming_date||"")&&!ids.has(g.p.away+g.p.home));if(!all.length)return"";
+  const by={};all.forEach(g=>(by[g.p.date]=by[g.p.date]||[]).push(g));
+  return `<section class="t2"><div class="t2hd"><h3>Дальше на неделе<small>предварительно, по модели без линии</small></h3></div>${Object.entries(by).map(([d,gs],k)=>`<details class="t2day" ${k?"":"open"}><summary>${esc(dLong(d))}<small>${plural(gs.length,"матч","матча","матчей")}</small></summary><div class="t2box">${gs.map(wRow).join("")}</div></details>`).join("")}</section>`}
 
 window.vGames=function(){const u=(D.upcoming||[]).slice().sort((a,b)=>String(a.start).localeCompare(String(b.start)));
   if(!u.length)return `<div class="t2">${weekList()||'<div class="card empty">Матчей в ближайший игровой день нет.</div>'}</div>`;
@@ -161,7 +181,7 @@ window.vGames=function(){const u=(D.upcoming||[]).slice().sort((a,b)=>String(a.s
   return `<div class="t2"><section class="t2"><div class="t2hd"><h2>Матчи<small>${esc(dLong(D.upcoming_date))}, время по Кирову</small></h2></div>
     ${ex.length?`<p class="t2note">Самые уверенные исходы: ${ex.map(x=>`<b>${EN[x.t]}</b> ${pct(x.p)}`).join(", ")}</p>`:""}
     <div class="t2box">${u.map(m=>gRow(m,m===mo)).join("")}</div>
-    <p class="t2note" style="font-size:12.5px;color:var(--mute)">Проценты — итог модели и рынка (60% рынка, 40% модели). Нажми на матч, чтобы открыть разбор.</p></section>${weekList()}</div>`};
+    <p class="t2note" style="font-size:12.5px;color:var(--mute)">Проценты — итог модели и рынка (60% рынка, 40% модели), кэфы — линия-ориентир. «Недооценка» — модель оценивает аутсайдера заметно выше рынка. Нажми на матч, чтобы открыть разбор.</p></section>${weekList()}</div>`};
 
 /* ---------------- Модель ---------------- */
 function mDetail(p,m){const hasOdds=m.odds||m.odds_1x||m.books||m.fonbet;
@@ -207,5 +227,7 @@ window.vTable=function(){return _vTable().replace('class="grid2"','class="t2tg"'
 window.lineChart=function(){return ""};
 const _pc=window.pClaude;window.pClaude=function(){return _pc().replace('<div class="card pad"></div>','')};
 
+(function(){const i=NAV.findIndex(n=>n[0]==="model");if(i>=0)NAV.splice(i,1,["news","Новости"]);const j=MORE.findIndex(n=>n[0]==="news");if(j>=0)MORE.splice(j,1);if(VIEW==="model")VIEW="games"})();
+window.vModel=function(){return window.vGames()};
 try{if(typeof D!=="undefined"&&D&&D.upcoming&&typeof render==="function")render()}catch(e){}
 })();

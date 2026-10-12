@@ -123,7 +123,7 @@ function todaySec(){const u=D.upcoming||[];if(!u.length)return "";
   const list=[...u].sort((a,b)=>String(a.start).localeCompare(String(b.start)));
   const ex=window.confLegs?confLegs():[];
   const conf=ex.length?`<div class="h2conf">Самые уверенные исходы: ${ex.map(x=>`<b>${EN[x.t]}</b> ${pct(x.p)}`).join(", ")}</div>`:"";
-  return `<section class="h2sec"><div class="h2hd"><h2>Сегодня<small>${esc(dLong(D.upcoming_date))}, время по Кирову</small></h2><button class="lnk" data-go="model">Все матчи вперёд</button></div>
+  return `<section class="h2sec"><div class="h2hd"><h2>Сегодня<small>${esc(dLong(D.upcoming_date))}, время по Кирову</small></h2><button class="lnk" data-go="games">Все матчи</button></div>
    <div class="h2box">${list.map(m=>gameRow2(m,m===mo)).join("")}</div>${conf}</section>`}
 
 function nightSec(){const d=lastDate();if(!d)return "";const gs=A.games.filter(g=>g.date===d);const n=dly();
