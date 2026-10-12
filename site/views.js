@@ -180,7 +180,9 @@ function vHome(){return `${staleBanner()}<div class="home"><div class="col">${po
 function goalsBlock(g){if(!g.goals||!g.goals.length)return g.end==="SO"&&g.as+g.hs===1?'<p class="note">Голов в игре не было, победа в серии буллитов.</p>':"";const per={};g.goals.forEach(x=>(per[x[3]]=per[x[3]]||[]).push(x));
   const pn=k=>k==4?"Овертайм":k==5?"Буллиты":`${k}-й период`;const st={pp:"бол.",sh:"мен.",en:"п.в."};
   return `<div class="goals">${Object.keys(per).sort().map(k=>`<div class="per">${pn(+k)}</div>${per[k].map(x=>`<div class="goal"><time>${+k===5?"Б":esc(x[4])}</time>${logo(x[1],26)}<span><b>${esc(x[0])}</b>${st[x[2]]?`<em>${st[x[2]]}</em>`:""}${x[5]?` <span class="as">(${esc(String(x[5]).replace(/,/g,", "))})</span>`:""}</span></div>`).join("")}`).join("")}</div>`}
-function sbar(l,v,a,h,parse=x=>x){const x=parse(v[0]),y=parse(v[1]);const tot=(x+y)||1;return `<div class="sbar"><b>${esc(v[0])}</b><div class="mid"><small>${l}</small><div class="two"><i style="width:${x/tot*100}%;background:${x>=y?tcol(a):"var(--soft2)"}"></i><i style="width:${y/tot*100}%;background:${y>=x?tcol(h):"var(--soft2)"}"></i></div></div><b>${esc(v[1])}</b></div>`}
+function sbar(l,v,a,h,parse=x=>x){const x=parse(v[0]),y=parse(v[1]);const tot=(x+y)||1;const w=z=>Math.max(z/tot*100,z?0:3);
+  let ca=tcol(a),ch=tcol(h);if(String(ca).toLowerCase()===String(ch).toLowerCase())ch=shade(ch,.6);const seg=(z,o,c)=>`<i style="width:${w(z)}%;background:${c};opacity:${z>=o?1:.32}"></i>`;
+  return `<div class="sbar"><b>${esc(v[0])}</b><div class="mid"><small>${l}</small><div class="two">${seg(x,y,ca)}${seg(y,x,ch)}</div></div><b>${esc(v[1])}</b></div>`}
 function sbars(g){const s=g.stats;const parse=v=>typeof v==="string"?+v.split("/")[0]:v;
   if(!s)return g.sog?`<div class="sbars">${sbar("Броски в створ",g.sog,g.away,g.home)}</div>`:"";
   const rows=[["Броски в створ",s.sog],["Большинство",s.pp],["Вбрасывания, %",s.fo],["Силовые",s.hits],["Блок-шоты",s.blk],["Штрафные минуты",s.pim]].filter(r=>r[1]);
