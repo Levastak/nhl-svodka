@@ -776,8 +776,8 @@ def hist():
                 val = lambda k: re.sub("<[^>]+>", "", (md.get(k) or {}).get("value", "")).strip()
                 lic = val("LicenseShortName")
                 ok = bool(re.search(r"CC|Public domain|PD|GFDL", lic, re.I)) and ii.get("width", 0) >= 700 \
-                    and bool(re.search(r"\.(jpe?g|png|webp|tiff?)$", ii.get("url", ""), re.I))
-                res.append(dict(ok=ok, title=pg.get("title"), url=ii.get("thumburl") or ii.get("url"), page=ii.get("descriptionurl"),
+                    and bool(re.search(r"\.(jpe?g|png|webp|tiff?)$", ii.get("url", "").split("?")[0], re.I))
+                res.append(dict(ok=ok, title=pg.get("title"), url=(ii.get("thumburl") or ii.get("url") or "").split("?")[0], page=(ii.get("descriptionurl") or "").split("?")[0],
                                 author=val("Artist")[:120], license=lic, date=val("DateTimeOriginal")[:20],
                                 desc=val("ImageDescription")[:200], w=ii.get("width"), h=ii.get("height")))
             res.sort(key=lambda x: (not x["ok"], -(x["w"] or 0)))
