@@ -1,0 +1,71 @@
+name: Сводка НХЛ
+
+on:
+  schedule:
+    - cron: "17 8 * * *"    # 11:17 по Кирову — утренний сбор
+    - cron: "19 20 * * *"   # 23:19 по Кирову — предматчевый сбор
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "am — утренний сбор, pm — предматчевый, deploy — только опубликовать"
+        default: deploy
+  push:
+    branches: [main]
+    paths: ["site/**", "trigger/**"]
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: svodka
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - name: Режим
+        id: mode
+        run: |
+          if [ "${{ github.event_name }}" = "schedule" ]; then
+            if [ "${{ github.event.schedule }}" = "17 8 * * *" ]; then echo "mode=am" >> $GITHUB_OUTPUT; else echo "mode=pm" >> $GITHUB_OUTPUT; fi
+          elif [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "mode=${{ github.event.inputs.mode }}" >> $GITHUB_OUTPUT
+          elif git diff --name-only HEAD~1 HEAD | grep -q '^trigger/mode$'; then
+            echo "mode=$(tr -d '[:space:]' < trigger/mode)" >> $GITHUB_OUTPUT
+          else
+            echo "mode=deploy" >> $GITHUB_OUTPUT
+          fi
+      - uses: actions/setup-python@v5
+        if: steps.mode.outputs.mode != 'deploy'
+        with:
+          python-version: "3.12"
+      - name: Сбор данных и модель
+        if: steps.mode.outputs.mode != 'deploy'
+        env:
+          ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
+        run: python3 scripts/fetch.py ${{ steps.mode.outputs.mode }}
+      - name: Сохранить данные в репозиторий
+        if: steps.mode.outputs.mode != 'deploy'
+        run: |
+          git config user.name "svodka-bot"
+          git config user.email "svodka-bot@users.noreply.github.com"
+          git add site
+          git diff --cached --quiet && exit 0
+          git commit -m "Данные: ${{ steps.mode.outputs.mode }} $(date -u +%Y-%m-%dT%H:%MZ)"
+          for i in 1 2 3; do git pull --rebase -X theirs origin main && git push && break; sleep 5; done
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+      - uses: actions/deploy-pages@v4
+        id: deploy
