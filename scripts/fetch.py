@@ -727,6 +727,60 @@ def news_images(data=None):
     return n
 
 
+# ---------- история: данные НХЛ и свободные фото по запросу (trigger/hist) ----------
+def hist():
+    """Строки trigger/hist: «player <id>» — карьера игрока (api-web.nhle.com landing);
+    «teams» — итоги всех команд по сезонам с 2005/06 (регулярка и плей-офф);
+    «photos <запрос>» — свободные фото с Wikimedia Commons (лицензия и автор).
+    Результат — site/hist/*.json для задачи «История»."""
+    import urllib.parse
+    os.makedirs(f"{SITE}/hist", exist_ok=True)
+    try:
+        lines = [l.strip() for l in open("trigger/hist", encoding="utf-8") if l.strip() and not l.startswith("#")]
+    except Exception:
+        lines = []
+    for line in lines:
+        kind, _, arg = line.partition(" ")
+        arg = arg.strip()
+        if kind == "player" and arg.isdigit():
+            j, _ = get(f"https://api-web.nhle.com/v1/player/{arg}/landing")
+            if j:
+                save(f"{SITE}/hist/player-{arg}.json", j)
+                LOG["ok"].append(f"hist player {arg}")
+        elif kind == "teams":
+            out = {}
+            for gt in (2, 3):
+                url = ("https://api.nhle.com/stats/rest/en/team/summary?isAggregate=false&isGame=false&limit=-1"
+                       f"&cayenneExp=gameTypeId={gt}%20and%20seasonId%3E=20052006")
+                j, _ = get(url)
+                if j and j.get("data"):
+                    out["regular" if gt == 2 else "playoffs"] = j["data"]
+            if out:
+                save(f"{SITE}/hist/teams.json", out)
+                LOG["ok"].append("hist teams")
+        elif kind == "photos" and arg:
+            q = urllib.parse.quote(arg)
+            url = ("https://commons.wikimedia.org/w/api.php?action=query&format=json&generator=search"
+                   f"&gsrsearch={q}&gsrnamespace=6&gsrlimit=20&prop=imageinfo&iiprop=url%7Cextmetadata%7Csize&iiurlwidth=1400")
+            j, _ = get(url)
+            res = []
+            for pg in ((j or {}).get("query", {}).get("pages", {}) or {}).values():
+                ii = (pg.get("imageinfo") or [{}])[0]
+                md = ii.get("extmetadata", {})
+                val = lambda k: re.sub("<[^>]+>", "", (md.get(k) or {}).get("value", "")).strip()
+                lic = val("LicenseShortName")
+                if not re.search(r"CC|Public domain|PD", lic, re.I):
+                    continue
+                if ii.get("width", 0) < 800 or not re.search(r"\.(jpe?g|png)$", ii.get("url", ""), re.I):
+                    continue
+                res.append(dict(title=pg.get("title"), url=ii.get("thumburl") or ii.get("url"), page=ii.get("descriptionurl"),
+                                author=val("Artist")[:120], license=lic, date=val("DateTimeOriginal")[:20],
+                                desc=val("ImageDescription")[:200], w=ii.get("width"), h=ii.get("height")))
+            slug = re.sub(r"[^a-z0-9]+", "-", arg.lower()).strip("-")
+            save(f"{SITE}/hist/photos-{slug}.json", res)
+            LOG["ok"].append(f"hist photos {arg}: {len(res)}")
+
+
 if __name__ == "__main__":
     mode = sys.argv[1] if len(sys.argv) > 1 else "am"
     if mode == "roster":
@@ -735,6 +789,10 @@ if __name__ == "__main__":
         if len(ppos) > 500:
             d["numbers"], d["russians"], d["heads"], d["ppos"] = numbers, russians, heads, ppos
             save(f"{SITE}/data.json", d)
+        print(json.dumps(LOG, ensure_ascii=False))
+        sys.exit(0)
+    if mode == "hist":
+        hist()
         print(json.dumps(LOG, ensure_ascii=False))
         sys.exit(0)
     if mode == "img":

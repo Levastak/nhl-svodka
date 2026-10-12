@@ -83,6 +83,7 @@ document.addEventListener("visibilitychange",()=>{if(!document.hidden&&Date.now(
   for(const s of D.standings||[])if(s.logo)LOGO[s.abbr]=s.logo;
   buildTeams();render();
   try{A=await fetch(DATA+"archive.json"+v).then(r=>r.json());buildTeams();rerenderKeep()}catch(e){}
+  try{ST=await fetch(DATA+"stories.json"+v).then(r=>r.ok?r.json():[]);ST=(Array.isArray(ST)?ST:ST.stories||[]).slice().sort((a,b)=>String(b.time).localeCompare(String(a.time)));if(ST.length)rerenderKeep()}catch(e){ST=[]}
   liveLoop();
   setInterval(()=>{if(["home","games"].includes(VIEW)&&$("#sheet").hidden&&!needLive())rerenderKeep()},60000);
 })();

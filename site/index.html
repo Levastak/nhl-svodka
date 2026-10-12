@@ -386,6 +386,18 @@ table.mt td small{display:block;color:var(--mute);font-size:var(--fs-xs)}
 .nr .th.art .lgw .lg{--s:74%}
 @media (max-width:640px){.nr{grid-template-columns:minmax(0,1fr) 92px}.lead h3{font-size:calc(24px*var(--disp-k))}}
 .colm{border-left:4px solid var(--red)}
+.stm{border-left:4px solid var(--gold)}.meta .k.st{color:var(--gold)}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:10px;margin:14px 0}
+.facts>div{background:var(--soft);border-radius:10px;padding:10px 12px}.facts b{display:block;font-family:var(--f-disp);font-size:28px;line-height:1}.facts small{display:block;margin-top:4px;font-size:var(--fs-xs);color:var(--mute)}
+.hch{margin:18px 0;padding:14px;border:1px solid var(--line);border-radius:12px}
+.hch figcaption{font-size:var(--fs-xs);font-weight:700;color:var(--mute);margin-bottom:10px}
+.hch .cols{display:flex;align-items:stretch;gap:6px}
+.hch .c{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;gap:4px}
+.hch .c>b{font-size:var(--fs-xs);font-weight:700;height:14px}
+.hch .bar{height:120px;width:100%;display:flex;align-items:flex-end;justify-content:center}
+.hch .bar i{width:72%;max-width:34px;background:var(--soft2);border-radius:4px 4px 0 0;animation:growh .6s ease-out both}
+.hch .c.hl .bar i{background:var(--gold)}
+.hch .c>small{font-size:10px;color:var(--mute);white-space:nowrap}
 /* правая колонка */
 .wg-h{display:flex;justify-content:space-between;align-items:center;padding:14px 16px 10px}
 .wg-h h3{font-family:var(--f-disp);font-size:calc(22px*var(--disp-k))}
