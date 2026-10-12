@@ -95,6 +95,9 @@ const css=`
 .t2fold .t2ess{padding:0 16px 16px}
 .sum{grid-template-columns:repeat(3,minmax(0,1fr))!important}
 .sum .card b{font-size:26px}
+.bdg.lg picture,.bdg.lg img{width:100%;height:100%;display:block;object-fit:contain}
+.bdg.ph{border-radius:50%;overflow:hidden;background:var(--c1);box-shadow:0 0 0 2px var(--card),0 0 0 3px var(--c1)}
+.bdg.ph img{width:100%;height:100%;display:block;object-fit:cover;object-position:50% 10%;background:linear-gradient(180deg,rgba(255,255,255,.18),rgba(255,255,255,0))}
 /* таблица */
 .t2tg{display:grid;gap:16px;grid-template-columns:minmax(0,1fr)}
 @media (min-width:1100px){.t2tg{grid-template-columns:repeat(2,minmax(0,1fr))}}
@@ -227,6 +230,16 @@ window.vTable=function(){return _vTable().replace('class="grid2"','class="t2tg"'
 window.lineChart=function(){return ""};
 const _pc=window.pClaude;window.pClaude=function(){return _pc().replace('<div class="card pad"></div>','')};
 
+
+/* официальные логотипы клубов и фото игроков (если не загрузились — остаётся наш значок) */
+const _badge0=window.badge,_pk0=window.pk;
+const LG="https://assets.nhle.com/logos/nhl/svg/",MG="https://assets.nhle.com/mugs/nhl/";
+window._bdf=function(img){const s=img.closest(".bdg");if(s)s.outerHTML=_badge0(s.dataset.a,s.dataset.c||"")};
+window._pkf=function(img){const s=img.closest(".bdg");if(s)s.outerHTML=_pk0(s.dataset.n,s.dataset.t,s.dataset.c||"",s.dataset.p||undefined)};
+window.badge=function(a,cls=""){if(!COLORS[a])return _badge0(a,cls);
+  return `<span class="bdg lg ${cls}" data-a="${a}" data-c="${esc(cls)}" aria-hidden="true"><picture><source srcset="${LG}${a}_dark.svg" media="(prefers-color-scheme: dark)"><img src="${LG}${a}_light.svg" alt="" loading="lazy" decoding="async" onerror="_bdf(this)"></picture></span>`};
+window.pk=function(name,team,cls="",pos){const h=D&&D.heads&&D.heads[name];if(!h||!COLORS[team])return _pk0(name,team,cls,pos);
+  return `<span class="bdg ph ${cls}" data-n="${esc(name)}" data-t="${team}" data-c="${esc(cls)}" data-p="${esc(pos||"")}" style="--c1:${COLORS[team][0]}" aria-hidden="true" title="${esc(name)}"><img src="${MG}${h}.png" alt="" loading="lazy" decoding="async" onerror="_pkf(this)"></span>`};
 (function(){const i=NAV.findIndex(n=>n[0]==="model");if(i>=0)NAV.splice(i,1,["news","Новости"]);const j=MORE.findIndex(n=>n[0]==="news");if(j>=0)MORE.splice(j,1);if(VIEW==="model")VIEW="games"})();
 window.vModel=function(){return window.vGames()};
 try{if(typeof D!=="undefined"&&D&&D.upcoming&&typeof render==="function")render()}catch(e){}

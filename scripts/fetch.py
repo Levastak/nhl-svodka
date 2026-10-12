@@ -246,7 +246,7 @@ def leaders(skaters):
 
 
 def rosters():
-    numbers, russians, seen = {}, [], {}
+    numbers, russians, seen, heads = {}, [], {}, {}
     for t in TEAMS:
         r, _ = get(f"https://api-web.nhle.com/v1/roster/{t}/current", label=f"roster {t}")
         if not r:
@@ -254,6 +254,9 @@ def rosters():
         for grp in ("forwards", "defensemen", "goalies"):
             for p in r.get(grp, []):
                 nm = f'{p["firstName"]["default"]} {p["lastName"]["default"]}'
+                hs = str(p.get("headshot") or "")
+                if "/mugs/nhl/" in hs:
+                    heads[nm] = hs.split("/mugs/nhl/")[1].rsplit(".", 1)[0]
                 num, pos = p.get("sweaterNumber"), p.get("positionCode")
                 if num is None:
                     continue
@@ -266,7 +269,7 @@ def rosters():
                 seen[nm] = (t, pos)
                 if p.get("birthCountry") == "RUS":
                     russians.append(dict(name=nm, team=t))
-    return numbers, russians
+    return numbers, russians, heads
 
 
 # ---------------------------------------------------------------- DailyFaceoff
@@ -539,9 +542,11 @@ def am():
     if st:
         data["standings"] = st
         LOG["ok"].append("standings")
-    numbers, russians = rosters()
+    numbers, russians, heads = rosters()
     if len(numbers) > 500:
         data["numbers"], data["russians"] = numbers, russians
+    if len(heads) > 500:
+        data["heads"] = heads
         LOG["ok"].append("rosters")
 
     teams = dict(data.get("teams") or {})
@@ -626,6 +631,10 @@ def pm():
             teams[t] = x
         time.sleep(0.5)
     data["teams"] = teams
+    if not data.get("heads"):
+        _, _, heads = rosters()
+        if len(heads) > 500:
+            data["heads"] = heads
 
     ev, rem = odds_events()
     if ev is not None:
