@@ -1,0 +1,43 @@
+name: probe
+on:
+  push:
+    branches: [probe]
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: fetch samples
+        env:
+          ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
+        run: |
+          mkdir -p probe
+          UA="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126 Safari/537.36"
+          get() { code=$(curl -sL -A "$UA" --compressed --max-time 60 -o "probe/$1" -w '%{http_code}' "$2"); echo "$1 $code $(stat -c%s probe/$1 2>/dev/null)" >> probe/report.txt; }
+          get standings.json "https://api-web.nhle.com/v1/standings/now"
+          get score.json "https://api-web.nhle.com/v1/score/2026-10-11"
+          get schedule.json "https://api-web.nhle.com/v1/schedule/2026-10-12"
+          get clubstats_MIN.json "https://api-web.nhle.com/v1/club-stats/MIN/now"
+          get roster_MIN.json "https://api-web.nhle.com/v1/roster/MIN/current"
+          get boxscore.json "https://api-web.nhle.com/v1/gamecenter/2026020085/boxscore"
+          get landing.json "https://api-web.nhle.com/v1/gamecenter/2026020085/landing"
+          get rightrail.json "https://api-web.nhle.com/v1/gamecenter/2026020085/right-rail"
+          get teamsummary.json "https://api.nhle.com/stats/rest/en/team/summary?cayenneExp=seasonId=20262027%20and%20gameTypeId=2"
+          get mp_teams.csv "https://moneypuck.com/moneypuck/playerData/seasonSummary/2026/regular/teams.csv"
+          get mp_goalies.csv "https://moneypuck.com/moneypuck/playerData/seasonSummary/2026/regular/goalies.csv"
+          get mp_skaters.csv "https://moneypuck.com/moneypuck/playerData/seasonSummary/2026/regular/skaters.csv"
+          get dfo_lines_MIN.html "https://www.dailyfaceoff.com/teams/minnesota-wild/line-combinations"
+          get dfo_goalies.html "https://www.dailyfaceoff.com/starting-goalies/2026-10-12"
+          code=$(curl -s -D probe/odds_headers.txt -o probe/odds_sports.json -w '%{http_code}' "https://api.the-odds-api.com/v4/sports/?apiKey=$ODDS_API_KEY")
+          echo "odds_sports $code $(grep -i x-requests-remaining probe/odds_headers.txt | tr -d '\r')" >> probe/report.txt
+          rm -f probe/odds_headers.txt
+          # keep big files small
+          for f in probe/mp_skaters.csv; do head -c 300000 $f > $f.tmp && mv $f.tmp $f; done
+          cat probe/report.txt
+      - name: commit
+        run: |
+          git config user.name "probe-bot"; git config user.email "probe@users.noreply.github.com"
+          git add probe && git commit -m "probe samples" && git push
