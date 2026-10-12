@@ -247,7 +247,7 @@ def leaders(skaters):
 
 
 def rosters():
-    numbers, russians, seen, heads = {}, [], {}, {}
+    numbers, russians, seen, heads, ppos = {}, [], {}, {}, {}
     for t in TEAMS:
         r, _ = get(f"https://api-web.nhle.com/v1/roster/{t}/current", label=f"roster {t}")
         if not r:
@@ -258,6 +258,8 @@ def rosters():
                 hs = str(p.get("headshot") or "")
                 if "/mugs/nhl/" in hs:
                     heads[nm] = hs.split("/mugs/nhl/")[1].rsplit(".", 1)[0]
+                pc, sc = p.get("positionCode"), p.get("shootsCatches")
+                ppos[nm] = {"L": "LW", "R": "RW", "C": "C", "G": "G"}.get(pc) or ("LD" if sc == "L" else "RD" if sc == "R" else "D")
                 num, pos = p.get("sweaterNumber"), p.get("positionCode")
                 if num is None:
                     continue
@@ -270,7 +272,7 @@ def rosters():
                 seen[nm] = (t, pos)
                 if p.get("birthCountry") == "RUS":
                     russians.append(dict(name=nm, team=t))
-    return numbers, russians, heads
+    return numbers, russians, heads, ppos
 
 
 # ---------------------------------------------------------------- DailyFaceoff
@@ -544,11 +546,13 @@ def am():
     if st:
         data["standings"] = st
         LOG["ok"].append("standings")
-    numbers, russians, heads = rosters()
+    numbers, russians, heads, ppos = rosters()
     if len(numbers) > 500:
         data["numbers"], data["russians"] = numbers, russians
     if len(heads) > 500:
         data["heads"] = heads
+    if len(ppos) > 500:
+        data["ppos"] = ppos
         LOG["ok"].append("rosters")
 
     teams = dict(data.get("teams") or {})
@@ -637,10 +641,10 @@ def pm():
         st = standings()
         if st:
             data["standings"] = st
-    if not data.get("heads"):
-        _, _, heads = rosters()
+    if not data.get("heads") or not data.get("ppos"):
+        _, _, heads, ppos = rosters()
         if len(heads) > 500:
-            data["heads"] = heads
+            data["heads"], data["ppos"] = heads, ppos
 
     ev, rem = odds_events()
     if ev is not None:
@@ -725,6 +729,14 @@ def news_images(data=None):
 
 if __name__ == "__main__":
     mode = sys.argv[1] if len(sys.argv) > 1 else "am"
+    if mode == "roster":
+        d = load(f"{SITE}/data.json", {})
+        numbers, russians, heads, ppos = rosters()
+        if len(ppos) > 500:
+            d["numbers"], d["russians"], d["heads"], d["ppos"] = numbers, russians, heads, ppos
+            save(f"{SITE}/data.json", d)
+        print(json.dumps(LOG, ensure_ascii=False))
+        sys.exit(0)
     if mode == "img":
         news_images()
         print(json.dumps(LOG, ensure_ascii=False))
