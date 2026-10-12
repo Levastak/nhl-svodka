@@ -62,6 +62,43 @@ const css=`
 .h2acc{display:flex;align-items:baseline;gap:10px;padding:14px 16px}
 .h2acc b{font-family:var(--display);font-size:34px;font-weight:700;line-height:1}
 @media (max-width:560px){.h2g{grid-template-columns:58px minmax(0,1fr);padding:12px}.h2g .v{grid-row:auto;grid-column:2;justify-self:start}.h2g .h2mo{grid-column:1/-1}.h2hd h2 small{display:block;margin:6px 0 0;font-size:14px}.h2star{grid-template-columns:34px 40px minmax(0,1fr) auto;gap:4px 10px;padding:12px}.h2star .n{font-size:22px}.h2star p{grid-column:2/5}.h2lead h3{font-size:24px}}
+/* герои игрового дня */
+.h2tabs{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding:2px 0 4px;margin:0 -2px}
+.h2tabs::-webkit-scrollbar{display:none}
+.h2tabs button{flex:none;font:inherit;font-size:14px;font-weight:600;padding:7px 14px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--ink2);cursor:pointer}
+.h2tabs button[aria-selected="true"]{background:var(--ink);border-color:var(--ink);color:var(--card)}
+.h2stars{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}
+.h2st{display:flex;flex-direction:column;gap:8px;padding:16px;border-left:1px solid var(--line)}
+.h2st:first-child{border-left:0}
+.h2st .h2top{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.h2st .rk{font-family:var(--display);font-size:15px;font-weight:700;color:var(--gold);display:flex;align-items:center;gap:4px}
+.h2st .rk b{font-size:30px;line-height:1}
+.h2st .ln{font-family:var(--display);font-size:26px;font-weight:700;line-height:1}
+.h2st .who{display:flex;align-items:center;gap:10px;min-width:0}
+.h2nm{display:flex;flex-direction:column;min-width:0}
+.h2nm button{font-weight:700;font-size:16px;text-align:left;padding:0;background:none;border:0;color:inherit;cursor:pointer;line-height:1.2}
+.h2nm small{color:var(--mute);font-size:12.5px;margin-top:2px}
+.h2st p,.h2ft p,.h2se p,.h2fl p{margin:0;font-size:14px;line-height:1.5;color:var(--ink2)}
+.h2ft{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:10px 14px;align-items:center;padding:18px 16px}
+.h2ft .big{text-align:right;font-family:var(--display);font-size:30px;font-weight:700;line-height:1}
+.h2ft .big small{display:block;font-family:var(--body,inherit);font-size:12.5px;font-weight:600;color:var(--mute);margin-top:4px}
+.h2ft p{grid-column:1/-1}
+.h2se{padding:16px;display:flex;flex-direction:column;gap:12px}
+.h2se .sc{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;gap:12px}
+.h2se .tm{display:flex;align-items:center;gap:8px;font-weight:700;min-width:0}
+.h2se .tm:last-child{justify-content:flex-end;text-align:right}
+.h2se .tm.fav{color:var(--mute);font-weight:600}
+.h2se .s{font-family:var(--display);font-size:34px;font-weight:700;font-variant-numeric:tabular-nums;line-height:1}
+.h2se h3{margin:0;font-family:var(--display);font-size:22px;line-height:1.1}
+.h2se .h2why{font-size:14px;color:var(--ink2)}
+.h2se .h2why b{color:var(--ink)}
+.h2se .act{align-self:flex-start;font:inherit;font-size:14px;font-weight:600;color:var(--link);background:none;border:0;padding:0;cursor:pointer}
+.h2fl{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:8px 14px;align-items:center;padding:16px;border-top:1px solid var(--line)}
+.h2fl:first-child{border-top:0}
+.h2fl .big{font-family:var(--display);font-size:24px;font-weight:700;color:var(--loss);white-space:nowrap}
+.h2fl p{grid-column:2/-1}
+.h2fl .h2tag{grid-column:1/-1;font-size:12.5px;font-weight:700;color:var(--mute)}
+@media (max-width:700px){.h2stars{grid-template-columns:1fr}.h2st{border-left:0;border-top:1px solid var(--line)}.h2st:first-child{border-top:0}.h2ft{grid-template-columns:auto minmax(0,1fr)}.h2ft .big{grid-column:1/-1;text-align:left;display:flex;align-items:baseline;gap:10px}.h2ft .big small{margin:0}.h2fl p{grid-column:1/-1}.h2se .s{font-size:28px}}
 .h2acc span{color:var(--ink2);font-size:14px}
 .h2side .wg-h h2{text-transform:none;letter-spacing:0}
 `;
@@ -91,12 +128,34 @@ function todaySec(){const u=D.upcoming||[];if(!u.length)return "";
 
 function nightSec(){const d=lastDate();if(!d)return "";const gs=A.games.filter(g=>g.date===d);const n=dly();
   const sc=`<div class="h2box"><div class="h2scores">${gs.map(g=>{const aw=g.as>g.hs;return `<button class="h2sc" data-res="${g.date}" data-gid="${g.id}"><span class="r ${aw?"":"lo"}">${badge(g.away,"xs")}${EN[g.away]}<span class="s">${g.as}</span></span><span class="r ${aw?"lo":""}">${badge(g.home,"xs")}${EN[g.home]}<span class="s">${g.hs}</span></span>${endTag(g.end)?`<small>${g.end==="OT"?"овертайм":"буллиты"}</small>`:""}</button>`}).join("")}</div></div>`;
-  let stars="";
-  if(n&&n.heroes&&n.heroes.length){
-    const row=(x,lab,cls,role)=>`<div class="h2star ${cls||""}"><span class="n">${lab}</span>${pk(x.name,x.team,"m",x.pos)}<span class="nm"><button class="plink" data-player="${esc(x.name)}" data-pteam="${x.team}">${esc(x.name)}</button><small>${role?role+" · ":""}${esc(FULL[x.team]||x.team)}</small></span><span class="ln">${esc(x.line||"")}</span>${x.text?`<p>${esc(x.text)}</p>`:""}</div>`;
-    stars=`<div class="h2box">${n.heroes.map((x,i)=>row(x,ord(i)+"★")).join("")}${n.goalie&&!n.heroes.some(h=>h.name===n.goalie.name)?row(n.goalie,"","g","Вратарь ночи"):""}${n.russian&&!n.heroes.some(h=>h.name===n.russian.name)?row(n.russian,"","g","Лучший россиянин"):""}</div>`}
-  return `<section class="h2sec"><div class="h2hd"><h2>Ночь<small>${esc(dLong(d))}</small></h2><button class="lnk" data-go="results">Итоги и протоколы</button></div>${sc}
-   ${stars?`<div class="h2hd" style="margin-top:6px"><h2 style="font-size:22px">Три звезды</h2></div>${stars}`:""}</section>`}
+  return `<section class="h2sec"><div class="h2hd"><h2>Ночь<small>${esc(dLong(d))}</small></h2><button class="lnk" data-go="results">Итоги и протоколы</button></div>${sc}</section>`}
+
+let H2T="stars";
+const nm=(x,role)=>`<span class="h2nm"><button class="plink" data-player="${esc(x.name)}" data-pteam="${x.team}">${esc(x.name)}</button><small>${role?role+" · ":""}${esc(FULL[x.team]||x.team)}</small></span>`;
+const svp=l=>{const m=/(\d+)\s*из\s*(\d+)/.exec(l||"");return m&&+m[2]?(m[1]/m[2]*100).toFixed(1).replace(".",",")+"% отражённых":""};
+function sense(n){const d=n&&n.date;if(n&&n.sensation)return n.sensation;
+  const j=(D.journal||[]).filter(x=>x.date===d&&x.result==="miss"&&x.odds&&x.odds<2&&(x.type==="win"||x.type==="total")).sort((a,b)=>(a.type==="win"?0:1)-(b.type==="win"?0:1)||a.odds-b.odds)[0];if(!j)return null;
+  const g=A.games.find(x=>x.date===d&&x.away===j.away&&x.home===j.home);if(!g)return null;
+  const p=Math.round(100/j.odds/1.04)/100;
+  if(j.type==="win"){const w=g.as>g.hs?g.away:g.home;return {id:g.id,kind:"исход",head:`Победа аутсайдера: ${EN[w]}`,fav:j.pick,p}}
+  return {id:g.id,kind:"тотал",head:`Тотал ${g.as+g.hs} при линии ${j.line}`,p,tot:j.pick}}
+function heroPanel(n){
+  if(H2T==="stars")return `<div class="h2stars">${n.heroes.slice(0,3).map((x,i)=>`<div class="h2st"><div class="h2top"><span class="rk"><b>${i+1}</b>★</span><span class="ln">${esc(x.line||"")}</span></div><div class="who">${pk(x.name,x.team,"m",x.pos)}${nm(x)}</div>${x.text?`<p>${esc(x.text)}</p>`:""}</div>`).join("")}</div>`;
+  if(H2T==="goalie"||H2T==="russian"){const x=n[H2T];const sub=H2T==="goalie"?svp(x.line):"";return `<div class="h2ft">${pk(x.name,x.team,"l",x.pos)}${nm(x,H2T==="goalie"?"Вратарь дня":"Россиянин дня")}<span class="big">${esc(x.line||"")}${sub?`<small>${sub}</small>`:""}</span>${x.text?`<p>${esc(x.text)}</p>`:""}</div>`}
+  if(H2T==="sense"){const x=sense(n);const g=A.games.find(y=>y.id===x.id);if(!g)return "";
+    const why=x.kind==="исход"&&x.fav?`Фаворитом был <b>${EN[x.fav]}</b>${x.p?` — линия давала около ${Math.round(x.p*100)}%`:""}.`:x.tot?`Линия ждала: <b>${esc(x.tot)}</b>${x.p?`, около ${Math.round(x.p*100)}%`:""}.`:"";
+    return `<div class="h2se"><div class="sc"><span class="tm ${x.fav===g.away?"fav":""}">${badge(g.away,"s")}${EN[g.away]}</span><span class="s">${g.as}:${g.hs}</span><span class="tm ${x.fav===g.home?"fav":""}">${EN[g.home]}${badge(g.home,"s")}</span></div>
+      <h3>${esc(x.head||"")}</h3>${why?`<div class="h2why">${why}</div>`:""}${x.text?`<p>${esc(x.text)}</p>`:""}<button class="act" data-res="${g.date}" data-gid="${g.id}">Протокол матча</button></div>`}
+  if(H2T==="flop"){const x=(n.antiheroes||[])[0],t=n.worst_team;
+    return `${x?`<div class="h2fl"><span class="h2tag">Игрок</span>${pk(x.name,x.team,"m",x.pos)}${nm(x)}<span class="big">${esc(x.line||"")}</span>${x.text?`<p>${esc(x.text)}</p>`:""}</div>`:""}
+     ${t?`<div class="h2fl"><span class="h2tag">Команда</span>${badge(t.abbr,"m")}<span class="h2nm"><button data-team="${t.abbr}">${esc(FULL[t.abbr]||t.abbr)}</button><small>${rec(t.abbr)}</small></span><span>${formDots(t.abbr)}</span>${t.text?`<p>${esc(t.text)}</p>`:""}</div>`:""}`}
+  return ""}
+function heroTabs(n){return [["stars","Три звезды",n.heroes&&n.heroes.length],["goalie","Вратарь дня",n.goalie],["russian","Россиянин дня",n.russian],["sense","Сенсация",sense(n)],["flop","Неудачники",(n.antiheroes||[]).length||n.worst_team]].filter(t=>t[2])}
+function heroesBody(){const n=D.daily;const t=heroTabs(n);if(!t.some(x=>x[0]===H2T))H2T=t[0][0];
+  return `<div class="h2tabs" role="tablist">${t.map(x=>`<button role="tab" data-h2t="${x[0]}" aria-selected="${x[0]===H2T}">${x[1]}</button>`).join("")}</div><div class="h2box">${heroPanel(n)}</div>`}
+function heroesSec(){const n=D.daily;if(!n||!n.heroes||!n.heroes.length)return "";
+  return `<section class="h2sec"><div class="h2hd"><h2>Герои игрового дня<small>${esc(dLong(n.date||lastDate()))}</small></h2><button class="lnk" data-go="results">Все итоги</button></div><div id="h2hb" style="display:flex;flex-direction:column;gap:10px">${heroesBody()}</div></section>`}
+document.addEventListener("click",e=>{const b=e.target.closest&&e.target.closest("[data-h2t]");if(!b)return;e.stopPropagation();H2T=b.dataset.h2t;const w=document.getElementById("h2hb");if(w)w.innerHTML=heroesBody();const nb=w&&w.querySelector(`[data-h2t="${H2T}"]`);if(nb)nb.focus()},true);
 
 function newsSec(){const arts=freshArts();if(!arts.length)return "";
   const col=arts.find(x=>x.kind==="column");const news=arts.filter(x=>x.kind!=="column");const lead=news[0];const rest=news.slice(1,6);
@@ -112,7 +171,7 @@ function accSec(){const j=(D.journal||[]).filter(x=>x.result&&x.result!=="void")
   return `<section class="h2sec"><div class="h2hd"><h2 style="font-size:22px">Точность модели</h2><button class="lnk" data-go="picks">Журнал</button></div>
    <div class="h2box"><div class="h2acc"><b>${Math.round(hit/j.length*100)}%</b><span>${hit} из ${j.length} прогнозов угадано с начала ведения журнала</span></div></div></section>`}
 
-window.vHome=function(){return `<div class="h2w"><div class="h2main">${todaySec()}${nightSec()}${newsSec()}</div>
+window.vHome=function(){return `<div class="h2w"><div class="h2main">${todaySec()}${nightSec()}${heroesSec()}${newsSec()}</div>
   <aside class="h2side">${accSec()}${standW()}${leadersW()}</aside></div>`};
 try{if(typeof D!=="undefined"&&D&&D.upcoming&&typeof render==="function")render()}catch(e){}
 })();

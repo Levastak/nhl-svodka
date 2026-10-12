@@ -8,11 +8,11 @@
 <meta property="og:description" content="Итоги ночи, три звезды, прогнозы модели и честный журнал точности.">
 <meta property="og:type" content="website">
 <meta name="theme-color" content="#07080A">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%23D0021B'/%3E%3Ctext x='16' y='21' font-size='13' font-family='Arial' font-weight='700' text-anchor='middle' fill='white'%3ENHL%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2314171C'/%3E%3Crect x='3.5' y='7' width='25' height='18' rx='8' fill='none' stroke='white' stroke-width='2.2'/%3E%3Cpath d='M11 8v16M21 8v16' stroke='%233D7BD9' stroke-width='1.8'/%3E%3Cpath d='M16 8v16' stroke='%23E0262F' stroke-width='2.2'/%3E%3Ccircle cx='16' cy='16' r='3.2' fill='none' stroke='white' stroke-width='1.4'/%3E%3C/svg%3E">
 <title>Сводка НХЛ</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;500;600;700&family=Fira+Sans+Extra+Condensed:ital,wght@0,600;0,700;0,800;1,800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;500;600;700&family=Unbounded:wght@400;700&family=Fira+Sans+Extra+Condensed:ital,wght@0,600;0,700;0,800;1,800&display=swap">
 <style>
 /* Layout: спортивная редакция — тёмная шапка с лентой счетов, светлая газетная полоса; слева статьи, справа колонка виджетов; узкие жирные заголовки, плотные таблицы */
 :root{
@@ -58,10 +58,10 @@ h1,h2,h3{margin:0;text-wrap:balance}
 .top{background:var(--bar);color:var(--barink);padding-top:env(safe-area-inset-top,0px);position:sticky;top:0;z-index:40}
 .top .wrap{display:flex;align-items:center;gap:20px;height:54px}
 .mark{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--barink);flex:none}
-.mark i{width:26px;height:26px;border-radius:50%;background:#000;border:2px solid #fff;position:relative;flex:none}
-.mark i::after{content:"";position:absolute;inset:-2px auto -2px 50%;width:3px;margin-left:-1.5px;background:var(--acc)}
-.mark b{font-family:var(--display);font-weight:800;font-style:italic;font-size:23px;letter-spacing:.01em;line-height:1;text-transform:uppercase}
-.mark b span{color:var(--acc)}
+.mark svg{width:38px;height:26px;flex:none;display:block}
+.mark b{font-family:"Unbounded",var(--display);font-weight:700;font-size:20px;letter-spacing:-.01em;line-height:1;text-transform:none;font-style:normal}
+.mark b span{font-weight:400;color:var(--barmute);margin-left:.28em}
+@media (max-width:899px){.top{position:relative}}
 .upd{margin-left:auto;font-size:11.5px;color:var(--barmute);text-align:right;line-height:1.3}
 .tnav{display:none}
 @media (min-width:900px){
@@ -518,7 +518,7 @@ details.card > summary::-webkit-details-marker{display:none}
 
 <header class="top">
   <div class="wrap">
-    <a class="mark" href="#home"><i aria-hidden="true"></i><b>Сводка <span>НХЛ</span></b></a>
+    <a class="mark" href="#home" aria-label="Сводка НХЛ — на главную"><svg viewBox="0 0 38 26" aria-hidden="true"><rect x="1.25" y="1.25" width="35.5" height="23.5" rx="10" fill="none" stroke="currentColor" stroke-width="2.5"/><path d="M13 2.5v21M25 2.5v21" stroke="#3D7BD9" stroke-width="2"/><path d="M19 2.5v21" stroke="#E0262F" stroke-width="2.5"/><circle cx="19" cy="13" r="4.2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M5.5 8v10" stroke="#E0262F" stroke-width="1.2"/><path d="M32.5 8v10" stroke="#E0262F" stroke-width="1.2"/></svg><b>Сводка<span>НХЛ</span></b></a>
     <nav class="tnav" id="tnav" aria-label="Разделы"></nav>
     <div class="upd" id="upd">загружаю…</div>
   </div>
@@ -532,8 +532,8 @@ details.card > summary::-webkit-details-marker{display:none}
 
 "use strict";
 /* ---------- справочники ---------- */
-const EN={ANA:"Anaheim",BOS:"Boston",BUF:"Buffalo",CGY:"Calgary",CAR:"Carolina",CHI:"Chicago",COL:"Colorado",CBJ:"Columbus",DAL:"Dallas",DET:"Detroit",EDM:"Edmonton",FLA:"Florida",LAK:"Los Angeles",MIN:"Minnesota",MTL:"Montreal",NSH:"Nashville",NJD:"New Jersey",NYI:"NY Islanders",NYR:"NY Rangers",OTT:"Ottawa",PHI:"Philadelphia",PIT:"Pittsburgh",SJS:"San Jose",SEA:"Seattle",STL:"St. Louis",TBL:"Tampa Bay",TOR:"Toronto",UTA:"Utah",VAN:"Vancouver",VGK:"Vegas",WSH:"Washington",WPG:"Winnipeg"};
-const FULL={ANA:"Anaheim Ducks",BOS:"Boston Bruins",BUF:"Buffalo Sabres",CGY:"Calgary Flames",CAR:"Carolina Hurricanes",CHI:"Chicago Blackhawks",COL:"Colorado Avalanche",CBJ:"Columbus Blue Jackets",DAL:"Dallas Stars",DET:"Detroit Red Wings",EDM:"Edmonton Oilers",FLA:"Florida Panthers",LAK:"Los Angeles Kings",MIN:"Minnesota Wild",MTL:"Montréal Canadiens",NSH:"Nashville Predators",NJD:"New Jersey Devils",NYI:"New York Islanders",NYR:"New York Rangers",OTT:"Ottawa Senators",PHI:"Philadelphia Flyers",PIT:"Pittsburgh Penguins",SJS:"San Jose Sharks",SEA:"Seattle Kraken",STL:"St. Louis Blues",TBL:"Tampa Bay Lightning",TOR:"Toronto Maple Leafs",UTA:"Utah Mammoth",VAN:"Vancouver Canucks",VGK:"Vegas Golden Knights",WSH:"Washington Capitals",WPG:"Winnipeg Jets"};
+const EN={ANA:"Анахайм",BOS:"Бостон",BUF:"Баффало",CGY:"Калгари",CAR:"Каролина",CHI:"Чикаго",COL:"Колорадо",CBJ:"Коламбус",DAL:"Даллас",DET:"Детройт",EDM:"Эдмонтон",FLA:"Флорида",LAK:"Лос-Анджелес",MIN:"Миннесота",MTL:"Монреаль",NSH:"Нэшвилл",NJD:"Нью-Джерси",NYI:"Айлендерс",NYR:"Рейнджерс",OTT:"Оттава",PHI:"Филадельфия",PIT:"Питтсбург",SJS:"Сан-Хосе",SEA:"Сиэтл",STL:"Сент-Луис",TBL:"Тампа",TOR:"Торонто",UTA:"Юта",VAN:"Ванкувер",VGK:"Вегас",WSH:"Вашингтон",WPG:"Виннипег"};
+const FULL={ANA:"Анахайм Дакс",BOS:"Бостон Брюинз",BUF:"Баффало Сейбрз",CGY:"Калгари Флэймз",CAR:"Каролина Харрикейнз",CHI:"Чикаго Блэкхокс",COL:"Колорадо Эвеланш",CBJ:"Коламбус Блю Джекетс",DAL:"Даллас Старз",DET:"Детройт Ред Уингз",EDM:"Эдмонтон Ойлерз",FLA:"Флорида Пантерз",LAK:"Лос-Анджелес Кингз",MIN:"Миннесота Уайлд",MTL:"Монреаль Канадиенс",NSH:"Нэшвилл Предаторз",NJD:"Нью-Джерси Девилз",NYI:"Нью-Йорк Айлендерс",NYR:"Нью-Йорк Рейнджерс",OTT:"Оттава Сенаторз",PHI:"Филадельфия Флайерз",PIT:"Питтсбург Пингвинз",SJS:"Сан-Хосе Шаркс",SEA:"Сиэтл Кракен",STL:"Сент-Луис Блюз",TBL:"Тампа-Бэй Лайтнинг",TOR:"Торонто Мэйпл Лифс",UTA:"Юта Мамонт",VAN:"Ванкувер Кэнакс",VGK:"Вегас Голден Найтс",WSH:"Вашингтон Кэпиталз",WPG:"Виннипег Джетс"};
 const COLORS={ANA:["#F47A38","#B9975B"],BOS:["#FFB81C","#000000"],BUF:["#003087","#FFB81C"],CGY:["#C8102E","#F1BE48"],CAR:["#CE1126","#000000"],CHI:["#CF0A2C","#000000"],COL:["#6F263D","#236192"],CBJ:["#002654","#CE1126"],DAL:["#006847","#8F8F8C"],DET:["#CE1126","#FFFFFF"],EDM:["#041E42","#FF4C00"],FLA:["#041E42","#C8102E"],LAK:["#111111","#A2AAAD"],MIN:["#154734","#A6192E"],MTL:["#AF1E2D","#192168"],NSH:["#FFB81C","#041E42"],NJD:["#CE1126","#000000"],NYI:["#00539B","#F47D30"],NYR:["#0038A8","#CE1126"],OTT:["#C52032","#C2912C"],PHI:["#F74902","#000000"],PIT:["#000000","#FCB514"],SJS:["#006D75","#EA7200"],SEA:["#001628","#99D9D9"],STL:["#002F87","#FCB514"],TBL:["#002868","#FFFFFF"],TOR:["#00205B","#FFFFFF"],UTA:["#6CACE4","#010101"],VAN:["#00205B","#00843D"],VGK:["#B4975A","#333F42"],WSH:["#C8102E","#041E42"],WPG:["#041E42","#004C97"]};
 const DIVS=[["Восток","Атлантический","Atlantic",["BOS","BUF","DET","FLA","MTL","OTT","TBL","TOR"]],["Восток","Столичный","Metropolitan",["CAR","CBJ","NJD","NYI","NYR","PHI","PIT","WSH"]],["Запад","Центральный","Central",["CHI","COL","DAL","MIN","NSH","STL","UTA","WPG"]],["Запад","Тихоокеанский","Pacific",["ANA","CGY","EDM","LAK","SJS","SEA","VAN","VGK"]]];
 const ALL=DIVS.flatMap(d=>d[3]);
