@@ -149,8 +149,8 @@ function heroesSec(){const n=D.daily;if(!n||!n.heroes||!n.heroes.length)return""
   return `<section class="sec"><div class="hd"><h2>Герои игрового дня<small>${esc(dLong(n.date||lastDate()))}</small></h2><button class="lnk" data-go="results">Все итоги</button></div><div id="hb" class="sec">${heroesBody()}</div></section>`}
 
 /* новости */
-function leadCard(x,noCover){return `<button class="lead" data-art="${x.k}">${noCover?"":coverHtml(x)}<span class="tx">${metaHtml(x)}<h3>${esc(x.title)}</h3><p>${esc(x.dek||x.body[0]||"")}</p></span></button>`}
-function nrow(x){return `<button class="nr" data-art="${x.k}">${metaHtml(x)}<h4>${esc(x.title)}</h4><p>${esc(x.dek||x.body[0]||"")}</p>${coverHtml(x,"th",false)}</button>`}
+function leadCard(x,noCover){return `<button class="lead" data-art="${x.k}">${noCover?"":coverHtml(x)}<span class="tx">${metaHtml(x)}<h3>${esc(x.title)}</h3><p>${esc(x.dek||(typeof x.body[0]==="string"?x.body[0]:"")||"")}</p></span></button>`}
+function nrow(x){return `<button class="nr" data-art="${x.k}">${metaHtml(x)}<h4>${esc(x.title)}</h4><p>${esc(x.dek||(typeof x.body[0]==="string"?x.body[0]:"")||"")}</p>${coverHtml(x,"th",false)}</button>`}
 function newsBlock(limit){const arts=articles();const col=arts.find(x=>x.kind==="column");const sty=arts.find(x=>x.kind==="story");const news=arts.filter(x=>x.kind==="news");if(!news.length&&!col)return"";
   const lead=news[0];const rest=limit?news.slice(1,limit+1):news.slice(1);
   return `${lead?`<div class="box">${leadCard(lead)}${rest.map(nrow).join("")}</div>`:""}${sty?`<div class="box stm">${leadCard(sty)}</div>`:""}${col?`<div class="box colm">${leadCard(col,true)}</div>`:""}`}
@@ -300,14 +300,18 @@ function playerSheet(name,tm){const s=skater(name),gk=goalie(name);tm=tm||(s||gk
    ${pg.length?`<div class="sec"><h4 class="sub">Очки по матчам${pg.length>12?" · последние 12":""}</h4><div class="spk" style="--c:${tcol(tm)}">${pg.slice(-12).map(x=>{const p=x.G+x.As,op=x.g.home===tm?x.g.away:x.g.home;return `<div class="c" title="${esc(dShort(x.g.date))} · ${x.g.home===tm?"дома":"в гостях"} · ${EN[op]||op}: ${x.G} Г, ${x.As} П"><b>${p||""}</b><span class="bar"><i class="${p?"":"z"}" style="height:${p?p/mx*100:0}%"></i></span>${logo(op,24)}<small>${x.g.home===tm?"":"@"}</small></div>`}).join("")}</div></div>`:""}
    ${gk?"":`<div class="sec"><h4 class="sub">Матчи с очками</h4>${withPts.length?`<div class="box">${withPts.map(({g,G,As})=>{const opp=g.away===tm?g.home:g.away;return `<button class="lr" style="grid-template-columns:minmax(0,1fr) auto;width:100%" data-res="${g.date}" data-gid="${g.id}"><span class="who">${logo(opp,30)}<b>${EN[opp]}</b><small class="mute">${esc(dShort(g.date))} · ${g.away===tm?"в гостях":"дома"}</small></span><b>${gaHtml(G,As)}</b></button>`}).join("")}</div>`:'<p class="note">В архиве матчей пока нет его голов и передач.</p>'}<p class="note">Голы и передачи — по протоколам матчей из архива сводки.</p></div>`}</div>`)}
 function playersOf(x){const out=[];const seen=new Set();for(const n of x.players||[]){const s=skater(n)||goalie(n);const t=(s&&s.team)||(x.teams||[])[0];if(!seen.has(n)&&t){seen.add(n);out.push([n,t])}}return out}
+/* элементы лонгрида: «## подзаголовок», «> выноска», {img,credit,link,cap} — фото внутри текста */
+function bodyItem(p){if(p&&typeof p==="object"){if(p.img)return `<figure class="bimg"><img src="${esc(p.img)}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.parentNode.remove()">${p.cap||p.credit?`<figcaption>${p.cap?esc(p.cap):""}${p.credit?` <span>Фото: ${p.link?`<a href="${esc(p.link)}" target="_blank" rel="noopener">${esc(p.credit)}</a>`:esc(p.credit)}</span>`:""}</figcaption>`:""}</figure>`;return""}
+  const s=String(p);if(s.startsWith("## "))return `<h3>${esc(s.slice(3))}</h3>`;if(s.startsWith("> "))return `<blockquote>${esc(s.slice(2))}</blockquote>`;return `<p>${esc(s)}</p>`}
+function readMin(x){const w=(x.body||[]).filter(p=>typeof p==="string").join(" ").split(/\s+/).length;return Math.max(1,Math.round(w/180))}
 function storyChart(ch){const it=ch.items||[];if(!it.length)return"";const mx=Math.max(...it.map(x=>+x.value||0))||1;
   return `<figure class="hch"><figcaption>${esc(ch.title||"")}</figcaption><div class="cols">${it.map(x=>`<div class="c${x.hl?" hl":""}"><b>${esc(x.value)}</b><span class="bar"><i style="height:${(+x.value||0)/mx*100}%"></i></span><small>${esc(x.label)}</small></div>`).join("")}</div>${ch.note?`<p class="note">${esc(ch.note)}</p>`:""}</figure>`}
 function openArticle(k){const x=articles().find(a=>a.k===k);if(!x)return;const all=articles();const relA=all.filter(a=>a.k!==k&&(a.teams||[]).some(t=>(x.teams||[]).includes(t))).slice(0,3);const pls=playersOf(x);
   openSheet(`<article class="reader"><div style="position:relative">${coverHtml(x)}<button class="sh-x" data-close aria-label="Закрыть">×</button></div><div class="rb">
-   ${metaHtml(x)}<h1>${esc(x.title)}</h1>${x.dek&&x.body[0]!==x.dek?`<p class="dek">${esc(x.dek)}</p>`:""}
+   ${metaHtml(x)}${x.kind==="story"?`<span class="rt">${readMin(x)} мин чтения</span>`:""}<h1>${esc(x.title)}</h1>${x.dek&&x.body[0]!==x.dek?`<p class="dek">${esc(x.dek)}</p>`:""}
    ${(x.teams||[]).length||pls.length?`<div class="who">${(x.teams||[]).map(t=>`<button data-team="${t}">${logo(t,32)}${EN[t]}</button>`).join("")}${pls.map(([n,t])=>`<button data-player="${esc(n)}" data-pteam="${t}">${photo(n,t,38)}${esc(n)}</button>`).join("")}</div>`:""}
    ${x.facts&&x.facts.length?`<div class="facts">${x.facts.map(f=>`<div><b>${esc(f.v)}</b><small>${esc(f.l)}</small></div>`).join("")}</div>`:""}
-   <div class="body">${x.body.map((p,i)=>`<p>${esc(p)}</p>${x.chart&&i===(x.chart.after??1)?storyChart(x.chart):""}`).join("")}</div>
+   <div class="body">${x.body.map((p,i)=>bodyItem(p)+(x.chart&&i===(x.chart.after??1)?storyChart(x.chart):"")+((x.charts||[]).filter(c=>c.after===i).map(storyChart).join(""))).join("")}</div>
    ${x.image_link?`<p class="note">Фото: <a href="${esc(x.image_link)}" target="_blank" rel="noopener">${esc(x.image_src||"источник")}</a></p>`:""}
    ${x.sources&&x.sources.length?`<p class="note">Данные: ${x.sources.map(s=>esc(s)).join(", ")}</p>`:""}
    ${x.url?`<div class="acts"><a class="btn" href="${esc(x.url)}" target="_blank" rel="noopener">${IC.ext}Оригинал: ${esc(x.source||"источник")}</a></div>`:""}
