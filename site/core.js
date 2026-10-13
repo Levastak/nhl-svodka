@@ -101,6 +101,8 @@ function findP(s,team){if(!s)return null;s=String(s).trim();const all=[...((D&&D
   let c=all.filter(x=>(!team||x.team===team)&&(full(x)===k||last(x)===k||full(x).endsWith(k)));if(c.length===1)return c[0].name;
   if(!c.length){const ks=Object.keys(RUN).filter(n=>nrm(n)===k||nrm(n.split(" ").slice(-1)[0])===k);if(ks.length===1)return ks[0]}
   return c.length?c[0].name:null}
+/* время на льду: минуты (21.6) → «21:36» */
+function mmss(m){if(m==null||m==="")return"—";if(typeof m==="string"&&m.includes(":"))return m;m=+m;let mi=Math.floor(m),s=Math.round((m-mi)*60);if(s===60){mi++;s=0}return `${mi}:${String(s).padStart(2,"0")}`}
 function plink(name,team,label){return `<button class="plink" data-player="${esc(name)}" data-pteam="${team}">${esc(label||pn(name))}</button>`}
 /* фамилия или имя из протокола → кликабельное русское имя */
 function pref(s,team,short){const f=findP(s,team);const lab=f?(short?ps(f):pn(f)):(short?ps(s):pn(s));return f?plink(f,team,lab):esc(lab)}

@@ -227,7 +227,7 @@ def club_stats():
             idname[p["playerId"]] = nm
             skaters.append(dict(team=t, name=nm, pos=p.get("positionCode"), gp=p.get("gamesPlayed", 0), g=p.get("goals", 0),
                                 a=p.get("assists", 0), pts=p.get("points", 0), pm=p.get("plusMinus", 0),
-                                toi=round((p.get("avgTimeOnIcePerGame") or 0) / 60, 1)))
+                                toi=round((p.get("avgTimeOnIcePerGame") or 0) / 60, 1), toi_s=int(round(p.get("avgTimeOnIcePerGame") or 0))))
         for p in c.get("goalies", []):
             nm = f'{p["firstName"]["default"]} {p["lastName"]["default"]}'
             idname[p["playerId"]] = nm
