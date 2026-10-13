@@ -188,7 +188,7 @@ function goalsBlock(g){if(!g.goals||!g.goals.length)return g.end==="SO"&&g.as+g.
   return goalList(g.goals.map(x=>({per:x[3],time:x[4],team:x[1],who:x[0],kind:x[2],as:x[5]})),g.away,g.home)}
 /* статистика: значения по краям, полосы расходятся от центра; сторона и цвет команды постоянны */
 function sbar(l,v,a,h,parse=x=>x){const x=+parse(v[0])||0,y=+parse(v[1])||0;const mx=Math.max(x,y)||1;
-  let ca=tcol(a),ch=tcol(h);if(String(ca).toLowerCase()===String(ch).toLowerCase())ch=shade(ch,.6);
+  const [ca,ch]=tpair(a,h);
   const half=(z,o,c,side)=>`<span class="hf ${side}"><i style="width:${z/mx*100}%;background:${c};opacity:${z>=o?1:.45}"></i></span>`;
   return `<div class="sbar"><small>${l}</small><div class="ln"><b class="${x>y?"on":x<y?"lo":""}">${esc(v[0])}</b><span class="tr">${half(x,y,ca,"l")}${half(y,x,ch,"r")}</span><b class="${y>x?"on":y<x?"lo":""}">${esc(v[1])}</b></div></div>`}
 function sbHead(a,h){return `<div class="sbh"><span>${logo(a,24)}<b>${EN[a]}</b></span><span><b>${EN[h]}</b>${logo(h,24)}</span></div>`}

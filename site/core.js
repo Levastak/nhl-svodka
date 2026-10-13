@@ -43,6 +43,9 @@ function lum(hex){const n=parseInt(String(hex).slice(1),16),r=(n>>16&255)/255,g=
 function shade(hex,k){const n=parseInt(hex.slice(1),16);const f=v=>Math.max(0,Math.min(255,Math.round(v*k)));return "#"+[n>>16&255,n>>8&255,n&255].map(v=>f(v).toString(16).padStart(2,"0")).join("")}
 function tcol(a){const c=COLORS[a]||["#556070","#8892A0"];const ok=x=>{const l=lum(x);return l>.05&&l<.75};return ok(c[0])?c[0]:ok(c[1])?c[1]:"#8FA6C8"}
 function tdeep(a){const c=COLORS[a]||["#2A2E35","#3A3F48"];return lum(c[0])<.5?c[0]:lum(c[1])<.5?c[1]:shade(c[0],.55)}
+function cdist(x,y){const p=h=>{const n=parseInt(String(h).slice(1),16);return [n>>16&255,n>>8&255,n&255]};const [a,b]=[p(x),p(y)];return Math.hypot(a[0]-b[0],a[1]-b[1],a[2]-b[2])}
+/* цвета двух команд, которые не сливаются: при похожих хозяева берут второй цвет клуба */
+function tpair(a,h){const ca=tcol(a);let ch=tcol(h);if(cdist(ca,ch)<90){const alt=(COLORS[h]||[])[1];const ok=alt&&lum(alt)>.05&&lum(alt)<.85&&cdist(ca,alt)>=90;ch=ok?alt:"#9AA3AE"}return [ca,ch]}
 function pair(a,b){let x=tdeep(a),y=tdeep(b);if(Math.abs(lum(x)-lum(y))<.012&&x.toLowerCase()===y.toLowerCase())y=shade(y,.6);return [x,y]}
 const f2=x=>x==null||isNaN(x)?"—":Number(x).toFixed(2);
 const pct=x=>x==null||isNaN(x)?"—":Math.round(x*100)+"%";
