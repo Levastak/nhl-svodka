@@ -4,6 +4,8 @@ on:
   schedule:
     - cron: "17 8 * * *"    # 11:17 по Кирову — утренний сбор
     - cron: "19 20 * * *"   # 23:19 по Кирову — предматчевый сбор
+    - cron: "*/15 0-6 * * *"    # ночь по Кирову (03:00–09:59): закончился матч — сразу итоги, таблица, лидеры
+    - cron: "*/15 16-23 * * *"  # дневные матчи выходных (19:00–02:59 по Кирову)
   workflow_dispatch:
     inputs:
       mode:
@@ -37,7 +39,7 @@ jobs:
         id: mode
         run: |
           if [ "${{ github.event_name }}" = "schedule" ]; then
-            if [ "${{ github.event.schedule }}" = "17 8 * * *" ]; then M=am; else M=pm; fi
+            case "${{ github.event.schedule }}" in "17 8 * * *") M=am;; "19 20 * * *") M=pm;; *) M=night;; esac
             # trigger/skip: «дата режим» — пропустить один плановый сбор (например «2026-10-12 pm»)
             if grep -qx "$(date -u +%F) $M" trigger/skip 2>/dev/null; then M=deploy; fi
             echo "mode=$M" >> $GITHUB_OUTPUT
@@ -62,18 +64,24 @@ jobs:
         if: steps.mode.outputs.mode == 'deploy'
         run: python3 scripts/fetch.py img || true
       - name: Сохранить данные в репозиторий
+        id: save
         run: |
           git config user.name "svodka-bot"
           git config user.email "svodka-bot@users.noreply.github.com"
           git add site; [ -d history ] && git add history || true
           git diff --cached --quiet && exit 0
           git commit -m "Данные: ${{ steps.mode.outputs.mode }} $(date -u +%Y-%m-%dT%H:%MZ)"
+          echo "changed=1" >> $GITHUB_OUTPUT
           for i in 1 2 3; do git pull --rebase -X theirs origin main && git push && break; sleep 5; done
       - name: Версия скриптов
+        if: steps.mode.outputs.mode != 'night' || steps.save.outputs.changed == '1'
         run: sed -i -E "s/(home2|tabs2|core|views|live)\.js(\?v=[0-9]+)?\"/\1.js?v=${{ github.run_id }}\"/g" site/index.html
       - uses: actions/configure-pages@v5
+        if: steps.mode.outputs.mode != 'night' || steps.save.outputs.changed == '1'
       - uses: actions/upload-pages-artifact@v3
+        if: steps.mode.outputs.mode != 'night' || steps.save.outputs.changed == '1'
         with:
           path: site
       - uses: actions/deploy-pages@v4
+        if: steps.mode.outputs.mode != 'night' || steps.save.outputs.changed == '1'
         id: deploy

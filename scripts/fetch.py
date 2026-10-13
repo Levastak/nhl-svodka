@@ -532,6 +532,9 @@ def am():
         LOG["ok"].append("club-stats")
     box = update_archive(archive, yesterday, idname)
     cur = load(f"{SITE}/box.json", {})
+    if box and cur.get("date") == yesterday:   # часть матчей уже добавил ночной сбор
+        ids = {b["id"] for b in box}
+        box = [b for b in cur.get("games", []) if b["id"] not in ids] + box
     if not box and (cur.get("date") != yesterday or not cur.get("games")):
         for g in [g for g in archive["games"] if g["date"] == yesterday]:
             players = game_extras(g["id"], dict(g), idname)
@@ -787,6 +790,55 @@ def hist():
             LOG["ok"].append(f"hist photos {arg}: {len(res)}")
 
 
+def night():
+    """Ночной сбор (каждые 15 минут, пока идут матчи): если закончился новый матч —
+    архив, протокол, таблица, статистика игроков и лидеры, журнал. Модель, кэфы и тексты не трогает.
+    Возвращает True, если что-то изменилось."""
+    data = load(f"{SITE}/data.json", {})
+    archive = load(f"{SITE}/archive.json", {"season": "2026-27", "games": []})
+    have = {g["id"] for g in archive["games"]}
+    now_et = now_utc().astimezone(ET)
+    new = []
+    for d in (now_et.date() - dt.timedelta(days=1), now_et.date()):
+        day = d.isoformat()
+        sc, _ = get(f"https://api-web.nhle.com/v1/score/{day}", label=f"score {day}")
+        for g in (sc or {}).get("games", []):
+            if g.get("gameType") in (2, 3) and g.get("gameState") in ("OFF", "FINAL") and g["id"] not in have:
+                new.append((day, g))
+    if not new:
+        LOG["ok"].append("night: новых матчей нет")
+        return False
+    skaters, goalies, idname = club_stats()
+    if skaters:
+        data["skaters"], data["goalies"], data["leaders"] = skaters, goalies, leaders(skaters)
+    slate = max(day for day, _ in new)
+    cur = load(f"{SITE}/box.json", {})
+    box = list(cur.get("games", [])) if cur.get("date") == slate else []
+    for day, g in new:
+        rec = build_game(g)
+        players = game_extras(g["id"], rec, idname)
+        archive["games"].append(rec)
+        if day == slate:
+            box = [b for b in box if b["id"] != rec["id"]] + [dict(id=rec["id"], away=rec["away"], home=rec["home"],
+                   score=f'{rec["as"]}:{rec["hs"]}', end=rec["end"], stars=rec.get("stars", []), players=players)]
+    archive["games"].sort(key=lambda g: (g["date"], g["id"]))
+    save(f"{SITE}/box.json", dict(date=slate, games=box))
+    data["results_date"] = slate
+    st = standings()
+    if st:
+        data["standings"] = st
+    ts = team_summary()
+    if len(ts) >= 30:
+        data["team_stats"], data["team_stats_updated"] = ts, iso()
+    grade_journal(data.get("journal", []), archive)
+    data["generated"] = iso()
+    data["night"] = dict(t=iso(), games=[g["id"] for _, g in new])
+    save(f"{SITE}/archive.json", archive)
+    save(f"{SITE}/data.json", data)
+    LOG["ok"].append(f"night: +{len(new)} матчей")
+    return True
+
+
 if __name__ == "__main__":
     mode = sys.argv[1] if len(sys.argv) > 1 else "am"
     if mode == "roster":
@@ -795,6 +847,10 @@ if __name__ == "__main__":
         if len(ppos) > 500:
             d["numbers"], d["russians"], d["heads"], d["ppos"] = numbers, russians, heads, ppos
             save(f"{SITE}/data.json", d)
+        print(json.dumps(LOG, ensure_ascii=False))
+        sys.exit(0)
+    if mode == "night":
+        night()
         print(json.dumps(LOG, ensure_ascii=False))
         sys.exit(0)
     if mode == "hist":
