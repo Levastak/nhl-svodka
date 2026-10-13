@@ -2,7 +2,7 @@ name: Сводка НХЛ
 
 on:
   schedule:
-    - cron: "17 8 * * *"    # 11:17 по Кирову — утренний сбор ok
+    - cron: "52 5 * * *"    # 08:52 по Кирову — утренний сбор (последние матчи заканчиваются около 08:45)
     - cron: "19 20 * * *"   # 23:19 по Кирову — предматчевый сбор
     - cron: "41 7 * * 1"     # понедельник 10:41 по Кирову — истории клубов и карьеры игроков
     - cron: "*/15 0-6 * * *"    # ночь по Кирову (03:00–09:59): закончился матч — сразу итоги, таблица, лидеры
@@ -49,7 +49,7 @@ jobs:
           elif git diff --name-only HEAD~1 HEAD | grep -q '^trigger/hist$'; then
             echo "mode=hist" >> $GITHUB_OUTPUT
           elif git diff --name-only HEAD~1 HEAD | grep -q '^trigger/mode$'; then
-            echo "mode=$(tr -d '[:space:]' < trigger/mode)" >> $GITHUB_OUTPUT
+            echo "mode=$(head -n1 trigger/mode | tr -d '[:space:]')" >> $GITHUB_OUTPUT
           else
             echo "mode=deploy" >> $GITHUB_OUTPUT
           fi
