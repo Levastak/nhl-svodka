@@ -1,6 +1,3 @@
-Warning: truncated output (original token count: 24140)
-Total output lines: 488
-
 /* NHL-STATS.RU — экраны */
 "use strict";
 
@@ -236,7 +233,84 @@ function vTable(){const modes=[["div","Дивизионы"],["conf","Конфе�
 /* ===================== прогнозы ===================== */
 function jRow(x){const t=x.type||"win";const TY={win:"Исход",total:"Тотал",express:"Уверенные"};const lv=liveRes(x);const r=x.result||(lv&&lv.fin?lv.r:null);
   const rs=r==="hit"?'<span class="res hit">Угадан</span>':r==="miss"?'<span class="res miss">Мимо</span>':r==="void"?'<span class="res void">Возврат</span>':lv?`<span class="res ${lv.r==="hit"?"hit":lv.r==="miss"?"miss":"wait"}"><span class="dot"></span> ${lv.r==="hit"?"заходит":lv.r==="miss"?"не заходит":esc(lv.txt||"идёт")}</span>`:'<span class="res wait">ждём</span>';
-  return `<div class="jr"><div class="l"><span class="ty"><span class="chip">${TY[t]||t}</span><sma…4140 tokens truncated…p(p=>{const f=findP(p,a)||p;return `<button class="plink" data-player="${esc(f)}" data-pteam="${a}">${esc(pn(f))}</button>`}).join(" · ")}</div>`:"";
+  return `<div class="jr"><div class="l"><span class="ty"><span class="chip">${TY[t]||t}</span><small>${esc(dShort(x.date))}${x.changed?" · прогноз уточнён":""}</small>${x.mkt_side&&x.mkt_side!==x.side?'<span class="chip gold">против рынка</span>':""}</span><b>${pickLabel(x)}${x.odds?` · ${f2(x.odds)}`:""}</b><small>${esc(matchLabel(x))}${x.score?` · <b>${esc(x.score)}</b>`:""}</small></div>${rs}</div>`}
+function mRes(x){if(!x.result||x.result==="void"||!x.mkt_side)return x.result;return x.mkt_side===x.side?x.result:x.result==="hit"?"miss":"hit"}
+function vsJournal(all){const xs=all.filter(x=>x.mkt_side&&(x.type||"win")!=="express"&&x.result&&x.result!=="void");
+  if(!xs.length)return `<div class="box pad"><h4 class="sub">Модель против рынка</h4><p class="txt" style="margin-top:6px">С 13 октября прогноз — чистое мнение модели, а фаворит рынка записывается рядом. Здесь будет видно, кто точнее, и отдельно — как сыграли прогнозы, где модель пошла против рынка.</p></div>`;
+  const mh=xs.filter(x=>x.result==="hit").length,kh=xs.filter(x=>mRes(x)==="hit").length;const ag=xs.filter(x=>x.mkt_side!==x.side);const ah=ag.filter(x=>x.result==="hit").length;
+  return `<div class="box pad"><h4 class="sub">Модель против рынка</h4><div class="sum"><div><b>${mh}/${xs.length}</b><small>угадала модель</small></div><div><b>${kh}/${xs.length}</b><small>угадал фаворит рынка</small></div><div><b>${ag.length?ah+"/"+ag.length:"—"}</b><small>модель против рынка</small></div></div><p class="note" style="margin:8px 0 0">Считаются прогнозы с 13 октября, исходы и тоталы. Последняя цифра — только матчи, где модель выбрала другую сторону: в них и видно, умеет ли она больше рынка.</p></div>`}
+function vPicks(){const all=jAll();const list=all.filter(x=>JF==="all"||(x.type||"win")===JF);const done=list.filter(x=>x.result&&x.result!=="void");
+  const hit=done.filter(x=>x.result==="hit").length;const withOdds=done.filter(x=>x.odds);const roi=withOdds.length?withOdds.reduce((s,x)=>s+plOf(x.result,x.odds),0)/withOdds.length:null;
+  const ch=all.filter(x=>x.changed&&x.result&&x.result!=="void"&&(x.type||"win")!=="express");
+  const am=ch.length?`<div class="box pad"><h4 class="sub">Утро против вечера</h4><p class="txt" style="margin-top:6px">Вечером прогноз менялся ${plural(ch.length,"раз","раза","раз")}: вечерний вариант угадан ${ch.filter(x=>x.result==="hit").length}, утренний был бы угадан ${ch.filter(x=>amRes(x)==="hit").length}.</p></div>`:`<p class="note">Прогноз фиксируется утром и уточняется перед матчами — после объявления вратарей, травм и по поздней линии. Когда вечером он изменится, здесь появится счёт «утро против вечера».</p>`;
+  return `<div class="col"><section class="sec"><div class="hd"><h1>Прогнозы<small>что прогнозировали и что вышло</small></h1></div>
+   <div class="pills">${[["all","Все"],["win","Исходы"],["total","Тоталы"],["express","Уверенные исходы"]].map(([k,l])=>`<button data-jf="${k}" aria-pressed="${JF===k}">${l}</button>`).join("")}</div>
+   <div class="box"><div class="sum"><div><b>${done.length?Math.round(hit/done.length*100)+"%":"—"}</b><small>точность</small></div><div><b>${hit}/${done.length}</b><small>угадано</small></div><div><b class="${sgn(roi)}">${roi==null?"—":(roi>0?"+":"")+Math.round(roi*100)+"%"}</b><small>условная доходность</small></div></div></div>
+   ${vsJournal(all)}
+   ${am}
+   <div class="box">${list.length?list.slice().reverse().map(x=>jRow((D.journal||[]).find(y=>y.date===x.date&&y.type===x.type&&y.pick===x.pick&&y.away===x.away)||x)).join(""):'<div class="empty">Пока пусто.</div>'}</div>
+   <p class="note">Прогноз фиксируется до начала матча и задним числом не меняется. Условная доходность — если бы на каждый прогноз шла одна и та же единица по коэффициенту линии-ориентира. Исход — победа с учётом овертайма и буллитов; тотал — все голы, включая овертайм; «уверенные исходы» засчитываются, только если сыграли все.</p></section></div>`}
+
+/* ===================== ещё ===================== */
+const back=()=>`<button class="back" data-go="more">← Ещё</button>`;
+function vMore(){return `<div class="col"><section class="sec"><div class="hd"><h1>Ещё</h1></div><div class="menu">${MORE.map(([k,l,s])=>`<button data-go="${k}">${IC[k]}<span><b>${l}</b><small>${s}</small></span></button>`).join("")}</div></section></div>`}
+function vTeams(){return `<div class="col">${back()}<section class="sec"><div class="hd"><h1>Команды</h1></div>
+  <button class="inp sopen" data-search>🔍 Найти игрока или команду</button>
+  ${DIVS.map(d=>`<div class="sec"><div class="hd"><h3>${d[1]} дивизион</h3></div><div class="teams">${d[2].map(a=>`<button data-team="${a}">${logo(a,48)}<span>${EN[a]}</span></button>`).join("")}</div></div>`).join("")}</section></div>`}
+function lastNPoints(n=5){const teamG={};A.games.slice().sort((x,y)=>x.date<y.date?-1:1).forEach(g=>{for(const t of [g.away,g.home])(teamG[t]=teamG[t]||[]).push(g)});
+  const pts={};for(const t in teamG)for(const g of teamG[t].slice(-n))for(const x of (g.goals||[])){if(x[1]!==t||x[3]===5)continue;const add=(s,k)=>{s=String(s||"").trim();if(!s)return;const key=t+"|"+s;pts[key]=pts[key]||{g:0,a:0};pts[key][k]++};add(x[0],"g");String(x[5]||"").split(",").forEach(s=>add(s,"a"))}
+  return pts}
+function hotList(){const L=lastNPoints(5);const rows=(D.skaters||[]).filter(s=>s.gp>=3).map(s=>{const p=L[s.team+"|"+s.name.split(" ").slice(1).join(" ")]||L[s.team+"|"+s.name.split(" ").pop()]||{g:0,a:0};return {...s,l5g:p.g,l5a:p.a,l5:p.g+p.a}});
+  return {hot:rows.slice().sort((a,b)=>b.l5-a.l5||b.l5g-a.l5g||b.pts-a.pts).slice(0,10),cold:rows.filter(r=>r.l5===0).sort((a,b)=>b.pts/b.gp-a.pts/a.gp).slice(0,10)}}
+function vLead(){const {hot,cold}=hotList();const list=HOT_MODE==="hot"?hot:cold;
+  return `<div class="col">${back()}<section class="sec"><div class="hd"><h1>Лидеры<small>текущий сезон</small></h1></div><div class="tgrid">
+  ${LTABS.map(([k,l])=>`<section class="box"><div class="wg-h"><h3>${l}${k==="gk"?" · от 3 игр":""}</h3></div>${leaderRows(k,10).map((r,i)=>lrow(r,i,r.v,`${EN[r.team]} · ${r.sub}`)).join("")}</section>`).join("")}
+  <section class="box"><div class="wg-h"><h3>Форма игроков</h3></div><div class="pills wg-pills">${[["hot","Горячие"],["cold","Холодные"]].map(([k,l])=>`<button data-hot="${k}" aria-pressed="${HOT_MODE===k}">${l}</button>`).join("")}</div><p class="note" style="padding:0 16px 6px">${HOT_MODE==="hot"?"Больше всех очков за последние 5 матчей команды":"Были среди результативных, но без очков 5 матчей"}</p>
+   ${list.map((r,i)=>lrow(r,i,HOT_MODE==="hot"?r.l5:"0",HOT_MODE==="hot"?`${EN[r.team]} · ${r.l5g} Г · ${r.l5a} П за 5 игр · сезон ${r.pts}`:`${EN[r.team]} · сезон ${r.g} Г · ${r.a} П · ${r.gp} И`)).join("")}</section></div></section></div>`}
+function vPower(){const t=Object.entries(M.teams||{}).sort((a,b)=>b[1].power-a[1].power);const mx=Math.max(...t.map(x=>Math.max(x[1].att,1/x[1].dfn)),1.3);
+  return `<div class="col">${back()}<section class="sec"><div class="hd"><h1>Сила команд<small>${M.league?`${M.league.games} матчей, ${nz(M.league.goals_pg,2)} гола на команду за игру`:""}</small></h1></div>
+  <div class="box">${t.map(([a,v],i)=>`<div class="pw"><span class="mute" style="font-weight:700">${i+1}</span><div style="display:flex;flex-direction:column;gap:6px;min-width:0"><button class="tm" data-team="${a}">${logo(a,34)}<b>${EN[a]}</b></button><div class="bars"><span class="bar2" style="--c:var(--blue)"><i style="--w:${v.att/mx*100}%"></i></span><span class="bar2" style="--c:var(--win)"><i style="--w:${(1/v.dfn)/mx*100}%"></i></span></div><small class="mute">голы ${v.gf_pg}–${v.ga_pg} · броски ${v.sf_pg}–${v.sa_pg} за игру</small></div><span class="v">${Math.round(v.power*100)}</span></div>`).join("")}</div>
+  <p class="note">Индекс 100 — средняя команда лиги. Синяя полоса — атака, зелёная — оборона (длиннее — лучше). Индекс считается по всем матчам сезона: 70% веса — ожидаемые голы (xG MoneyPuck), 30% — реальные голы, с поправкой на соперников и на уровень прошлого сезона, которая слабеет с каждым матчем.</p></section></div>`}
+function vInj(){const rows=ALL.map(a=>[a,(((D.teams||{})[a]||{}).injuries||[])]).filter(x=>x[1].length);
+  return `<div class="col">${back()}<section class="sec"><div class="hd"><h1>Травмы<small>по данным Daily Faceoff</small></h1></div><div class="tgrid">${rows.map(([a,l])=>`<div class="box pad" style="display:flex;flex-direction:column;gap:10px"><button class="tm" data-team="${a}">${logo(a,40)}<b>${FULL[a]}</b></button><ul class="ul">${l.map(x=>`<li><b>${pref(x.name,a)}</b> · ${esc(x.status)}</li>`).join("")}</ul></div>`).join("")}</div>
+  <p class="note">IR и LTIR — список травмированных, Out — точно не сыграет, DTD — решение принимают перед игрой.</p></section></div>`}
+function vRus(){const r=(D.russians||[]).map(x=>({...x,s:skater(x.name),g:goalie(x.name)}));const sk=r.filter(x=>!x.g).sort((a,b)=>((b.s||{}).pts||0)-((a.s||{}).pts||0)),gk=r.filter(x=>x.g);
+  return `<div class="col">${back()}<section class="sec"><div class="hd"><h1>Россияне<small>${plural(r.length,"игрок","игрока","игроков")}</small></h1></div><div class="tgrid">
+  <section class="box"><div class="wg-h"><h3>Полевые · очки</h3></div>${sk.map((x,i)=>lrow({...x,pos:x.s&&x.s.pos},i,x.s?gaHtml(x.s.g,x.s.a):"—",`${EN[x.team]}${x.s?` · ${x.s.gp} и · ${x.s.pm>0?"+":""}${x.s.pm}`:""}`)).join("")}</section>
+  <section class="box"><div class="wg-h"><h3>Вратари</h3></div>${gk.map((x,i)=>lrow(x,i,nz(x.g.sv*100)+"%",`${EN[x.team]} · ${x.g.gp} и · ${x.g.w}-${x.g.l}-${x.g.otl}`)).join("")}</section></div></section></div>`}
+
+/* ===================== карточки ===================== */
+function openSheet(html){$("#panel").innerHTML=html;$("#sheet").hidden=false;document.body.style.overflow="hidden";$("#panel").scrollTop=0}
+function closeSheet(){$("#sheet").hidden=true;document.body.style.overflow=""}
+function specTeams(a){const off=(D.team_stats||{})[a];if(!off)return null;const all=Object.values(D.team_stats||{});const rank=k=>all.map(x=>x[k]).filter(x=>x!=null).sort((p,q)=>q-p).indexOf(off[k])+1;
+  return {pp:off.pp_pct,pk:off.pk_pct,ppr:rank("pp_pct"),pkr:rank("pk_pct"),fo:off.fo_pct,sf:off.sf_pg,sa:off.sa_pg,gf:off.gf_pg,ga:off.ga_pg}}
+
+/* состав клуба из фото-путей НХЛ (20262027/MIN/id) */
+function rosterOf(a){const H=(D&&D.heads)||{};return Object.keys(H).filter(n=>String(H[n]).split("/")[1]===a)}
+function rosterBlock(a){const ns=rosterOf(a);if(!ns.length)return"";const P=(D.ppos||{});
+  const grp=[["Нападающие",n=>["C","LW","RW"].includes(P[n])],["Защитники",n=>["LD","RD","D"].includes(P[n])],["Вратари",n=>P[n]==="G"]];
+  const card=n=>{const s=skater(n),g=goalie(n);const st=g?`${g.gp} И · ${nz(g.sv*100,1)}%`:s?`${s.gp} И · ${s.g} Г · ${s.a} П`:"нет матчей";const num=pnum(n);
+    return `<button class="rc" data-player="${esc(n)}" data-pteam="${a}">${photo(n,a,46)}<span class="nm2"><span><b>${esc(pn(n))}</b>${posTag(n)}</span><small>${num?"#"+num+" · ":""}${st}</small></span></button>`};
+  const sortK=n=>{const s=skater(n),g=goalie(n);return -((s&&s.pts)||(g&&g.gp)||0)};
+  return `<div class="sec"><h4 class="sub">Состав</h4>${grp.map(([l,f])=>{const xs=ns.filter(f).sort((x,y)=>sortK(x)-sortK(y));return xs.length?`<h5 class="rg">${l} · ${xs.length}</h5><div class="rcs">${xs.map(card).join("")}</div>`:""}).join("")}</div>`}
+const PO_RU={"Stanley Cup Final":"Финал Кубка","Conference Finals":"Финал конференции","Second Round":"2-й раунд","2nd Round":"2-й раунд","1st Round":"1-й раунд","First Round":"1-й раунд","Division Finals":"Финал дивизиона","Division Semi-Finals":"Полуфинал дивизиона","Quarter-Finals":"Четвертьфинал","Semi-Finals":"Полуфинал","Qualifying Round":"Квалификация","Stanley Cup Qualifiers":"Квалификация","Round Robin":"Турнир за посев","First Round Robin":"Турнир за посев","Preliminary Round":"Предварительный раунд"};
+function poRu(x){if(!x.po)return `<span class="po no">не попали</span>`;if(x.title==="Stanley Cup Final"&&x.dec==="W")return `<span class="po cup">🏆 Кубок Стэнли</span>`;
+  if(!x.title)return `<span class="po">плей-офф</span>`;return `<span class="po${x.title==="Stanley Cup Final"?" fin":""}">${esc(PO_RU[x.title]||x.title)}</span>`}
+async function fillTeamHist(a){const fr=await loadFR();const h=(fr||{})[a];const box=$("#thist");if(!box)return;if(!h){box.innerHTML="";return}
+  const cups=[...(a==="MTL"?[19151916]:[]),...(h.cups||[])],fin=h.finals||[];const top=$("#cupsTop");
+  if(top)top.innerHTML=cups.length?`<span class="cupb">🏆 ${cups.length} ${plural(cups.length,"Кубок","Кубка","Кубков").split(" ").slice(1).join(" ")} Стэнли</span>`:`<span class="cupb no">Кубков Стэнли пока нет</span>`;
+  const done=(h.seasons||[]).filter(x=>x.gp>=(String(x.s)===String(D.season_id||"")?999:20));const last=done.slice(0,10);
+  const yr=s=>String(s).slice(4);const firstS=h.first?seasonLab(h.first):null;
+  const chart=last.length?storyChart({title:"Очки по сезонам",color:tcol(a),items:last.slice().reverse().map(x=>({label:seasonLab(x.s).slice(2),value:x.pts,hl:x.title==="Stanley Cup Final"&&x.dec==="W"}))}):"";
+  box.innerHTML=`<div class="sec"><h4 class="sub">История клуба</h4>
+   <div class="kv"><div><small>Кубки Стэнли</small><b>${cups.length}</b></div><div><small>Финалы</small><b>${cups.length+fin.length}</b></div>${firstS?`<div><small>В НХЛ с сезона</small><b>${firstS}</b></div>`:""}<div><small>Плей-офф за 10 лет</small><b>${last.filter(x=>x.po).length} из ${last.length}</b></div></div>
+   ${cups.length?`<h5 class="rg">Кубки Стэнли</h5><div class="cupy">${cups.slice().reverse().map(s=>`<span>🏆 ${yr(s)}</span>`).join("")}</div>`:""}
+   ${fin.length?`<h5 class="rg">Проигранные финалы</h5><div class="cupy fin">${fin.slice().reverse().map(s=>`<span>${yr(s)}</span>`).join("")}</div>`:""}
+   ${chart}
+   ${last.length?`<h5 class="rg">Последние сезоны</h5><div class="tw"><table class="mt st5"><thead><tr><th>Сезон</th><th>И</th><th>В-П-ОТ</th><th>О</th><th>Место</th><th>Плей-офф</th></tr></thead><tbody>${last.map(x=>`<tr><td>${seasonLab(x.s)}</td><td>${x.gp}</td><td>${x.w}-${x.l}-${x.otl??x.t??0}</td><td><b>${x.pts}</b></td><td>${x.div?x.div+"-е":"—"}</td><td>${poRu(x)}</td></tr>`).join("")}</tbody></table></div><p class="note">Место — в дивизионе по итогам регулярки. Данные: records.nhl.com.</p>`:""}</div>`}
+function teamSheet(a){const t=TEAMS[a],md=(M.teams||{})[a],r=(D.teams||{})[a]||{};const sp=specTeams(a);
+  const nxt=(D.week||[]).filter(g=>(g.away===a||g.home===a)&&state(g.start)==="pre").slice(0,5);const last=(t.games||[]).slice(-8).reverse();
+  const ln=(k,arr)=>arr&&arr.length?`<div><span class="k">${k}</span>${arr.map(p=>{const f=findP(p,a)||p;return `<button class="plink" data-player="${esc(f)}" data-pteam="${a}">${esc(pn(f))}</button>`}).join(" · ")}</div>`:"";
   const rus=(D.russians||[]).filter(x=>x.team===a);const f=v=>v==null?"—":nz(v)+"%";
   openSheet(`<div class="ph-hero tm-hero" style="--c:${tdeep(a)};--c2:${tcol(a)}"><span class="mesh"></span><img class="ghost" src="${esc(logoUrl(a,true))}" alt="" aria-hidden="true">
    <img class="tlogo big" src="${esc(logoUrl(a,true))}" alt=""><div class="tx"><small class="fn">${esc(DIV_OF[a]||"")} дивизион</small><h2>${esc(FULL[a])}</h2><p>${t.w}-${t.l}-${t.otl} · ${plural(t.pts,"очко","очка","очков")} · ${place(a)}-е место в дивизионе${t.streak?` · серия ${esc(t.streak)}`:""}</p><div id="cupsTop"></div></div><button class="sh-x" data-close aria-label="Закрыть">×</button></div>
