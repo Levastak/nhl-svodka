@@ -428,6 +428,160 @@ main.wrap{padding-top:34px;padding-bottom:112px}
 .season-scroll{border-block:1px solid var(--line);scrollbar-color:#c9c8c1 transparent}
 .season-table{min-width:620px;table-layout:auto}
 .season-table th,.season-table td{padding:9px 10px}
+
+/* Главная, редакция 02: газетная полоса по референсу. */
+:root[data-theme="light"]{
+  --bg:#fff;--card:#fff;--ink:#171717;--ink2:#555;--mute:#777;
+  --line:#e5e5e5;--soft:#f6f6f4;--soft2:#e9e9e6;
+  --strip:#f5f5f3;--accent:#252525;--signal:#a62825;--red:#a62825;--link:#111;
+  --f-body:Arial,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  --f-disp:"Regular Slab","A2 Regular Slab",Georgia,"Times New Roman",serif;
+  color-scheme:light
+}
+html,body{background:#fff;color:#171717}
+body{font-family:var(--f-body);font-size:16px;line-height:1.48}
+.wrap{max-width:1920px;padding-inline:32px}
+main.wrap{padding-top:0;padding-bottom:80px}
+.top{background:#191919;color:#fff;border-bottom:0}
+.top .mast{min-height:72px}
+.mark{gap:10px}
+.mark .brand-emblem{width:40px;height:40px}
+.wordmark{gap:3px}
+.wordmark b{font-family:var(--f-disp);font-weight:800;font-size:25px;letter-spacing:-.035em}
+.mark .wordmark b .word-name{font-family:var(--f-disp);color:#fff;font-weight:800;letter-spacing:-.035em}
+.mark .wordmark b .word-domain{font:700 10px/1 var(--f-body);color:#fff;border:0;padding:0;margin:0 0 0 2px}
+.wordmark em{display:none}
+.edition-note{color:#aaa}
+.tnav{gap:2px}
+.tnav button{color:#c9c9c9;font-size:14px;font-weight:500;letter-spacing:0}
+.tnav button[aria-current="page"]{color:#fff}
+.tnav button[aria-current="page"]::before{background:#fff}
+.sbtn{color:#eee;border-color:#555}
+.sbtn svg{color:#fff}
+.upd{color:#b9b9b9}
+.strip{background:#272727;color:#eee;border-color:#393939}
+.strip .wrap{padding-inline:0}
+.sg,.sday{border-color:#414141}
+.sday,.sg small{color:#bdbdbd}
+.sday b,.sg .r{color:#fff}
+.dock{background:#fff;border-color:var(--line)}
+.dock button[aria-current="page"]{border-top-color:#191919;color:#191919}
+
+/* Компактное табло: матч остаётся первым, но не отнимает место у ленты. */
+.home-stack{display:flex;flex-direction:column;gap:26px}
+.poster.motd-compact{color:var(--ink);background:#fff;border:0;border-block:1px solid var(--line);border-radius:0;overflow:visible}
+.motd-compact .in{display:grid;grid-template-columns:115px minmax(280px,1fr) minmax(235px,.78fr);grid-template-rows:auto auto auto;align-items:center;gap:4px 18px;padding:10px 0}
+.motd-compact .lab{display:contents;font:600 10px/1.25 var(--f-body);letter-spacing:.06em;text-transform:uppercase}
+.motd-compact .lab span:first-child{grid-column:1;color:#171717;font:700 11px/1.2 var(--f-body);letter-spacing:.07em}
+.motd-compact .lab span:nth-child(2){grid-column:1;color:var(--mute);font:11px/1.2 var(--f-body);text-transform:none;letter-spacing:0}
+.motd-compact .lab .go{grid-column:3;grid-row:3;justify-self:end;color:#444;border:0;padding:2px 0;background:none;font-size:11px;font-weight:600}
+.motd-compact .go:hover{background:none;text-decoration:underline}
+.motd-compact .vs{grid-column:2;grid-row:1/4;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:12px}
+.motd-compact .side{gap:8px;color:var(--ink);text-align:left;min-width:0}
+.motd-compact .side.h{flex-direction:row-reverse;text-align:right}
+.motd-compact .side .lgd{--s:34px!important}
+.motd-compact .side b{font:700 14px/1.1 var(--f-body);letter-spacing:0;color:var(--ink)}
+.motd-compact .side small{display:block;margin-top:3px;color:var(--mute);font:10px/1.2 var(--f-body)}
+.motd-compact .mid b{font:600 15px/1.1 var(--f-body);color:var(--ink)}
+.motd-compact .mid small{font:10px/1.2 var(--f-body);color:var(--mute)}
+.motd-compact .pbs{grid-column:3;grid-row:1/3;gap:4px;min-width:0}
+.motd-compact .pbr{grid-template-columns:48px auto minmax(44px,1fr) auto;gap:6px;font-size:10px}
+.motd-compact .pbr .bar{height:4px}
+.motd-compact .ptot{padding-left:54px;color:var(--mute);font-size:10px}
+.motd-compact .dot{background:var(--signal)}
+
+/* Три редакционные колонки: главный материал, короткий список и заголовки. */
+.home-edition{gap:0}
+.home-edition-head{display:flex;align-items:baseline;gap:15px;margin:26px 0 25px;padding-bottom:15px;border-bottom:1px solid var(--line)}
+.home-edition-head h1{margin:0;font:700 34px/1 var(--f-disp);letter-spacing:-.03em}
+.home-edition-head>span{color:var(--mute);font:13px/1.2 var(--f-body)}
+.home-edition-head .lnk{margin-left:auto;color:var(--mute);font-size:12px}
+.editorial-grid{display:grid;grid-template-columns:minmax(0,1.38fr) minmax(0,1.04fr) minmax(280px,.82fr);align-items:stretch}
+.ed-feature{min-width:0;padding-right:clamp(20px,2vw,38px)}
+.ed-secondary{min-width:0;padding:0 clamp(20px,2vw,38px);border-left:1px solid var(--line)}
+.ed-headlines{min-width:0;padding-left:clamp(20px,2vw,38px);border-left:1px solid var(--line)}
+.ed-secondary>h2,.ed-headline-title h2{margin:0 0 13px;font:700 15px/1.2 var(--f-body);letter-spacing:.04em;text-transform:uppercase}
+.ed-headline-title{display:flex;align-items:baseline;justify-content:space-between;gap:8px}
+.ed-headline-title .lnk{color:var(--mute);font-size:12px}
+.lead{display:flex!important;flex-direction:column!important;gap:0;width:100%;text-align:left;border:0!important;background:transparent}
+.lead:hover h3{color:#333}
+.lead .cover{height:auto!important;min-height:0!important;aspect-ratio:1.48;flex:none}
+.lead .tx{padding:13px 0 0!important;gap:8px}
+.lead .meta{font-size:12px;font-weight:400}
+.lead .meta .k{color:var(--signal)}
+.lead h3{margin:0;font:700 clamp(25px,2.1vw,36px)/1.12 var(--f-disp);letter-spacing:-.025em;color:var(--ink)}
+.lead p{margin:0;color:#555;font:17px/1.42 var(--f-disp);max-width:66ch}
+.home-story-row{display:grid;grid-template-columns:minmax(0,1fr) 88px;gap:16px;align-items:start;width:100%;padding:0 0 14px;margin:0 0 14px;border:0;border-bottom:1px solid var(--line);background:transparent;text-align:left;color:var(--ink);cursor:pointer}
+.home-story-row:last-child{margin-bottom:0}
+.home-story-copy{display:flex;flex-direction:column;gap:6px;min-width:0}
+.home-story-copy .meta{font-size:11px;font-weight:400}
+.home-story-copy .meta .k{color:var(--signal)}
+.home-story-copy>b{font:700 20px/1.17 var(--f-disp);letter-spacing:-.015em}
+.home-story-copy>small{color:var(--mute);font:12px/1.4 var(--f-body)}
+.home-thumb{display:block;width:88px;aspect-ratio:1;overflow:hidden;background:#eee}
+.home-thumb img{display:block;width:100%;height:100%;object-fit:cover}
+.home-headline{display:grid;grid-template-columns:14px minmax(0,1fr);gap:9px;width:100%;padding:0 0 16px;margin:0 0 14px;border:0;border-bottom:1px solid transparent;background:transparent;text-align:left;color:var(--ink);cursor:pointer;font:16px/1.42 var(--f-body)}
+.home-headline:hover,.home-story-row:hover .home-story-copy>b{color:#555}
+.home-headline .square{padding-top:1px;font-size:12px;color:#111}
+.home-headline small{display:block;margin-top:5px;color:var(--mute);font:11px/1.25 var(--f-body)}
+.home-claude{display:flex;flex-direction:column;gap:6px;width:100%;padding:12px 0 0;border:0;border-top:1px solid var(--line);background:transparent;text-align:left;color:var(--ink);cursor:pointer}
+.home-claude small{font:700 10px/1.2 var(--f-body);letter-spacing:.07em;text-transform:uppercase;color:var(--signal)}
+.home-claude b{font:700 18px/1.2 var(--f-disp)}
+.home-claude span{color:var(--mute);font:12px/1.42 var(--f-body)}
+.home-lower{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(280px,.8fr);gap:clamp(24px,3vw,54px);padding-top:28px;border-top:1px solid var(--line)}
+.home-lower>.col{min-width:0;gap:30px}
+.home-lower>.col>aside,.home-lower>aside{min-width:0}
+.hd{border-color:var(--line)}
+.hd h1,.hd h2,.hd h3,.wg-h h3,.stc .th3 h3,.day>summary{font-family:var(--f-disp);font-weight:700;letter-spacing:-.02em;text-transform:none}
+.hd h1,.hd h2{font-size:clamp(26px,2.4vw,34px);line-height:1.12}
+.hd h3{font-size:23px}
+.hd small{font-family:var(--f-body);font-weight:400}
+.box,.card3,.sense,.stc,.hch{background:#fff;border-color:var(--line);border-radius:0;box-shadow:none}
+.poster .go,.lnk{font-family:var(--f-body)}
+.cover,.cover.art,.nr .th.art{background:#eee}
+
+@media(max-width:1120px){
+  .editorial-grid{grid-template-columns:minmax(0,1.15fr) minmax(0,1fr)}
+  .ed-headlines{grid-column:1/-1;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:22px;padding:18px 0 0;margin-top:18px;border-left:0;border-top:1px solid var(--line)}
+  .ed-headline-title{grid-column:1/-1}
+  .home-claude{grid-column:1/-1}
+  .motd-compact .in{grid-template-columns:90px minmax(250px,1fr) minmax(210px,.8fr);gap:8px 12px}
+}
+@media(max-width:760px){
+  .wrap{padding-inline:18px}
+  .home-stack{gap:18px}
+  .home-edition-head{margin:20px 0 17px;gap:10px}
+  .home-edition-head h1{font-size:29px}
+  .home-edition-head>span{font-size:11px}
+  .editorial-grid{grid-template-columns:minmax(0,1fr);gap:20px}
+  .ed-feature{padding:0}
+  .ed-secondary{padding:18px 0 0;border-left:0;border-top:1px solid var(--line)}
+  .ed-headlines{grid-template-columns:minmax(0,1fr);padding-top:17px;margin-top:0}
+  .ed-headline-title,.home-claude{grid-column:1}
+  .lead .cover{aspect-ratio:1.55}
+  .lead h3{font-size:clamp(25px,7vw,32px)}
+  .lead p{font-size:16px}
+  .home-story-copy>b{font-size:19px}
+  .home-lower{grid-template-columns:minmax(0,1fr);gap:24px;padding-top:22px}
+  .home-lower>.col{gap:24px}
+  .motd-compact .in{grid-template-columns:minmax(0,1fr) auto;grid-template-rows:auto;gap:8px 10px;padding:9px 0}
+  .motd-compact .lab{display:flex;grid-column:1/-1;gap:8px;align-items:center}
+  .motd-compact .lab span:first-child,.motd-compact .lab span:nth-child(2){grid-column:auto}
+  .motd-compact .lab span:first-child{font-size:10px}
+  .motd-compact .lab span:nth-child(2){display:inline;font-size:10px}
+  .motd-compact .lab .go{grid-column:auto;grid-row:auto;margin-left:auto;font-size:10px}
+  .motd-compact .vs{grid-column:1/-1;grid-row:auto}
+  .motd-compact .pbs{grid-column:1/-1;grid-row:auto;display:grid;grid-template-columns:1fr 1fr;gap:4px 12px}
+  .motd-compact .pbs .ptot{grid-column:1/-1;padding-left:0}
+  .motd-compact .pbr{grid-template-columns:45px auto minmax(25px,1fr) auto;gap:5px}
+}
+@media(max-width:420px){
+  .wrap{padding-inline:14px}
+  .home-edition-head>span{display:none}
+  .home-headline{font-size:15px}
+  .home-thumb{width:76px}
+  .home-story-row{grid-template-columns:minmax(0,1fr) 76px;gap:12px}
+}
 .season-table th:nth-child(2),.season-table td:nth-child(2){text-align:left}
 .season-table tbody tr:nth-child(even){background:#f8f7f3}
 .season-table tbody tr:hover{background:#eef2f1}
