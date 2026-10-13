@@ -1,0 +1,66 @@
+name: Ночной дозор
+
+# Запускается раз за вечер (изменением trigger/watch или вручную) и до 5 ч 50 мин
+# каждые 10 минут проверяет матчи: закончился новый — сразу итоги, таблица, лидеры, журнал
+# и публикация сайта. Останавливается сам, когда все матчи дня сыграны.
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ["trigger/watch"]
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: watch
+  cancel-in-progress: false
+
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 355
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Дозор
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git config user.name "svodka-bot"
+          git config user.email "svodka-bot@users.noreply.github.com"
+          end=$(( $(date +%s) + 345*60 ))
+          while [ "$(date +%s)" -lt "$end" ]; do
+            git pull -q --rebase origin main || true
+            python3 scripts/fetch.py night || true
+            git add site
+            if ! git diff --cached --quiet; then
+              git commit -q -m "Данные: дозор $(date -u +%Y-%m-%dT%H:%MZ)"
+              for i in 1 2 3; do git pull -q --rebase -X theirs origin main && git push -q && break; sleep 5; done
+              gh workflow run site.yml -f mode=deploy || true
+            fi
+            left=$(python3 - <<'PY'
+          import json, urllib.request, datetime as dt
+          from zoneinfo import ZoneInfo
+          d = dt.datetime.now(ZoneInfo("America/New_York")).date()
+          left = 0
+          for day in (d - dt.timedelta(days=1), d):
+              try:
+                  r = urllib.request.urlopen(urllib.request.Request(f"https://api-web.nhle.com/v1/score/{day}", headers={"User-Agent": "Mozilla/5.0"}), timeout=30)
+                  for g in json.load(r).get("games", []):
+                      if g.get("gameType") in (2, 3) and g.get("gameState") not in ("OFF", "FINAL"):
+                          start = dt.datetime.fromisoformat(g["startTimeUTC"].replace("Z", "+00:00"))
+                          if start < dt.datetime.now(dt.timezone.utc) + dt.timedelta(hours=8):
+                              left += 1
+              except Exception:
+                  left += 1
+          print(left)
+          PY
+            )
+            echo "$(date -u +%H:%M) осталось матчей: $left"
+            [ "$left" = "0" ] && break
+            sleep 600
+          done
