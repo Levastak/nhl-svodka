@@ -128,7 +128,7 @@ function posterSec(){const mo=D.motd;if(!mo)return"";const m=(D.upcoming||[]).fi
 function todaySec(){const u=todayGames();if(!u.length)return noGames();const mo=D.motd?u.find(x=>x.away===D.motd.away&&x.home===D.motd.home):null;
   return `<section class="sec"><div class="hd"><h2>Сегодня<small>${esc(dLong(D.upcoming_date))}, время по Кирову</small></h2><button class="lnk" data-go="games">Все матчи</button></div>
     <div class="box">${u.map(m=>gRow(m,{nav:true,mo:m===mo&&false})).join("")}</div>${confLine()}</section>`}
-function nightSec(){const d=lastDate();if(!d)return"";const gs=A.games.filter(g=>g.date===d);
+function nightSec(){const d=lastDate();if(!d)return"";/* пока идёт игровой день, его финалы уже видны в «Сегодня» — блок «Ночь» не дублируем */if(D.upcoming_date&&d>=D.upcoming_date)return"";const gs=A.games.filter(g=>g.date===d);
   return `<section class="sec"><div class="hd"><h2>Ночь<small>${esc(dLong(d))}</small></h2><button class="lnk" data-go="results">Итоги и протоколы</button></div>
     <div class="box"><div class="scores">${gs.map(g=>{const aw=g.as>g.hs;return `<button class="sc1" data-res="${g.date}" data-gid="${g.id}"><span class="r ${aw?"":"lo"}">${logo(g.away,40)}${EN[g.away]}<b>${g.as}</b></span><span class="r ${aw?"lo":""}">${logo(g.home,40)}${EN[g.home]}<b>${g.hs}</b></span>${endTag(g.end)?`<small>${endLong(g.end)}</small>`:""}</button>`}).join("")}</div></div></section>`}
 
