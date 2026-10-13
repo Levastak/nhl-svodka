@@ -1,7 +1,7 @@
 {
  "version": 4,
  "xg_used": true,
- "generated": "2026-10-13T20:48Z",
+ "generated": "2026-10-13T23:44Z",
  "league": {
   "goals_pg": 3.094,
   "home_adv": 0.021,
@@ -1029,7 +1029,7 @@
    ],
    "shares_adj": -0.101,
    "goalie_away": {
-    "name": "Leevi Merilainen (не подтв.)",
+    "name": "Leevi Merilainen (подтв.)",
     "gsax_rate": 0.0046,
     "talent": 0.89,
     "team_level": 0.883,
@@ -1075,25 +1075,32 @@
     "att": 0.983,
     "dfn": 1.023
    },
-   "mkt_home": 0.657,
-   "mkt_away": 0.343,
-   "edge_home": 0.046,
-   "edge_away": -0.046,
-   "p_home_blend": 0.676,
-   "p_away_blend": 0.324,
+   "mkt_home": 0.659,
+   "mkt_away": 0.341,
+   "edge_home": 0.044,
+   "edge_away": -0.044,
+   "p_home_blend": 0.677,
+   "p_away_blend": 0.323,
    "fatigue_edge": false,
    "value": null,
-   "mkt_over": 0.504,
-   "edge_over": 0.073,
-   "p_over_blend": 0.533,
-   "p_under_blend": 0.467,
+   "mkt_over": 0.483,
+   "edge_over": 0.094,
+   "p_over_blend": 0.521,
+   "p_under_blend": 0.479,
    "value_total": "over",
    "soft": [
+    {
+     "book": "Марафон",
+     "bet": "П1 NYI (осн. время)",
+     "odds": 1.82,
+     "fair": 1.76,
+     "ev": 0.034
+    },
     {
      "book": "1xBet",
      "bet": "П1 NYI (осн. время)",
      "odds": 1.81,
-     "fair": 1.75,
+     "fair": 1.76,
      "ev": 0.031
     }
    ],
@@ -1108,22 +1115,22 @@
     "vs_market": false,
     "level": "lean",
     "edge_side": "home",
-    "edge": 0.046,
+    "edge": 0.044,
     "fatigue": false,
     "bet": {
      "kind": "win",
      "side": "home",
      "odds": 1.48,
      "p_model": 0.703,
-     "p_mkt": 0.657,
+     "p_mkt": 0.659,
      "src": "Pinnacle"
     },
     "total": {
      "side": "over",
      "line": 6.0,
      "p": 0.577,
-     "mkt_side": "over",
-     "vs_market": false,
+     "mkt_side": "under",
+     "vs_market": true,
      "value": "over"
     }
    }
@@ -1214,33 +1221,33 @@
     "att": 0.868,
     "dfn": 1.101
    },
-   "mkt_home": 0.406,
-   "mkt_away": 0.594,
-   "edge_home": -0.126,
-   "edge_away": 0.126,
-   "p_home_blend": 0.356,
-   "p_away_blend": 0.644,
+   "mkt_home": 0.402,
+   "mkt_away": 0.598,
+   "edge_home": -0.122,
+   "edge_away": 0.122,
+   "p_home_blend": 0.353,
+   "p_away_blend": 0.647,
    "fatigue_edge": false,
    "value": "away",
-   "mkt_over": 0.5,
-   "edge_over": -0.003,
-   "p_over_blend": 0.499,
-   "p_under_blend": 0.501,
+   "mkt_over": 0.522,
+   "edge_over": -0.025,
+   "p_over_blend": 0.512,
+   "p_under_blend": 0.488,
    "value_total": null,
    "soft": [
     {
      "book": "1xBet",
      "bet": "П2 PIT (осн. время)",
      "odds": 2.1,
-     "fair": 1.87,
-     "ev": 0.121
+     "fair": 1.86,
+     "ev": 0.128
     },
     {
      "book": "Марафон",
      "bet": "П2 PIT (осн. время)",
-     "odds": 2.07,
-     "fair": 1.87,
-     "ev": 0.105
+     "odds": 2.06,
+     "fair": 1.86,
+     "ev": 0.109
     }
    ],
    "h2h": [],
@@ -1254,14 +1261,14 @@
     "vs_market": false,
     "level": "bet",
     "edge_side": "away",
-    "edge": 0.126,
+    "edge": 0.122,
     "fatigue": false,
     "bet": {
      "kind": "win",
      "side": "away",
-     "odds": 1.64,
+     "odds": 1.63,
      "p_model": 0.72,
-     "p_mkt": 0.594,
+     "p_mkt": 0.598,
      "src": "Pinnacle"
     },
     "total": {
@@ -1351,12 +1358,12 @@
     "att": 0.956,
     "dfn": 1.01
    },
-   "mkt_home": 0.492,
-   "mkt_away": 0.508,
-   "edge_home": 0.019,
-   "edge_away": -0.019,
-   "p_home_blend": 0.5,
-   "p_away_blend": 0.5,
+   "mkt_home": 0.494,
+   "mkt_away": 0.506,
+   "edge_home": 0.017,
+   "edge_away": -0.017,
+   "p_home_blend": 0.501,
+   "p_away_blend": 0.499,
    "fatigue_edge": true,
    "value": null,
    "mkt_over": 0.513,
@@ -1376,7 +1383,7 @@
     "vs_market": true,
     "level": "pass",
     "edge_side": "home",
-    "edge": 0.019,
+    "edge": 0.017,
     "fatigue": true,
     "total": {
      "side": "under",
@@ -1474,18 +1481,18 @@
     "att": 0.975,
     "dfn": 0.89
    },
-   "mkt_home": 0.523,
-   "mkt_away": 0.477,
-   "edge_home": -0.135,
-   "edge_away": 0.135,
+   "mkt_home": 0.524,
+   "mkt_away": 0.476,
+   "edge_home": -0.136,
+   "edge_away": 0.136,
    "p_home_blend": 0.469,
    "p_away_blend": 0.531,
    "fatigue_edge": false,
    "value": "away",
-   "mkt_over": 0.474,
-   "edge_over": 0.024,
-   "p_over_blend": 0.484,
-   "p_under_blend": 0.516,
+   "mkt_over": 0.476,
+   "edge_over": 0.022,
+   "p_over_blend": 0.485,
+   "p_under_blend": 0.515,
    "value_total": null,
    "soft": [
     {
@@ -1498,9 +1505,9 @@
     {
      "book": "Марафон",
      "bet": "П2 COL (осн. время)",
-     "odds": 2.63,
-     "fair": 2.4,
-     "ev": 0.094
+     "odds": 2.65,
+     "fair": 2.41,
+     "ev": 0.102
     }
    ],
    "h2h": [],
@@ -1514,14 +1521,14 @@
     "vs_market": true,
     "level": "bet",
     "edge_side": "away",
-    "edge": 0.135,
+    "edge": 0.136,
     "fatigue": false,
     "bet": {
      "kind": "win",
      "side": "away",
      "odds": 2.05,
      "p_model": 0.612,
-     "p_mkt": 0.477,
+     "p_mkt": 0.476,
      "src": "Pinnacle"
     },
     "total": {
@@ -1620,18 +1627,18 @@
     "att": 0.978,
     "dfn": 1.012
    },
-   "mkt_home": 0.458,
-   "mkt_away": 0.542,
-   "edge_home": 0.011,
-   "edge_away": -0.011,
-   "p_home_blend": 0.462,
-   "p_away_blend": 0.538,
+   "mkt_home": 0.461,
+   "mkt_away": 0.539,
+   "edge_home": 0.008,
+   "edge_away": -0.008,
+   "p_home_blend": 0.464,
+   "p_away_blend": 0.536,
    "fatigue_edge": true,
    "value": null,
-   "mkt_over": 0.519,
-   "edge_over": -0.018,
-   "p_over_blend": 0.512,
-   "p_under_blend": 0.488,
+   "mkt_over": 0.518,
+   "edge_over": -0.017,
+   "p_over_blend": 0.511,
+   "p_under_blend": 0.489,
    "value_total": null,
    "soft": [],
    "h2h": [],
@@ -1645,7 +1652,7 @@
     "vs_market": false,
     "level": "pass",
     "edge_side": "home",
-    "edge": 0.011,
+    "edge": 0.008,
     "fatigue": true,
     "total": {
      "side": "over",
@@ -1743,16 +1750,16 @@
     "att": 1.065,
     "dfn": 0.959
    },
-   "mkt_home": 0.594,
-   "mkt_away": 0.406,
-   "edge_home": 0.129,
-   "edge_away": -0.129,
-   "p_home_blend": 0.646,
-   "p_away_blend": 0.354,
+   "mkt_home": 0.593,
+   "mkt_away": 0.407,
+   "edge_home": 0.13,
+   "edge_away": -0.13,
+   "p_home_blend": 0.645,
+   "p_away_blend": 0.355,
    "fatigue_edge": false,
    "value": "home",
-   "mkt_over": 0.522,
-   "edge_over": -0.01,
+   "mkt_over": 0.523,
+   "edge_over": -0.011,
    "p_over_blend": 0.518,
    "p_under_blend": 0.482,
    "value_total": null,
@@ -1762,14 +1769,14 @@
      "bet": "П1 UTA (осн. время)",
      "odds": 2.05,
      "fair": 1.86,
-     "ev": 0.099
+     "ev": 0.1
     },
     {
      "book": "Марафон",
      "bet": "П1 UTA (осн. время)",
      "odds": 2.02,
      "fair": 1.86,
-     "ev": 0.083
+     "ev": 0.084
     }
    ],
    "h2h": [],
@@ -1783,14 +1790,14 @@
     "vs_market": false,
     "level": "bet",
     "edge_side": "home",
-    "edge": 0.129,
+    "edge": 0.13,
     "fatigue": false,
     "bet": {
      "kind": "win",
      "side": "home",
-     "odds": 1.64,
+     "odds": 1.65,
      "p_model": 0.723,
-     "p_mkt": 0.594,
+     "p_mkt": 0.593,
      "src": "Pinnacle"
     },
     "total": {
@@ -1898,18 +1905,18 @@
     "att": 1.05,
     "dfn": 1.028
    },
-   "mkt_home": 0.617,
-   "mkt_away": 0.383,
-   "edge_home": 0.044,
-   "edge_away": -0.044,
-   "p_home_blend": 0.635,
-   "p_away_blend": 0.365,
+   "mkt_home": 0.611,
+   "mkt_away": 0.389,
+   "edge_home": 0.05,
+   "edge_away": -0.05,
+   "p_home_blend": 0.631,
+   "p_away_blend": 0.369,
    "fatigue_edge": false,
-   "value": null,
-   "mkt_over": 0.512,
-   "edge_over": 0.055,
-   "p_over_blend": 0.534,
-   "p_under_blend": 0.466,
+   "value": "home",
+   "mkt_over": 0.514,
+   "edge_over": 0.053,
+   "p_over_blend": 0.535,
+   "p_under_blend": 0.465,
    "value_total": "over",
    "soft": [],
    "h2h": [
@@ -1929,16 +1936,16 @@
     "p_fav": 0.661,
     "mkt_fav": "home",
     "vs_market": false,
-    "level": "lean",
+    "level": "bet",
     "edge_side": "home",
-    "edge": 0.044,
+    "edge": 0.05,
     "fatigue": false,
     "bet": {
      "kind": "win",
      "side": "home",
-     "odds": 1.58,
+     "odds": 1.6,
      "p_model": 0.661,
-     "p_mkt": 0.617,
+     "p_mkt": 0.611,
      "src": "Pinnacle"
     },
     "total": {
@@ -2050,26 +2057,26 @@
     "att": 0.941,
     "dfn": 0.984
    },
-   "mkt_home": 0.463,
-   "mkt_away": 0.537,
-   "edge_home": -0.069,
-   "edge_away": 0.069,
-   "p_home_blend": 0.435,
-   "p_away_blend": 0.565,
+   "mkt_home": 0.466,
+   "mkt_away": 0.534,
+   "edge_home": -0.072,
+   "edge_away": 0.072,
+   "p_home_blend": 0.437,
+   "p_away_blend": 0.563,
    "fatigue_edge": false,
    "value": "away",
-   "mkt_over": 0.521,
-   "edge_over": 0.021,
-   "p_over_blend": 0.529,
-   "p_under_blend": 0.471,
+   "mkt_over": 0.517,
+   "edge_over": 0.025,
+   "p_over_blend": 0.527,
+   "p_under_blend": 0.473,
    "value_total": null,
    "soft": [
     {
      "book": "1xBet",
      "bet": "П2 EDM (осн. время)",
-     "odds": 2.32,
-     "fair": 2.22,
-     "ev": 0.047
+     "odds": 2.33,
+     "fair": 2.23,
+     "ev": 0.046
     }
    ],
    "h2h": [],
@@ -2083,14 +2090,14 @@
     "vs_market": false,
     "level": "bet",
     "edge_side": "away",
-    "edge": 0.069,
+    "edge": 0.072,
     "fatigue": false,
     "bet": {
      "kind": "win",
      "side": "away",
-     "odds": 1.82,
+     "odds": 1.83,
      "p_model": 0.606,
-     "p_mkt": 0.537,
+     "p_mkt": 0.534,
      "src": "Pinnacle"
     },
     "total": {
@@ -2180,18 +2187,18 @@
     "att": 0.93,
     "dfn": 1.069
    },
-   "mkt_home": 0.462,
-   "mkt_away": 0.538,
-   "edge_home": -0.117,
-   "edge_away": 0.117,
+   "mkt_home": 0.461,
+   "mkt_away": 0.539,
+   "edge_home": -0.116,
+   "edge_away": 0.116,
    "p_home_blend": 0.415,
    "p_away_blend": 0.585,
    "fatigue_edge": false,
    "value": "away",
-   "mkt_over": 0.51,
-   "edge_over": 0.017,
-   "p_over_blend": 0.517,
-   "p_under_blend": 0.483,
+   "mkt_over": 0.526,
+   "edge_over": 0.001,
+   "p_over_blend": 0.526,
+   "p_under_blend": 0.474,
    "value_total": null,
    "soft": [
     {
@@ -2206,7 +2213,7 @@
      "bet": "П2 BOS (осн. время)",
      "odds": 2.28,
      "fair": 2.12,
-     "ev": 0.075
+     "ev": 0.077
     }
    ],
    "h2h": [],
@@ -2220,14 +2227,14 @@
     "vs_market": false,
     "level": "bet",
     "edge_side": "away",
-    "edge": 0.117,
+    "edge": 0.116,
     "fatigue": false,
     "bet": {
      "kind": "win",
      "side": "away",
      "odds": 1.81,
      "p_model": 0.655,
-     "p_mkt": 0.538,
+     "p_mkt": 0.539,
      "src": "Pinnacle"
     },
     "total": {
@@ -2253,9 +2260,9 @@
    "p_home_reg": 0.49,
    "p_away_reg": 0.305,
    "exp_total": 6.91,
-   "line": 5.5,
-   "p_over": 0.667,
-   "p_under": 0.333,
+   "line": 6.5,
+   "p_over": 0.56,
+   "p_under": 0.44,
    "fair_home": 1.69,
    "fair_away": 2.45,
    "b2b_away": true,
@@ -2328,36 +2335,20 @@
     "att": 1.053,
     "dfn": 1.022
    },
-   "soft": [
-    {
-     "book": "1xBet",
-     "bet": "ТБ 6.5",
-     "odds": 2.2,
-     "fair": 2.01,
-     "ev": 0.093
-    },
-    {
-     "book": "Марафон",
-     "bet": "ТБ 6.5",
-     "odds": 2.15,
-     "fair": 2.01,
-     "ev": 0.069
-    },
-    {
-     "book": "1xBet",
-     "bet": "П1 WSH (осн. время)",
-     "odds": 2.21,
-     "fair": 2.08,
-     "ev": 0.062
-    },
-    {
-     "book": "Марафон",
-     "bet": "П1 WSH (осн. время)",
-     "odds": 2.18,
-     "fair": 2.08,
-     "ev": 0.047
-    }
-   ],
+   "mkt_home": 0.562,
+   "mkt_away": 0.438,
+   "edge_home": 0.029,
+   "edge_away": -0.029,
+   "p_home_blend": 0.574,
+   "p_away_blend": 0.426,
+   "fatigue_edge": false,
+   "value": null,
+   "mkt_over": 0.5,
+   "edge_over": 0.06,
+   "p_over_blend": 0.524,
+   "p_under_blend": 0.476,
+   "value_total": "over",
+   "soft": [],
    "h2h": [],
    "id": 2026020106,
    "date": "2026-10-14",
@@ -2365,7 +2356,20 @@
    "verdict": {
     "fav": "home",
     "p_fav": 0.591,
-    "level": "noodds"
+    "mkt_fav": "home",
+    "vs_market": false,
+    "level": "pass",
+    "edge_side": "home",
+    "edge": 0.029,
+    "fatigue": false,
+    "total": {
+     "side": "over",
+     "line": 6.5,
+     "p": 0.56,
+     "mkt_side": "over",
+     "vs_market": false,
+     "value": "over"
+    }
    }
   },
   {
@@ -2454,10 +2458,10 @@
    "p_away_blend": 0.389,
    "fatigue_edge": false,
    "value": "home",
-   "mkt_over": 0.484,
-   "edge_over": 0.024,
-   "p_over_blend": 0.494,
-   "p_under_blend": 0.506,
+   "mkt_over": 0.487,
+   "edge_over": 0.021,
+   "p_over_blend": 0.495,
+   "p_under_blend": 0.505,
    "value_total": null,
    "soft": [
     {
@@ -2470,9 +2474,9 @@
     {
      "book": "Марафон",
      "bet": "П1 COL (осн. время)",
-     "odds": 2.12,
+     "odds": 2.11,
      "fair": 2.01,
-     "ev": 0.054
+     "ev": 0.049
     }
    ],
    "h2h": [],
