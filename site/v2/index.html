@@ -18,13 +18,13 @@
     var i=0;
     (function next(){
       if(i>=q.length)return;
-      var s=document.createElement("script");s.src=q[i++]+"?v="+version;s.onload=next;
+      var s=document.createElement("script");s.src=q[i++]+"?v="+version+"-brand02";s.onload=next;
       s.onerror=function(){document.getElementById("app").innerHTML='<div class="box empty">Не удалось загрузить новую редакцию. Обнови страницу.</div>'};
       (document.body||document.documentElement).appendChild(s);
     })();
   }
   fetch("../version.txt?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.ok?r.text():"2.0.0"})
-    .catch(function(){return "2.0.0"}).then(function(v){v=String(v).trim()||"2.0.0";var l=document.querySelector('link[rel="stylesheet"]');l.href="style.css?v="+v;document.getElementById("edition-css").href="edition.css?v="+v;load(v)});
+    .catch(function(){return "2.0.0"}).then(function(v){v=String(v).trim()||"2.0.0";var l=document.querySelector('link[rel="stylesheet"]');l.href="style.css?v="+v+"-brand02";document.getElementById("edition-css").href="edition.css?v="+v+"-brand02";load(v)});
 })();
 </script>
 </head>
