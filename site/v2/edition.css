@@ -375,3 +375,82 @@ main.wrap{padding-top:34px;padding-bottom:112px}
   .home{gap:28px}
   .home>.col,.home>aside{gap:28px}
 }
+
+/* Ручной знак, читаемые вероятности и выправленные строки редакции. */
+.mark{gap:10px}
+.mark .brand-emblem{width:46px;height:46px}
+.wordmark{gap:5px}
+.wordmark b{gap:3px;font-family:var(--f-body);font-size:25px;font-weight:850;letter-spacing:-.045em}
+.mark .wordmark b .word-name{color:#f1efe8;font-family:var(--f-body);font-weight:850;letter-spacing:-.045em}
+.mark .wordmark b .word-domain{align-self:flex-start;margin:2px 0 0 3px;padding-left:6px;border-left:1px solid rgba(241,239,232,.28);color:#d59a86;font:700 10px/1 var(--f-mono);letter-spacing:.06em}
+.wordmark em{color:#c7c7bf;font:500 10px/1.1 var(--f-body);font-style:normal;letter-spacing:.015em}
+
+.card3 .rk{color:var(--ink);opacity:1}
+.card3 .rk i{color:var(--signal)}
+.card3 .num3{color:var(--ink);opacity:1;background:var(--card);border-left:2px solid var(--signal);padding:3px 6px}
+
+.pcs{gap:4px;min-width:0}
+.pcs::before{content:none}
+.pcs>span{display:grid;grid-template-columns:27px minmax(20px,1fr) 32px;gap:5px;align-items:center;min-width:0;font:600 10px/1 var(--f-mono);font-variant-numeric:tabular-nums;color:var(--mute)}
+.pcs>span.f{color:var(--ink)}
+.pcs .pc-team{font:600 9px/1 var(--f-mono);font-style:normal;color:var(--mute)}
+.pcs>span.f .pc-team{color:var(--ink)}
+.pcs .bar2{height:4px;width:100%;min-width:20px;flex:initial;border-radius:0}
+.pcs .pc-value{text-align:right;font:inherit;white-space:nowrap}
+.pcs .bar2 i{background:var(--soft2)}
+.pcs>span.f .bar2 i{background:var(--c)}
+
+.lr .nm2{flex:1}
+.lr .nm2>span,.lr .nm2 small{min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lr .nm2 small{display:block;line-height:1.25}
+.home aside .wg-h{gap:6px;padding:12px 12px 8px}
+.home aside .wg-h h3{font-size:17px;white-space:nowrap}
+.home aside .acc{gap:8px;padding:4px 12px 12px;align-items:center}
+.home aside .acc b{font-size:36px}
+.home aside .acc span{font-size:11px;line-height:1.35}
+.home aside .lr{grid-template-columns:16px minmax(0,1fr) auto;gap:7px;padding:8px 10px}
+.home aside .lr .who{gap:7px}
+.home aside .lr .ph{--s:36px!important}
+.home aside .lr .nm2 .plink{font-size:12px}
+.home aside .lr .nm2 small{font-size:10px}
+.home aside .lr .v{font-size:19px}
+.home aside .wg-pills{padding:0 10px 8px;gap:0}
+.home aside .wg-pills button{padding:7px 8px;font-size:11px}
+
+.reader-column .reader-art>.cover.art{height:142px;min-height:142px;max-height:142px;aspect-ratio:auto;justify-content:flex-start;gap:10px;padding:0 24px;background:#efeee9}
+.reader-column .reader-art>.cover.art::before{content:"МОДЕЛЬ · РЫНОК · ЛЁД";font:600 10px/1 var(--f-mono);letter-spacing:.12em;color:#74766f}
+.reader-column .reader-art .lgw{width:44px;max-width:44px;flex:none;background:transparent;box-shadow:none}
+.reader-column .reader-art .lgw .lg{--s:38px}
+.reader-column .rb{padding-top:16px}
+.bio-copy{max-width:72ch;color:var(--ink2);font-size:14px;line-height:1.65}
+.bio-copy p{margin:0 0 9px}
+.bio-copy p:last-child{margin-bottom:0}
+.season-scroll{border-block:1px solid var(--line);scrollbar-color:#c9c8c1 transparent}
+.season-table{min-width:620px;table-layout:auto}
+.season-table th,.season-table td{padding:9px 10px}
+.season-table th:nth-child(2),.season-table td:nth-child(2){text-align:left}
+.season-table tbody tr:nth-child(even){background:#f8f7f3}
+.season-table tbody tr:hover{background:#eef2f1}
+.season-table .tmi{display:inline-flex;align-items:center;gap:4px;margin:0 3px 0 0;padding:2px 4px;border:0;border-radius:2px;background:var(--soft);color:var(--ink);font:600 9px/1 var(--f-mono);vertical-align:middle}
+.season-table .tmi .lg{--s:18px!important}
+.season-table .tmi span{white-space:nowrap}
+.season-note-mobile{display:none}
+.spk .c{max-width:68px}
+.season-scroll:focus-visible{outline-offset:1px}
+@media(max-width:640px){
+  .mark .brand-emblem{width:38px;height:38px}
+  .wordmark em{font-size:9px}
+  .home aside .lr{grid-template-columns:20px minmax(0,1fr) auto;gap:10px;padding:9px 12px}
+  .home aside .lr .who{gap:9px}
+  .home aside .lr .ph{--s:42px!important}
+  .home aside .lr .nm2 .plink{font-size:14px}
+  .home aside .lr .nm2 small{font-size:11px}
+  .home aside .lr .v{font-size:21px}
+  .season-note-full{display:none}
+  .season-note-mobile{display:inline}
+  .spk .c{max-width:44px}
+  .reader-column .reader-art>.cover.art{height:104px;min-height:104px;max-height:104px;padding-inline:14px}
+  .reader-column .reader-art>.cover.art::before{font-size:8px;letter-spacing:.07em}
+  .reader-column .reader-art .lgw{width:34px;max-width:34px}
+  .reader-column .reader-art .lgw .lg{--s:30px}
+}
