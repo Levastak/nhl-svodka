@@ -851,6 +851,79 @@ def night():
     return True
 
 
+# ---------- история клубов и карьеры игроков (раз в неделю: режим weekly) ----------
+def team_history():
+    """site/hist/franchises.json: по каждому клубу — все сезоны (очки, место, плей-офф), Кубки Стэнли и финалы."""
+    fr, _ = get("https://api.nhle.com/stats/rest/en/franchise?sort=fullName&include=lastSeason.id&include=firstSeason.id")
+    cup, _ = get("https://records.nhl.com/site/api/award-details?cayenneExp=trophyId=1&sort=seasonId&dir=DESC")
+    cup = (cup or {}).get("data", []) if isinstance(cup, dict) else (cup or [])
+    team_cups = [x for x in cup if x.get("playerId") is None]
+    out = {}
+    for f in (fr or {}).get("data", []):
+        if f.get("lastSeason"):
+            continue
+        ab = team_abbr(f["fullName"])
+        if not ab:
+            continue
+        rows, _ = get(f"https://records.nhl.com/site/api/franchise-season-results?cayenneExp=franchiseId={f['id']}&sort=seasonId&dir=DESC")
+        rows = (rows or {}).get("data", []) if isinstance(rows, dict) else (rows or [])
+        tids = {r.get("teamId") for r in rows}
+        reg = {r["seasonId"]: r for r in rows if r.get("gameTypeId") == 2}
+        po = {r["seasonId"]: r for r in rows if r.get("gameTypeId") == 3}
+        seasons = []
+        for sid in sorted(reg, reverse=True):
+            r, q = reg[sid], po.get(sid) or {}
+            seasons.append(dict(s=sid, team=r.get("teamName"), gp=r.get("gamesPlayed"), w=r.get("wins"), l=r.get("losses"),
+                                otl=r.get("overtimeLosses"), t=r.get("ties"), pts=r.get("points"), gf=r.get("goals"), ga=r.get("goalsAgainst"),
+                                div=r.get("divisionSequence"), divn=r.get("divisionName"), lg=r.get("leagueSequence"),
+                                po=bool(r.get("inPlayoffs")), rd=q.get("playoffRound"), title=q.get("seriesTitle"), dec=q.get("decision"),
+                                pw=q.get("wins"), pl=q.get("losses")))
+        cups = sorted({x["seasonId"] for x in team_cups if x.get("status") == "WINNER" and x.get("teamId") in tids})
+        finals = sorted({x["seasonId"] for x in team_cups if x.get("status") == "RUNNER_UP" and x.get("teamId") in tids})
+        out[ab] = dict(franchise=f["id"], first=(f.get("firstSeason") or {}).get("id"), cups=cups, finals=finals, seasons=seasons)
+        time.sleep(0.3)
+    if len(out) >= 30:
+        save(f"{SITE}/hist/franchises.json", out)
+        LOG["ok"].append(f"team history {len(out)}")
+    return cup
+
+
+def player_careers(cup_rows=None):
+    """site/p/<id>.json по каждому игроку текущих составов: биография, сезоны, трофеи, драфт, Кубки Стэнли."""
+    data = load(f"{SITE}/data.json", {})
+    heads = data.get("heads") or {}
+    cups = {}
+    for x in cup_rows or []:
+        if x.get("status") == "WINNER" and x.get("playerId"):
+            cups.setdefault(x["playerId"], []).append(dict(s=x["seasonId"], team=x.get("fullName")))
+    os.makedirs(f"{SITE}/p", exist_ok=True)
+    n = 0
+    for name, h in heads.items():
+        pid = str(h).rsplit("/", 1)[-1]
+        if not pid.isdigit():
+            continue
+        j, _ = get(f"https://api-web.nhle.com/v1/player/{pid}/landing", label=f"player {pid}")
+        if not j:
+            continue
+        d = lambda v: (v or {}).get("default") if isinstance(v, dict) else v
+        st = []
+        for x in j.get("seasonTotals", []):
+            st.append({k: v for k, v in dict(s=x.get("season"), lg=x.get("leagueAbbrev"), team=d(x.get("teamName")), gt=x.get("gameTypeId"),
+                       gp=x.get("gamesPlayed"), g=x.get("goals"), a=x.get("assists"), pts=x.get("points"), pm=x.get("plusMinus"),
+                       pim=x.get("pim"), w=x.get("wins"), l=x.get("losses"), otl=x.get("otLosses"), gaa=x.get("goalsAgainstAvg"),
+                       sv=x.get("savePctg"), so=x.get("shutouts")).items() if v is not None})
+        aw = [dict(t=d(a.get("trophy")), s=[x.get("seasonId") for x in a.get("seasons", [])]) for a in j.get("awards", []) or []]
+        out = dict(id=int(pid), name=name, first=d(j.get("firstName")), last=d(j.get("lastName")), born=j.get("birthDate"),
+                   city=d(j.get("birthCity")), country=j.get("birthCountry"), h=j.get("heightInCentimeters"), w=j.get("weightInKilograms"),
+                   shoots=j.get("shootsCatches"), pos=j.get("position"), num=j.get("sweaterNumber"), draft=j.get("draftDetails"),
+                   hof=j.get("inHHOF"), top100=j.get("inTop100AllTime"), hero=j.get("heroImage"), awards=aw,
+                   cups=cups.get(int(pid), []), career=j.get("careerTotals"), seasons=st)
+        save(f"{SITE}/p/{pid}.json", out)
+        n += 1
+        time.sleep(0.15)
+    LOG["ok"].append(f"players {n}")
+
+
 if __name__ == "__main__":
     mode = sys.argv[1] if len(sys.argv) > 1 else "am"
     if mode == "roster":
@@ -861,6 +934,10 @@ if __name__ == "__main__":
         if len(BIO) > 500:
             d["bio"] = BIO
             save(f"{SITE}/data.json", d)
+        print(json.dumps(LOG, ensure_ascii=False))
+        sys.exit(0)
+    if mode == "weekly":
+        player_careers(team_history())
         print(json.dumps(LOG, ensure_ascii=False))
         sys.exit(0)
     if mode == "night":

@@ -4,6 +4,7 @@ on:
   schedule:
     - cron: "17 8 * * *"    # 11:17 по Кирову — утренний сбор
     - cron: "19 20 * * *"   # 23:19 по Кирову — предматчевый сбор
+    - cron: "41 7 * * 1"     # понедельник 10:41 по Кирову — истории клубов и карьеры игроков
     - cron: "*/15 0-6 * * *"    # ночь по Кирову (03:00–09:59): закончился матч — сразу итоги, таблица, лидеры
     - cron: "*/15 16-23 * * *"  # дневные матчи выходных (19:00–02:59 по Кирову)
   workflow_dispatch:
@@ -39,7 +40,7 @@ jobs:
         id: mode
         run: |
           if [ "${{ github.event_name }}" = "schedule" ]; then
-            case "${{ github.event.schedule }}" in "17 8 * * *") M=am;; "19 20 * * *") M=pm;; *) M=night;; esac
+            case "${{ github.event.schedule }}" in "17 8 * * *") M=am;; "19 20 * * *") M=pm;; "41 7 * * 1") M=weekly;; *) M=night;; esac
             # trigger/skip: «дата режим» — пропустить один плановый сбор (например «2026-10-12 pm»)
             if grep -qx "$(date -u +%F) $M" trigger/skip 2>/dev/null; then M=deploy; fi
             echo "mode=$M" >> $GITHUB_OUTPUT
