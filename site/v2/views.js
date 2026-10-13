@@ -99,6 +99,10 @@ function weekList(){const ids=new Set((D.upcoming||[]).map(x=>x.away+x.home));co
   return `<section class="sec"><div class="hd"><h2>Дальше на неделе<small>предварительно, по модели без линии</small></h2></div>${Object.entries(by).map(([d,gs],k)=>`<details class="day" ${k?"":"open"}><summary>${esc(dLong(d))}<small>${plural(gs.length,"матч","матча","матчей")}</small></summary><div class="box">${gs.map(wRow).join("")}</div></details>`).join("")}</section>`}
 function confLine(){const ex=confLegs();return ex.length?`<p class="txt">Самые уверенные исходы: ${ex.map(x=>`<b>${RU[x.t]}</b> ${pct(x.p)}`).join(", ")}</p>`:""}
 function todayGames(){return (D.upcoming||[]).slice().sort((a,b)=>String(a.start).localeCompare(String(b.start)))}
+function homeGameRow(m){const p=modelOf(m),L=liveOf(m),pa=pB(p,"away"),ph=pB(p,"home"),key=`${m.away}-${m.home}`,live=L&&L.state==="in",done=L&&L.state==="post";
+  const time=live?`<span class="hgr-live"><i></i>LIVE</span>`:done?`<span class="hgr-final">ФИНАЛ</span>`:`<time>${kt(m.start)}</time>`;
+  const score=live||done?`${L.as} : ${L.hs}`:"—";
+  return `<button class="home-game-row" data-go="games" data-open="${key}"><span class="home-game-time">${time}</span><span class="home-game-pair"><span class="home-game-team" title="${esc(EN[m.away])}">${logo(m.away,22)}<b>${AB[m.away]}</b></span><b class="home-game-score">${score}</b><span class="home-game-team" title="${esc(EN[m.home])}">${logo(m.home,22)}<b>${AB[m.home]}</b></span></span><span class="home-game-model" aria-label="Вероятность победы по модели">${pa!=null&&ph!=null?`<span class="home-game-pcts"><b>${pct(pa)}</b><i>—</i><b>${pct(ph)}</b></span><span class="home-game-bar"><i style="width:${pa*100}%"></i><i style="width:${ph*100}%"></i></span>`:`<span class="home-game-pcts empty">—</span>`}</span></button>`}
 function vGames(){const u=todayGames();const mo=D.motd?u.find(x=>x.away===D.motd.away&&x.home===D.motd.home):null;
   if(!u.length)return `<div class="col">${noGames()}${weekList()}</div>`;
   return `<div class="col"><section class="sec"><div class="hd"><h1>Матчи<small>${esc(dLong(D.upcoming_date))}, время по Кирову</small></h1></div>${confLine()}
@@ -120,12 +124,13 @@ function posterSec(){const mo=D.motd;if(!mo)return"";const m=(D.upcoming||[]).fi
     ${pa!=null&&!lv?`<div class="pbs">${pbar("Модель",pa,ph,"var(--ta)","var(--th)")}${p.mkt_home!=null?pbar("Рынок",p.mkt_away,p.mkt_home,"var(--ta)","var(--th)"):""}${(()=>{const mt=modTot(p),kt2=mktTot(p);const tl=(m.total_pick||{}).line??(m.odds||{}).total;if(!mt||tl==null)return"";const S=s=>s==="over"?"больше":"меньше";
       return `<div class="ptot">Тотал ${esc(tl)}: модель за ${S(mt.side)} (${pct(mt.p)})${kt2?`, рынок ${kt2.side===mt.side?"тоже":"за "+S(kt2.side)} (${pct(kt2.p)})`:""}</div>`})()}</div>`:""}
     </div></section>`}
-function todaySec(){const u=todayGames();if(!u.length)return noGames();const mo=D.motd?u.find(x=>x.away===D.motd.away&&x.home===D.motd.home):null;
-  return `<section class="sec"><div class="hd"><h2>Сегодня<small>${esc(dLong(D.upcoming_date))}, время по Кирову</small></h2><button class="lnk" data-go="games">Все матчи</button></div>
-    <div class="box">${u.map(m=>gRow(m,{nav:true,mo:m===mo&&false})).join("")}</div>${confLine()}</section>`}
+function todaySec(){const u=todayGames();if(!u.length)return noGames();
+  return `<section class="sec home-today"><div class="hd"><h2>Сегодня<small>${esc(dLong(D.upcoming_date))}</small></h2><button class="lnk" data-go="games">Все матчи →</button></div>
+    <div class="home-game-list"><div class="home-game-head"><span>Время</span><span>Матч</span><span>Модель</span></div>${u.map(homeGameRow).join("")}</div></section>`}
 function nightSec(){const d=lastDate();if(!d)return"";/* пока идёт игровой день, его финалы уже видны в «Сегодня» — блок «Ночь» не дублируем */if(D.upcoming_date&&d>=D.upcoming_date)return"";const gs=A.games.filter(g=>g.date===d);
-  return `<section class="sec"><div class="hd"><h2>Ночь<small>${esc(dLong(d))}</small></h2><button class="lnk" data-go="results">Итоги и протоколы</button></div>
-    <div class="box"><div class="scores">${gs.map(g=>{const aw=g.as>g.hs;return `<button class="sc1" data-res="${g.date}" data-gid="${g.id}"><span class="r ${aw?"":"lo"}">${logo(g.away,40)}${EN[g.away]}<b>${g.as}</b></span><span class="r ${aw?"lo":""}">${logo(g.home,40)}${EN[g.home]}<b>${g.hs}</b></span>${endTag(g.end)?`<small>${endLong(g.end)}</small>`:""}</button>`}).join("")}</div></div></section>`}
+  return `<section class="sec home-night"><div class="hd"><h2>Итоги ночи<small>${esc(dLong(d))}</small></h2><button class="lnk" data-go="results">Все результаты →</button></div>
+    <div class="home-night-list">${gs.map(g=>{const aw=g.as>g.hs;const side=(t,home)=>`<span class="home-night-team ${home?"home":"away"} ${t===(aw?g.away:g.home)?"winner":""}">${home?`<span class="home-night-name"><span class="full">${esc(FULL[t]||t)}</span><span class="short">${AB[t]}</span></span>${logo(t,22)}`:`${logo(t,22)}<span class="home-night-name"><span class="full">${esc(FULL[t]||t)}</span><span class="short">${AB[t]}</span></span>`}</span>`;
+      return `<button class="home-night-row" data-res="${g.date}" data-gid="${g.id}">${side(g.away,false)}<span class="home-night-score"><span class="home-night-numbers"><b class="${aw?"winner":""}">${g.as}</b><i>–</i><b class="${aw?"":"winner"}">${g.hs}</b></span>${endTag(g.end)?`<small>${endTag(g.end)}</small>`:""}</span>${side(g.home,true)}</button>`}).join("")}</div></section>`}
 
 /* герои игрового дня */
 function sensation(n){if(n.sensation)return n.sensation;const d=n.date;
@@ -134,25 +139,27 @@ function sensation(n){if(n.sensation)return n.sensation;const d=n.date;
   if(j.type==="win"){const w=g.as>g.hs?g.away:g.home;return {id:g.id,kind:"исход",head:`Победа аутсайдера: ${EN[w]}`,fav:j.pick,p}}
   return {id:g.id,kind:"тотал",head:`Тотал ${g.as+g.hs} при линии ${j.line}`,p,tot:pickLabel(j)}}
 function svp(l){const m=/(\d+)\s*из\s*(\d+)/.exec(l||"");return m&&+m[2]?nz(m[1]/m[2]*100)+"% отражённых":""}
-function card3(x,i){const n=pnum(x.name,x.pos);return `<article class="card3" style="--c:${tdeep(x.team)}"><div class="top3"><span class="wm">${logo(x.team,120)}</span><span class="rk">${i+1}<i>★</i></span>${n&&headOf(x.name)?`<span class="num3">#${n}</span>`:""}${photo(x.name,x.team,118)}</div>
-  <div class="bd"><div class="nm"><span>${plink(x.name,x.team)}${posTag(x.name,x.pos)}<small>${esc(FULL[x.team]||x.team)}</small></span><b class="v">${lineHtml(x.line)}</b></div>${x.text?`<p>${esc(x.text)}</p>`:""}</div></article>`}
-function feat(x,role,big,sub){return `<div class="feat">${photo(x.name,x.team,92,"ring")}<span class="nm2"><span>${plink(x.name,x.team)}${posTag(x.name,x.pos)}</span><small>${role} · ${esc(FULL[x.team]||x.team)}</small></span><span class="big">${lineHtml(big)}${sub?`<small>${sub}</small>`:""}</span>${x.text?`<p>${esc(x.text)}</p>`:""}</div>`}
+function homeHeroCard(x,role,metric,sub,rank){const star=!!rank;
+  return `<article class="home-hero-card${star?" home-hero-star":""}"><div class="home-hero-kicker">${star?`<span>${String(rank).padStart(2,"0")}</span>`:"<i></i>"}<b>${esc(role)}</b></div>
+    <div class="home-hero-main">${photo(x.name,x.team,star?62:68,"home-hero-avatar")}<div class="home-hero-copy"><div class="home-hero-name">${plink(x.name,x.team)}${posTag(x.name,x.pos)}</div><div class="home-hero-team">${logo(x.team,20)}<span>${esc(FULL[x.team]||x.team)}</span></div></div>
+    <div class="home-hero-stat"><b>${lineHtml(metric||x.line)}</b>${sub?`<small>${esc(sub)}</small>`:""}</div></div>${x.text?`<p>${esc(x.text)}</p>`:""}</article>`}
+function homeHeroTeam(tm){return `<article class="home-hero-card home-hero-team-card"><div class="home-hero-kicker"><i></i><b>Команда вечера</b></div><div class="home-hero-main"><span class="home-hero-teammark">${logo(tm.abbr,48)}</span><div class="home-hero-copy"><div class="home-hero-name"><button class="plink" data-team="${tm.abbr}">${esc(FULL[tm.abbr]||tm.abbr)}</button></div><div class="home-hero-team"><span>${rec(tm.abbr)}</span></div></div><span class="home-hero-form">${formDots(tm.abbr)}</span></div>${tm.text?`<p>${esc(tm.text)}</p>`:""}</article>`}
 function heroPanel(n){const t=HERO_TAB;
-  if(t==="stars")return `<div class="cards">${n.heroes.slice(0,3).map(card3).join("")}</div>`;
-  if(t==="goalie")return `<div class="box">${feat(n.goalie,"Вратарь дня",n.goalie.line,svp(n.goalie.line))}</div>`;
-  if(t==="russian")return `<div class="box">${feat(n.russian,"Россиянин дня",n.russian.line)}</div>`;
+  if(t==="stars")return `<div class="home-hero-panel is-stars">${n.heroes.slice(0,3).map((x,i)=>homeHeroCard(x,["Первая звезда","Вторая звезда","Третья звезда"][i],x.line,"",i+1)).join("")}</div>`;
+  if(t==="goalie")return `<div class="home-hero-panel">${homeHeroCard(n.goalie,"Вратарь дня",n.goalie.line,svp(n.goalie.line))}</div>`;
+  if(t==="russian")return `<div class="home-hero-panel">${homeHeroCard(n.russian,"Россиянин дня",n.russian.line)}</div>`;
   if(t==="sense"){const x=sensation(n);const g=x&&A.games.find(y=>y.id===x.id);if(!g)return"";
     const why=x.kind==="исход"&&x.fav?`Фаворитом был <b>${EN[x.fav]}</b>${x.p?` — линия давала около ${Math.round(x.p*100)}%`:""}.`:x.tot?`Линия ждала: <b>${esc(x.tot)}</b>${x.p?`, около ${Math.round(x.p*100)}%`:""}.`:"";
-    return `<div class="box sense"><div class="sc"><span class="${x.fav===g.away?"fav":""}">${logo(g.away,46)}${EN[g.away]}</span><b>${g.as}:${g.hs}</b><span class="${x.fav===g.home?"fav":""}">${EN[g.home]}${logo(g.home,46)}</span></div><h3>${esc(x.head||"")}</h3>${why?`<p class="txt">${why}</p>`:""}${x.text?`<p class="txt">${esc(x.text)}</p>`:""}<button class="lnk" style="align-self:flex-start" data-res="${g.date}" data-gid="${g.id}">Протокол матча</button></div>`}
+    const mt=(a,home)=>`<span class="home-hero-match-team ${x.fav===a?"fav":""} ${home?"home":"away"}">${home?`<span class="home-hero-match-name"><span class="full">${esc(FULL[a]||a)}</span><span class="short">${AB[a]}</span></span>${logo(a,26)}`:`${logo(a,26)}<span class="home-hero-match-name"><span class="full">${esc(FULL[a]||a)}</span><span class="short">${AB[a]}</span></span>`}</span>`;
+    return `<div class="home-hero-panel"><article class="home-hero-card home-hero-game"><div class="home-hero-kicker"><i></i><b>Сенсация дня</b></div><div class="home-hero-match">${mt(g.away,false)}<span class="home-hero-match-score"><b>${g.as}<i>:</i>${g.hs}</b><small>${endTag(g.end)||"ФИНАЛ"}</small></span>${mt(g.home,true)}</div><h3>${esc(x.head||"")}</h3>${why?`<p>${why}</p>`:""}${x.text?`<p>${esc(x.text)}</p>`:""}<button class="lnk" data-res="${g.date}" data-gid="${g.id}">Протокол матча →</button></article></div>`}
   if(t==="flop"){const x=(n.antiheroes||[])[0],tm=n.worst_team;
-    return `<div class="box">${x?`<div class="flop"><span class="tag">Игрок</span>${photo(x.name,x.team,64)}<span class="nm2"><span>${plink(x.name,x.team)}${posTag(x.name,x.pos)}</span><small>${esc(FULL[x.team]||x.team)}</small></span><span class="v">${lineHtml(x.line)}</span>${x.text?`<p>${esc(x.text)}</p>`:""}</div>`:""}
-      ${tm?`<div class="flop"><span class="tag">Команда</span>${logo(tm.abbr,60)}<span class="nm2"><button class="plink" data-team="${tm.abbr}">${esc(FULL[tm.abbr]||tm.abbr)}</button><small>${rec(tm.abbr)}</small></span>${formDots(tm.abbr)}${tm.text?`<p>${esc(tm.text)}</p>`:""}</div>`:""}</div>`}
+    return `<div class="home-hero-panel">${x?homeHeroCard(x,"Игрок матча",x.line):""}${tm?homeHeroTeam(tm):""}</div>`}
   return""}
 function heroTabs(n){return [["stars","Три звезды",n.heroes&&n.heroes.length],["goalie","Вратарь дня",n.goalie],["russian","Россиянин дня",n.russian],["sense","Сенсация",sensation(n)],["flop","Неудачники",(n.antiheroes||[]).length||n.worst_team]].filter(t=>t[2])}
 function heroesBody(){const n=D.daily;const t=heroTabs(n);if(!t.some(x=>x[0]===HERO_TAB))HERO_TAB=t[0][0];
   return `<div class="pills" role="tablist">${t.map(x=>`<button role="tab" data-ht="${x[0]}" aria-selected="${x[0]===HERO_TAB}">${x[1]}</button>`).join("")}</div><div class="appear">${heroPanel(n)}</div>`}
 function heroesSec(){const n=D.daily;if(!n||!n.heroes||!n.heroes.length)return"";
-  return `<section class="sec"><div class="hd"><h2>Герои игрового дня<small>${esc(dLong(n.date||lastDate()))}</small></h2><button class="lnk" data-go="results">Все итоги</button></div><div id="hb" class="sec">${heroesBody()}</div></section>`}
+  return `<section class="sec home-heroes"><div class="hd"><h2>Герои игрового дня<small>${esc(dLong(n.date||lastDate()))}</small></h2><button class="lnk" data-go="results">Все итоги</button></div><div id="hb" class="sec">${heroesBody()}</div></section>`}
 
 /* новости */
 function leadCard(x,noCover){return `<button class="lead" data-art="${x.k}">${noCover?"":coverHtml(x)}<span class="tx">${metaHtml(x)}<h3>${esc(x.title)}</h3><p>${esc(x.dek||(typeof x.body[0]==="string"?x.body[0]:"")||"")}</p></span></button>`}
@@ -164,7 +171,7 @@ function homeStoryRow(x){return `<button class="home-story-row" data-art="${x.k}
 function homeHeadline(x){return `<button class="home-headline" data-art="${x.k}"><span class="square" aria-hidden="true">▪</span><span>${esc(x.title)}<small>${x.source?esc(x.source)+" · ":""}${x.time?esc(dShort(String(x.time).slice(0,10))):""}</small></span></button>`}
 function homeNewsGrid(){const arts=articles(),news=arts.filter(x=>x.kind==="news");if(!news.length)return"";
   const lead=news.find(x=>x.image)||news[0],rest=news.filter(x=>x!==lead),middle=rest.slice(0,3),heads=rest.slice(3,7),story=arts.find(x=>x.kind==="story"),col=arts.find(x=>x.kind==="column");
-  return `<section class="sec home-edition"><div class="home-edition-head"><h1>NHL</h1><span>Истории, результаты и цифры</span><button class="lnk" data-go="news">Все материалы →</button></div>
+  return `<section class="sec home-edition"><div class="home-edition-head"><h1>Новости</h1><span>Истории и аналитика НХЛ</span><button class="lnk" data-go="news">Все материалы →</button></div>
     <div class="editorial-grid"><div class="ed-feature">${leadCard(lead)}</div>
       <div class="ed-secondary"><h2>Свежие материалы</h2>${middle.map(homeStoryRow).join("")}${story?homeStoryRow(story):""}</div>
       <aside class="ed-headlines"><div class="ed-headline-title"><h2>Заголовки</h2><button class="lnk" data-go="news">Все</button></div>${heads.map(homeHeadline).join("")}${col?`<button class="home-claude" data-art="${col.k}"><small>Колонка Claude</small><b>${esc(col.title)}</b><span>${esc(col.dek||"")}</span></button>`:""}</aside>
