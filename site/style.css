@@ -594,3 +594,21 @@ table.st tbody tr:hover td{background:var(--soft);cursor:pointer}
 .cupy.fin span{background:var(--soft);color:var(--ink2)}
 .po{font-size:var(--fs-xs);font-weight:700}.po.no{color:var(--mute);font-weight:500}.po.cup{color:var(--gold)}.po.fin{color:var(--ink)}
 @media (max-width:640px){.tm-hero .tlogo.big{position:static;width:72px;height:72px}.tm-hero{gap:12px}.tm-hero .tx{padding:22px 0}}
+
+/* поиск */
+.sbtn{flex:none;width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--barink);background:rgba(255,255,255,.08);margin-left:10px}.sbtn:hover{background:rgba(255,255,255,.16)}
+.srch{position:fixed;inset:0;z-index:60;background:rgba(5,7,10,.6);backdrop-filter:blur(4px);display:flex;justify-content:center;align-items:flex-start;padding:70px 12px 12px}
+.srch[hidden]{display:none}
+.srch-in{width:100%;max-width:640px;background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.4);max-height:calc(100vh - 90px);display:flex;flex-direction:column}
+.srch-bar{display:flex;align-items:center;gap:10px;padding:12px 14px;border-bottom:1px solid var(--line);color:var(--mute)}
+.srch-bar input{flex:1;min-width:0;border:0;outline:0;background:transparent;font:inherit;font-size:17px;color:var(--ink)}
+.srch-bar button{font-size:24px;line-height:1;color:var(--mute);width:32px;height:32px}
+.srch-res{overflow:auto;padding:6px}
+.srch-res h5{margin:10px 10px 4px;font-size:var(--fs-xs);color:var(--mute)}
+.srch-res .it{display:flex;align-items:center;gap:12px;width:100%;padding:8px 10px;border-radius:10px;text-align:left}
+.srch-res .it:hover,.srch-res .it.on{background:var(--soft)}
+.srch-res .it b{display:block}.srch-res .it small{display:block;color:var(--mute);font-size:var(--fs-xs)}
+.srch-res .empty{padding:18px;color:var(--mute);font-size:var(--fs-s)}
+@media (max-width:640px){.srch{padding:8px}.srch-in{max-height:calc(100vh - 16px)}}
+.hch.tc .bar i{background:var(--hc);opacity:.55}.hch.tc .c.hl .bar i{background:var(--hc);opacity:1;box-shadow:0 0 0 2px var(--gold)}.hch.tc .c.hl>b::before{content:"🏆 "}
+.mls li.ex .y{font-size:15px;color:var(--ink2)}

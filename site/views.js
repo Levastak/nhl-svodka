@@ -286,7 +286,7 @@ function rosterBlock(a){const ns=rosterOf(a);if(!ns.length)return"";const P=(D.p
     return `<button class="rc" data-player="${esc(n)}" data-pteam="${a}">${photo(n,a,46)}<span class="nm2"><span><b>${esc(pn(n))}</b>${posTag(n)}</span><small>${num?"#"+num+" · ":""}${st}</small></span></button>`};
   const sortK=n=>{const s=skater(n),g=goalie(n);return -((s&&s.pts)||(g&&g.gp)||0)};
   return `<div class="sec"><h4 class="sub">Состав</h4>${grp.map(([l,f])=>{const xs=ns.filter(f).sort((x,y)=>sortK(x)-sortK(y));return xs.length?`<h5 class="rg">${l} · ${xs.length}</h5><div class="rcs">${xs.map(card).join("")}</div>`:""}).join("")}</div>`}
-const PO_RU={"Stanley Cup Final":"Финал Кубка","Conference Finals":"Финал конференции","Second Round":"2-й раунд","2nd Round":"2-й раунд","1st Round":"1-й раунд","First Round":"1-й раунд","Division Finals":"Финал дивизиона","Division Semi-Finals":"Полуфинал дивизиона","Quarter-Finals":"Четвертьфинал","Semi-Finals":"Полуфинал","Qualifying Round":"Квалификация","Preliminary Round":"Предварительный раунд"};
+const PO_RU={"Stanley Cup Final":"Финал Кубка","Conference Finals":"Финал конференции","Second Round":"2-й раунд","2nd Round":"2-й раунд","1st Round":"1-й раунд","First Round":"1-й раунд","Division Finals":"Финал дивизиона","Division Semi-Finals":"Полуфинал дивизиона","Quarter-Finals":"Четвертьфинал","Semi-Finals":"Полуфинал","Qualifying Round":"Квалификация","Stanley Cup Qualifiers":"Квалификация","Round Robin":"Турнир за посев","First Round Robin":"Турнир за посев","Preliminary Round":"Предварительный раунд"};
 function poRu(x){if(!x.po)return `<span class="po no">не попали</span>`;if(x.title==="Stanley Cup Final"&&x.dec==="W")return `<span class="po cup">🏆 Кубок Стэнли</span>`;
   if(!x.title)return `<span class="po">плей-офф</span>`;return `<span class="po${x.title==="Stanley Cup Final"?" fin":""}">${esc(PO_RU[x.title]||x.title)}</span>`}
 async function fillTeamHist(a){const fr=await loadFR();const h=(fr||{})[a];const box=$("#thist");if(!box)return;if(!h){box.innerHTML="";return}
@@ -294,7 +294,7 @@ async function fillTeamHist(a){const fr=await loadFR();const h=(fr||{})[a];const
   if(top)top.innerHTML=cups.length?`<span class="cupb">🏆 ${cups.length} ${plural(cups.length,"Кубок","Кубка","Кубков").split(" ").slice(1).join(" ")} Стэнли</span>`:`<span class="cupb no">Кубков Стэнли пока нет</span>`;
   const done=(h.seasons||[]).filter(x=>x.gp>=(String(x.s)===String(D.season_id||"")?999:20));const last=done.slice(0,10);
   const yr=s=>String(s).slice(4);const firstS=h.first?seasonLab(h.first):null;
-  const chart=last.length?storyChart({title:"Очки по сезонам",items:last.slice().reverse().map(x=>({label:seasonLab(x.s).slice(2),value:x.pts,hl:x.title==="Stanley Cup Final"&&x.dec==="W"}))}):"";
+  const chart=last.length?storyChart({title:"Очки по сезонам",color:tcol(a),items:last.slice().reverse().map(x=>({label:seasonLab(x.s).slice(2),value:x.pts,hl:x.title==="Stanley Cup Final"&&x.dec==="W"}))}):"";
   box.innerHTML=`<div class="sec"><h4 class="sub">История клуба</h4>
    <div class="kv"><div><small>Кубки Стэнли</small><b>${cups.length}</b></div><div><small>Финалы</small><b>${cups.length+fin.length}</b></div>${firstS?`<div><small>В НХЛ с сезона</small><b>${firstS}</b></div>`:""}<div><small>Плей-офф за 10 лет</small><b>${last.filter(x=>x.po).length} из ${last.length}</b></div></div>
    ${cups.length?`<h5 class="rg">Кубки Стэнли</h5><div class="cupy">${cups.slice().reverse().map(s=>`<span>🏆 ${yr(s)}</span>`).join("")}</div>`:""}
@@ -303,7 +303,7 @@ async function fillTeamHist(a){const fr=await loadFR();const h=(fr||{})[a];const
    ${last.length?`<h5 class="rg">Последние сезоны</h5><div class="tw"><table class="mt st5"><thead><tr><th>Сезон</th><th>И</th><th>В-П-ОТ</th><th>О</th><th>Место</th><th>Плей-офф</th></tr></thead><tbody>${last.map(x=>`<tr><td>${seasonLab(x.s)}</td><td>${x.gp}</td><td>${x.w}-${x.l}-${x.otl??x.t??0}</td><td><b>${x.pts}</b></td><td>${x.div?x.div+"-е":"—"}</td><td>${poRu(x)}</td></tr>`).join("")}</tbody></table></div><p class="note">Место — в дивизионе по итогам регулярки. Данные: records.nhl.com.</p>`:""}</div>`}
 function teamSheet(a){const t=TEAMS[a],md=(M.teams||{})[a],r=(D.teams||{})[a]||{};const sp=specTeams(a);
   const nxt=(D.week||[]).filter(g=>(g.away===a||g.home===a)&&state(g.start)==="pre").slice(0,5);const last=(t.games||[]).slice(-8).reverse();
-  const ln=(k,arr)=>arr&&arr.length?`<div><span class="k">${k}</span>${arr.map(p=>`<button class="plink" data-player="${esc(p)}" data-pteam="${a}">${esc(pn(p))}</button>`).join(" · ")}</div>`:"";
+  const ln=(k,arr)=>arr&&arr.length?`<div><span class="k">${k}</span>${arr.map(p=>{const f=findP(p,a)||p;return `<button class="plink" data-player="${esc(f)}" data-pteam="${a}">${esc(pn(f))}</button>`}).join(" · ")}</div>`:"";
   const rus=(D.russians||[]).filter(x=>x.team===a);const f=v=>v==null?"—":nz(v)+"%";
   openSheet(`<div class="ph-hero tm-hero" style="--c:${tdeep(a)};--c2:${tcol(a)}"><span class="mesh"></span><img class="ghost" src="${esc(logoUrl(a,true))}" alt="" aria-hidden="true">
    <img class="tlogo big" src="${esc(logoUrl(a,true))}" alt=""><div class="tx"><small class="fn">${esc(DIV_OF[a]||"")} дивизион</small><h2>${esc(FULL[a])}</h2><p>${t.w}-${t.l}-${t.otl} · ${plural(t.pts,"очко","очка","очков")} · ${place(a)}-е место в дивизионе${t.streak?` · серия ${esc(t.streak)}`:""}</p><div id="cupsTop"></div></div><button class="sh-x" data-close aria-label="Закрыть">×</button></div>
@@ -361,7 +361,8 @@ function clubRu(team,lg){const ab=team_ab(team);if(ab)return EN[ab];if(CLUB2[tea
   return trl(team)}
 function team_ab(name){if(!name)return null;if(OLD_TEAMS[name])return OLD_TEAMS[name];const k=nrm(name);for(const a in FULL_LAT){if(nrm(FULL_LAT[a])===k)return a}return null}
 const TROPHY={"Hart Memorial Trophy":"Харт Трофи — самый ценный игрок","Art Ross Trophy":"Арт Росс Трофи — лучший бомбардир","Maurice \"Rocket\" Richard Trophy":"Морис Ришар Трофи — лучший снайпер","Maurice Richard Trophy":"Морис Ришар Трофи — лучший снайпер","Ted Lindsay Award":"Тед Линдсей Эворд — лучший по версии игроков","Vezina Trophy":"Везина Трофи — лучший вратарь","James Norris Memorial Trophy":"Джеймс Норрис Трофи — лучший защитник","Calder Memorial Trophy":"Колдер Трофи — лучший новичок","Conn Smythe Trophy":"Конн Смайт Трофи — MVP плей-офф","Frank J. Selke Trophy":"Фрэнк Дж. Селки Трофи — лучший оборонительный нападающий","William M. Jennings Trophy":"Уильям Дженнингс Трофи — меньше всех пропустили","Lady Byng Memorial Trophy":"Леди Бинг Трофи — за благородство","Bill Masterton Memorial Trophy":"Билл Мастертон Трофи — за преданность хоккею","King Clancy Memorial Trophy":"Кинг Клэнси Трофи — за лидерство и благотворительность","Mark Messier Leadership Award":"Марк Мессье Эворд — за лидерство","Jack Adams Award":"Джек Адамс Эворд","NHL Foundation Player Award":"Премия фонда НХЛ","Willie O'Ree Community Hero Award":"Премия Вилли О'Ри","Stanley Cup":"Кубок Стэнли"};
-const tro=t=>TROPHY[t]||t;
+const TRK=[["richard","Морис Ришар Трофи — лучший снайпер"],["messier","Марк Мессье Эворд — за лидерство"],["hart","Харт Трофи — самый ценный игрок"],["art ross","Арт Росс Трофи — лучший бомбардир"],["lindsay","Тед Линдсей Эворд — лучший по версии игроков"],["pearson","Лестер Пирсон Эворд — лучший по версии игроков"],["vezina","Везина Трофи — лучший вратарь"],["norris","Джеймс Норрис Трофи — лучший защитник"],["calder","Колдер Трофи — лучший новичок"],["conn smythe","Конн Смайт Трофи — MVP плей-офф"],["selke","Фрэнк Селки Трофи — лучший оборонительный нападающий"],["jennings","Уильям Дженнингс Трофи — меньше всех пропустили"],["lady byng","Леди Бинг Трофи — за благородство"],["masterton","Билл Мастертон Трофи — за преданность хоккею"],["clancy","Кинг Клэнси Трофи — за лидерство и благотворительность"],["jack adams","Джек Адамс Эворд — лучший тренер"],["o'ree","Премия Вилли О'Ри"],["foundation","Премия фонда НХЛ"],["plus-minus","Лучший показатель плюс-минус"],["all-star","Матч всех звёзд — MVP"]];
+const tro=t=>{if(TROPHY[t])return TROPHY[t];const k=String(t||"").toLowerCase().replace(/[“”"]/g,"");const m=TRK.find(([w])=>k.includes(w));return m?m[1]:t};
 const MON=["января","февраля","марта","апреля","мая","июня","июля","августа","сентября","октября","ноября","декабря"];
 function dateRu(d){if(!d)return"";const [y,m,dd]=String(d).split("-");return `${+dd} ${MON[+m-1]} ${y}`}
 function draftRu(dr){if(!dr)return"Не выбирался на драфте НХЛ — пришёл в лигу свободным агентом.";const t=dr.teamAbbrev;return `Драфт ${dr.year}: ${dr.round}-й раунд, ${dr.overallPick}-й номер, выбран «${RU[t]||OLD_RU[t]||t}».`}
@@ -381,13 +382,17 @@ function seasonsTable(c){const isG=c.pos==="G";const nhl=(c.seasons||[]).filter(
     return isG?`<tr><td>${seasonLab(k)}</td><td>${tl}</td><td>${sum("gp")}</td><td>${sum("w")}</td><td>${xs.length===1&&xs[0].gaa!=null?nz(xs[0].gaa,2):"—"}</td><td>${xs.length===1&&xs[0].sv!=null?nz(xs[0].sv*100,1)+"%":"—"}</td><td>${sum("so")}</td></tr>`
       :`<tr><td>${seasonLab(k)}</td><td>${tl}</td><td>${sum("gp")}</td><td>${sum("g")}</td><td>${sum("a")}</td><td><b>${sum("pts")}</b></td><td>${(v=>v>0?"+"+v:v)(sum("pm"))}</td></tr>`};
   return `<div class="sec"><h4 class="sub">Последние сезоны в НХЛ</h4><div class="tw"><table class="mt st5"><thead><tr><th>Сезон</th><th>Клуб</th>${isG?"<th>И</th><th>В</th><th>КН</th><th>%ОБ</th><th>«0»</th>":"<th>И</th><th>Г</th><th>П</th><th>О</th><th>+/−</th>"}</tr></thead><tbody>${keys.map(row).join("")}</tbody></table></div></div>`}
-function milestones(c){const it=[];(c.cups||[]).forEach(x=>{const t=team_ab(x.team);it.push([x.s,`🏆 Кубок Стэнли`,t?`с «${RU[t]}»`:""])});
-  (c.awards||[]).filter(a=>a.t!=="Stanley Cup").forEach(a=>(a.s||[]).forEach(s=>it.push([s,`🏅 ${tro(a.t)}`,""])));
-  if(c.hof)it.push([99999999,"Член Зала хоккейной славы",""]);if(c.top100)it.push([99999998,"В списке 100 величайших игроков НХЛ",""]);
-  const cr=(c.career||{}).regularSeason;if(cr&&c.pos!=="G"){[[1000,"очков"],[500,"очков"]].forEach(([n,l])=>{if(cr.points>=n)it.push([0,`${n}+ ${l} в НХЛ`,""])});[[500,"голов"]].forEach(([n,l])=>{if(cr.goals>=n)it.push([0,`${n}+ ${l} в НХЛ`,""])});if(cr.gamesPlayed>=1000)it.push([0,"1000+ матчей в НХЛ",""])}
-  if(c.draft&&c.draft.overallPick===1)it.push([+(c.draft.year+"0000"),`Первый номер драфта ${c.draft.year}`,""]);
-  if(!it.length)return"";it.sort((a,b)=>b[0]-a[0]);
-  return `<div class="sec"><h4 class="sub">Вехи и трофеи</h4><ul class="mls">${it.map(([s,t,x])=>`<li><span class="y">${s>90000000||!s?"":String(s).length===8&&s>19000000?cupYear(s):""}</span><span>${esc(t)}${x?` <small>${esc(x)}</small>`:""}</span></li>`).join("")}</ul></div>`}
+function milestones(c){const it=[];const Y=s=>String(s).slice(4);
+  (c.cups||[]).forEach(x=>{const t=team_ab(x.team);it.push({k:x.s,y:Y(x.s),t:"🏆 Кубок Стэнли",x:t?`с «${RU[t]}»`:""})});
+  (c.awards||[]).filter(a=>a.t!=="Stanley Cup").forEach(a=>(a.s||[]).forEach(s=>it.push({k:s,y:Y(s),t:`🏅 ${tro(a.t)}`,x:""})));
+  if(c.draft&&c.draft.overallPick===1)it.push({k:+(c.draft.year+"0000"),y:String(c.draft.year),t:"🎯 Первый номер драфта",x:""});
+  const cr=(c.career||{}).regularSeason,ex=[];
+  if(cr&&c.pos!=="G"){if(cr.points>=1000)ex.push(["1000+","очков в НХЛ"]);else if(cr.points>=500)ex.push(["500+","очков в НХЛ"]);if(cr.goals>=500)ex.push(["500+","голов в НХЛ"]);}
+  if(cr&&c.pos==="G"&&cr.wins>=300)ex.push([cr.wins>=500?"500+":"300+","побед в НХЛ"]);
+  if(cr&&cr.gamesPlayed>=1000)ex.push(["1000+","матчей в НХЛ"]);
+  if(c.hof)ex.unshift(["★","Член Зала хоккейной славы"]);if(c.top100)ex.unshift(["★","В списке 100 величайших игроков НХЛ"]);
+  if(!it.length&&!ex.length)return"";it.sort((a,b)=>b.k-a.k);
+  return `<div class="sec"><h4 class="sub">Вехи и трофеи</h4><ul class="mls">${it.map(m=>`<li><span class="y">${esc(m.y)}</span><span>${esc(m.t)}${m.x?` <small>${esc(m.x)}</small>`:""}</span></li>`).join("")}${ex.map(([n,t])=>`<li class="ex"><span class="y">${esc(n)}</span><span>${esc(t)}</span></li>`).join("")}</ul></div>`}
 function transfers(c){const rows=(c.seasons||[]).filter(x=>x.gt===2&&!INTL.test(x.lg||""));const segs=[];
   rows.sort((a,b)=>a.s-b.s).forEach(x=>{const last=segs[segs.length-1];if(last&&last.team===x.team&&last.lg===x.lg){last.to=x.s;last.gp+=x.gp||0;last.pts+=x.pts||0}else segs.push({team:x.team,lg:x.lg,from:x.s,to:x.s,gp:x.gp||0,pts:x.pts||0})});
   if(!segs.length)return"";const isG=c.pos==="G";const yr=(a,b)=>a===b?seasonLab(a):`${String(a).slice(0,4)}–${String(b).slice(6)}`;
@@ -410,8 +415,8 @@ function playersOf(x){const out=[];const seen=new Set();for(const n of x.players
 function bodyItem(p){if(p&&typeof p==="object"){if(p.img)return `<figure class="bimg"><img src="${esc(p.img)}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.parentNode.remove()">${p.cap||p.credit?`<figcaption>${p.cap?esc(p.cap):""}${p.credit?` <span>Фото: ${p.link?`<a href="${esc(p.link)}" target="_blank" rel="noopener">${esc(p.credit)}</a>`:esc(p.credit)}</span>`:""}</figcaption>`:""}</figure>`;return""}
   const s=String(p);if(s.startsWith("## "))return `<h3>${esc(s.slice(3))}</h3>`;if(s.startsWith("> "))return `<blockquote>${esc(s.slice(2))}</blockquote>`;return `<p>${esc(s)}</p>`}
 function readMin(x){const w=(x.body||[]).filter(p=>typeof p==="string").join(" ").split(/\s+/).length;return Math.max(1,Math.round(w/180))}
-function storyChart(ch){const it=ch.items||[];if(!it.length)return"";const mx=Math.max(...it.map(x=>+x.value||0))||1;
-  return `<figure class="hch"><figcaption>${esc(ch.title||"")}</figcaption><div class="cols">${it.map(x=>`<div class="c${x.hl?" hl":""}"><b>${esc(x.value)}</b><span class="bar"><i style="height:${(+x.value||0)/mx*100}%"></i></span><small>${esc(x.label)}</small></div>`).join("")}</div>${ch.note?`<p class="note">${esc(ch.note)}</p>`:""}</figure>`}
+function storyChart(ch){const it=ch.items||[];if(!it.length)return"";const mx=Math.max(...it.map(x=>+x.value||0))||1;const cs=ch.color?` style="--hc:${ch.color}"`:"";
+  return `<figure class="hch${ch.color?" tc":""}"${cs}><figcaption>${esc(ch.title||"")}</figcaption><div class="cols">${it.map(x=>`<div class="c${x.hl?" hl":""}"><b>${esc(x.value)}</b><span class="bar"><i style="height:${(+x.value||0)/mx*100}%"></i></span><small>${esc(x.label)}</small></div>`).join("")}</div>${ch.note?`<p class="note">${esc(ch.note)}</p>`:""}</figure>`}
 function openArticle(k){const x=articles().find(a=>a.k===k);if(!x)return;const all=articles();const relA=all.filter(a=>a.k!==k&&(a.teams||[]).some(t=>(x.teams||[]).includes(t))).slice(0,3);const pls=playersOf(x);
   openSheet(`<article class="reader"><div style="position:relative">${coverHtml(x)}<button class="sh-x" data-close aria-label="Закрыть">×</button></div><div class="rb">
    ${metaHtml(x)}${x.kind==="story"?`<span class="rt">${readMin(x)} мин чтения</span>`:""}<h1>${esc(x.title)}</h1>${x.dek&&x.body[0]!==x.dek?`<p class="dek">${esc(x.dek)}</p>`:""}
@@ -443,3 +448,33 @@ document.addEventListener("click",e=>{const t=e.target.closest("button,a,[data-t
 });
 $("#sheet").addEventListener("click",e=>{if(e.target.id==="sheet")closeSheet()});
 document.addEventListener("keydown",e=>{if(e.key==="Escape")closeSheet()});
+
+/* ===================== умный поиск: игроки и команды ===================== */
+const TEAM_ALIAS={WSH:"кэпиталз столичные капиталс",PIT:"пингвинз пингвины",SJS:"шаркс акулы",EDM:"ойлерз нефтяники",FLA:"пантерз пантеры",TBL:"лайтнинг молния тампа-бэй",CAR:"харрикейнз ураганы",MIN:"уайлд дикие",NJD:"девилз дьяволы",DET:"ред уингз красные крылья",CHI:"блэкхокс чёрные ястребы",BOS:"брюинз медведи",TOR:"мейпл лифс кленовые листья",MTL:"канадиенс хабс монреаль",VGK:"голден найтс золотые рыцари",COL:"эвеланш лавина",DAL:"старз звёзды",NYR:"рейнджерс нью-йорк",NYI:"айлендерс островитяне",UTA:"мамонт юта хоккей клаб аризона",SEA:"кракен",LAK:"кингз короли",ANA:"дакс утки",STL:"блюз",NSH:"предаторз хищники",WPG:"джетс",VAN:"кэнакс",CGY:"флэймз",OTT:"сенаторз",BUF:"сейбрз",PHI:"флайерз",CBJ:"блю джекетс"};
+let SIDX=null;
+const snorm=s=>String(s||"").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/ё/g,"е").replace(/[^a-zа-я0-9 ]/g," ").replace(/\s+/g," ").trim();
+function buildSIdx(){const H=(D&&D.heads)||{};const names=new Set([...Object.keys(H),...Object.keys(RUN),...((D.skaters||[]).map(x=>x.name)),...((D.goalies||[]).map(x=>x.name))]);const pl=[];
+  names.forEach(n=>{const s=skater(n),g=goalie(n);const team=(H[n]?String(H[n]).split("/")[1]:null)||(s&&s.team)||(g&&g.team);if(!team)return;const ru=pn(n);
+    pl.push({n,team,ru,key:" "+snorm(n)+" "+snorm(ru)+" ",tkey:" "+snorm([team,AB[team],RU[team],FULL[team],FULL_LAT[team],TEAM_ALIAS[team]||""].join(" "))+" ",pts:(s&&s.pts)||(g&&g.gp)||0})});
+  const tm=Object.keys(FULL).map(a=>({a,key:" "+snorm([a,AB[a],RU[a],FULL[a],FULL_LAT[a],TEAM_ALIAS[a]||""].join(" "))+" "}));SIDX={pl,tm}}
+function searchAll(q){if(!SIDX)buildSIdx();q=snorm(q);if(q.length<2)return {tm:[],pl:[]};const words=q.split(" ");
+  const score=k=>{let s=0;for(const w of words){const i=k.indexOf(" "+w);if(i>=0)s+=10;else if(k.includes(w))s+=3;else return -1}return s};
+  const tm=SIDX.tm.map(t=>({t,s:score(t.key)})).filter(x=>x.s>=0).sort((a,b)=>b.s-a.s).slice(0,4).map(x=>x.t.a);
+  const score2=p=>{let s=0;for(const w of words){const i=p.key.indexOf(" "+w);if(i>=0)s+=10;else if(p.key.includes(w))s+=3;else if(p.tkey.indexOf(" "+w)>=0)s+=1;else return -1}return s};
+  const pl=SIDX.pl.map(p=>({p,s:score2(p)})).filter(x=>x.s>=0).sort((a,b)=>b.s-a.s||b.p.pts-a.p.pts).slice(0,tm.length&&words.length===1?8:10).map(x=>x.p);
+  return {tm,pl}}
+function srchRender(){const q=$("#sq").value;const out=$("#sr");if(snorm(q).length<2){out.innerHTML=`<div class="empty">Начни вводить фамилию игрока или название клуба — по-русски или латиницей.</div>`;return}
+  const {tm,pl}=searchAll(q);if(!tm.length&&!pl.length){out.innerHTML=`<div class="empty">Ничего не нашёл. Попробуй иначе: «Овечкин», «Ovechkin», «Вашингтон», «WSH».</div>`;return}
+  out.innerHTML=`${tm.length?`<h5>Команды</h5>${tm.map(a=>{const t=TEAMS[a]||{};return `<button class="it" data-team="${a}">${logo(a,36)}<span><b>${esc(FULL[a])}</b><small>${t.gp!=null?`${t.w}-${t.l}-${t.otl} · ${plural(t.pts,"очко","очка","очков")} · ${place(a)}-е место`:""}</small></span></button>`}).join("")}`:""}
+   ${pl.length?`<h5>Игроки</h5>${pl.map(p=>{const s=skater(p.n),g=goalie(p.n);const st=g?`${g.gp} И · ${nz(g.sv*100,1)}%`:s?`${s.gp} И · ${s.g} Г · ${s.a} П`:"";return `<button class="it" data-player="${esc(p.n)}" data-pteam="${p.team}">${photo(p.n,p.team,40)}<span><b>${esc(p.ru)} ${posTag(p.n)}</b><small>${esc(RU[p.team]||p.team)}${st?" · "+st:""}</small></span></button>`}).join("")}`:""}`;
+  const f=out.querySelector(".it");f&&f.classList.add("on")}
+function openSearch(){const s=$("#srch");s.hidden=false;const i=$("#sq");i.value="";srchRender();setTimeout(()=>i.focus(),30)}
+function closeSearch(){$("#srch").hidden=true}
+document.addEventListener("DOMContentLoaded",()=>{});
+(function initSearch(){const b=$("#sbtn");if(!b)return;b.onclick=openSearch;$("#sx").onclick=closeSearch;
+  $("#srch").addEventListener("click",e=>{if(e.target.id==="srch")closeSearch();const it=e.target.closest(".it");if(it)closeSearch()});
+  $("#sq").addEventListener("input",srchRender);
+  $("#sq").addEventListener("keydown",e=>{const its=[...document.querySelectorAll("#sr .it")];let i=its.findIndex(x=>x.classList.contains("on"));
+    if(e.key==="ArrowDown"||e.key==="ArrowUp"){e.preventDefault();if(!its.length)return;its[i]&&its[i].classList.remove("on");i=(i+(e.key==="ArrowDown"?1:-1)+its.length)%its.length;its[i].classList.add("on");its[i].scrollIntoView({block:"nearest"})}
+    if(e.key==="Enter"&&its[i]){its[i].click()}if(e.key==="Escape")closeSearch()});
+  document.addEventListener("keydown",e=>{if(e.key==="/"&&!/input|textarea/i.test((document.activeElement||{}).tagName||"")){e.preventDefault();openSearch()}})})();
