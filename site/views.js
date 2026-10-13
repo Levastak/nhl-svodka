@@ -6,8 +6,14 @@ function isNav(k){return VIEW===k||(k==="more"&&MORE.some(m=>m[0]===VIEW))}
 function renderChrome(){
   $("#dock").innerHTML=NAV.map(([k,l])=>`<button data-nav="${k}" ${isNav(k)?'aria-current="page"':""}>${IC[k]}<span>${l}</span></button>`).join("");
   $("#tnav").innerHTML=NAV.map(([k,l])=>`<button data-nav="${k}" ${isNav(k)?'aria-current="page"':""}>${l}</button>`).join("");
-  const f=freshness();const u=$("#upd");u.innerHTML=f.txt;u.classList.toggle("old",f.old);
+  const f=freshness();const u=$("#upd");u.classList.toggle("old",f.old);u.title="Данные сайта "+f.txt.replace(/<[^>]+>/g,"");tick();
   const s=$("#strip .wrap");const h=stripHtml();if(s.dataset.h!==h){s.innerHTML=h;s.dataset.h=h}}
+ /* часы с устройства: «13.10.2026, вторник 04:12 (UTC+3)» */
+const WD=["воскресенье","понедельник","вторник","среда","четверг","пятница","суббота"];
+function tick(){const u=$("#upd");if(!u)return;const d=new Date();const p=n=>String(n).padStart(2,"0");const off=-d.getTimezoneOffset();const oh=off/60;
+  const tz="UTC"+(off>=0?"+":"−")+(Number.isInteger(oh)?Math.abs(oh):Math.abs(oh).toFixed(1));
+  u.innerHTML=`<span class="ck-d">${p(d.getDate())}.${p(d.getMonth()+1)}.${d.getFullYear()}, ${WD[d.getDay()]}</span><span class="ck-t"><b>${p(d.getHours())}:${p(d.getMinutes())}</b> <span class="ck-z">${tz}</span></span>`}
+setInterval(tick,15000);
 function go(v){VIEW=v;try{history.replaceState(null,"","#"+v)}catch(e){}render();window.scrollTo(0,0)}
 const VIEWS={home:vHome,games:vGames,news:vNews,results:vResults,table:vTable,picks:vPicks,more:vMore,teams:vTeams,lead:vLead,power:vPower,inj:vInj,rus:vRus};
 function render(){if(!D)return;renderChrome();const f=VIEWS[VIEW]||vHome;$("#app").innerHTML=f();afterRender()}
@@ -23,9 +29,14 @@ function stripHtml(){if(!D)return"";const d=lastDate();const gs=A.games.filter(g
   const day=iso=>{const [a,b]=dShort(iso).split(" ");return `<span class="sday"><b>${esc(a)}</b>${esc(b||"")}</span>`};
   let h="";
   if(gs.length)h+=day(d)+gs.map(g=>{const aw=g.as>g.hs;return `<button class="sg" data-res="${g.date}" data-gid="${g.id}" aria-label="${EN[g.away]} ${g.as}, ${EN[g.home]} ${g.hs}"><small>Финал${endTag(g.end)?" · "+endTag(g.end):""}</small>${row(g.away,g.as,!aw)}${row(g.home,g.hs,aw)}</button>`}).join("");
-  if(up.length)h+=day(D.upcoming_date||nhlDate(up[0].start))+up.map(m=>{const L=liveOf(m);const p=modelOf(m);
+  const upd=D.upcoming_date||(up[0]&&nhlDate(up[0].start));
+  if(up.length)h+=(gs.length&&d===upd?"":day(upd))+up.map(m=>{const L=liveOf(m);const p=modelOf(m);
     if(L&&L.state!=="pre"){const aw=L.as>L.hs;return `<button class="sg" data-go="games" data-open="${m.away}-${m.home}"><small class="${L.state==="in"?"live":""}">${L.state==="in"?'<span class="dot"></span>'+esc(L.short):"Финал"+(L.end?" · "+L.end:"")}</small>${row(m.away,L.as,L.state==="post"&&!aw)}${row(m.home,L.hs,L.state==="post"&&aw)}</button>`}
     return `<button class="sg" data-go="games" data-open="${m.away}-${m.home}"><small>${kt(m.start)}</small>${row(m.away,p?pct(pB(p,"away")):"",false)}${row(m.home,p?pct(pB(p,"home")):"",false)}</button>`}).join("");
+  /* дальше — матчи следующего игрового дня (и ещё одного, если их мало) */
+  const fut=(D.week||[]).filter(w=>w.date>(upd||"")&&state(w.start)==="pre");const days=[...new Set(fut.map(w=>w.date))].sort();let n=0;
+  for(const dd of days){if(n>=8)break;const gg=fut.filter(w=>w.date===dd).sort((a,b)=>a.start<b.start?-1:1);n+=gg.length;
+    h+=day(dd)+gg.map(m=>{const p=modelOf(m);return `<button class="sg" data-go="games" data-open="${m.away}-${m.home}"><small>${kt(m.start)}</small>${row(m.away,p?pct(pB(p,"away")):"",false)}${row(m.home,p?pct(pB(p,"home")):"",false)}</button>`}).join("")}
   return h}
 
 /* ===================== матчи: строка и разбор ===================== */
