@@ -72,7 +72,7 @@ img{display:block}
 .sg .r{display:flex;align-items:center;gap:8px;font-weight:600;font-size:var(--fs-s)}
 .sg .r b{margin-left:auto;font-family:var(--f-disp);font-size:18px;font-weight:700}
 .sg .r.lo{opacity:.55}
-.strip .lg{background:#fff;border-radius:50%;padding:3px}
+
 
 /* нижняя навигация */
 .dock{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line);z-index:45;padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -599,12 +599,9 @@ table.st tbody tr:hover td{background:var(--soft);cursor:pointer}
 .hch.tc .bar i{background:var(--hc);opacity:.55}.hch.tc .c.hl .bar i{background:var(--hc);opacity:1;box-shadow:0 0 0 2px var(--gold)}.hch.tc .c.hl>b::before{content:"🏆 "}
 .mls li.ex .y{font-size:15px;color:var(--ink2)}
 
-/* логотипы на подложке цвета клуба */
-.bdg{--s:36px;width:var(--s);height:var(--s);flex:none;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;vertical-align:middle;
-  background:radial-gradient(circle at 32% 25%,color-mix(in srgb,var(--b1) 42%,#2a2f38) 0%,color-mix(in srgb,var(--b1) 26%,#101318) 70%);
-  box-shadow:inset 0 0 0 2px color-mix(in srgb,var(--b1) 85%,#fff 10%),0 2px 6px rgba(0,0,0,.3)}
-.bdg img{width:72%;height:72%;object-fit:contain;filter:drop-shadow(0 1px 1px rgba(0,0,0,.35))}
-.sg{min-width:164px;gap:7px;padding:10px 14px}.sg .r{gap:10px}
-.poster .side .bdg{box-shadow:inset 0 0 0 3px color-mix(in srgb,var(--b2) 80%,transparent),0 0 0 4px rgba(255,255,255,.07),0 10px 28px rgba(0,0,0,.4)}
-.mr .tm .bdg{margin-right:2px}
-@media (max-width:640px){.poster .side .bdg{--s:68px!important}.mr .tm .bdg{--s:38px!important}}
+/* логотипы: прозрачные, крупные, как на nhl.com */
+.lgd img{filter:drop-shadow(0 1px 2px rgba(0,0,0,.35))}
+.sg{min-width:176px;gap:8px;padding:10px 16px}.sg .r{gap:10px;font-size:17px;font-weight:700;letter-spacing:.01em}.sg .r b{font-size:22px}
+.poster .side .lgd{filter:drop-shadow(0 8px 20px rgba(0,0,0,.45))}
+.mr .tm .lg{margin-right:2px}
+@media (max-width:640px){.poster .side .lgd{--s:76px!important}.mr .tm .lg{--s:38px!important}.sg{min-width:150px;padding:9px 12px}.sg .r{font-size:15px}.sg .r b{font-size:19px}}
