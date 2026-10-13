@@ -880,7 +880,7 @@ def team_history():
                                 pw=q.get("wins"), pl=q.get("losses")))
         cups = sorted({x["seasonId"] for x in team_cups if x.get("status") == "WINNER" and x.get("teamId") in tids})
         finals = sorted({x["seasonId"] for x in team_cups if x.get("status") == "RUNNER_UP" and x.get("teamId") in tids})
-        out[ab] = dict(franchise=f["id"], first=(f.get("firstSeason") or {}).get("id"), cups=cups, finals=finals, seasons=seasons)
+        out[ab] = dict(franchise=f["id"], first=(f.get("firstSeason") or {}).get("id"), cups=cups, finals=finals, seasons=seasons[:30])
         time.sleep(0.3)
     if len(out) >= 30:
         save(f"{SITE}/hist/franchises.json", out)

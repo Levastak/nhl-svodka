@@ -17,10 +17,7 @@ setInterval(tick,15000);
 function go(v){VIEW=v;try{history.replaceState(null,"","#"+v)}catch(e){}render();window.scrollTo(0,0)}
 const VIEWS={home:vHome,games:vGames,news:vNews,results:vResults,table:vTable,picks:vPicks,more:vMore,teams:vTeams,lead:vLead,power:vPower,inj:vInj,rus:vRus};
 function render(){if(!D)return;renderChrome();const f=VIEWS[VIEW]||vHome;$("#app").innerHTML=f();afterRender()}
-function afterRender(){const dc=$(".dch");if(dc){const on=dc.querySelector('[aria-pressed="true"]');on&&on.scrollIntoView({inline:"center",block:"nearest"})}
-  const ps=$("#psearch");if(ps)ps.oninput=()=>{const q=ps.value.trim().toLowerCase();const out=$("#psres");if(q.length<2){out.innerHTML="";return}
-    const hits=[...(D.skaters||[]),...(D.goalies||[]).map(g=>({...g,pos:"G"}))].filter(s=>s.name.toLowerCase().includes(q)||pn(s.name).toLowerCase().includes(q)).slice(0,8);
-    out.innerHTML=hits.length?`<div class="box">${hits.map((r,i)=>lrow(r,i,r.pos==="G"?(r.sv*100).toFixed(1)+"%":gaHtml(r.g,r.a),EN[r.team])).join("")}</div>`:'<p class="note">Никого не нашёл. Попробуй фамилию, например «Капризов».</p>'}}
+function afterRender(){const dc=$(".dch");if(dc){const on=dc.querySelector('[aria-pressed="true"]');on&&on.scrollIntoView({inline:"center",block:"nearest"})}}
 
 /* лента счетов */
 function stripHtml(){if(!D)return"";const d=lastDate();const gs=A.games.filter(g=>g.date===d);
@@ -236,7 +233,6 @@ function vTable(){const modes=[["div","Дивизионы"],["conf","Конфе�
 /* ===================== прогнозы ===================== */
 function jRow(x){const t=x.type||"win";const TY={win:"Исход",total:"Тотал",express:"Уверенные"};const lv=liveRes(x);const r=x.result||(lv&&lv.fin?lv.r:null);
   const rs=r==="hit"?'<span class="res hit">Угадан</span>':r==="miss"?'<span class="res miss">Мимо</span>':r==="void"?'<span class="res void">Возврат</span>':lv?`<span class="res ${lv.r==="hit"?"hit":lv.r==="miss"?"miss":"wait"}"><span class="dot"></span> ${lv.r==="hit"?"заходит":lv.r==="miss"?"не заходит":esc(lv.txt||"идёт")}</span>`:'<span class="res wait">ждём</span>';
-  const legs=t==="express"?(x.legs||[]):[x];
   return `<div class="jr"><div class="l"><span class="ty"><span class="chip">${TY[t]||t}</span><small>${esc(dShort(x.date))}${x.changed?" · прогноз уточнён":""}</small>${x.mkt_side&&x.mkt_side!==x.side?'<span class="chip gold">против рынка</span>':""}</span><b>${pickLabel(x)}${x.odds?` · ${f2(x.odds)}`:""}</b><small>${esc(matchLabel(x))}${x.score?` · <b>${esc(x.score)}</b>`:""}</small></div>${rs}</div>`}
 function mRes(x){if(!x.result||x.result==="void"||!x.mkt_side)return x.result;return x.mkt_side===x.side?x.result:x.result==="hit"?"miss":"hit"}
 function vsJournal(all){const xs=all.filter(x=>x.mkt_side&&(x.type||"win")!=="express"&&x.result&&x.result!=="void");
@@ -259,7 +255,7 @@ function vPicks(){const all=jAll();const list=all.filter(x=>JF==="all"||(x.type|
 const back=()=>`<button class="back" data-go="more">← Ещё</button>`;
 function vMore(){return `<div class="col"><section class="sec"><div class="hd"><h1>Ещё</h1></div><div class="menu">${MORE.map(([k,l,s])=>`<button data-go="${k}">${IC[k]}<span><b>${l}</b><small>${s}</small></span></button>`).join("")}</div></section></div>`}
 function vTeams(){return `<div class="col">${back()}<section class="sec"><div class="hd"><h1>Команды</h1></div>
-  <input class="inp" id="psearch" placeholder="Найти игрока, например Kaprizov" aria-label="Найти игрока"><div id="psres"></div>
+  <button class="inp sopen" data-search>🔍 Найти игрока или команду</button>
   ${DIVS.map(d=>`<div class="sec"><div class="hd"><h3>${d[1]} дивизион</h3></div><div class="teams">${d[2].map(a=>`<button data-team="${a}">${logo(a,48)}<span>${EN[a]}</span></button>`).join("")}</div></div>`).join("")}</section></div>`}
 function lastNPoints(n=5){const teamG={};A.games.slice().sort((x,y)=>x.date<y.date?-1:1).forEach(g=>{for(const t of [g.away,g.home])(teamG[t]=teamG[t]||[]).push(g)});
   const pts={};for(const t in teamG)for(const g of teamG[t].slice(-n))for(const x of (g.goals||[])){if(x[1]!==t||x[3]===5)continue;const add=(s,k)=>{s=String(s||"").trim();if(!s)return;const key=t+"|"+s;pts[key]=pts[key]||{g:0,a:0};pts[key][k]++};add(x[0],"g");String(x[5]||"").split(",").forEach(s=>add(s,"a"))}
@@ -415,7 +411,7 @@ function nationalBlock(c){const rows=(c.seasons||[]).filter(x=>NAT[x.lg]);if(!ro
 async function fillCareer(name,tm){const h=headOf(name);const id=h?String(h).split("/").pop():null;const box=$("#career");if(!box||!id)return;const c=await loadPC(id);
   if(!c){box.innerHTML="";return}box.innerHTML=`<div class="sec"><h4 class="sub">Биография</h4><p class="txt">${esc(careerBio(c,tm))}</p></div>${seasonsTable(c)}${milestones(c)}${transfers(c)}${nationalBlock(c)}`}
 function playerSheet(name,tm){const s=skater(name),gk=goalie(name);tm=tm||(s||gk||{}).team;const pg=gk?[]:playerGames(name,tm);const mx=Math.max(1,...pg.map(x=>x.G+x.As));
-  const withPts=pg.filter(x=>x.G||x.As).reverse();const POS={C:"центральный нападающий",L:"левый нападающий",R:"правый нападающий",D:"защитник",G:"вратарь"};
+  const withPts=pg.filter(x=>x.G||x.As).reverse();
   openSheet(`${playerHero(name,tm,s)}
    <div class="sh-b">${s?`<div class="kv"><div><small>Игры</small><b>${s.gp}</b></div><div><small>Голы</small><b>${s.g}</b></div><div><small>Передачи</small><b>${s.a}</b></div><div><small>Очки</small><b>${s.pts}</b></div><div><small>+/−</small><b>${s.pm>0?"+":""}${s.pm}</b></div>${s.toi?`<div><small>Время на льду</small><b>${mmss(s.toi_s?s.toi_s/60:s.toi)}</b><small>в среднем за матч</small></div>`:""}</div>`
      :gk?`<div class="kv"><div><small>Игры</small><b>${gk.gp}</b></div><div><small>В-П-ПО</small><b>${gk.w}-${gk.l}-${gk.otl}</b></div><div><small>% отражённых</small><b>${nz(gk.sv*100)}%</b></div><div><small>Коэф. надёжности</small><b>${nz(gk.gaa,2)}</b></div><div><small>Сухие матчи</small><b>${gk.so||0}</b></div></div>`:'<p class="note">Сезонной статистики по игроку пока нет в сводке.</p>'}
@@ -442,6 +438,7 @@ function openArticle(k){const x=articles().find(a=>a.k===k);if(!x)return;const a
 /* ===================== события ===================== */
 document.addEventListener("click",e=>{const t=e.target.closest("button,a,[data-team],[data-player]");if(!t)return;const ds=t.dataset;
   if(ds.close!==undefined){closeSheet();return}
+  if(ds.search!==undefined){openSearch();return}
   if(ds.ht){HERO_TAB=ds.ht;const w=$("#hb");if(w)w.innerHTML=heroesBody();return}
   if(ds.art){openArticle(ds.art);return}
   if(ds.nav){closeSheet();go(ds.nav);return}
