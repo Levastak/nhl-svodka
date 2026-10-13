@@ -76,7 +76,7 @@ jobs:
           for i in 1 2 3; do git pull --rebase -X theirs origin main && git push && break; sleep 5; done
       - name: Версия скриптов
         if: steps.mode.outputs.mode != 'night' || steps.save.outputs.changed == '1'
-        run: sed -i -E "s/(home2|tabs2|core|views|live)\.js(\?v=[0-9]+)?\"/\1.js?v=${{ github.run_id }}\"/g" site/index.html
+        run: echo "${{ github.run_id }}" > site/version.txt
       - uses: actions/configure-pages@v5
         if: steps.mode.outputs.mode != 'night' || steps.save.outputs.changed == '1'
       - uses: actions/upload-pages-artifact@v3
