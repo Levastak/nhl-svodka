@@ -77,6 +77,9 @@ function puck(a){const c=COLORS[a]||["#556070","#8892A0"];const fg=lum(c[0])>.45
 window._lgf=function(img){const s=img.closest(".lg");if(s)s.innerHTML=puck(s.dataset.a)};
 function logo(a,s=28){if(!COLORS[a])return `<span class="lg" style="--s:${s}px">${puck(a)}</span>`;
   return `<span class="lg" data-a="${a}" style="--s:${typeof s==="number"?s+"px":s}" aria-hidden="true"><picture><source srcset="${logoUrl(a,true)}" media="(prefers-color-scheme: dark)"><img src="${logoUrl(a)}" alt="" loading="lazy" decoding="async" onerror="_lgf(this)"></picture></span>`}
+/* логотип на круглой подложке в цвете клуба (тёмная версия логотипа) */
+function badge(a,s=36){if(!COLORS[a])return logo(a,s);const c1=tdeep(a),c2=(COLORS[a]||[])[1]||c1;
+  return `<span class="bdg" style="--s:${s}px;--b1:${c1};--b2:${c2}" aria-hidden="true"><img src="${logoUrl(a,true)}" alt="" loading="lazy" decoding="async" onerror="this.parentNode.outerHTML=logo('${a}',${s})"></span>`}
 function initials(n){return String(n||"").split(/\s+/).map(w=>w[0]||"").join("").slice(0,2).toUpperCase()}
 let NUMN=null;const nrm=s=>String(s||"").normalize("NFD").replace(/[̀-ͯ]/g,"").toLowerCase().replace(/[^a-z]/g,"");
 function pnum(name,pos){const N=(D&&D.numbers)||{};let n=pos!=null?N[name+"|"+pos]:null;if(n==null)n=N[name];if(n==null){if(!NUMN){NUMN={};for(const k in N)NUMN[nrm(k)]=N[k]}n=NUMN[nrm(name)]}return n!=null?String(n):null}

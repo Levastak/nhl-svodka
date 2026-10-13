@@ -25,7 +25,7 @@ function afterRender(){const dc=$(".dch");if(dc){const on=dc.querySelector('[ari
 /* лента счетов */
 function stripHtml(){if(!D)return"";const d=lastDate();const gs=A.games.filter(g=>g.date===d);
   const up=(D.upcoming||[]).filter(m=>!A.games.some(g=>g.away===m.away&&g.home===m.home&&g.date>=nhlDate(m.start)));
-  const row=(t,s,lo)=>`<div class="r ${lo?"lo":""}">${logo(t,30)}<span>${AB[t]||t}</span><b>${s}</b></div>`;
+  const row=(t,s,lo)=>`<div class="r ${lo?"lo":""}">${badge(t,34)}<span>${AB[t]||t}</span><b>${s}</b></div>`;
   const day=iso=>{const [a,b]=dShort(iso).split(" ");return `<span class="sday"><b>${esc(a)}</b>${esc(b||"")}</span>`};
   let h="";
   if(gs.length)h+=day(d)+gs.map(g=>{const aw=g.as>g.hs;return `<button class="sg" data-res="${g.date}" data-gid="${g.id}" aria-label="${EN[g.away]} ${g.as}, ${EN[g.home]} ${g.hs}"><small>Финал${endTag(g.end)?" · "+endTag(g.end):""}</small>${row(g.away,g.as,!aw)}${row(g.home,g.hs,aw)}</button>`}).join("");
@@ -40,7 +40,7 @@ function stripHtml(){if(!D)return"";const d=lastDate();const gs=A.games.filter(g
   return h}
 
 /* ===================== матчи: строка и разбор ===================== */
-function tmLine(a,{p,f,sc,lo}){return `<span class="tm ${lo?"lo":""}">${logo(a,36)}<b>${EN[a]}</b><span class="rec">${rec(a)}</span>${sc!=null?`<span class="sc">${sc}</span>`:`${formDots(a)}${p!=null?`<span class="p ${f?"f":""}">${pct(p)}</span>`:""}`}</span>`}
+function tmLine(a,{p,f,sc,lo}){return `<span class="tm ${lo?"lo":""}">${badge(a,44)}<b>${EN[a]}</b><span class="rec">${rec(a)}</span>${sc!=null?`<span class="sc">${sc}</span>`:`${formDots(a)}${p!=null?`<span class="p ${f?"f":""}">${pct(p)}</span>`:""}`}</span>`}
 function pcLine(a,p,f){return `<span class="${f?"f":""}" style="--c:${tcol(a)}"><span class="bar2"><i style="--w:${Math.round(p*100)}%"></i></span>${pct(p)}</span>`}
 function timeCell(m,L){if(L&&L.state==="in")return `<span class="t lv">${esc(L.ps||L.per)}<small class="live"><span class="dot"></span>${esc(L.clock||"идёт")}</small></span>`;
   if(L&&L.state==="post")return `<span class="t">Финал<small>${L.end?endLong(L.end):kt(m.start)}</small></span>`;
@@ -115,7 +115,7 @@ function topScorer(t){return (D.skaters||[]).filter(s=>s.team===t).sort((a,b)=>b
 function posterSec(){const mo=D.motd;if(!mo)return"";const m=(D.upcoming||[]).find(x=>x.away===mo.away&&x.home===mo.home);if(!m||state(m.start)==="done")return"";
   const p=modelOf(m);const L=liveOf(m);const [ca,ch]=pair(m.away,m.home);const pa=pB(p,"away"),ph=pB(p,"home");
   const lv=L&&L.state!=="pre";
-  const side=(t,cls)=>`<button class="side ${cls}" data-team="${t}"><span class="lgw">${logo(t,64)}</span><span><b>${EN[t]}</b><small>${rec(t)}${TEAMS[t]&&TEAMS[t].gp?" · "+place(t)+"-е место":""}</small></span></button>`;
+  const side=(t,cls)=>`<button class="side ${cls}" data-team="${t}">${badge(t,92)}<span><b>${EN[t]}</b><small>${rec(t)}${TEAMS[t]&&TEAMS[t].gp?" · "+place(t)+"-е место":""}</small></span></button>`;
   const pl=(t,cls)=>{const s=topScorer(t);return s?`<button class="pl ${cls}" data-player="${esc(s.name)}" data-pteam="${t}">${photo(s.name,t,44)}<span><b>${esc(pn(s.name))} ${posTag(s.name,s.pos)}</b><small>${s.g} Г · ${s.a} П в сезоне · лидер ${EN[t]}</small></span></button>`:""};
   const mid=lv?`<b>${L.as}:${L.hs}</b><small>${L.state==="in"?'<span class="dot"></span> '+esc(L.short):"финал"}</small>`:`<b>${kt(m.start)}</b><small>${esc(rel(m.start)||"")}</small>`;
   return `<section class="poster" style="--a:${ca};--h:${ch};--ta:${tpair(m.away,m.home)[0]};--th:${tpair(m.away,m.home)[1]}"><div class="bg"><span class="wm a">${logo(m.away,420)}</span><span class="wm h">${logo(m.home,420)}</span></div><div class="in">
