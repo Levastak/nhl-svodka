@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="ru" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#111416">
+<title>NHL-STATS.RU — новая редакция</title>
+<meta name="description" content="Матчи, цифры и истории НХЛ — новая редакция NHL-STATS.RU.">
+<link rel="icon" href="brand-mark.svg?v=2" type="image/svg+xml">
+<link rel="preconnect" href="https://assets.nhle.com" crossorigin>
+<link rel="stylesheet" href="style.css?v=2.0.0">
+<link id="edition-css" rel="stylesheet" href="edition.css?v=2.0.0">
+<script>
+/* V2 загружает отдельные стили и скрипты, данные читает из общего корня сайта. */
+(function(){
+  var q=["core.js","views.js","live.js"];
+  function load(version){
+    var i=0;
+    (function next(){
+      if(i>=q.length)return;
+      var s=document.createElement("script");s.src=q[i++]+"?v="+version;s.onload=next;
+      s.onerror=function(){document.getElementById("app").innerHTML='<div class="box empty">Не удалось загрузить новую редакцию. Обнови страницу.</div>'};
+      (document.body||document.documentElement).appendChild(s);
+    })();
+  }
+  fetch("../version.txt?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.ok?r.text():"2.0.0"})
+    .catch(function(){return "2.0.0"}).then(function(v){v=String(v).trim()||"2.0.0";var l=document.querySelector('link[rel="stylesheet"]');l.href="style.css?v="+v;document.getElementById("edition-css").href="edition.css?v="+v;load(v)});
+})();
+</script>
+</head>
+<body class="edition-v2">
+<header class="top">
+  <div class="mast wrap">
+    <a class="mark" href="#home" aria-label="NHL-STATS.RU — на главную">
+      <svg viewBox="0 0 44 44" aria-hidden="true"><rect x="3.5" y="3.5" width="37" height="37" rx="18.5" fill="none" stroke="currentColor"/><path d="M22 4v36M11 4v36M33 4v36" stroke="currentColor" stroke-opacity=".35"/><circle cx="22" cy="22" r="7" fill="none" stroke="currentColor" stroke-opacity=".68"/><circle cx="29" cy="16" r="2.4" fill="var(--signal)"/><path d="M25.5 19.5 23 22" stroke="var(--signal)" stroke-width="1.5"/></svg>
+      <span class="wordmark"><b>NHL<span class="wordmark-rule">—</span>STATS</b><small>.RU</small></span>
+    </a>
+    <div class="edition-note"><span>НЕЗАВИСИМОЕ ХОККЕЙНОЕ МЕДИА</span><span>ДАННЫЕ · ИГРА · КОНТЕКСТ</span></div>
+    <nav class="tnav" id="tnav" aria-label="Разделы"></nav>
+    <button class="sbtn" id="sbtn" aria-label="Поиск игроков и команд"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 4.5 4.5"/></svg><span>Найти игрока</span><kbd>/</kbd></button>
+    <div class="upd" id="upd"></div>
+  </div>
+</header>
+<div class="srch" id="srch" hidden><div class="srch-in"><div class="srch-bar"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 4.5 4.5"/></svg><input id="sq" placeholder="Капризов, Kaprizov, Миннесота, MIN…" autocomplete="off" aria-label="Поиск"><button id="sx" aria-label="Закрыть">×</button></div><div id="sr" class="srch-res"></div></div></div>
+<div class="strip" id="strip" aria-label="Счета и расписание"><div class="wrap"></div></div>
+<main class="wrap" id="app"><div class="skel" aria-label="Загрузка"><i></i><i></i><i></i><i></i></div></main>
+<footer class="foot">NHL-STATS.RU · независимый проект. Данные: NHL, MoneyPuck, DailyFaceoff; живой счёт — ESPN. Логотипы и фотографии принадлежат их правообладателям. Прогнозы модели не являются рекомендацией делать ставки.</footer>
+<nav class="dock" aria-label="Разделы"><div class="wrap" id="dock"></div></nav>
+<div class="sheet" id="sheet" hidden><div class="panel" id="panel" role="dialog" aria-modal="true"></div></div>
+</body>
+</html>

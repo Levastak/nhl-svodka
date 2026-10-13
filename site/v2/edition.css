@@ -1,0 +1,147 @@
+/* NHL-STATS.RU / редакция 02 — самостоятельный визуальный слой. */
+:root[data-theme="dark"]{
+  --bg:#111516;--card:#171c1d;--ink:#edf0eb;--ink2:#bdc5c1;--mute:#87918e;
+  --line:rgba(231,239,235,.12);--soft:#1d2424;--soft2:#293130;
+  --bar:#101516;--strip:#171d1d;--barink:#edf0eb;--barmute:#8e9995;
+  --red:#df7654;--blue:#8db9c2;--link:#a8cbd0;
+  --gold:#d9ac6a;--goldbg:#2c261d;--win:#94b49a;--winbg:#1e2b25;--loss:#d48277;--lossbg:#30211f;--ot:#d9ac6a;
+  --f-body:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  --f-disp:"Arial Narrow","Roboto Condensed","Franklin Gothic Condensed",sans-serif;
+  --f-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --fs-xs:11px;--fs-s:13px;--fs-m:15px;--fs-l:19px;--fs-xl:25px;--fs-2xl:33px;--fs-3xl:48px;
+  --sp1:4px;--sp2:8px;--sp3:12px;--sp4:16px;--sp5:24px;--sp6:32px;
+  --r:4px;--r2:3px;--shadow:none;--signal:#df7654;--accent:#8db9c2;
+  color-scheme:dark
+}
+*{box-sizing:border-box}
+html,body{background:var(--bg);color:var(--ink)}
+body{font-family:var(--f-body);font-size:15px;line-height:1.48;font-variant-numeric:tabular-nums}
+button,input{font-family:inherit}
+button{transition:background-color .14s ease,color .14s ease,border-color .14s ease}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px}
+::selection{background:rgba(141,185,194,.3);color:var(--ink)}
+.wrap{max-width:1320px;padding-inline:24px}
+.num,.row .t,.row .sc,.sc1 .r b,.feat .big,.kv b,.acc b,.facts b,.picks b,.sense .sc b,.sbar .ln>b,.goal .gsc,.tm .sc,.tm .p,.meta time,table.mt td,table.st td,.wtab td,.rr .score{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+
+/* Мачтовая шапка: типографика и разметка, без глянцевых поверхностей. */
+.top{position:relative;z-index:40;background:var(--bar);color:var(--barink);border-bottom:1px solid var(--line);padding-top:env(safe-area-inset-top,0px)}
+@media(min-width:900px){.top{position:sticky;top:0}}
+.top .mast{height:76px;display:flex;align-items:center;gap:25px}
+.mark{display:flex;align-items:center;gap:10px;flex:none;color:var(--barink);text-decoration:none}
+.mark svg{width:36px;height:36px;flex:none}
+.wordmark{display:flex;align-items:baseline;gap:4px;line-height:1}
+.wordmark b{font-family:var(--f-disp);font-size:24px;font-weight:800;letter-spacing:.025em}
+.wordmark-rule{color:var(--accent);padding:0 2px}
+.mark .wordmark b .wordmark-rule{color:var(--accent)}
+.wordmark small{font:700 10px/1 var(--f-mono);color:var(--signal);letter-spacing:.08em}
+.edition-note{display:flex;flex-direction:column;gap:4px;padding-left:16px;border-left:1px solid var(--line);color:var(--barmute);font:600 9px/1.15 var(--f-mono);letter-spacing:.075em;white-space:nowrap}
+.tnav{display:none}
+@media(min-width:900px){.tnav{display:flex;height:100%;gap:0}.tnav button{height:100%;padding:0 11px;border:0;border-bottom:2px solid transparent;border-radius:0;color:var(--barmute);font-size:12px;font-weight:650;letter-spacing:.015em}.tnav button:hover{color:var(--barink);background:transparent}.tnav button[aria-current="page"]{color:var(--barink);border-bottom-color:var(--accent);opacity:1}}
+.sbtn{height:36px;margin-left:auto;padding:0 10px;border:1px solid var(--line);border-radius:3px;background:transparent;color:var(--barmute);font-size:12px}
+.sbtn:hover{color:var(--barink);background:rgba(255,255,255,.04)}.sbtn svg{color:var(--accent)}.sbtn kbd{border-radius:2px;border-color:var(--line);font:10px var(--f-mono)}
+.upd{font:10px/1.4 var(--f-mono);color:var(--barmute);min-width:112px}.upd b{color:var(--barink)}
+.strip{background:var(--strip);border-bottom:1px solid var(--line);color:var(--barink)}
+.strip .wrap{padding-inline:0;scrollbar-width:thin;scrollbar-color:var(--soft2) transparent}
+.sday{min-width:48px;padding-inline:10px;border-right:1px solid var(--line);font:10px var(--f-mono);text-transform:uppercase}
+.sday b{font:700 18px/1.2 var(--f-mono);color:var(--barink)}
+.sg{min-width:146px;gap:4px;padding:8px 12px;border-right:1px solid var(--line)}.sg:hover{background:rgba(255,255,255,.035)}
+.sg small{font:10px var(--f-mono);letter-spacing:.02em}.sg small.live{color:var(--signal)}.sg .r{font-size:12px}.sg .r b{font:600 14px var(--f-mono)}
+.dock{background:var(--bar);border-color:var(--line)}.dock .wrap{padding-inline:8px}.dock button{font-size:10px;color:var(--barmute);border-radius:0}.dock button[aria-current="page"]{color:var(--barink);border-top-color:var(--accent)}
+main{padding-top:30px;padding-bottom:100px;min-height:72vh}
+.foot{padding:14px 24px 28px;border-top:1px solid var(--line);font-size:11px}
+@media(max-width:899px){.top .mast{height:66px;gap:12px}.edition-note{display:none}.wrap{padding-inline:16px}}
+@media(max-width:420px){.wordmark b{font-size:20px}.mark{gap:7px}.mark svg{width:32px;height:32px}.upd{min-width:0}.sbtn{width:36px;justify-content:center;padding:0}.sbtn span,.sbtn kbd{display:none}}
+
+/* Общие поверхности — плоскости, тонкая рамка, короткий радиус. */
+.col{gap:30px}.sec{gap:12px}.hd{padding-bottom:9px;border-bottom:1px solid var(--line)}
+.hd h1,.hd h2,.hd h3,.wg-h h3,.stc .th3 h3,.day>summary,.lead h3,.reader .body h3{font-family:var(--f-disp);font-stretch:condensed;letter-spacing:.005em}
+.hd h1,.hd h2{font-size:32px;letter-spacing:.025em;text-transform:uppercase}
+.hd h3{font-size:24px}.hd small{font-size:12px}.hd .lnk,.lnk{font-size:12px}
+.box,.card3,.sense,.stc,.hch{background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:none}
+.pad{padding:16px}.sec>.sub{font:600 10px/1.2 var(--f-mono);color:var(--mute);letter-spacing:.085em;text-transform:uppercase}
+.pills{gap:0;border-bottom:1px solid var(--line)}
+.pills button{padding:7px 11px;border:0;border-bottom:2px solid transparent;border-radius:0;background:transparent;color:var(--mute);font-size:12px}
+.pills button[aria-pressed="true"],.pills button[aria-selected="true"]{background:transparent;border-color:var(--accent);color:var(--ink)}
+.chip{border-radius:2px;padding:3px 6px;font:600 10px var(--f-mono);letter-spacing:.025em}.btn{padding:8px 11px;border-radius:3px;background:transparent;font-size:12px}.btn:hover{background:var(--soft)}
+.banner{border-left:2px solid var(--gold);border-radius:0;background:var(--goldbg)}
+.kv{gap:14px 18px}.kv>div{gap:3px}.kv small{font:10px var(--f-mono);letter-spacing:.02em}.kv b{font-size:19px;line-height:1.2}
+.inp{border-radius:3px}
+
+/* Матч дня — сухая табло-композиция с цветом клубов только в маркерах. */
+.poster{border-radius:3px;background:#1a2020;border:1px solid var(--line);border-top:2px solid var(--accent)}
+.poster .bg,.poster .wm{display:none}.poster .in{padding:18px 20px;gap:15px}
+.poster .lab{font:10px var(--f-mono);letter-spacing:.08em;text-transform:uppercase}.poster .lab span:first-child{background:transparent;color:var(--signal);padding:0;border-radius:0}
+.poster .vs{gap:18px}.poster .side{gap:12px}.poster .side b{font-size:24px;letter-spacing:.02em;text-transform:uppercase}.poster .mid b{font:500 25px var(--f-mono);color:var(--accent)}
+.poster .pl{background:transparent;border:0;border-left:1px solid rgba(255,255,255,.16);border-radius:0;padding:4px 10px;backdrop-filter:none}.poster .pl.h{border-left:0;border-right:1px solid rgba(255,255,255,.16)}
+.poster .pl .ph{border:1px solid rgba(255,255,255,.28)}.poster .go{border:1px solid rgba(255,255,255,.2);border-radius:2px;background:transparent}
+.poster p{max-width:68ch;color:#d0d6d1}.poster .go:hover{background:rgba(255,255,255,.08)}
+@media(max-width:640px){.poster .in{padding:14px}.poster .side b{font-size:16px}.poster .mid b{font-size:18px}.poster .pl.h{flex-direction:row-reverse;text-align:right}}
+
+/* Игроки, клубы и редакционные карточки: без водяных знаков и сияющих подложек. */
+.cards{gap:10px}.card3{border-radius:3px}.card3 .top3{min-height:112px;background:#202727!important;border-bottom:1px solid var(--line);padding:10px 12px 0}
+.card3 .top3::before,.card3 .wm{display:none}.card3 .ph{--s:96px;filter:none}.card3 .rk{text-shadow:none;font:600 30px/1 var(--f-mono);color:var(--accent)}.card3 .rk i{color:var(--signal)}
+.card3 .bd{padding:12px}.card3 .nm .plink{font-size:14px}.card3 .nm b.v{font:600 16px var(--f-mono)}
+.feat{padding:14px 12px;border-top:1px solid var(--line)}.feat .ph{--s:62px}.feat .big{font-size:24px}
+.lead{border-radius:0;border-bottom:1px solid var(--line)}.lead .tx{padding:13px 0}.lead h3{font-size:26px;line-height:1.12}.lead p{font-size:14px}
+.cover{background:#202727}.cover.art,.nr .th.art{background:#202727;gap:0}.cover.art::before,.nr .th.art::before{content:"NHL / DATA";font:600 11px var(--f-mono);letter-spacing:.12em;color:var(--ink2)}
+.cover.art .lgw,.nr .th.art .lgw{background:transparent;border-radius:0;box-shadow:none}.facts{gap:0;border-block:1px solid var(--line)}.facts>div{padding:9px 10px;background:transparent;border-right:1px solid var(--line);border-radius:0}.facts b{font:600 20px var(--f-mono)}
+.reader .body{font-family:Georgia,"Times New Roman",serif;font-size:17px;line-height:1.78;color:var(--ink2)}.reader .body p{max-width:68ch}.reader .body h3{font-family:var(--f-disp);font-size:23px;line-height:1.2;color:var(--ink)}
+.reader .body blockquote{border-left:2px solid var(--signal);border-radius:0;background:transparent;font-family:Georgia,"Times New Roman",serif;font-size:19px}
+.bimg img{border-radius:2px}.hch{border-radius:3px}.hch .bar i{border-radius:0}.hch .c.hl .bar i{background:var(--accent)}
+
+/* Сводки и статистические таблицы. Закрепление работает внутри .tw/.stc. */
+.tw{max-width:100%;overflow:auto;overscroll-behavior-x:contain;scrollbar-width:thin;scrollbar-color:var(--soft2) transparent}
+table.mt,table.st,.wtab{border-collapse:separate;border-spacing:0;font-size:12px}
+table.mt th,table.st th,.wtab th{position:sticky;top:0;z-index:3;background:var(--card);font:600 10px var(--f-mono);letter-spacing:.035em;text-transform:uppercase;padding:7px 9px;border-bottom:1px solid var(--line)}
+table.mt td,table.st td,.wtab td{padding:7px 9px;border-top:0;border-bottom:1px solid rgba(231,239,235,.055);font:12px var(--f-mono)}
+table.st tbody tr:nth-child(even) td,table.mt tbody tr:nth-child(even) td{background:rgba(255,255,255,.018)}
+table.st tbody tr:hover td,table.mt tbody tr:hover td{background:rgba(141,185,194,.07);cursor:pointer}
+table.st th:first-child,table.st td:first-child,table.mt th:first-child,table.mt td:first-child{position:sticky;left:0;z-index:2;background:var(--card)}
+table.st tbody tr:nth-child(even) td:first-child,table.mt tbody tr:nth-child(even) td:first-child{background:#1a2020}
+table.st tbody tr:hover td:first-child,table.mt tbody tr:hover td:first-child{background:#202929}
+table.st thead th:first-child,table.mt thead th:first-child{z-index:4}
+table.st tr.cut td{border-top:1px solid var(--accent)}
+table.st td.p{color:var(--accent);font-weight:700}
+table.st td.heat-low,table.mt td.heat-low{background:rgba(212,130,119,.12)}
+table.st td.heat-mid,table.mt td.heat-mid{background:rgba(231,239,235,.035)}
+table.st td.heat-high,table.mt td.heat-high{background:rgba(148,180,154,.12)}
+.stc .th3{padding:12px 12px 8px}.stc .th3 h3{font-size:18px}
+.wtab tr.cut td{border-top:1px solid var(--signal)}
+.dates .arr,.dch button{border-radius:2px}.dch button{padding:5px 9px}.dch button[aria-pressed="true"]{background:var(--soft);border-color:var(--accent);color:var(--ink)}.dch button[aria-pressed="true"] b{color:var(--accent)}
+.sbar .ln>b{font-size:16px}.sbar .tr{height:6px}.sbar .hf{border-radius:0}.sbar .bar2{border-radius:0}.sbar .bar2 i{border-radius:0}
+#app .pcs .bar2 i{background:var(--soft2)}#app .pcs span.f .bar2 i{background:var(--accent)}
+
+/* Профиль игрока/команды — сохраняет все блоки и действия, меняет только подачу. */
+.sheet{background:rgba(5,8,9,.78);backdrop-filter:blur(2px);animation:none}
+.panel{max-width:900px;max-height:min(92vh,920px);background:var(--bg);border:1px solid var(--line);border-radius:5px 5px 0 0;animation:none;scrollbar-width:thin;scrollbar-color:var(--soft2) transparent}
+@media(min-width:800px){.panel{border-radius:5px;max-height:88vh}}
+.sh-x{width:32px;height:32px;border:1px solid rgba(237,240,235,.24);border-radius:3px;background:#141919;color:var(--ink);font:20px/1 var(--f-body)}
+.sh-b{padding:18px 24px 28px;gap:22px}
+.ph-hero{min-height:208px;padding:0 24px;gap:20px;color:var(--ink);background:#1b2222;isolation:isolate}
+.ph-hero::before{left:0;right:auto;top:0;bottom:0;width:3px;height:auto;background:var(--accent)}
+.ph-hero .mesh,.ph-hero .ghost{display:none}.ph-hero .cut{height:174px;margin-left:4px;filter:none;mix-blend-mode:normal}
+.ph-hero .num{font:500 46px var(--f-mono);color:var(--accent);opacity:.85}
+.ph-hero .tx{padding:26px 0 22px}.ph-hero .fn{font:11px var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--mute)}
+.ph-hero h2{font:700 clamp(32px,5vw,48px)/.98 var(--f-disp);letter-spacing:.005em;text-transform:uppercase;margin:5px 0 9px}
+.ph-hero p{font:11px var(--f-mono);color:var(--ink2);opacity:1}.ph-hero .tm{border:0;border-left:2px solid var(--signal);border-radius:0;background:transparent;color:var(--ink);padding:2px 0 2px 8px;font:600 11px var(--f-body)}
+.ph-hero .tlogo{width:66px;height:66px;margin:0 34px 0 0;filter:none;opacity:.75}
+.tm-hero{min-height:176px}.tm-hero .tlogo.big{width:82px;height:82px}.tm-hero .tx{padding:24px 0}.tm-hero h2{font-size:clamp(28px,4vw,42px)}
+.mls{gap:0;border-top:1px solid var(--line)}.mls li{border-bottom:1px solid var(--line);border-radius:0;background:transparent;padding:8px 6px}.mls .y{font:11px var(--f-mono);color:var(--accent)}
+.path{border-left:1px solid var(--line)}.path li{border-radius:0}.path li::before{border-radius:0;background:var(--bg)}.path li.nhl::before{border-color:var(--accent);background:var(--accent)}.path li.nhl:hover{background:var(--soft)}
+.nat>div{border-radius:0;background:var(--soft)}.nat>div.sen{border-left:2px solid var(--gold)}
+.rcs{gap:0;grid-template-columns:repeat(auto-fill,minmax(245px,1fr))}.rc{border-top:1px solid var(--line);border-radius:0;padding:8px 4px}.rc:hover{background:var(--soft)}
+.cupb{border-radius:2px;background:var(--goldbg);color:var(--gold);border:1px solid rgba(217,172,106,.25)}
+@media(max-width:640px){.ph-hero{min-height:160px;padding:0 14px;gap:8px}.ph-hero .cut{height:128px;margin-left:-8px}.ph-hero .tx{padding:40px 0 15px}.ph-hero h2{font-size:30px}.ph-hero .tlogo{right:10px;top:50px;width:42px;height:42px}.ph-hero .p{font-size:10px}.sh-b{padding:15px 14px 24px}.tm-hero .tlogo.big{position:static;width:58px;height:58px}}
+
+/* Состояния и мелкие элементы. Движение оставлено только там, где оно передаёт LIVE. */
+.dot{width:7px;height:7px;background:var(--signal);animation:pulse-v2 1.8s ease-out infinite}
+@keyframes pulse-v2{0%,100%{box-shadow:0 0 0 0 rgba(223,118,84,.35)}65%{box-shadow:0 0 0 5px rgba(223,118,84,0)}}
+.mr::before{width:2px;background:var(--ca)}.mr:has(>.rr)::before,.mr:has(>.rr)::after{width:2px}.mr:has(>.rr)::after{opacity:.6}
+.row{padding:12px 14px 12px 16px}.row:hover,.rr:hover,.lr:hover{background:rgba(141,185,194,.045)}
+.t,.tm .sc,.goal .gsc{font-variant-numeric:tabular-nums}
+.skel i{border-radius:2px;background:var(--soft2);animation:none}
+.ph{box-shadow:none}.ph img{background:none}.ph.ring{box-shadow:0 0 0 1px var(--card),0 0 0 2px var(--c)}
+.lgd img,.poster .side .lgd{filter:none}
+.srch{backdrop-filter:none;background:rgba(5,8,9,.84)}.srch-in{border-radius:4px;box-shadow:none}
+.hch.tc .c.hl .bar i{box-shadow:none}
+@media(prefers-reduced-motion:reduce){.dot{animation:none}}
