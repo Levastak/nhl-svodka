@@ -32,10 +32,40 @@
 <header class="top">
   <div class="mast wrap">
     <a class="mark" href="#home" aria-label="NHL-STATS.RU — на главную">
-      <svg viewBox="0 0 44 44" aria-hidden="true"><rect x="3.5" y="3.5" width="37" height="37" rx="18.5" fill="none" stroke="currentColor"/><path d="M22 4v36M11 4v36M33 4v36" stroke="currentColor" stroke-opacity=".35"/><circle cx="22" cy="22" r="7" fill="none" stroke="currentColor" stroke-opacity=".68"/><circle cx="29" cy="16" r="2.4" fill="var(--signal)"/><path d="M25.5 19.5 23 22" stroke="var(--signal)" stroke-width="1.5"/></svg>
-      <span class="wordmark"><b>NHL<span class="wordmark-rule">—</span>STATS</b><small>.RU</small></span>
+      <svg class="brand-emblem" viewBox="0 0 88 88" role="img" aria-labelledby="brand-title">
+        <title id="brand-title">Знак NHL-STATS.RU: шайба, разметка зоны и траектория броска</title>
+        <defs>
+          <linearGradient id="rim" x1="18" y1="9" x2="68" y2="78" gradientUnits="userSpaceOnUse"><stop stop-color="#fff"/><stop offset=".18" stop-color="#c8d0d1"/><stop offset=".48" stop-color="#667277"/><stop offset=".72" stop-color="#e8ebE8"/><stop offset="1" stop-color="#697478"/></linearGradient>
+          <linearGradient id="face" x1="22" y1="17" x2="62" y2="68" gradientUnits="userSpaceOnUse"><stop stop-color="#384247"/><stop offset=".45" stop-color="#182126"/><stop offset="1" stop-color="#0b1115"/></linearGradient>
+          <linearGradient id="blue-enamel" x1="26" y1="14" x2="61" y2="70" gradientUnits="userSpaceOnUse"><stop stop-color="#b8d7dc"/><stop offset=".22" stop-color="#668c96"/><stop offset=".54" stop-color="#35535c"/><stop offset="1" stop-color="#1c3036"/></linearGradient>
+          <linearGradient id="red-mark" x1="44" y1="25" x2="44" y2="62" gradientUnits="userSpaceOnUse"><stop stop-color="#f0b4a1"/><stop offset="1" stop-color="#a34232"/></linearGradient>
+          <filter id="puck-shadow" x="2" y="4" width="84" height="84" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feGaussianBlur in="SourceAlpha" stdDeviation="2.3"/><feOffset dy="2.6"/><feComponentTransfer><feFuncA type="linear" slope=".55"/></feComponentTransfer><feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+          <clipPath id="puck-face"><circle cx="44" cy="40" r="31"/></clipPath>
+        </defs>
+        <g filter="url(#puck-shadow)">
+          <circle cx="44" cy="44" r="35.5" fill="#070b0e" stroke="#06090b" stroke-width="2"/>
+          <path d="M44 5.5A35.5 35.5 0 1 1 8.5 41" fill="none" stroke="url(#rim)" stroke-width="3"/>
+          <circle cx="44" cy="40" r="31.5" fill="url(#face)" stroke="#d8dedb" stroke-width="1.5"/>
+          <circle cx="44" cy="40" r="29" fill="none" stroke="#5d696e" stroke-width=".7"/>
+          <g clip-path="url(#puck-face)">
+            <path d="M44 8v64M25 10v60M63 10v60" stroke="url(#blue-enamel)" stroke-width="1.2" opacity=".8"/>
+            <circle cx="44" cy="40" r="10.5" fill="none" stroke="#c4d4d5" stroke-width="1.1" opacity=".8"/>
+            <circle cx="44" cy="40" r="2.1" fill="#dbe5e2"/>
+            <path d="M15 40h58M44 29.5v21" stroke="#99a9a9" stroke-width=".65" opacity=".6"/>
+            <path d="M23 59 36 48.5l7-2 12-15 8-6" fill="none" stroke="#080c0f" stroke-width="4.1" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M23 58 36 47.5l7-2 12-15 8-6" fill="none" stroke="url(#red-mark)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="63" cy="24" r="3.4" fill="#080c0f" stroke="#f1d2c7" stroke-width=".8"/>
+            <circle cx="63" cy="24" r="1.35" fill="#cf7058"/>
+            <path d="M22 15c12-7 32-8 45 3" fill="none" stroke="#fff" stroke-width="1" opacity=".43"/>
+          </g>
+          <path d="M18 61a32 32 0 0 0 50 8" fill="none" stroke="#070b0e" stroke-width="2"/>
+          <path d="M18 61a32 32 0 0 0 49 8" fill="none" stroke="#778287" stroke-width=".8"/>
+          <circle cx="44" cy="40" r="31" fill="none" stroke="#fff" stroke-width=".55" opacity=".35"/>
+        </g>
+      </svg>
+      <span class="wordmark"><b><span class="word-nhl">NHL</span><span class="wordmark-rule">/</span><span class="word-stats">STATS</span><span class="word-domain">.RU</span></b><em>ХОККЕЙ · ДАННЫЕ · КОНТЕКСТ</em></span>
     </a>
-    <div class="edition-note"><span>НЕЗАВИСИМОЕ ХОККЕЙНОЕ МЕДИА</span><span>ДАННЫЕ · ИГРА · КОНТЕКСТ</span></div>
+    <div class="edition-note"><span>НЕЗАВИСИМАЯ АНАЛИТИКА НХЛ</span><span>СЕЗОН 2026/27 · РЕДАКЦИЯ 01</span></div>
     <nav class="tnav" id="tnav" aria-label="Разделы"></nav>
     <button class="sbtn" id="sbtn" aria-label="Поиск игроков и команд"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 4.5 4.5"/></svg><span>Найти игрока</span><kbd>/</kbd></button>
     <div class="upd" id="upd"></div>

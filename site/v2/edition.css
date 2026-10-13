@@ -290,3 +290,88 @@ table.st td.heat-high,table.mt td.heat-high{background:#e9f0e8}
   .sbtn span,.sbtn kbd{display:none}
   .upd{min-width:78px;font-size:9px}
 }
+
+/* Фирменная система теста: шайба-скаут, словесный знак и навигация по рубрикам. */
+.wrap{max-width:1520px}
+.mark{gap:12px;align-items:center}
+.mark .brand-emblem{width:48px;height:48px;flex:none;overflow:visible}
+.wordmark{display:flex;flex-direction:column;align-items:flex-start;gap:5px;line-height:1}
+.wordmark b{display:flex;align-items:baseline;gap:5px;white-space:nowrap;font-family:var(--f-body);font-size:25px;font-weight:900;letter-spacing:-.065em}
+.mark .wordmark b .word-nhl{color:#f3f2ed}
+.wordmark-rule{color:#c47761;font:500 21px/1 Georgia,serif;padding:0 1px}
+.mark .wordmark b .word-stats{color:#f3f2ed;font-family:Georgia,"Times New Roman",serif;font-size:24px;font-weight:700;letter-spacing:-.045em}
+.mark .wordmark b .word-domain{align-self:flex-start;margin:2px 0 0 1px;color:#d6a18f;border-left:1px solid rgba(255,255,255,.28);padding-left:5px;font:700 9px/1 var(--f-mono);letter-spacing:.08em}
+.wordmark em{color:#aeb4b0;font:600 8px/1.2 var(--f-mono);font-style:normal;letter-spacing:.08em}
+.edition-note{font-size:9px;letter-spacing:.09em}
+.edition-note span:first-child{color:#ecebe5}
+
+@media(min-width:900px){
+  .top .mast{height:auto;min-height:0;display:grid;grid-template-columns:auto minmax(0,1fr) auto auto;grid-template-rows:68px 40px;column-gap:clamp(16px,2vw,30px);align-content:center}
+  .mark{grid-column:1;grid-row:1}
+  .edition-note{grid-column:2;grid-row:1;justify-self:start}
+  .sbtn{grid-column:3;grid-row:1;margin:0}
+  .upd{grid-column:4;grid-row:1;min-width:112px;margin:0}
+  .tnav{grid-column:1/-1;grid-row:2;display:flex;height:40px;gap:3px;align-items:stretch;border-top:1px solid rgba(255,255,255,.13)}
+  .tnav button{position:relative;height:100%;padding:0 15px;border:0;color:#afb2ae;font-size:12px;font-weight:650;letter-spacing:.035em;white-space:nowrap}
+  .tnav button:first-child{padding-left:5px}
+  .tnav button:hover{color:#fff;background:transparent}
+  .tnav button[aria-current="page"]{color:#fff;border:0}
+  .tnav button[aria-current="page"]::before{content:"";position:absolute;left:15px;right:15px;top:-1px;height:2px;background:#bd7059}
+  .tnav button:first-child[aria-current="page"]::before{left:5px}
+  .sbtn{height:34px;border-color:rgba(255,255,255,.2);padding-inline:10px}
+}
+@media(min-width:900px) and (max-width:1139px){
+  .top .mast{column-gap:14px}
+  .edition-note{display:none}
+  .tnav button{padding-inline:10px}
+  .tnav button[aria-current="page"]::before{left:10px;right:10px}
+  .sbtn{width:36px;padding:0;justify-content:center}
+  .sbtn span,.sbtn kbd{display:none}
+  .upd{min-width:86px;font-size:9px}
+}
+@media(max-width:899px){
+  .top .mast{height:70px;min-height:0;display:flex;gap:12px;padding-inline:18px}
+  .mark{gap:9px}
+  .mark .brand-emblem{width:43px;height:43px}
+  .edition-note{display:none}
+  .wordmark b{font-size:22px}
+  .wordmark em{font-size:7px}
+  .upd{margin-left:auto;min-width:0}
+  .sbtn{width:38px;min-width:38px;height:36px;margin-left:0;padding:0;display:flex;align-items:center;justify-content:center}
+  .sbtn span,.sbtn kbd{display:none}
+}
+@media(max-width:420px){
+  .top .mast{height:64px;gap:8px;padding-inline:13px}
+  .mark{gap:7px}
+  .mark .brand-emblem{width:38px;height:38px}
+  .wordmark{gap:4px}
+  .wordmark b{font-size:20px;gap:4px}
+  .wordmark-rule{font-size:18px}
+  .wordmark em{font-size:6.5px;letter-spacing:.055em}
+  .upd{font-size:9px}
+  .sbtn{width:33px;min-width:33px}
+}
+
+/* У главной есть дыхание на широком экране; узкие ноутбуки остаются в одну колонку. */
+main.wrap{padding-top:34px;padding-bottom:112px}
+.home{grid-template-columns:minmax(0,1fr);gap:38px}
+.home>.col,.home>aside{gap:36px}
+@media(min-width:980px) and (max-width:1159px){
+  .home{grid-template-columns:minmax(0,2.2fr) minmax(252px,.9fr);gap:28px}
+  .home>.col,.home>aside{gap:30px}
+}
+@media(min-width:1160px){
+  .home{grid-template-columns:minmax(0,1fr) minmax(296px,350px);gap:clamp(32px,3.2vw,52px)}
+  .home>.col,.home>aside{gap:34px}
+}
+@media(min-width:1440px){
+  .home{grid-template-columns:minmax(0,1fr) 360px;gap:56px}
+  .home>.col,.home>aside{gap:40px}
+  .lead:has(.cover){grid-template-columns:minmax(0,1.08fr) minmax(0,.92fr)}
+  .lead:has(.cover) .cover{min-height:340px}
+}
+@media(max-width:640px){
+  main.wrap{padding-top:21px;padding-bottom:100px}
+  .home{gap:28px}
+  .home>.col,.home>aside{gap:28px}
+}

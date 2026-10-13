@@ -183,7 +183,7 @@ function leaderRows(k,n=10){const S=(D.skaters||[]).filter(s=>s.gp>0);
 function lrow(r,i,v,sub){return `<div class="lr"><span class="n">${i+1}</span><span class="who">${photo(r.name,r.team,52)}<span class="nm2"><span>${plink(r.name,r.team)}${posTag(r.name,r.pos)}</span><small>${esc(sub||"")}</small></span></span><span class="v">${v}</span></div>`}
 function leadersW(){return `<section class="box"><div class="wg-h"><h3>Лидеры</h3><button class="lnk" data-go="lead">Все</button></div><div class="pills wg-pills">${LTABS.map(([k,l])=>`<button data-rlead="${k}" aria-pressed="${RAIL_LEAD===k}">${l}</button>`).join("")}</div>${leaderRows(RAIL_LEAD,6).map((r,i)=>lrow(r,i,r.v,`${EN[r.team]} · ${r.sub}`)).join("")}</section>`}
 function staleBanner(){const f=freshness();return f.old?`<div class="banner">Данные давно не обновлялись — последний сбор ${esc(kdt(D.generated))}. Счёт матчей обновляется сам, остальное подтянется со следующим сбором.</div>`:""}
-function vHome(){return `${staleBanner()}<div class="home"><div class="col">${posterSec()}${todaySec()}${nightSec()}${heroesSec()}${newsSec()}</div><aside class="col">${accW()}${standW()}${leadersW()}</aside></div>`}
+function vHome(){return `${staleBanner()}<div class="home"><div class="col">${posterSec()}${newsSec()}${todaySec()}${nightSec()}${heroesSec()}</div><aside class="col">${accW()}${standW()}${leadersW()}</aside></div>`}
 
 /* ===================== итоги ===================== */
 /* голы: время · клуб · автор (ассистенты ниже) · счёт после гола */
