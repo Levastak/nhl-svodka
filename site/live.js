@@ -4,7 +4,11 @@ const ESPN="https://site.api.espn.com/apis/site/v2/sports/hockey/nhl/";
 const EAB={NJ:"NJD",TB:"TBL",LA:"LAK",SJ:"SJS",UTAH:"UTA",MON:"MTL",WAS:"WSH",VEG:"VGK",CLB:"CBJ",NAS:"NSH",WIN:"WPG",ARI:"UTA"};
 const ab=x=>EAB[x]||x;
 const LIVE={},LSUM={},LSUMT={};let LIVE_OK=true,LTIMER=null,LAST_POLL=0;
-function liveOf(m){const L=LIVE[`${m.away}-${m.home}`];return L||null}
+function liveOf(m){const L=LIVE[`${m.away}-${m.home}`];if(L)return L;
+  /* табло ESPN уже не отдаёт матч — берём финал из архива сводки */
+  if(m&&m.start&&state(m.start)!=="pre"){const d=nhlDate(m.start);const g=(A.games||[]).find(x=>x.away===m.away&&x.home===m.home&&x.date===d);
+    if(g)return {state:"post",as:g.as,hs:g.hs,end:g.end&&g.end!=="REG"?g.end:"",fromArchive:true}}
+  return null}
 function perName(n){return n<=3?`${n}-й период`:n===4?"Овертайм":"Буллиты"}
 function perShort(n){return n<=3?`${n}-й`:n===4?"ОТ":"Б"}
 function parseEvent(ev){const c=(ev.competitions||[])[0];if(!c)return null;const st=ev.status||c.status||{};const ty=st.type||{};
