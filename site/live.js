@@ -68,9 +68,9 @@ function liveBlock(m,L){const S=LSUM[L.id];const title=L.state==="in"?`<span cla
   const top=S.players.filter(p=>p.pts>0).slice(0,3);
   return `<div class="blk"><h4 style="display:flex;align-items:center;gap:8px;margin-top:0">${title}</h4>
      ${S.goals.length?goalList(S.goals.map(g=>({per:g.per,time:g.clock,team:g.team,who:g.who,kind:g.kind,as:g.as})),m.away,m.home):'<p class="note">Голов пока нет.</p>'}</div>
-   <div class="blk">${rows.length?`<div class="sbars">${rows.map(([l,v])=>sbar(l,v,m.away,m.home,parse)).join("")}</div>`:""}
-     ${S.goalies.length?`<h4>Вратари</h4><ul class="ul">${S.goalies.map(g=>`<li><b>${esc(g.name)}</b> (${EN[g.team]||g.team}) — ${g.sv} из ${g.sa}${g.pct?`, ${esc(g.pct)}`:""}</li>`).join("")}</ul>`:""}
-     ${top.length?`<h4>Лучшие в матче</h4>${top.map(p=>`<div class="lr" style="padding:6px 0;border:0;grid-template-columns:minmax(0,1fr) auto"><span class="who">${photo(p.name,p.team,46)}<span class="nm2"><span>${plink(p.name,p.team)}${posTag(p.name)}</span><small>${EN[p.team]||p.team} · бросков ${p.sog}${p.toi?` · ${esc(p.toi)} на льду`:""}</small></span></span><span class="v">${gaHtml(p.g,p.a)}</span></div>`).join("")}`:""}</div>`}
+   <div class="blk">${rows.length?`<div class="sbars">${sbHead(m.away,m.home)}${rows.map(([l,v])=>sbar(l,v,m.away,m.home,parse)).join("")}</div>`:""}
+     ${S.goalies.length?`<h4>Вратари</h4><ul class="ul">${S.goalies.map(g=>`<li><b>${pref(g.name,g.team)}</b> (${EN[g.team]||g.team}) — ${g.sv} из ${g.sa}${g.pct?`, ${esc(g.pct)}`:""}</li>`).join("")}</ul>`:""}
+     ${top.length?`<h4>Лучшие в матче</h4>${top.map(p=>`<div class="lr" style="padding:6px 0;border:0;grid-template-columns:minmax(0,1fr) auto"><span class="who">${photo(findP(p.name,p.team)||p.name,p.team,46)}<span class="nm2"><span>${pref(p.name,p.team)}${posTag(findP(p.name,p.team)||p.name)}</span><small>${EN[p.team]||p.team} · бросков ${p.sog}${p.toi?` · ${esc(p.toi)} на льду`:""}</small></span></span><span class="v">${gaHtml(p.g,p.a)}</span></div>`).join("")}`:""}</div>`}
 function liveLoop(){clearInterval(LTIMER);LTIMER=setInterval(()=>poll(false),25000);poll(false)}
 document.addEventListener("visibilitychange",()=>{if(!document.hidden&&Date.now()-LAST_POLL>20000)poll(false)});
 
@@ -78,7 +78,7 @@ document.addEventListener("visibilitychange",()=>{if(!document.hidden&&Date.now(
 (async function(){
   const v="?v="+Math.floor(Date.now()/6e4);
   const h=(location.hash||"").slice(1);if(h==="model")VIEW="games";else if(VIEWS[h])VIEW=h;
-  try{const [d,m]=await Promise.all([fetch(DATA+"data.json"+v).then(r=>r.json()),fetch(DATA+"model.json"+v).then(r=>r.json()).catch(()=>({games:[],teams:{}}))]);D=d;M=m}
+  try{const [d,m,n]=await Promise.all([fetch(DATA+"data.json"+v).then(r=>r.json()),fetch(DATA+"model.json"+v).then(r=>r.json()).catch(()=>({games:[],teams:{}})),fetch(DATA+"names_ru.json"+v).then(r=>r.json()).catch(()=>({}))]);D=d;M=m;RUN=n||{}}
   catch(e){$("#app").innerHTML='<div class="box empty">Не удалось загрузить данные. Обнови страницу.</div>';return}
   for(const s of D.standings||[])if(s.logo)LOGO[s.abbr]=s.logo;
   buildTeams();render();

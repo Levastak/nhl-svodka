@@ -2,9 +2,11 @@
 "use strict";
 const DATA="./";
 /* названия: EN — интерфейс (английский), RU — прогнозы и тексты */
-const EN={ANA:"Anaheim",BOS:"Boston",BUF:"Buffalo",CGY:"Calgary",CAR:"Carolina",CHI:"Chicago",COL:"Colorado",CBJ:"Columbus",DAL:"Dallas",DET:"Detroit",EDM:"Edmonton",FLA:"Florida",LAK:"Los Angeles",MIN:"Minnesota",MTL:"Montréal",NSH:"Nashville",NJD:"New Jersey",NYI:"NY Islanders",NYR:"NY Rangers",OTT:"Ottawa",PHI:"Philadelphia",PIT:"Pittsburgh",SJS:"San Jose",SEA:"Seattle",STL:"St. Louis",TBL:"Tampa Bay",TOR:"Toronto",UTA:"Utah",VAN:"Vancouver",VGK:"Vegas",WSH:"Washington",WPG:"Winnipeg"};
+const EN_LAT={ANA:"Anaheim",BOS:"Boston",BUF:"Buffalo",CGY:"Calgary",CAR:"Carolina",CHI:"Chicago",COL:"Colorado",CBJ:"Columbus",DAL:"Dallas",DET:"Detroit",EDM:"Edmonton",FLA:"Florida",LAK:"Los Angeles",MIN:"Minnesota",MTL:"Montréal",NSH:"Nashville",NJD:"New Jersey",NYI:"NY Islanders",NYR:"NY Rangers",OTT:"Ottawa",PHI:"Philadelphia",PIT:"Pittsburgh",SJS:"San Jose",SEA:"Seattle",STL:"St. Louis",TBL:"Tampa Bay",TOR:"Toronto",UTA:"Utah",VAN:"Vancouver",VGK:"Vegas",WSH:"Washington",WPG:"Winnipeg"};
+const AB={"ANA": "АНА", "BOS": "БОС", "BUF": "БАФ", "CGY": "КАЛ", "CAR": "КАР", "CHI": "ЧИК", "COL": "КОЛ", "CBJ": "КЛМ", "DAL": "ДАЛ", "DET": "ДЕТ", "EDM": "ЭДМ", "FLA": "ФЛА", "LAK": "ЛАК", "MIN": "МИН", "MTL": "МОН", "NSH": "НЭШ", "NJD": "НДЖ", "NYI": "АЙЛ", "NYR": "РЕЙ", "OTT": "ОТТ", "PHI": "ФИЛ", "PIT": "ПИТ", "SJS": "САН", "SEA": "СИЭ", "STL": "СЕН", "TBL": "ТАМ", "TOR": "ТОР", "UTA": "ЮТА", "VAN": "ВАН", "VGK": "ВЕГ", "WSH": "ВАШ", "WPG": "ВИН"};
 const RU={ANA:"Анахайм",BOS:"Бостон",BUF:"Баффало",CGY:"Калгари",CAR:"Каролина",CHI:"Чикаго",COL:"Колорадо",CBJ:"Коламбус",DAL:"Даллас",DET:"Детройт",EDM:"Эдмонтон",FLA:"Флорида",LAK:"Лос-Анджелес",MIN:"Миннесота",MTL:"Монреаль",NSH:"Нэшвилл",NJD:"Нью-Джерси",NYI:"Айлендерс",NYR:"Рейнджерс",OTT:"Оттава",PHI:"Филадельфия",PIT:"Питтсбург",SJS:"Сан-Хосе",SEA:"Сиэтл",STL:"Сент-Луис",TBL:"Тампа",TOR:"Торонто",UTA:"Юта",VAN:"Ванкувер",VGK:"Вегас",WSH:"Вашингтон",WPG:"Виннипег"};
-const FULL={ANA:"Anaheim Ducks",BOS:"Boston Bruins",BUF:"Buffalo Sabres",CGY:"Calgary Flames",CAR:"Carolina Hurricanes",CHI:"Chicago Blackhawks",COL:"Colorado Avalanche",CBJ:"Columbus Blue Jackets",DAL:"Dallas Stars",DET:"Detroit Red Wings",EDM:"Edmonton Oilers",FLA:"Florida Panthers",LAK:"Los Angeles Kings",MIN:"Minnesota Wild",MTL:"Montréal Canadiens",NSH:"Nashville Predators",NJD:"New Jersey Devils",NYI:"New York Islanders",NYR:"New York Rangers",OTT:"Ottawa Senators",PHI:"Philadelphia Flyers",PIT:"Pittsburgh Penguins",SJS:"San Jose Sharks",SEA:"Seattle Kraken",STL:"St. Louis Blues",TBL:"Tampa Bay Lightning",TOR:"Toronto Maple Leafs",UTA:"Utah Mammoth",VAN:"Vancouver Canucks",VGK:"Vegas Golden Knights",WSH:"Washington Capitals",WPG:"Winnipeg Jets"};
+const EN=RU; /* интерфейс по-русски: короткие названия клубов */
+const FULL={"ANA": "Анахайм Дакс", "BOS": "Бостон Брюинз", "BUF": "Баффало Сейбрз", "CGY": "Калгари Флэймз", "CAR": "Каролина Харрикейнз", "CHI": "Чикаго Блэкхокс", "COL": "Колорадо Эвеланш", "CBJ": "Коламбус Блю Джекетс", "DAL": "Даллас Старз", "DET": "Детройт Ред Уингз", "EDM": "Эдмонтон Ойлерз", "FLA": "Флорида Пантерз", "LAK": "Лос-Анджелес Кингз", "MIN": "Миннесота Уайлд", "MTL": "Монреаль Канадиенс", "NSH": "Нэшвилл Предаторз", "NJD": "Нью-Джерси Девилз", "NYI": "Нью-Йорк Айлендерс", "NYR": "Нью-Йорк Рейнджерс", "OTT": "Оттава Сенаторз", "PHI": "Филадельфия Флайерз", "PIT": "Питтсбург Пингвинз", "SJS": "Сан-Хосе Шаркс", "SEA": "Сиэтл Кракен", "STL": "Сент-Луис Блюз", "TBL": "Тампа-Бэй Лайтнинг", "TOR": "Торонто Мейпл Лифс", "UTA": "Юта Мамонт", "VAN": "Ванкувер Кэнакс", "VGK": "Вегас Голден Найтс", "WSH": "Вашингтон Кэпиталз", "WPG": "Виннипег Джетс"};
 const COLORS={ANA:["#F47A38","#B9975B"],BOS:["#FFB81C","#000000"],BUF:["#003087","#FFB81C"],CGY:["#C8102E","#F1BE48"],CAR:["#CE1126","#000000"],CHI:["#CF0A2C","#000000"],COL:["#6F263D","#236192"],CBJ:["#002654","#CE1126"],DAL:["#006847","#8F8F8C"],DET:["#CE1126","#FFFFFF"],EDM:["#041E42","#FF4C00"],FLA:["#041E42","#C8102E"],LAK:["#111111","#A2AAAD"],MIN:["#154734","#A6192E"],MTL:["#AF1E2D","#192168"],NSH:["#FFB81C","#041E42"],NJD:["#CE1126","#000000"],NYI:["#00539B","#F47D30"],NYR:["#0038A8","#CE1126"],OTT:["#C52032","#C2912C"],PHI:["#F74902","#000000"],PIT:["#000000","#FCB514"],SJS:["#006D75","#EA7200"],SEA:["#001628","#99D9D9"],STL:["#002F87","#FCB514"],TBL:["#002868","#FFFFFF"],TOR:["#00205B","#FFFFFF"],UTA:["#6CACE4","#010101"],VAN:["#00205B","#00843D"],VGK:["#B4975A","#333F42"],WSH:["#C8102E","#041E42"],WPG:["#041E42","#004C97"]};
 const DIVS=[["Восток","Атлантический",["BOS","BUF","DET","FLA","MTL","OTT","TBL","TOR"]],["Восток","Столичный",["CAR","CBJ","NJD","NYI","NYR","PHI","PIT","WSH"]],["Запад","Центральный",["CHI","COL","DAL","MIN","NSH","STL","UTA","WPG"]],["Запад","Тихоокеанский",["ANA","CGY","EDM","LAK","SJS","SEA","VAN","VGK"]]];
 const ALL=DIVS.flatMap(d=>d[2]);
@@ -30,7 +32,7 @@ const NAV=[["home","Главная"],["games","Матчи"],["news","Новос�
 const MORE=[["teams","Команды","составы, звенья, календарь"],["lead","Лидеры","очки, голы, вратари, форма"],["power","Сила команд","рейтинг модели"],["inj","Травмы","кто пропускает матчи"],["rus","Россияне","все наши в НХЛ"]];
 
 /* ---------- состояние ---------- */
-let D=null,A={games:[]},M={games:[],horizon:[],teams:{}},ST=[];
+let D=null,A={games:[]},M={games:[],horizon:[],teams:{}},ST=[],RUN={};
 let VIEW="home",RES_DATE=null,TBL_MODE="div",JF="all",HERO_TAB="stars",RAIL_CONF="Восток",RAIL_LEAD="points",HOT_MODE="hot";
 const OPEN=new Set();
 const $=s=>document.querySelector(s);
@@ -64,7 +66,7 @@ const sideTeam=(m,s)=>s==="home"?m.home:m.away;
 const LG="https://assets.nhle.com/logos/nhl/svg/",MG="https://assets.nhle.com/mugs/nhl/";
 let LOGO={};
 function logoUrl(a,dark){let u=LOGO[a]||`${LG}${a}_light.svg`;if(dark)u=u.replace(/_light\.svg$/,"_dark.svg");return u}
-function puck(a){const c=COLORS[a]||["#556070","#8892A0"];const fg=lum(c[0])>.45?"#10131A":"#FFFFFF";return `<svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="19" fill="${c[0]}"/><circle cx="20" cy="20" r="16" fill="none" stroke="${c[1]}" stroke-width="1.6"/><text x="20" y="24.5" text-anchor="middle" font-family="Arial Narrow,Arial,sans-serif" font-weight="700" font-size="12" fill="${fg}">${esc(a)}</text></svg>`}
+function puck(a){const c=COLORS[a]||["#556070","#8892A0"];const fg=lum(c[0])>.45?"#10131A":"#FFFFFF";return `<svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="19" fill="${c[0]}"/><circle cx="20" cy="20" r="16" fill="none" stroke="${c[1]}" stroke-width="1.6"/><text x="20" y="24.5" text-anchor="middle" font-family="Arial Narrow,Arial,sans-serif" font-weight="700" font-size="12" fill="${fg}">${esc(AB[a]||a)}</text></svg>`}
 window._lgf=function(img){const s=img.closest(".lg");if(s)s.innerHTML=puck(s.dataset.a)};
 function logo(a,s=28){if(!COLORS[a])return `<span class="lg" style="--s:${s}px">${puck(a)}</span>`;
   return `<span class="lg" data-a="${a}" style="--s:${typeof s==="number"?s+"px":s}" aria-hidden="true"><picture><source srcset="${logoUrl(a,true)}" media="(prefers-color-scheme: dark)"><img src="${logoUrl(a)}" alt="" loading="lazy" decoding="async" onerror="_lgf(this)"></picture></span>`}
@@ -75,13 +77,26 @@ let HEADN=null;
 function headOf(name){const H=(D&&D.heads)||{};if(H[name])return H[name];if(!HEADN){HEADN={};for(const k in H)HEADN[nrm(k)]=H[k]}return HEADN[nrm(name)]||null}
 window._phf=function(img){const s=img.closest(".ph");if(s){img.remove()}};
 function photo(name,team,s=44,cls=""){const h=headOf(name);const c=tdeep(team);const n=pnum(name);
-  return `<span class="ph ${cls}" style="--s:${s}px;--c:${c}" aria-hidden="true" title="${esc(name)}"><span class="ph-t">${n?"#"+n:initials(name)}</span>${h?`<img src="${MG}${h}.png" alt="" loading="lazy" decoding="async" onerror="_phf(this)">`:""}</span>`}
+  return `<span class="ph ${cls}" style="--s:${s}px;--c:${c}" aria-hidden="true" title="${esc(pn(name))}"><span class="ph-t">${n?"#"+n:initials(name)}</span>${h?`<img src="${MG}${h}.png" alt="" loading="lazy" decoding="async" onerror="_phf(this)">`:""}</span>`}
 const POS1={C:"C",L:"LW",R:"RW",D:"D",G:"G",LW:"LW",RW:"RW",LD:"LD",RD:"RD"};
 function posOf(name,pos){const P=(D&&D.ppos)||{};return P[name]||POS1[pos]||(goalie(name)?"G":(skater(name)&&POS1[skater(name).pos]))||""}
-function posTag(name,pos){const p=posOf(name,pos);return p?`<span class="pp">${p}</span>`:""}
+const POSRU={C:"ЦН",LW:"ЛН",RW:"ПН",LD:"ЛЗ",RD:"ПЗ",D:"З",G:"ВР"};
+function posRu(name,pos){const p=posOf(name,pos);return POSRU[p]||p||""}
+function posTag(name,pos){const p=posRu(name,pos);return p?`<span class="pp">${p}</span>`:""}
 function gaHtml(g,a){g=+g||0;a=+a||0;if(!g&&!a)return "0";return `<span class="ga">${[g?`${g}<i>Г</i>`:"",a?`${a}<i>П</i>`:""].filter(Boolean).join(`<em>·</em>`)}</span>`}
 function lineHtml(line){const m=/^\s*(\d+)\s*\+\s*(\d+)\s*$/.exec(String(line||""));return m?gaHtml(m[1],m[2]):esc(line||"")}
-function plink(name,team,label){return `<button class="plink" data-player="${esc(name)}" data-pteam="${team}">${esc(label||name)}</button>`}
+/* имена по-русски: словарь names_ru.json; pn — полное имя, ps — фамилия; findP — полное латинское имя по фамилии и клубу */
+let RUNN=null;
+function pn(name){if(!name)return"";if(RUN[name])return RUN[name];if(!RUNN){RUNN={};for(const k in RUN)RUNN[nrm(k)]=RUN[k]}return RUNN[nrm(name)]||name}
+function ps(name){const r=pn(name);if(r===name&&!/[А-яЁё]/.test(r))return String(name).split(" ").slice(-1)[0];const p=r.split(" ");return p.length>1?p.slice(1).join(" "):r}
+function findP(s,team){if(!s)return null;s=String(s).trim();const all=[...((D&&D.skaters)||[]),...((D&&D.goalies)||[])];if(all.some(x=>x.name===s))return s;
+  const k=nrm(s),last=x=>nrm(String(x.name).split(" ").slice(-1)[0]),full=x=>nrm(x.name);
+  let c=all.filter(x=>(!team||x.team===team)&&(full(x)===k||last(x)===k||full(x).endsWith(k)));if(c.length===1)return c[0].name;
+  if(!c.length){const ks=Object.keys(RUN).filter(n=>nrm(n)===k||nrm(n.split(" ").slice(-1)[0])===k);if(ks.length===1)return ks[0]}
+  return c.length?c[0].name:null}
+function plink(name,team,label){return `<button class="plink" data-player="${esc(name)}" data-pteam="${team}">${esc(label||pn(name))}</button>`}
+/* фамилия или имя из протокола → кликабельное русское имя */
+function pref(s,team,short){const f=findP(s,team);const lab=f?(short?ps(f):pn(f)):(short?ps(s):pn(s));return f?plink(f,team,lab):esc(lab)}
 
 /* ---------- расчёты по архиву ---------- */
 let TEAMS={};

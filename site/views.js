@@ -13,13 +13,13 @@ const VIEWS={home:vHome,games:vGames,news:vNews,results:vResults,table:vTable,pi
 function render(){if(!D)return;renderChrome();const f=VIEWS[VIEW]||vHome;$("#app").innerHTML=f();afterRender()}
 function afterRender(){const dc=$(".dch");if(dc){const on=dc.querySelector('[aria-pressed="true"]');on&&on.scrollIntoView({inline:"center",block:"nearest"})}
   const ps=$("#psearch");if(ps)ps.oninput=()=>{const q=ps.value.trim().toLowerCase();const out=$("#psres");if(q.length<2){out.innerHTML="";return}
-    const hits=[...(D.skaters||[]),...(D.goalies||[]).map(g=>({...g,pos:"G"}))].filter(s=>s.name.toLowerCase().includes(q)).slice(0,8);
-    out.innerHTML=hits.length?`<div class="box">${hits.map((r,i)=>lrow(r,i,r.pos==="G"?(r.sv*100).toFixed(1)+"%":gaHtml(r.g,r.a),EN[r.team])).join("")}</div>`:'<p class="note">Никого не нашёл. Имена латиницей, например «Kaprizov».</p>'}}
+    const hits=[...(D.skaters||[]),...(D.goalies||[]).map(g=>({...g,pos:"G"}))].filter(s=>s.name.toLowerCase().includes(q)||pn(s.name).toLowerCase().includes(q)).slice(0,8);
+    out.innerHTML=hits.length?`<div class="box">${hits.map((r,i)=>lrow(r,i,r.pos==="G"?(r.sv*100).toFixed(1)+"%":gaHtml(r.g,r.a),EN[r.team])).join("")}</div>`:'<p class="note">Никого не нашёл. Попробуй фамилию, например «Капризов».</p>'}}
 
 /* лента счетов */
 function stripHtml(){if(!D)return"";const d=lastDate();const gs=A.games.filter(g=>g.date===d);
   const up=(D.upcoming||[]).filter(m=>!A.games.some(g=>g.away===m.away&&g.home===m.home&&g.date>=nhlDate(m.start)));
-  const row=(t,s,lo)=>`<div class="r ${lo?"lo":""}">${logo(t,30)}<span>${t}</span><b>${s}</b></div>`;
+  const row=(t,s,lo)=>`<div class="r ${lo?"lo":""}">${logo(t,30)}<span>${AB[t]||t}</span><b>${s}</b></div>`;
   const day=iso=>{const [a,b]=dShort(iso).split(" ");return `<span class="sday"><b>${esc(a)}</b>${esc(b||"")}</span>`};
   let h="";
   if(gs.length)h+=day(d)+gs.map(g=>{const aw=g.as>g.hs;return `<button class="sg" data-res="${g.date}" data-gid="${g.id}" aria-label="${EN[g.away]} ${g.as}, ${EN[g.home]} ${g.hs}"><small>Финал${endTag(g.end)?" · "+endTag(g.end):""}</small>${row(g.away,g.as,!aw)}${row(g.home,g.hs,aw)}</button>`}).join("");
@@ -77,7 +77,7 @@ function gDetail(m,p,L){const tp=m.total_pick;const pickT=m.pick_side?sideTeam(m
   const fac=(m.factors||[]).length?`<div class="blk"><h4>Почему так</h4><ul class="ul">${m.factors.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div>`:"";
   const gl=`<div class="blk"><h4>Вратари</h4><div class="kv">${[0,1].map(i=>{const t=i?m.home:m.away;const gp=p&&(i?p.goalie_home:p.goalie_away);const nm=String(ga[i]||"").split(" (")[0];
       return `<div><small>${EN[t]}</small><span style="display:flex;align-items:center;gap:8px">${nm&&nm!=="не объявлен"?photo(nm,t,44):""}<b style="font-family:var(--f-body);font-size:var(--fs-s)">${esc(ga[i]||"не объявлен")}</b></span>${gp&&gp.sv?`<small>${nz(gp.sv*100)}% отражённых · ${gp.gp} и.</small>`:""}</div>`}).join("")}</div>
-    ${(injA.length||injH.length)?`<h4>Без кого играют</h4><ul class="ul">${[[m.away,injA],[m.home,injH]].filter(x=>x[1].length).map(([t,l])=>`<li><b>${EN[t]}:</b> ${l.map(x=>esc(x.name)).join(", ")}</li>`).join("")}</ul>`:""}</div>`;
+    ${(injA.length||injH.length)?`<h4>Без кого играют</h4><ul class="ul">${[[m.away,injA],[m.home,injH]].filter(x=>x[1].length).map(([t,l])=>`<li><b>${EN[t]}:</b> ${l.map(x=>pref(x.name,t)).join(", ")}</li>`).join("")}</ul>`:""}</div>`;
   const lines=(m.odds||m.books||m.odds_1x)?`<div class="blk full"><h4>Линии</h4>${booksTable(m)}</div>`:"";
   const live=L&&L.state!=="pre"?liveBlock(m,L):"";
   return `<div class="x">${live}${pick}${live?"":vsBox(p,m)}${fac}${gl}${lines}${modelBlk(p,m)}<div class="acts full"><button class="btn" data-team="${m.away}">${logo(m.away,24)}${EN[m.away]}</button><button class="btn" data-team="${m.home}">${logo(m.home,24)}${EN[m.home]}</button></div></div>`}
@@ -105,7 +105,7 @@ function posterSec(){const mo=D.motd;if(!mo)return"";const m=(D.upcoming||[]).fi
   const p=modelOf(m);const L=liveOf(m);const [ca,ch]=pair(m.away,m.home);const pa=pB(p,"away"),ph=pB(p,"home");
   const lv=L&&L.state!=="pre";
   const side=(t,cls)=>`<button class="side ${cls}" data-team="${t}"><span class="lgw">${logo(t,64)}</span><span><b>${EN[t]}</b><small>${rec(t)}${TEAMS[t]&&TEAMS[t].gp?" · "+place(t)+"-е место":""}</small></span></button>`;
-  const pl=(t,cls)=>{const s=topScorer(t);return s?`<button class="pl ${cls}" data-player="${esc(s.name)}" data-pteam="${t}">${photo(s.name,t,44)}<span><b>${esc(s.name)} ${posTag(s.name,s.pos)}</b><small>${s.g} Г · ${s.a} П в сезоне · лидер ${EN[t]}</small></span></button>`:""};
+  const pl=(t,cls)=>{const s=topScorer(t);return s?`<button class="pl ${cls}" data-player="${esc(s.name)}" data-pteam="${t}">${photo(s.name,t,44)}<span><b>${esc(pn(s.name))} ${posTag(s.name,s.pos)}</b><small>${s.g} Г · ${s.a} П в сезоне · лидер ${EN[t]}</small></span></button>`:""};
   const mid=lv?`<b>${L.as}:${L.hs}</b><small>${L.state==="in"?'<span class="dot"></span> '+esc(L.short):"финал"}</small>`:`<b>${kt(m.start)}</b><small>${esc(rel(m.start)||"")}</small>`;
   return `<section class="poster" style="--a:${ca};--h:${ch};--ta:${tcol(m.away)};--th:${tcol(m.home)}"><div class="bg"><span class="wm a">${logo(m.away,420)}</span><span class="wm h">${logo(m.home,420)}</span></div><div class="in">
     <div class="lab"><span>Матч дня</span><span>${esc(dLong(D.upcoming_date))}</span><button class="go" data-go="games" data-open="${m.away}-${m.home}">Разбор матча →</button></div>
@@ -183,7 +183,7 @@ function goalList(items,away,home,so){if(!items.length)return"";let sa=0,sh=0;co
   const per={};items.forEach(x=>(per[x.per]=per[x.per]||[]).push(x));
   return `<div class="goals">${Object.keys(per).sort().map(k=>`<div class="per">${pn(+k)}</div>${per[k].map(x=>{if(+k!==5){x.team===away?sa++:sh++}
     const as=[...new Set(String(x.as||"").split(",").map(s=>s.trim()).filter(Boolean))];const kd=ST[x.kind]||(["бол.","мен.","п.в."].includes(x.kind)?x.kind:"");const left=x.team===away;
-    return `<div class="goal"><time>${+k===5?"Б":esc(x.time)}</time>${logo(x.team,28)}<span class="who"><b>${esc(x.who)}</b>${kd?`<em>${esc(kd)}</em>`:""}${as.length?`<small>${esc(as.join(", "))}</small>`:+k===5?"":`<small>без передач</small>`}</span>${+k===5?"":`<span class="gsc"><b class="${left?"on":""}">${sa}</b>:<b class="${left?"":"on"}">${sh}</b></span>`}</div>`}).join("")}`).join("")}</div>`}
+    return `<div class="goal"><time>${+k===5?"Б":esc(x.time)}</time>${logo(x.team,28)}<span class="who"><b>${pref(x.who,x.team)}</b>${kd?`<em>${esc(kd)}</em>`:""}${as.length?`<small>${as.map(a=>pref(a,x.team,true)).join(", ")}</small>`:+k===5?"":`<small>без передач</small>`}</span>${+k===5?"":`<span class="gsc"><b class="${left?"on":""}">${sa}</b>:<b class="${left?"":"on"}">${sh}</b></span>`}</div>`}).join("")}`).join("")}</div>`}
 function goalsBlock(g){if(!g.goals||!g.goals.length)return g.end==="SO"&&g.as+g.hs===1?'<p class="note">Голов в игре не было, победа в серии буллитов.</p>':"";
   return goalList(g.goals.map(x=>({per:x[3],time:x[4],team:x[1],who:x[0],kind:x[2],as:x[5]})),g.away,g.home)}
 /* статистика: значения по краям, полосы расходятся от центра; сторона и цвет команды постоянны */
@@ -191,14 +191,15 @@ function sbar(l,v,a,h,parse=x=>x){const x=+parse(v[0])||0,y=+parse(v[1])||0;cons
   let ca=tcol(a),ch=tcol(h);if(String(ca).toLowerCase()===String(ch).toLowerCase())ch=shade(ch,.6);
   const half=(z,o,c,side)=>`<span class="hf ${side}"><i style="width:${z/mx*100}%;background:${c};opacity:${z>=o?1:.45}"></i></span>`;
   return `<div class="sbar"><small>${l}</small><div class="ln"><b class="${x>y?"on":x<y?"lo":""}">${esc(v[0])}</b><span class="tr">${half(x,y,ca,"l")}${half(y,x,ch,"r")}</span><b class="${y>x?"on":y<x?"lo":""}">${esc(v[1])}</b></div></div>`}
+function sbHead(a,h){return `<div class="sbh"><span>${logo(a,24)}<b>${EN[a]}</b></span><span><b>${EN[h]}</b>${logo(h,24)}</span></div>`}
 function sbars(g){const s=g.stats;const parse=v=>typeof v==="string"?+v.split("/")[0]:v;
-  if(!s)return g.sog?`<div class="sbars">${sbar("Броски в створ",g.sog,g.away,g.home)}</div>`:"";
+  if(!s)return g.sog?`<div class="sbars">${sbHead(g.away,g.home)}${sbar("Броски в створ",g.sog,g.away,g.home)}</div>`:"";
   const rows=[["Броски в створ",s.sog],["Большинство",s.pp],["Вбрасывания, %",s.fo],["Силовые",s.hits],["Блок-шоты",s.blk],["Штрафные минуты",s.pim]].filter(r=>r[1]);
-  return `<div class="sbars">${rows.map(([l,v])=>sbar(l,v,g.away,g.home,parse)).join("")}</div>`}
+  return `<div class="sbars">${sbHead(g.away,g.home)}${rows.map(([l,v])=>sbar(l,v,g.away,g.home,parse)).join("")}</div>`}
 function resRow(g){const key="r"+g.id,open=OPEN.has(key);const aw=g.as>g.hs;
   return `<div class="mr" id="g${g.id}" style="--ca:${tcol(g.away)};--ch:${tcol(g.home)}"><button class="rr" data-tog="${key}" aria-expanded="${open}"><span class="s ${aw?"":"lo"}">${logo(g.away,52)}<span><b>${EN[g.away]}</b><small>${rec(g.away)}</small></span></span>
    <span class="score">${g.as}:${g.hs}<small>${endTag(g.end)?endLong(g.end):"финал"}</small></span><span class="s h ${aw?"lo":""}">${logo(g.home,52)}<span><b>${EN[g.home]}</b><small>${rec(g.home)}</small></span></span>${IC.chev}</button>
-   ${open?`<div class="x">${g.recap?`<p class="txt full">${esc(g.recap)}</p>`:""}<div class="blk">${goalsBlock(g)}</div><div class="blk">${sbars(g)}${g.stars&&g.stars.length?`<h4>Три звезды матча</h4><div class="acts">${g.stars.map((s,i)=>s&&s!=="—"?`<span class="chip gold">${"★".repeat(i+1)} ${esc(s)}</span>`:"").join("")}</div>`:""}</div>
+   ${open?`<div class="x">${g.recap?`<p class="txt full">${esc(g.recap)}</p>`:""}<div class="blk">${goalsBlock(g)}</div><div class="blk">${sbars(g)}${g.stars&&g.stars.length?`<h4>Три звезды матча</h4><div class="acts">${g.stars.map((s,i)=>{if(!s||s==="—")return"";const m=/^(.*)\s\((\w+)\)$/.exec(s);return `<span class="chip gold">${"★".repeat(i+1)} ${m?pref(m[1],m[2])+" · "+(AB[m[2]]||m[2]):esc(s)}</span>`}).join("")}</div>`:""}</div>
    <div class="acts full">${g.video?`<a class="btn" href="${esc(g.video)}" target="_blank" rel="noopener">${IC.play}Обзор матча</a>`:""}${g.gc?`<a class="btn" href="${esc(g.gc)}" target="_blank" rel="noopener">${IC.ext}Матч на NHL.com</a>`:""}<button class="btn" data-team="${g.away}">${logo(g.away,24)}${EN[g.away]}</button><button class="btn" data-team="${g.home}">${logo(g.home,24)}${EN[g.home]}</button></div></div>`:""}</div>`}
 function vResults(){const ds=dates();if(!ds.length)return `<div class="box empty">Архив пока пуст.</div>`;if(!RES_DATE||!ds.includes(RES_DATE))RES_DATE=ds[ds.length-1];const i=ds.indexOf(RES_DATE);
   const gs=A.games.filter(g=>g.date===RES_DATE);
@@ -264,7 +265,7 @@ function vPower(){const t=Object.entries(M.teams||{}).sort((a,b)=>b[1].power-a[1
   <div class="box">${t.map(([a,v],i)=>`<div class="pw"><span class="mute" style="font-weight:700">${i+1}</span><div style="display:flex;flex-direction:column;gap:6px;min-width:0"><button class="tm" data-team="${a}">${logo(a,34)}<b>${EN[a]}</b></button><div class="bars"><span class="bar2" style="--c:var(--blue)"><i style="--w:${v.att/mx*100}%"></i></span><span class="bar2" style="--c:var(--win)"><i style="--w:${(1/v.dfn)/mx*100}%"></i></span></div><small class="mute">голы ${v.gf_pg}–${v.ga_pg} · броски ${v.sf_pg}–${v.sa_pg} за игру</small></div><span class="v">${Math.round(v.power*100)}</span></div>`).join("")}</div>
   <p class="note">Индекс 100 — средняя команда лиги. Синяя полоса — атака, зелёная — оборона (длиннее — лучше). Индекс считается по всем матчам сезона: 70% веса — ожидаемые голы (xG MoneyPuck), 30% — реальные голы, с поправкой на соперников и на уровень прошлого сезона, которая слабеет с каждым матчем.</p></section></div>`}
 function vInj(){const rows=ALL.map(a=>[a,(((D.teams||{})[a]||{}).injuries||[])]).filter(x=>x[1].length);
-  return `<div class="col">${back()}<section class="sec"><div class="hd"><h1>Травмы<small>по данным Daily Faceoff</small></h1></div><div class="tgrid">${rows.map(([a,l])=>`<div class="box pad" style="display:flex;flex-direction:column;gap:10px"><button class="tm" data-team="${a}">${logo(a,40)}<b>${FULL[a]}</b></button><ul class="ul">${l.map(x=>`<li><b>${esc(x.name)}</b> · ${esc(x.status)}</li>`).join("")}</ul></div>`).join("")}</div>
+  return `<div class="col">${back()}<section class="sec"><div class="hd"><h1>Травмы<small>по данным Daily Faceoff</small></h1></div><div class="tgrid">${rows.map(([a,l])=>`<div class="box pad" style="display:flex;flex-direction:column;gap:10px"><button class="tm" data-team="${a}">${logo(a,40)}<b>${FULL[a]}</b></button><ul class="ul">${l.map(x=>`<li><b>${pref(x.name,a)}</b> · ${esc(x.status)}</li>`).join("")}</ul></div>`).join("")}</div>
   <p class="note">IR и LTIR — список травмированных, Out — точно не сыграет, DTD — решение принимают перед игрой.</p></section></div>`}
 function vRus(){const r=(D.russians||[]).map(x=>({...x,s:skater(x.name),g:goalie(x.name)}));const sk=r.filter(x=>!x.g).sort((a,b)=>((b.s||{}).pts||0)-((a.s||{}).pts||0)),gk=r.filter(x=>x.g);
   return `<div class="col">${back()}<section class="sec"><div class="hd"><h1>Россияне<small>${plural(r.length,"игрок","игрока","игроков")}</small></h1></div><div class="tgrid">
@@ -278,7 +279,7 @@ function specTeams(a){const off=(D.team_stats||{})[a];if(!off)return null;const 
   return {pp:off.pp_pct,pk:off.pk_pct,ppr:rank("pp_pct"),pkr:rank("pk_pct"),fo:off.fo_pct,sf:off.sf_pg,sa:off.sa_pg,gf:off.gf_pg,ga:off.ga_pg}}
 function teamSheet(a){const t=TEAMS[a],md=(M.teams||{})[a],r=(D.teams||{})[a]||{};const sp=specTeams(a);
   const nxt=(D.week||[]).filter(g=>(g.away===a||g.home===a)&&state(g.start)==="pre").slice(0,5);const last=(t.games||[]).slice(-8).reverse();
-  const ln=(k,arr)=>arr&&arr.length?`<div><span class="k">${k}</span>${arr.map(p=>`<button class="plink" data-player="${esc(p)}" data-pteam="${a}">${esc(p)}</button>`).join(" · ")}</div>`:"";
+  const ln=(k,arr)=>arr&&arr.length?`<div><span class="k">${k}</span>${arr.map(p=>`<button class="plink" data-player="${esc(p)}" data-pteam="${a}">${esc(pn(p))}</button>`).join(" · ")}</div>`:"";
   const rus=(D.russians||[]).filter(x=>x.team===a);const f=v=>v==null?"—":nz(v)+"%";
   openSheet(`<div class="sh-h" style="--c:${tdeep(a)}"><span class="wm">${logo(a,200)}</span><span class="lgw">${logo(a,58)}</span><div><h2>${esc(FULL[a])}</h2><small>${t.w}-${t.l}-${t.otl} · ${plural(t.pts,"очко","очка","очков")} · ${place(a)}-е место, ${esc(DIV_OF[a])} дивизион</small></div><button class="sh-x" data-close aria-label="Закрыть">×</button></div>
    <div class="sh-b">
@@ -287,20 +288,21 @@ function teamSheet(a){const t=TEAMS[a],md=(M.teams||{})[a],r=(D.teams||{})[a]||{
     ${nxt.length?`<div class="sec"><h4 class="sub">Ближайшие матчи</h4><div class="box">${nxt.map(g=>{const o=g.home===a?g.away:g.home;return `<div class="lr" style="grid-template-columns:minmax(0,1fr) auto"><span class="who">${logo(o,34)}<b>${EN[o]}</b><small class="mute">${g.home===a?"дома":"в гостях"}</small></span><span class="note">${esc(kdt(g.start))}</span></div>`}).join("")}</div></div>`:""}
     ${last.length?`<div class="sec"><h4 class="sub">Последние матчи</h4><div class="box">${last.map(g=>`<button class="lr" style="grid-template-columns:22px minmax(0,1fr) auto;width:100%" data-res="${g.date}" data-gid="${g.id}"><span class="fd"><i class="${g.r}">${g.r==="W"?"В":g.r==="O"?"О":"П"}</i></span><span class="who">${logo(g.opp,32)}<b>${EN[g.opp]}</b><small class="mute">${g.home?"дома":"в гостях"}</small></span><span><b>${g.gf}:${g.ga}</b>${g.end!=="REG"?" "+endTag(g.end):""} <span class="note">${esc(dShort(g.date))}</span></span></button>`).join("")}</div></div>`:""}
     ${r.forwards?`<div class="sec"><h4 class="sub">Звенья</h4><div class="lines">${(r.forwards||[]).map((l,i)=>ln(`${i+1}-е`,l)).join("")}${(r.defense||[]).map((l,i)=>ln(`З${i+1}`,l)).join("")}${ln("Вр",r.goalies)}${ln("ПП1",r.pp1)}${ln("ПП2",r.pp2)}</div><p class="note">Звенья по Daily Faceoff${r.updated?`, обновлено ${esc(dShort(r.updated.slice(0,10)))}`:""}.</p></div>`:""}
-    ${(r.injuries||[]).length?`<div class="sec"><h4 class="sub">Травмы</h4><ul class="ul">${r.injuries.map(x=>`<li><b>${esc(x.name)}</b> · ${esc(x.status)}</li>`).join("")}</ul></div>`:""}
-    ${rus.length?`<div class="sec"><h4 class="sub">Россияне</h4><div class="acts">${rus.map(x=>`<button class="btn" data-player="${esc(x.name)}" data-pteam="${a}">${photo(x.name,a,32)}${esc(x.name)}</button>`).join("")}</div></div>`:""}
+    ${(r.injuries||[]).length?`<div class="sec"><h4 class="sub">Травмы</h4><ul class="ul">${r.injuries.map(x=>`<li><b>${pref(x.name,a)}</b> · ${esc(x.status)}</li>`).join("")}</ul></div>`:""}
+    ${rus.length?`<div class="sec"><h4 class="sub">Россияне</h4><div class="acts">${rus.map(x=>`<button class="btn" data-player="${esc(x.name)}" data-pteam="${a}">${photo(x.name,a,32)}${esc(pn(x.name))}</button>`).join("")}</div></div>`:""}
    </div>`)}
 function playerGames(name,tm){const ln=name.split(" ").slice(1).join(" ")||name;const short=name.split(" ").pop();const out=[];
   for(const g of A.games.slice().sort((x,y)=>x.date<y.date?-1:1)){if(g.away!==tm&&g.home!==tm)continue;let G=0,As=0;for(const x of g.goals||[]){if(x[1]!==tm||x[3]===5)continue;if(x[0]===ln||x[0]===short)G++;if(String(x[5]||"").split(",").map(s=>s.trim()).some(s=>s===ln||s===short))As++}out.push({g,G,As})}return out}
 /* шапка игрока как в профиле НХЛ: цвет клуба → чёрный, фактура джерси, призрачный логотип, фото снизу */
-const CTRY={RUS:"Россия",CAN:"Канада",USA:"США",SWE:"Швеция",FIN:"Финляндия",CZE:"Чехия",SVK:"Словакия",DEU:"Германия",CHE:"Швейцария",AUT:"Австрия",DNK:"Дания",NOR:"Норвегия",LVA:"Латвия",BLR:"Беларусь",FRA:"Франция",GBR:"Великобритания",AUS:"Австралия",KAZ:"Казахстан",UKR:"Украина",SVN:"Словения",NLD:"Нидерланды",JPN:"Япония",POL:"Польша",ITA:"Италия",LTU:"Литва",EST:"Эстония",HUN:"Венгрия",KOR:"Корея",CHN:"Китай",BRA:"Бразилия",JAM:"Ямайка",NGA:"Нигерия",ZAF:"ЮАР"};
+const CTRY={RUS:["RU","РОС"],CAN:["CA","КАН"],USA:["US","США"],SWE:["SE","ШВЕ"],FIN:["FI","ФИН"],CZE:["CZ","ЧЕХ"],SVK:["SK","СЛК"],DEU:["DE","ГЕР"],CHE:["CH","ШВА"],AUT:["AT","АВС"],DNK:["DK","ДАН"],NOR:["NO","НОР"],LVA:["LV","ЛАТ"],BLR:["BY","БЛР"],FRA:["FR","ФРА"],GBR:["GB","ВБР"],AUS:["AU","АВЛ"],KAZ:["KZ","КАЗ"],UKR:["UA","УКР"],SVN:["SI","СЛО"],NLD:["NL","НИД"],JPN:["JP","ЯПО"],POL:["PL","ПОЛ"],ITA:["IT","ИТА"],LTU:["LT","ЛИТ"],EST:["EE","ЭСТ"],HUN:["HU","ВЕН"],KOR:["KR","КОР"],CHN:["CN","КИТ"],BRA:["BR","БРА"],JAM:["JM","ЯМА"],NGA:["NG","НИГ"],ZAF:["ZA","ЮАР"]};
+const flag=iso2=>iso2?String.fromCodePoint(...[...iso2].map(c=>127397+c.charCodeAt(0))):"";
 function bioOf(name){const B=(D&&D.bio)||{};if(B[name])return B[name];const k=Object.keys(B).find(x=>nrm(x)===nrm(name));return k?B[k]:null}
 function ageOf(d){if(!d)return null;const b=new Date(d),n=new Date();let a=n.getFullYear()-b.getFullYear();if(n<new Date(n.getFullYear(),b.getMonth(),b.getDate()))a--;return a}
-function playerHero(name,tm,s){const h=headOf(name),n=pnum(name,s&&s.pos),pos=posOf(name,s&&s.pos),bio=bioOf(name)||[];const parts=String(name).split(" ");const first=parts.slice(0,-1).join(" "),last=parts.slice(-1)[0];
-  const age=ageOf(bio[2]);const meta=[n?"#"+n:"",pos,age?plural(age,"год","года","лет"):"",bio[0]?bio[0]+" см":"",bio[1]?bio[1]+" кг":"",CTRY[bio[3]]||bio[3]||""].filter(Boolean);
+function playerHero(name,tm,s){const h=headOf(name),n=pnum(name,s&&s.pos),pos=posOf(name,s&&s.pos),bio=bioOf(name)||[];const parts=pn(name).split(" ");const first=parts.length>1?parts[0]:"",last=parts.length>1?parts.slice(1).join(" "):parts[0];const cc=CTRY[bio[3]];
+  const age=ageOf(bio[2]);const meta=[n?"#"+n:"",POSRU[pos]||pos,age?plural(age,"год","года","лет"):"",bio[0]?bio[0]+" см":"",bio[1]?bio[1]+" кг":""].filter(Boolean);
   return `<div class="ph-hero" style="--c:${tdeep(tm)};--c2:${tcol(tm)}"><span class="mesh"></span><img class="ghost" src="${esc(logoUrl(tm,true))}" alt="" aria-hidden="true">
    ${h?`<img class="cut" src="${MG}${esc(h)}.png" alt="" onerror="this.outerHTML='<span class=&quot;num&quot;>${n?"#"+n:""}</span>'">`:`<span class="num">${n?"#"+n:""}</span>`}
-   <div class="tx"><small class="fn">${esc(first)}</small><h2>${esc(last)}</h2><p>${meta.map(esc).join(" · ")}</p><button class="tm" data-team="${tm}">${esc(FULL[tm]||tm)}</button></div>
+   <div class="tx"><small class="fn">${esc(first)}</small><h2>${esc(last)}</h2><p>${meta.map(esc).join(" · ")}${cc||bio[3]?` · <span class="ctry"><span class="fl">${cc?flag(cc[0]):""}</span>${esc(cc?cc[1]:bio[3])}</span>`:""}</p><button class="tm" data-team="${tm}">${esc(FULL[tm]||tm)}</button></div>
    <img class="tlogo" src="${esc(logoUrl(tm,true))}" alt="${esc(FULL[tm]||tm)}"><button class="sh-x" data-close aria-label="Закрыть">×</button></div>`}
 function playerSheet(name,tm){const s=skater(name),gk=goalie(name);tm=tm||(s||gk||{}).team;const pg=gk?[]:playerGames(name,tm);const mx=Math.max(1,...pg.map(x=>x.G+x.As));
   const withPts=pg.filter(x=>x.G||x.As).reverse();const POS={C:"центральный нападающий",L:"левый нападающий",R:"правый нападающий",D:"защитник",G:"вратарь"};
@@ -319,7 +321,7 @@ function storyChart(ch){const it=ch.items||[];if(!it.length)return"";const mx=Ma
 function openArticle(k){const x=articles().find(a=>a.k===k);if(!x)return;const all=articles();const relA=all.filter(a=>a.k!==k&&(a.teams||[]).some(t=>(x.teams||[]).includes(t))).slice(0,3);const pls=playersOf(x);
   openSheet(`<article class="reader"><div style="position:relative">${coverHtml(x)}<button class="sh-x" data-close aria-label="Закрыть">×</button></div><div class="rb">
    ${metaHtml(x)}${x.kind==="story"?`<span class="rt">${readMin(x)} мин чтения</span>`:""}<h1>${esc(x.title)}</h1>${x.dek&&x.body[0]!==x.dek?`<p class="dek">${esc(x.dek)}</p>`:""}
-   ${(x.teams||[]).length||pls.length?`<div class="who">${(x.teams||[]).map(t=>`<button data-team="${t}">${logo(t,32)}${EN[t]}</button>`).join("")}${pls.map(([n,t])=>`<button data-player="${esc(n)}" data-pteam="${t}">${photo(n,t,38)}${esc(n)}</button>`).join("")}</div>`:""}
+   ${(x.teams||[]).length||pls.length?`<div class="who">${(x.teams||[]).map(t=>`<button data-team="${t}">${logo(t,32)}${EN[t]}</button>`).join("")}${pls.map(([n,t])=>`<button data-player="${esc(n)}" data-pteam="${t}">${photo(n,t,38)}${esc(pn(n))}</button>`).join("")}</div>`:""}
    ${x.facts&&x.facts.length?`<div class="facts">${x.facts.map(f=>`<div><b>${esc(f.v)}</b><small>${esc(f.l)}</small></div>`).join("")}</div>`:""}
    <div class="body">${x.body.map((p,i)=>bodyItem(p)+(x.chart&&i===(x.chart.after??1)?storyChart(x.chart):"")+((x.charts||[]).filter(c=>c.after===i).map(storyChart).join(""))).join("")}</div>
    ${x.image_link?`<p class="note">Фото: <a href="${esc(x.image_link)}" target="_blank" rel="noopener">${esc(x.image_src||"источник")}</a></p>`:""}
