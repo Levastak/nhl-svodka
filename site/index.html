@@ -565,6 +565,22 @@ table.st tbody tr:hover td{background:var(--soft);cursor:pointer}
 .vsb h4{margin:4px 0 0;font-size:var(--fs-xs);color:var(--mute)}.vsb h4:first-child{margin-top:0}
 .vsb p{margin:4px 0 0;font-size:var(--fs-s);color:var(--ink2)}.vsb p.df{color:var(--gold);font-weight:600}
 @media (max-width:640px){.pbr{grid-template-columns:50px auto minmax(0,1fr) auto;gap:8px}.ptot{padding-left:0}}
+/* шапка игрока */
+.ph-hero{position:relative;overflow:hidden;color:#fff;min-height:200px;display:flex;align-items:flex-end;gap:18px;padding:0 20px;isolation:isolate;
+  background:linear-gradient(180deg,var(--c) 0%,color-mix(in srgb,var(--c) 45%,#07080a) 60%,#07080a 100%)}
+.ph-hero::before{content:"";position:absolute;left:0;right:0;top:0;height:3px;background:var(--c2);z-index:2}
+.ph-hero .mesh{position:absolute;inset:0;z-index:-1;opacity:.55;background-image:radial-gradient(rgba(0,0,0,.45) 1.1px,transparent 1.6px);background-size:7px 9px;-webkit-mask-image:linear-gradient(180deg,#000 0%,rgba(0,0,0,.4) 70%,transparent 100%);mask-image:linear-gradient(180deg,#000 0%,rgba(0,0,0,.4) 70%,transparent 100%)}
+.ph-hero .ghost{position:absolute;z-index:-1;left:42%;top:50%;width:520px;height:520px;transform:translate(-50%,-50%) rotate(-6deg);object-fit:contain;opacity:.10;filter:grayscale(1) brightness(2.2) contrast(.8)}
+.ph-hero .cut{position:relative;height:190px;width:auto;flex:none;align-self:flex-end;margin-bottom:0;filter:drop-shadow(0 6px 18px rgba(0,0,0,.45))}
+.ph-hero .num{flex:none;align-self:center;font-family:var(--f-disp);font-size:72px;font-weight:800;opacity:.9;padding:0 10px}
+.ph-hero .tx{flex:1;min-width:0;padding:26px 0 24px;align-self:center}
+.ph-hero .fn{display:block;font-size:var(--fs-l,20px);font-weight:500;opacity:.95;line-height:1.1}
+.ph-hero h2{font-family:var(--f-body);font-weight:800;font-size:clamp(34px,6vw,56px);line-height:1;letter-spacing:-.01em;margin:2px 0 8px}
+.ph-hero p{margin:0;font-size:var(--fs-s);opacity:.9}
+.ph-hero .tm{margin-top:10px;font-size:var(--fs-xs);font-weight:700;color:#fff;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);padding:4px 10px;border-radius:999px}
+.ph-hero .tlogo{flex:none;align-self:center;width:110px;height:110px;object-fit:contain;margin-right:36px;filter:drop-shadow(0 6px 16px rgba(0,0,0,.35))}
+@media (max-width:640px){.ph-hero{min-height:160px;padding:0 14px;gap:10px}.ph-hero .cut{height:140px;margin-left:-8px}.ph-hero .tlogo{position:absolute;right:12px;top:52px;width:48px;height:48px;margin:0;opacity:.95}
+ .ph-hero h2{font-size:32px}.ph-hero .fn{font-size:16px}.ph-hero .tx{padding:44px 0 16px}.ph-hero .ghost{width:340px;height:340px;left:60%}}
 </style>
 </head>
 <body>

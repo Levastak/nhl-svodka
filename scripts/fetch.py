@@ -246,6 +246,9 @@ def leaders(skaters):
     return out
 
 
+BIO = {}   # имя → [рост см, вес кг, дата рождения, страна (ISO-3)] — заполняет rosters()
+
+
 def rosters():
     numbers, russians, seen, heads, ppos = {}, [], {}, {}, {}
     for t in TEAMS:
@@ -258,6 +261,7 @@ def rosters():
                 hs = str(p.get("headshot") or "")
                 if "/mugs/nhl/" in hs:
                     heads[nm] = hs.split("/mugs/nhl/")[1].rsplit(".", 1)[0]
+                BIO[nm] = [p.get("heightInCentimeters"), p.get("weightInKilograms"), p.get("birthDate"), p.get("birthCountry")]
                 pc, sc = p.get("positionCode"), p.get("shootsCatches")
                 ppos[nm] = {"L": "LW", "R": "RW", "C": "C", "G": "G"}.get(pc) or ("LD" if sc == "L" else "RD" if sc == "R" else "D")
                 num, pos = p.get("sweaterNumber"), p.get("positionCode")
@@ -557,6 +561,8 @@ def am():
     if len(ppos) > 500:
         data["ppos"] = ppos
         LOG["ok"].append("rosters")
+    if len(BIO) > 500:
+        data["bio"] = BIO
 
     teams = dict(data.get("teams") or {})
     for t in TEAMS:
@@ -846,6 +852,8 @@ if __name__ == "__main__":
         numbers, russians, heads, ppos = rosters()
         if len(ppos) > 500:
             d["numbers"], d["russians"], d["heads"], d["ppos"] = numbers, russians, heads, ppos
+        if len(BIO) > 500:
+            d["bio"] = BIO
             save(f"{SITE}/data.json", d)
         print(json.dumps(LOG, ensure_ascii=False))
         sys.exit(0)
