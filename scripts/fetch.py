@@ -767,6 +767,12 @@ def hist():
             if out:
                 save(f"{SITE}/hist/teams.json", out)
                 LOG["ok"].append("hist teams")
+        elif kind == "url" and arg:
+            name, _, url = arg.partition(" ")
+            j, _ = get(url.strip())
+            if j is not None:
+                save(f"{SITE}/hist/raw-{re.sub(r'[^a-z0-9_-]+', '-', name.lower())}.json", j)
+                LOG["ok"].append(f"hist url {name}")
         elif kind == "photos" and arg:
             q = urllib.parse.quote(arg)
             url = ("https://commons.wikimedia.org/w/api.php?action=query&format=json&generator=search"

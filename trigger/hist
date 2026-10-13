@@ -1,3 +1,7 @@
-# 2026-10-12T21:44:15
-photos Kirill Kaprizov
-photos Kaprizov Minnesota Wild
+# разведка: история команд и Кубки Стэнли
+url cup https://records.nhl.com/site/api/award-details?cayenneExp=trophyId=1&sort=seasonId&dir=DESC
+url trophy https://records.nhl.com/site/api/trophy
+url franchise https://api.nhle.com/stats/rest/en/franchise?sort=fullName&include=lastSeason.id&include=firstSeason.id
+url fseason https://records.nhl.com/site/api/franchise-season-results?cayenneExp=franchiseId=15&sort=seasonId&dir=DESC
+url fdetail https://records.nhl.com/site/api/franchise-detail?cayenneExp=mostRecentTeamId=12
+url plsum https://api.nhle.com/stats/rest/en/team/summary?isAggregate=false&isGame=false&limit=-1&cayenneExp=gameTypeId=3%20and%20seasonId%3E=20152016
