@@ -227,7 +227,44 @@ def espn_pick(pc):
             dec(close(a)), dec(close(h))]
 
 
-def espn_odds(games, sample):
+CORE = "https://sports.core.api.espn.com/v2/sports/hockey/leagues/nhl/events/{e}/competitions/{e}/odds?lang=en&region=us"
+
+
+def core_pick(it):
+    """Линия из раздела core: берём закрытие, если есть, иначе текущую/последнюю; открытие — отдельно."""
+    h, a = it.get("homeTeamOdds") or {}, it.get("awayTeamOdds") or {}
+    def ml(side, k):
+        x = side.get(k) or {}
+        return american((x.get("moneyLine") if isinstance(x, dict) else None))
+    def tot(k):
+        x = it.get(k) or {}
+        return x if isinstance(x, dict) else {}
+    cl = tot("close"); op = tot("open")
+    def num_(x):
+        try: return float(american(x) if isinstance(x, dict) else x)
+        except Exception: return None
+    ou = num_((cl.get("total") or {}).get("american") if isinstance(cl.get("total"), dict) else None) or it.get("overUnder")
+    return [(it.get("provider") or {}).get("name"),
+            dec(ml(a, "close") or american(a.get("moneyLine"))), dec(ml(h, "close") or american(h.get("moneyLine"))),
+            ou, dec(american(cl.get("over")) or american(it.get("overOdds"))), dec(american(cl.get("under")) or american(it.get("underOdds"))),
+            dec(ml(a, "open")), dec(ml(h, "open"))]
+
+
+def espn_core(eid, sample):
+    raw = fetch(CORE.format(e=eid))
+    js = json.loads(raw) if raw else {}
+    out = []
+    for it in js.get("items", [])[:6]:
+        if set(it) <= {"$ref"}:
+            r2 = fetch(it["$ref"].replace(".pvt", ".com").replace("http://", "https://"))
+            it = json.loads(r2) if r2 else {}
+        if it:
+            out.append(core_pick(it))
+            if len(sample) < 2: sample.append({k: it.get(k) for k in ("provider", "overUnder", "overOdds", "underOdds", "homeTeamOdds", "awayTeamOdds", "open", "close", "current")})
+    return out
+
+
+def espn_odds(games, sample, core=False):
     """Кэфы ESPN по матчам сезона: табло по дням → id события ESPN → summary (pickcenter)."""
     from concurrent.futures import ThreadPoolExecutor
     ev = {}
@@ -248,6 +285,11 @@ def espn_odds(games, sample):
         eid = ev.get((g[1], g[3]))
         if not eid:
             return g[0], None, None
+        if core:
+            try:
+                return g[0], espn_core(eid, sample), None
+            except Exception:
+                return g[0], None, None
         raw = fetch(f"{ESPN}/summary?event={eid}")
         try:
             pcs = (json.loads(raw) if raw else {}).get("pickcenter") or []
@@ -269,6 +311,7 @@ def main():
     ap.add_argument("--force", action="store_true")
     ap.add_argument("--skaters-from", type=int, default=2019, help="полевые нужны только с этого сезона (вратари — для истории сейвов — раньше)")
     ap.add_argument("--odds-from", type=int, default=2021, help="кэфы ESPN собирать с этого сезона")
+    ap.add_argument("--core-limit", type=int, default=60, help="раздел core: сколько матчей сезона (0 — все)")
     a = ap.parse_args()
     if "-" in a.seasons:
         s0, s1 = map(int, a.seasons.split("-")); seasons = list(range(s0, s1 + 1))
@@ -332,25 +375,47 @@ def main():
         r["odds"] = dict(espn_events=nev, games_with_lines=len(odds), moneyline_both=full, total_with_prices=tot, closing_moneyline=cls, providers=prov,
                          sample=[{k: x.get(k) for k in ("provider", "details", "overUnder", "overOdds", "underOdds", "homeTeamOdds", "awayTeamOdds")} for x in sample[:1]])
         log("  ", {k: v for k, v in r["odds"].items() if k != "sample"})
+    for s in seasons:
+        op = os.path.join(a.out, f"odds2_{s}.json.gz"); sp = os.path.join(a.out, f"season_{s}.json.gz")
+        full = os.path.exists(op) and json.load(gzip.open(op, "rt", encoding="utf-8")).get("limit") == 0
+        if s < a.odds_from or not os.path.exists(sp) or (full and s < cur and not a.force) or (os.path.exists(op) and a.core_limit and s < cur):
+            continue
+        games = json.load(gzip.open(sp, "rt", encoding="utf-8"))["games"]
+        if a.core_limit: games = games[::max(1, len(games) // a.core_limit)][:a.core_limit]
+        log(f"Кэфы ESPN core {s}-{(s + 1) % 100:02d}: {len(games)} матчей…")
+        sample = []
+        try:
+            odds, nev = espn_odds(games, sample, core=True)
+        except Exception as e:
+            log(f"  не вышло: {e}"); continue
+        with gzip.open(op, "wt", encoding="utf-8") as fh:
+            json.dump(dict(season=s, odds=odds, limit=a.core_limit), fh, separators=(",", ":"))
+        prov = {}
+        for v in odds.values():
+            for p in v: prov[p[0]] = prov.get(p[0], 0) + 1
+        report.setdefault(str(s), {})["odds_core"] = dict(games_with_lines=len(odds), providers=prov, sample=sample[:1])
+        log("  ", len(odds), prov)
     # проверка кэфов на «подглядывание»: линия до матча — маржа 2–8%, фаворит выигрывает ~60%, лог-лосс ~0,66;
     # кэфы по ходу/после матча — маржа странная и «угадывают» результат
     import math, statistics
-    for s in seasons:
-        op = os.path.join(a.out, f"odds_{s}.json.gz"); sp = os.path.join(a.out, f"season_{s}.json.gz")
+    for s, (fn, prov_) in ((s, x) for s in seasons for x in (("odds", None), ("odds2", None))):
+        op = os.path.join(a.out, f"{fn}_{s}.json.gz"); sp = os.path.join(a.out, f"season_{s}.json.gz")
         if not (os.path.exists(op) and os.path.exists(sp)): continue
         odds = json.load(gzip.open(op, "rt", encoding="utf-8"))["odds"]
         res = {str(g[0]): g for g in json.load(gzip.open(sp, "rt", encoding="utf-8"))["games"]}
-        ov, ll, fav, n, sane = [], 0.0, 0, 0, 0
-        for gid, picks in odds.items():
-            p_ = next((p for p in picks if p[1] and p[2]), None); g = res.get(str(gid))
+        names = sorted({p[0] for v in odds.values() for p in v if p[0]})
+        for pv in names:
+          ov, ll, fav, n, sane = [], 0.0, 0, 0, 0
+          for gid, picks in odds.items():
+            p_ = next((p for p in picks if p[0] == pv and p[1] and p[2]), None); g = res.get(str(gid))
             if not p_ or not g: continue
             ia, ih = 1 / p_[1], 1 / p_[2]; ov.append(ia + ih); ph = ih / (ia + ih); hw = g[5] > g[4]
             ll -= math.log(max(1e-9, ph if hw else 1 - ph)); fav += (ph >= .5) == hw; n += 1; sane += 1.0 <= ia + ih <= 1.10
-        if n:
-            report.setdefault(str(s), {}).setdefault("odds", {})["check"] = dict(
+          if n:
+            report.setdefault(str(s), {}).setdefault("odds_check", {})[f"{fn}:{pv}"] = c = dict(
                 games=n, overround_median=round(statistics.median(ov), 3), overround_sane_share=round(sane / n, 3),
                 favourite_won=round(fav / n, 3), logloss=round(ll / n, 4))
-            log(f"Проверка кэфов {s}:", report[str(s)]["odds"]["check"])
+            log(f"Проверка кэфов {s} {fn} {pv}:", c)
     json.dump(report, open(os.path.join(a.out, "report.json"), "w"), ensure_ascii=False, indent=1)
     if os.path.exists(tp): os.remove(tp)
 

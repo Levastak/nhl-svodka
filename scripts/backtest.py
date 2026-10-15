@@ -115,7 +115,7 @@ def build_prior(packs, s, fit):
 
 
 # ------------------------------------------------------------------ data.json на день
-def build_day(pk, day, gmode="actual"):
+def build_day(pk, day, gmode="actual", odds=None):
     games = pk["games"]
     before = [g for g in games if g[1] < day]; today = [g for g in games if g[1] == day]
     A = dict(games=[gdict(g) for g in before])
@@ -193,13 +193,32 @@ def build_day(pk, day, gmode="actual"):
             gl = [f"{p} (не подтв.)" if p else None for p in pr]
         else:
             gl = act
-        D["upcoming"].append(dict(id=g[0], date=day, away=g[2], home=g[3], goalies=gl))
+        u = dict(id=g[0], date=day, away=g[2], home=g[3], goalies=gl)
+        if odds and str(g[0]) in odds: u["odds"] = odds[str(g[0])]
+        D["upcoming"].append(u)
     return A, D, today, miss
 
 
 # ------------------------------------------------------------------ воркер
+def load_odds(data, s):
+    """Кэфы сезона (ESPN): по матчу берём первую нормальную линию — маржа 0–12%, обе стороны есть."""
+    out = {}
+    for fn in ("odds", "odds2"):
+        p = os.path.join(data, f"{fn}_{s}.json.gz")
+        if not os.path.exists(p): continue
+        for gid, picks in json.load(gzip.open(p, "rt", encoding="utf-8"))["odds"].items():
+            if gid in out: continue
+            for pv, a, h, t, o, u, *_ in picks:
+                if a and h and 1.0 <= 1 / a + 1 / h <= 1.12:
+                    x = dict(away=a, home=h, source=f"ESPN {pv}")
+                    if t and o and u and 1.0 <= 1 / o + 1 / u <= 1.15: x.update(total=float(t), over=o, under=u)
+                    out[gid] = x; break
+    return out
+
+
 def init(data, seasons, models, prior_dir):
     G["packs"] = {s: load_pack(data, s) for s in seasons}
+    G["odds"] = {s: load_odds(data, s) for s in seasons}
     G["models"] = []
     for i, (lab, p, opt) in enumerate(models):
         m = load_model(p, f"bt_model_{i}")
@@ -218,11 +237,12 @@ def run_day(task):
     for lab, mod, opt in G["models"]:
         gm = opt.get("goalies", "actual")
         if gm not in built:
-            A, D, today, miss = build_day(G["packs"][s], day, gm)
+            A, D, today, miss = build_day(G["packs"][s], day, gm, G["odds"].get(s))
             ap, dp = os.path.join(G["tmp"], f"a_{gm}.json"), os.path.join(G["tmp"], f"d_{gm}.json")
             json.dump(A, open(ap, "w")); json.dump(D, open(dp, "w"))
             built[gm] = (ap, dp, {g[0]: g for g in today}, miss)
         ap, dp, res, miss = built[gm]
+        res_odds = G["odds"].get(s) or {}
         buf = io.StringIO()
         with contextlib.redirect_stdout(buf):
             mod.main(ap, dp, pp)
@@ -239,6 +259,13 @@ def run_day(task):
                 if k in r: row[k] = r[k]
             if "missing" in r: row["missing"] = "|".join(r["missing"])
             row["goalie_away"] = (r.get("goalie_away") or {}).get("name"); row["goalie_home"] = (r.get("goalie_home") or {}).get("name")
+            if "mkt_home" in r:
+                v = r.get("verdict") or {}; b = v.get("bet") or {}; t = v.get("total") or {}
+                row.update(mkt_home=r["mkt_home"], level=v.get("level"), bet_kind=b.get("kind"), bet_side=b.get("side"), bet_odds=b.get("odds"),
+                           edge=v.get("edge"), vs_market=v.get("vs_market"), total_side=t.get("side"), total_value=t.get("value"),
+                           mkt_over=r.get("mkt_over"), edge_over=r.get("edge_over"))
+                o = res_odds.get(str(r["id"])) or {}
+                row.update(odds_home=o.get("home"), odds_away=o.get("away"), odds_total=o.get("total"), odds_over=o.get("over"), odds_under=o.get("under"), odds_src=o.get("source"))
             out.append(row)
     return out
 
@@ -282,6 +309,43 @@ def metrics(rows):
                             for b, v in sorted(bins.items())])
     if "incomplete" in rows[0]: res["incomplete_share"] = round(sum(bool(r.get("incomplete")) for r in rows) / n, 4)
     return res
+
+
+def market(rows):
+    """Модель против рынка и ставки по реальным кэфам (ставка 1 на каждый сигнал)."""
+    R = [r for r in rows if r.get("mkt_home") is not None]
+    if not R: return None
+    n = len(R); hw = lambda r: r["h_goals"] > r["a_goals"]
+    lm = sum(-math.log(max(1e-9, r["p_home"] if hw(r) else 1 - r["p_home"])) for r in R) / n
+    lk = sum(-math.log(max(1e-9, r["mkt_home"] if hw(r) else 1 - r["mkt_home"])) for r in R) / n
+    bl = [0.6 * r["mkt_home"] + 0.4 * r["p_home"] for r in R]
+    lb = sum(-math.log(max(1e-9, b if hw(r) else 1 - b)) for b, r in zip(bl, R)) / n
+    vm = [r for r in R if r.get("vs_market")]
+    def bets(sel, side_of, odds_of, won_of):
+        k = w = 0; pnl = 0.0
+        for r in sel:
+            o = odds_of(r)
+            if not o: continue
+            res = won_of(r)
+            if res is None: continue          # возврат
+            k += 1; w += res; pnl += (o - 1) if res else -1
+        return dict(bets=k, won=w, profit=round(pnl, 2), roi=round(pnl / k, 4) if k else None)
+    win = lambda r: (r["bet_side"] == "home") == hw(r)
+    oo = lambda r: r["odds_home"] if r["bet_side"] == "home" else r["odds_away"]
+    def tot_res(r):
+        g = r["h_goals"] + r["a_goals"]; L = r["odds_total"]
+        if g == L: return None
+        return (g > L) == (r["total_value"] == "over")
+    tov = lambda r: r["odds_over"] if r["total_value"] == "over" else r["odds_under"]
+    return dict(games=n, logloss_model=round(lm, 4), logloss_market=round(lk, 4), logloss_blend60=round(lb, 4),
+                accuracy_model=round(sum((r["p_home"] >= .5) == hw(r) for r in R) / n, 4),
+                accuracy_market=round(sum((r["mkt_home"] >= .5) == hw(r) for r in R) / n, 4),
+                vs_market=dict(games=len(vm), model_right=round(sum((r["p_home"] >= .5) == hw(r) for r in vm) / max(1, len(vm)), 4)),
+                bets_bet=bets([r for r in R if r.get("level") == "bet" and r.get("bet_kind") == "win"], None, oo, win),
+                bets_lean=bets([r for r in R if r.get("level") == "lean" and r.get("bet_kind") == "win"], None, oo, win),
+                bets_all_model_fav=bets([dict(r, bet_side="home" if r["p_home"] >= .5 else "away") for r in R], None, oo, win),
+                totals_value=bets([r for r in R if r.get("total_value") and r.get("odds_total") is not None], None, tov, tot_res),
+                by_source=sorted({r.get("odds_src", "") for r in R}))
 
 
 def paired(rows_a, rows_b, key):
@@ -363,6 +427,19 @@ def report_md(summ, labels, base):
         for lab in gm:
             m = summ["models"][lab]["goalie_miss"]
             L.append(f"- {lab}: {m['games']} матчей, угадано {m['accuracy']:.1%}, лог-лосс {m['logloss']:.4f}, тотал 5,5 {m['totals']['5.5']['logloss']:.4f}")
+    mk = [l for l in labels if summ["models"][l].get("market")]
+    if mk:
+        L += ["", "## Против рынка (кэфы ESPN) и ставки по реальным кэфам, ставка 1 на сигнал", ""]
+        for lab in mk:
+            m = summ["models"][lab]["market"]
+            def b(x): return f"{x['bets']} ставок, выиграно {x['won']}, итог {x['profit']:+.1f} ({x['roi']:+.1%})" if x["bets"] else "ставок нет"
+            L += [f"- **{lab}**: {m['games']} матчей с кэфами; лог-лосс модель {m['logloss_model']:.4f}, рынок {m['logloss_market']:.4f}, смесь 60/40 {m['logloss_blend60']:.4f}; "
+                  f"угадано модель {m['accuracy_model']:.1%}, рынок {m['accuracy_market']:.1%}",
+                  f"  - против рынка: {m['vs_market']['games']} матчей, модель права в {m['vs_market']['model_right']:.1%}",
+                  f"  - «ставка» (перевес 5%+): {b(m['bets_bet'])}; «склоняюсь» (3–5%): {b(m['bets_lean'])}",
+                  f"  - всегда на фаворита модели: {b(m['bets_all_model_fav'])}; выгодный тотал: {b(m['totals_value'])}"]
+            for sn, x in summ["models"][lab]["market_by_season"].items():
+                if x: L.append(f"  - {sn}: {x['games']} матчей; лог-лосс модель {x['logloss_model']:.4f} / рынок {x['logloss_market']:.4f}; «ставка»: {b(x['bets_bet'])}")
     L += ["", "## Овертайм", ""]
     for lab in labels:
         m = summ["models"][lab]["all"]
@@ -438,6 +515,7 @@ def main():
         rs = by[lab]
         summ["models"][lab] = dict(path=os.path.relpath(p, ROOT), options=opt, all=metrics(rs),
                                    goalie_miss=metrics([r for r in rs if r.get("proj_miss") == 1]) if any("proj_miss" in r for r in rs) else None,
+                                   market=market(rs), market_by_season={sname[s]: market([r for r in rs if r["season"] == s]) for s in seasons},
                                    by_season={sname[s]: metrics([r for r in rs if r["season"] == s]) for s in seasons})
         summ["site_check"][lab] = site_check(rs, ROOT)
     base = labels[0]

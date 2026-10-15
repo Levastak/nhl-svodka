@@ -31,7 +31,7 @@ jobs:
         run: |
           python3 - <<'EOF' >> "$GITHUB_OUTPUT"
           import re
-          label, seasons, models = "latest", "2021-2025", []
+          label, seasons, models, data_args = "latest", "2021-2025", [], ""
           for ln in open("backtest/run.txt", encoding="utf-8"):
               ln = ln.split("#")[0].strip()
               if ":" not in ln: continue
@@ -39,8 +39,10 @@ jobs:
               if k == "label": label = re.sub(r"[^A-Za-z0-9._-]", "-", v) or "latest"
               elif k == "seasons": seasons = v
               elif k == "model": models.append(v)
+              elif k == "data": data_args = v
           print(f"label={label}")
           print(f"seasons={seasons}")
+          print(f"data_args={data_args}")
           import shlex
           print("models=" + " ".join("--model " + shlex.quote(m) for m in models or ["v4.2=scripts/model.py"]))
           EOF
@@ -57,7 +59,7 @@ jobs:
         run: |
           set -o pipefail
           mkdir -p "backtest/results/${{ steps.cfg.outputs.label }}"
-          python3 scripts/backtest_data.py --out bt-data --seasons 2016-2026 2>&1 | tee "backtest/results/${{ steps.cfg.outputs.label }}/data.log"
+          python3 scripts/backtest_data.py --out bt-data --seasons 2016-2026 ${{ steps.cfg.outputs.data_args }} 2>&1 | tee "backtest/results/${{ steps.cfg.outputs.label }}/data.log"
           cp bt-data/report.json "backtest/results/${{ steps.cfg.outputs.label }}/data_report.json"
 
       - name: Сохранить данные в кеш
