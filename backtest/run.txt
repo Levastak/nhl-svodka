@@ -1,9 +1,15 @@
 # Запуск бэктеста: правка этого файла и пуш в main запускает .github/workflows/backtest.yml.
 # Результаты — backtest/results/<label>/ (report.md, summary.json, preds_<версия>.csv.gz).
 # Первая модель — база, с ней сравниваются остальные на одних и тех же матчах.
-label: v42-vs-v43
+# Формат версии: метка=путь?ПАРАМЕТР=значение&goalies=projected (projected — вратарь не подтверждён, берётся ожидаемый)
+label: p3-ot-goals-goalies
 seasons: 2021-2025
-model: v4.2=scripts/model.py
-model: v4.3=backtest/candidates/model_v43.py
-
-# перезапуск: 2026-10-15T17:48:18Z
+model: v4.3=scripts/model.py
+model: reg=backtest/candidates/model_v44.py?REG_FIT=1
+model: reg-tie1.25=backtest/candidates/model_v44.py?REG_FIT=1&TIE_K=1.25
+model: reg-tie1.45=backtest/candidates/model_v44.py?REG_FIT=1&TIE_K=1.45
+model: ot-k0.30=scripts/model.py?OT_K=0.30
+model: proj=scripts/model.py?goalies=projected
+model: mix0=backtest/candidates/model_v44.py?G_MIX=1&G_PROJ=0&goalies=projected
+model: mix50=backtest/candidates/model_v44.py?G_MIX=1&G_PROJ=0.5&goalies=projected
+model: mix75=backtest/candidates/model_v44.py?G_MIX=1&G_PROJ=0.75&goalies=projected
