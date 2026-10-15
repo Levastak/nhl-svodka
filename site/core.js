@@ -163,7 +163,7 @@ function modelWhy(m,p){const out=[];const ra=p.rating_away,rh=p.rating_home;cons
 
 /* ---------- журнал ---------- */
 function pickLabel(j){const t=j.type||"win";
-  if(t==="win")return j.side?RU[sideTeam(j,j.side)]:esc(j.pick);
+  if(t==="win"||t==="sure")return j.side?RU[sideTeam(j,j.side)]:esc(j.pick);
   if(t==="total")return `${(j.side==="over")?"Больше":"Меньше"} ${j.line}`;
   if(t==="express")return (j.legs||[]).map(l=>l.side?RU[sideTeam(l,l.side)]:l.pick).join(" + ");
   return esc(j.pick||"")}

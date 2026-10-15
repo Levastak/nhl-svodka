@@ -40,7 +40,7 @@ function liveTouch(){poll(true)}
 function legLive(away,home,side){const L=LIVE[`${away}-${home}`];if(!L||L.state==="pre")return null;const fin=L.state==="post";
   const w=L.as===L.hs?null:(L.as>L.hs?"away":"home");if(!w)return {r:null,fin,txt:"ничья"};return {r:w===side?"hit":"miss",fin}}
 function liveRes(j){if(j.result)return null;const t=j.type||"win";
-  if(t==="win")return legLive(j.away,j.home,j.side);
+  if(t==="win"||t==="sure")return legLive(j.away,j.home,j.side);
   if(t==="total"){const L=LIVE[`${j.away}-${j.home}`];if(!L||L.state==="pre")return null;const tot=L.as+L.hs,line=+j.line,fin=L.state==="post";
     if(tot>line)return {r:j.side==="over"?"hit":"miss",fin:true};
     if(fin)return {r:tot===line?"void":(j.side==="under"?"hit":"miss"),fin};

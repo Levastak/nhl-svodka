@@ -235,6 +235,38 @@ def journal_add(data, u, g, date):
         J.append(j)
 
 
+def sure_journal(data, model, evening=False):
+    """«Уверенный фаворит» (model.py п. 17): запись до матча, ставка — победа с ОТ на команду модели.
+    Утром — новые сигналы; вечером (поздняя линия) — новые записываются, у записанных обновляется кэф,
+    пропавшие снимаются (result=void, cancelled). Начавшиеся и сыгранные матчи не трогаются."""
+    M = {g["id"]: g for g in model.get("games", [])}
+    J = data.setdefault("journal", [])
+    date = data.get("upcoming_date"); n = 0
+    for u in data.get("upcoming", []):
+        g = M.get(u["id"])
+        if not g or started(u):
+            continue
+        s = (g.get("verdict") or {}).get("sure"); o = u.get("odds") or {}
+        cur = next((j for j in J if j.get("type") == "sure" and j.get("date") == date and j.get("away") == u["away"]
+                    and j.get("home") == u["home"]), None)
+        if cur and cur.get("result") is not None and not cur.get("cancelled"):
+            continue
+        if s:
+            rec = dict(pick=u[s["side"]], side=s["side"], odds=o.get(s["side"]) or s.get("odds"), p=s["p"], mkt=s["mkt"], edge=s["edge"])
+            if not cur:
+                J.append(dict(date=date, type="sure", away=u["away"], home=u["home"], src="Линия 1", result=None, score=None, **rec)); n += 1
+            else:
+                if cur.get("cancelled"):
+                    cur.pop("cancelled", None); cur["result"] = None
+                if cur.get("side") != s["side"]:
+                    cur.update(pick_am=cur.get("pick"), side_am=cur.get("side"), changed=True)
+                cur.update(rec); n += 1
+                if evening: cur["odds_late"], cur["final"] = rec["odds"], True
+        elif cur and evening and cur.get("result") is None:
+            cur.update(result="void", cancelled=True, final=True)
+    return n
+
+
 def express(data, M, games):
     legs = []
     for u in games:
@@ -346,6 +378,7 @@ def final(data, model):
             if new and not any(j.get("date") == date and j.get("type") == "express" for j in data.get("journal", [])):
                 data["journal"].append(dict(date=date, type="express", away=None, home=None, pick=" + ".join(l["pick"] for l in new["legs"]),
                                             legs=new["legs"], odds=new["odds"], src="Линия 1", result=None, score=None))
+    sure_journal(data, model, evening=True)
     data["final"] = dict(t=iso(), changed=changed, auto=True)
     return len(pending), len(changed)
 

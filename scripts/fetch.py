@@ -515,7 +515,7 @@ def grade_journal(journal, archive):
         if not g:
             continue
         j["score"] = sc(g)
-        if t == "win":
+        if t in ("win", "sure"):
             j["result"] = "hit" if win(j, g) else "miss"
         elif t == "total":
             tot = g["as"] + g["hs"]
@@ -657,6 +657,7 @@ def am():
     save(f"{SITE}/archive.json", archive)
     save(f"{SITE}/data.json", data)
     run_model()
+    sure_signals(data)
     data["fetch"] = dict(mode="am", t=iso(), ok=LOG["ok"], fail=LOG["fail"])
     save(f"{SITE}/data.json", data)
 
@@ -727,6 +728,17 @@ def pm():
     auto_texts(data, evening=True)
     data["fetch"] = dict(mode="pm", t=iso(), ok=LOG["ok"], fail=LOG["fail"])
     save(f"{SITE}/data.json", data)
+
+
+def sure_signals(data, evening=False):
+    """Сигнал «уверенный фаворит» в журнал (scripts/texts.py → sure_journal): утром записать, вечером уточнить или снять."""
+    try:
+        sys.path.insert(0, os.path.join(ROOT, "scripts"))
+        import texts
+        n = texts.sure_journal(data, load(f"{SITE}/model.json", {}), evening=evening)
+        LOG["ok"].append(f"уверенный фаворит: {n}")
+    except Exception as e:
+        LOG["fail"].append(f"уверенный фаворит: {e}")
 
 
 def auto_texts(data, evening=False):

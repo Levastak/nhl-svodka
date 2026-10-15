@@ -121,6 +121,11 @@
    заявленный), доля ничьих TIE_K 1,25 и 1,45 (1,35 лучше), OT_K 0,30 (в пределах шума).
    Цифры бэктеста в model.json берутся из воспроизводимого прогона backtest/results/<BT_LABEL>/summary.json
    (scripts/backtest.py), а не вписаны в код.
+17. Сигнал «уверенный фаворит» (verdict.sure, 15.10.2026): модель даёт команде 65%+ и это на 3+ п.п. выше рынка
+   (линия без маржи). Бэктест backtest/results/market (6560 матчей, кэфы ESPN): 1008 ставок на победу с ОТ, итог +4,2%,
+   в плюсе все 5 сезонов (+9/+3/+1/+6/+3%). Те же фавориты без перевеса над рынком — −2,8%, все фавориты рынка 60–75%
+   подряд — −2,3%. Правило выбрано из ~20 зон по истории, поэтому с 16.10.2026 ведётся отдельный счёт вперёд в журнале.
+   Вероятности не меняет.
 """
 import json, math, os, sys, datetime
 from collections import defaultdict
@@ -156,6 +161,8 @@ SV_K = 1000        # «виртуальные» броски среднего у
 SV_LAST_W = 0.7    # вес бросков прошлого сезона
 SV_ROOKIE = 0.890  # уровень вратаря без истории
 VALUE_EDGE = 0.05
+SURE_P = 0.65      # «уверенный фаворит» (п. 17): модель не ниже 65%…
+SURE_EDGE = 0.03   # …и выше рынка на 3+ п.п.
 SOFT_EDGE = 0.03   # российская контора: кэф выше честного минимум на 3%
 INJ_STATUSES = ("out", "ir", "ltir")
 INJ_FOR = 0.3      # −голов своей команды на единицу личного xG за матч отсутствующего (п. 5)
@@ -434,6 +441,9 @@ def main(ap, dp, pp, gp_=None):
         elif edge >= 0.03 or (sb and sb["ev"] >= 0.03):
             level = "lean"
         v.update(level=level, edge_side=es, edge=round(edge, 3), fatigue=fat)
+        for sd in ("home", "away"):
+            if r[f"p_{sd}"] >= SURE_P and r[f"p_{sd}"] - r[f"mkt_{sd}"] >= SURE_EDGE:
+                v["sure"] = dict(side=sd, p=r[f"p_{sd}"], mkt=r[f"mkt_{sd}"], edge=round(r[f"p_{sd}"] - r[f"mkt_{sd}"], 3), odds=odds.get(sd))
         if level != "pass":
             if edge >= 0.03 or (fat and edge >= 0.02):
                 v["bet"] = dict(kind="win", side=es, odds=odds.get(es), p_model=r[f"p_{es}"], p_mkt=r[f"mkt_{es}"], src=odds.get("source", "Pinnacle"))
