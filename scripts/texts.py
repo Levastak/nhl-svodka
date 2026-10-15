@@ -197,6 +197,10 @@ def model_paras(u, g):
         extra.append("хозяевам с тихоокеанского побережья добавлена небольшая прибавка")
     if extra:
         p1 += " " + "; ".join(extra).capitalize() + "."
+    lf = "home" if g["lam_home"] > g["lam_away"] else "away"
+    if lf != fav and abs(g.get("shares_adj") or 0) >= 0.05:
+        p1 += (f" По ожидаемым голам чуть впереди {q(u[lf])}, но поправка на игру в равных составах "
+               f"(доли бросков и опасных моментов 5 на 5) переворачивает оценку.")
     p1 += f" Итог — {q(u[fav])}, {pct(side_p(g, fav))}."
     tv = v["total"]
     word = "больше" if tv["side"] == "over" else "меньше"
