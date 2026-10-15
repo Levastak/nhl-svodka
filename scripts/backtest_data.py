@@ -193,12 +193,82 @@ def mp_players(kind, season, tmp):
     return rows
 
 
+# ------------------------------------------------------------------ кэфы: публичный API ESPN
+ESPN = "https://site.api.espn.com/apis/site/v2/sports/hockey/nhl"
+ESPN_CODES = {"TB": "TBL", "NJ": "NJD", "LA": "LAK", "SJ": "SJS", "UTAH": "UTA", "WSH": "WSH", "MON": "MTL", "NAS": "NSH"}
+
+
+def american(x):
+    """Американский кэф из того, что отдаёт ESPN (число, строка «+125», словарь с american/value)."""
+    if isinstance(x, dict):
+        for k in ("american", "alternateDisplayValue", "value", "odds"):
+            if x.get(k) not in (None, ""):
+                return american(x[k])
+        return None
+    try:
+        v = float(str(x).replace("+", "").strip())
+        return v if abs(v) >= 100 else None
+    except Exception:
+        return None
+
+
+def dec(a):
+    return None if a is None else round(1 + a / 100 if a > 0 else 1 + 100 / abs(a), 3)
+
+
+def espn_pick(pc):
+    """Одна линия из pickcenter: [провайдер, П с ОТ гости, хозяева, тотал, больше, меньше, закрытие гости, хозяева]."""
+    h, a = pc.get("homeTeamOdds") or {}, pc.get("awayTeamOdds") or {}
+    def close(side):
+        c = side.get("close") or {}
+        return american(c.get("moneyLine")) if isinstance(c, dict) else None
+    return [(pc.get("provider") or {}).get("name"), dec(american(a.get("moneyLine"))), dec(american(h.get("moneyLine"))),
+            pc.get("overUnder"), dec(american(pc.get("overOdds"))), dec(american(pc.get("underOdds"))),
+            dec(close(a)), dec(close(h))]
+
+
+def espn_odds(games, sample):
+    """Кэфы ESPN по матчам сезона: табло по дням → id события ESPN → summary (pickcenter)."""
+    from concurrent.futures import ThreadPoolExecutor
+    ev = {}
+    for d in sorted({g[1] for g in games}):
+        raw = fetch(f"{ESPN}/scoreboard?dates={d.replace('-', '')}")
+        js = json.loads(raw) if raw else {}
+        for e in js.get("events", []):
+            comp = (e.get("competitions") or [{}])[0]
+            side = {c.get("homeAway"): c for c in comp.get("competitors", [])}
+            try:
+                hc = side["home"]["team"]["abbreviation"]
+            except Exception:
+                continue
+            ev[(d, ESPN_CODES.get(hc, hc))] = e["id"]
+        time.sleep(0.2)
+
+    def one(g):
+        eid = ev.get((g[1], g[3]))
+        if not eid:
+            return g[0], None, None
+        raw = fetch(f"{ESPN}/summary?event={eid}")
+        try:
+            pcs = (json.loads(raw) if raw else {}).get("pickcenter") or []
+        except Exception:
+            pcs = []
+        return g[0], [espn_pick(pc) for pc in pcs], (pcs[0] if pcs else None)
+    out = {}
+    with ThreadPoolExecutor(6) as ex:
+        for gid, picks, raw in ex.map(one, games):
+            if picks: out[gid] = picks
+            if raw and len(sample) < 2: sample.append(raw)
+    return out, len(ev)
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--out", default="bt-data")
     ap.add_argument("--seasons", default="2016-2026", help="год начала сезона, диапазон или список через запятую")
     ap.add_argument("--force", action="store_true")
     ap.add_argument("--skaters-from", type=int, default=2019, help="полевые нужны только с этого сезона (вратари — для истории сейвов — раньше)")
+    ap.add_argument("--odds-from", type=int, default=2021, help="кэфы ESPN собирать с этого сезона")
     a = ap.parse_args()
     if "-" in a.seasons:
         s0, s1 = map(int, a.seasons.split("-")); seasons = list(range(s0, s1 + 1))
@@ -208,13 +278,12 @@ def main():
     today = dt.date.today(); cur = today.year if today.month >= 9 else today.year - 1
     todo = [s for s in seasons if a.force or s >= cur or not os.path.exists(os.path.join(a.out, f"season_{s}.json.gz"))]
     report = json.load(open(os.path.join(a.out, "report.json"))) if os.path.exists(os.path.join(a.out, "report.json")) else {}
-    if not todo:
-        log("Все сезоны уже собраны."); return
-    log("Собираю сезоны:", todo)
     tp = os.path.join(tmp, "all_teams.csv")
-    log("MoneyPuck: команды по матчам (один большой файл)…")
-    fetch(TEAMS_URL, tp)
-    teams = mp_teams(tp, set(todo))
+    if todo:
+        log("Собираю сезоны:", todo)
+        log("MoneyPuck: команды по матчам (один большой файл)…")
+        fetch(TEAMS_URL, tp)
+        teams = mp_teams(tp, set(todo))
     for s in todo:
         log(f"Сезон {s}-{(s + 1) % 100:02d}: результаты НХЛ…")
         games = nhl_games(s)
@@ -239,6 +308,30 @@ def main():
         for k in ("goalies", "skaters"):
             p = os.path.join(tmp, f"{k}_{s}.zip")   # общий архив 2008–2024 оставляем до конца
             if os.path.exists(p): os.remove(p)
+    # кэфы ESPN (отдельные файлы: собираются один раз, текущий сезон — заново)
+    for s in seasons:
+        op = os.path.join(a.out, f"odds_{s}.json.gz"); sp = os.path.join(a.out, f"season_{s}.json.gz")
+        if s < a.odds_from or not os.path.exists(sp) or (os.path.exists(op) and s < cur and not a.force):
+            continue
+        games = json.load(gzip.open(sp, "rt", encoding="utf-8"))["games"]
+        log(f"Кэфы ESPN {s}-{(s + 1) % 100:02d}: {len(games)} матчей…")
+        sample = []
+        try:
+            odds, nev = espn_odds(games, sample)
+        except Exception as e:
+            log(f"  не вышло: {e}"); continue
+        with gzip.open(op, "wt", encoding="utf-8") as fh:
+            json.dump(dict(season=s, odds=odds), fh, separators=(",", ":"))
+        prov = {}
+        for v in odds.values():
+            for p in v: prov[p[0]] = prov.get(p[0], 0) + 1
+        full = sum(1 for v in odds.values() if any(p[1] and p[2] for p in v))
+        tot = sum(1 for v in odds.values() if any(p[3] and p[4] and p[5] for p in v))
+        cls = sum(1 for v in odds.values() if any(p[6] and p[7] for p in v))
+        r = report.setdefault(str(s), {})
+        r["odds"] = dict(espn_events=nev, games_with_lines=len(odds), moneyline_both=full, total_with_prices=tot, closing_moneyline=cls, providers=prov,
+                         sample=[{k: x.get(k) for k in ("provider", "details", "overUnder", "overOdds", "underOdds", "homeTeamOdds", "awayTeamOdds")} for x in sample[:1]])
+        log("  ", {k: v for k, v in r["odds"].items() if k != "sample"})
     json.dump(report, open(os.path.join(a.out, "report.json"), "w"), ensure_ascii=False, indent=1)
     if os.path.exists(tp): os.remove(tp)
 

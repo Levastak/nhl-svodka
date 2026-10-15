@@ -3,10 +3,6 @@
 # Первая модель — база, с ней сравниваются остальные на одних и тех же матчах.
 # Формат версии: метка=путь?ПАРАМЕТР=значение&goalies=projected (projected — вратарь не подтверждён, берётся ожидаемый)
 # Прогон с меткой версии (v4.4) — эталон: его цифры модель показывает в model.json (backtest).
-label: v4.4
+label: odds-probe
 seasons: 2021-2025
 model: v4.4=scripts/model.py
-model: xgnorm=backtest/candidates/model_v45.py?XG_NORM=1
-model: tot0.985=backtest/candidates/model_v45.py?TOT_SCALE=0.985
-model: tot0.97=backtest/candidates/model_v45.py?TOT_SCALE=0.97
-model: xgnorm-tot0.985=backtest/candidates/model_v45.py?XG_NORM=1&TOT_SCALE=0.985
