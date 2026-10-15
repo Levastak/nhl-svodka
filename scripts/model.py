@@ -113,8 +113,16 @@
    или с ненайденным травмированным). Прогноз победителя и тотал не меняются. Бэктест scripts/backtest.py,
    6560 матчей 2021–2026: три исхода основного времени — лог-лосс 1,0369 → 1,0322 (лучше во всех 5 сезонах),
    фаворит в основное время: ждали 46,2% → 48,8%, было 48,4%.
+16. Версия 4.4 (15.10.2026, аудит 14.10). Сила команд учится по голам основного времени: гол в ОТ и победный
+   буллит из счёта убираются (раньше только буллит). Гол в ОТ и так добавляется при ничьей в основное время
+   (тотал, exp_total), и в обучении он учитывался дважды — модель завышала голы. Бэктест (6560 матчей): тоталы
+   5,5 и 6,5 точнее (лог-лосс −0,0004 ± 0,0002), ожидаемых голов 6,39 → 6,34 при факте 6,24; победитель без
+   изменений. Там же проверено и НЕ используется: смесь вратарей при неподтверждённом стартовом (хуже, чем
+   заявленный), доля ничьих TIE_K 1,25 и 1,45 (1,35 лучше), OT_K 0,30 (в пределах шума).
+   Цифры бэктеста в model.json берутся из воспроизводимого прогона backtest/results/<BT_LABEL>/summary.json
+   (scripts/backtest.py), а не вписаны в код.
 """
-import json, math, sys, datetime
+import json, math, os, sys, datetime
 from collections import defaultdict
 
 KEEP = 0.65        # доля прошлогоднего отличия от среднего
@@ -157,6 +165,7 @@ TOP_N = 6          # ключевые = топ-6 своей команды по 
 D_TOI_K = 0.012    # защитник из топ-4 по времени: ±голов за каждую минуту сверх D_TOI_BASE
 D_TOI_BASE = 16.0
 PRIOR_GP = 20      # прошлые сезоны весят не больше 20 матчей
+BT_LABEL = "v4.4"  # прогон бэктеста этой версии: backtest/results/<BT_LABEL>/summary.json
 
 
 def pois(k, l):
@@ -188,7 +197,7 @@ def fit(games, prior, today, prior_xg=None, txg=None):
     rows = []
     for g in games:
         hs, as_ = g["hs"], g["as"]
-        if g.get("end") == "SO":
+        if g.get("end") in ("SO", "OT"):   # v4.4: только основное время (гол в ОТ добавляется при ничьей)
             if hs > as_: hs -= 1
             else: as_ -= 1
         h, a = g["home"], g["away"]
@@ -228,6 +237,20 @@ def split_reg(ph, tie, q):
     (OT_HOME + OT_K × сырой перевес). Основное время подгоняется так, чтобы phr + tie × q = ph точно."""
     phr = min(1 - tie, max(0.0, ph - tie * q))
     return phr, 1 - tie - phr, q
+
+
+def backtest_summary():
+    """Цифры из воспроизводимого бэктеста (scripts/backtest.py), если прогон этой версии есть в репозитории."""
+    p = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "backtest", "results", BT_LABEL, "summary.json")
+    try:
+        s = json.load(open(p, encoding="utf-8")); lab = next(iter(s["models"])); m = s["models"][lab]
+        a = m["all"]
+        return dict(source=f"backtest/results/{BT_LABEL}", generated=s.get("generated"), seasons=s.get("seasons"), games=a["games"],
+                    accuracy=a["accuracy"], logloss=a["logloss"], reg3_logloss=a["reg3_logloss"],
+                    totals_logloss={k: v["logloss"] for k, v in a["totals"].items()},
+                    by_season={k: dict(accuracy=v["accuracy"], logloss=v["logloss"]) for k, v in m["by_season"].items()})
+    except Exception:
+        return None
 
 
 def main(ap, dp, pp, gp_=None):
@@ -593,9 +616,9 @@ def main(ap, dp, pp, gp_=None):
                         sf_pg=round(t["sf"] / max(t["sgp"], 1), 1), sa_pg=round(t["sa"] / max(t["sgp"], 1), 1),
                         ppg=t["ppg"], ppga=t["ppga"], att=round(math.exp(att[k]), 3), dfn=round(math.exp(dfn[k]), 3),
                         power=round(math.exp(att[k] - dfn[k]), 3))
-    json.dump(dict(version=4.3, xg_used=bool(D.get("team_xg")), generated=datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%MZ"),
+    json.dump(dict(version=4.4, xg_used=bool(D.get("team_xg")), generated=datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%MZ"),
                    league=dict(goals_pg=round(math.exp(mu), 3), home_adv=round(math.exp(ha) ** 2 - 1, 3), sv=round(sv_lg, 4), games=len(games)),
-                   backtest=dict(seasons="2021-22…2025-26", games=6560, accuracy_v4=[0.641, 0.611, 0.617, 0.601, 0.551], accuracy_v3=[0.631, 0.616, 0.600, 0.594, 0.553], logloss_v4=0.6596, logloss_v3=0.6631),
+                   backtest=backtest_summary(),
                    games=out, horizon=horizon, teams=teams, unmatched={k: sorted(set(v)) for k, v in unmatched.items()}), sys.stdout, ensure_ascii=False, indent=1)
 
 

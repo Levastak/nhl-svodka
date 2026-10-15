@@ -235,7 +235,7 @@ def run_day(task):
             if r["id"] in miss: row["proj_miss"] = miss[r["id"]]
             for k in ("p_home", "p_away", "p_home_reg", "p_away_reg", "p_ot", "p_ot_home", "lam_home", "lam_away",
                       "exp_total", "p_over", "line", "shares_adj", "b2b_home", "b2b_away", "inj_adj_home", "inj_adj_away",
-                      "p_home_reg_raw", "p_ot_home_raw", "incomplete"):
+                      "p_home_reg_raw", "p_ot_home_raw", "incomplete", "tot_scale"):
                 if k in r: row[k] = r[k]
             if "missing" in r: row["missing"] = "|".join(r["missing"])
             row["goalie_away"] = (r.get("goalie_away") or {}).get("name"); row["goalie_home"] = (r.get("goalie_home") or {}).get("name")
@@ -269,7 +269,7 @@ def metrics(rows):
         pf = max(ph, 1 - ph); b = min(19, int(pf * 20)); bins[b][0] += 1; bins[b][1] += pf; bins[b][2] += (ph >= 0.5) == hw
         tg = r["h_goals"] + r["a_goals"]
         for L in tot:
-            po = p_over(r["lam_home"], r["lam_away"], L); o = tg > L
+            k_ = float(r.get("tot_scale") or 1); po = p_over(r["lam_home"] * k_, r["lam_away"] * k_, L); o = tg > L
             tot[L][0] -= math.log(max(1e-9, po if o else 1 - po)); tot[L][1] += (po >= 0.5) == o; tot[L][2] += po; tot[L][3] += o
     res = dict(games=n, accuracy=round(acc / n, 4), logloss=round(ll / n, 4), brier=round(br / n, 4),
                reg3_logloss=round(ll3 / n, 4), reg3_brier=round(br3 / n, 4),
@@ -305,7 +305,7 @@ def ll_reg3(r):
 
 
 def ll_tot(r, L):
-    po = p_over(r["lam_home"], r["lam_away"], L)
+    k_ = float(r.get("tot_scale") or 1); po = p_over(r["lam_home"] * k_, r["lam_away"] * k_, L)
     return -math.log(max(1e-9, po if r["h_goals"] + r["a_goals"] > L else 1 - po))
 
 

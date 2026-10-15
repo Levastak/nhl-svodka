@@ -2,17 +2,11 @@
 # Результаты — backtest/results/<label>/ (report.md, summary.json, preds_<версия>.csv.gz).
 # Первая модель — база, с ней сравниваются остальные на одних и тех же матчах.
 # Формат версии: метка=путь?ПАРАМЕТР=значение&goalies=projected (projected — вратарь не подтверждён, берётся ожидаемый)
-label: p3-ot-goals-goalies
+# Прогон с меткой версии (v4.4) — эталон: его цифры модель показывает в model.json (backtest).
+label: v4.4
 seasons: 2021-2025
-model: v4.3=scripts/model.py
-model: reg=backtest/candidates/model_v44.py?REG_FIT=1
-model: reg-tie1.25=backtest/candidates/model_v44.py?REG_FIT=1&TIE_K=1.25
-model: reg-tie1.45=backtest/candidates/model_v44.py?REG_FIT=1&TIE_K=1.45
-model: ot-k0.30=scripts/model.py?OT_K=0.30
-model: proj=scripts/model.py?goalies=projected
-model: mix0=backtest/candidates/model_v44.py?G_MIX=1&G_PROJ=0&goalies=projected
-model: mix50=backtest/candidates/model_v44.py?G_MIX=1&G_PROJ=0.5&goalies=projected
-model: mix75=backtest/candidates/model_v44.py?G_MIX=1&G_PROJ=0.75&goalies=projected
-
-# перезапуск: 2026-10-15T18:17:22Z
-# перезапуск: 2026-10-15T18:26:11Z
+model: v4.4=scripts/model.py
+model: xgnorm=backtest/candidates/model_v45.py?XG_NORM=1
+model: tot0.985=backtest/candidates/model_v45.py?TOT_SCALE=0.985
+model: tot0.97=backtest/candidates/model_v45.py?TOT_SCALE=0.97
+model: xgnorm-tot0.985=backtest/candidates/model_v45.py?XG_NORM=1&TOT_SCALE=0.985
