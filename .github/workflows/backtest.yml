@@ -41,7 +41,8 @@ jobs:
               elif k == "model": models.append(v)
           print(f"label={label}")
           print(f"seasons={seasons}")
-          print("models=" + " ".join(f"--model {m}" for m in models or ["v4.2=scripts/model.py"]))
+          import shlex
+          print("models=" + " ".join("--model " + shlex.quote(m) for m in models or ["v4.2=scripts/model.py"]))
           EOF
           cat "$GITHUB_OUTPUT"
 
