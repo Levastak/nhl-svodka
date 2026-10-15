@@ -105,6 +105,14 @@
    verdict.total.mkt_side и флаги vs_market. Смесь p_*_blend по-прежнему считается — для сравнения и
    оценок «честной вероятности», но прогноз не определяет. Журнал хранит mkt_side, чтобы вести два
    счёта: модель и фаворит рынка, плюс отдельно матчи, где модель пошла против рынка.
+15. Версия 4.3 (15.10.2026, по внешнему аудиту 14.10). Разбивка на основное время и ОТ согласована с итоговой
+   вероятностью: шанс ничьей и доля хозяев в ОТ — как раньше, основное время подгоняется так, чтобы
+   p_home_reg + p_ot × p_ot_home = p_home (раньше считалось до калибровки и расходилось на ~3 п.п., у 7% матчей
+   разбивка показывала другого фаворита). Ничья у трёхисходных контор делится по доле побед в ОТ, а не пополам.
+   Метка неполных данных: missing (чего не было) и incomplete (считали без xG команд, долей 5 на 5, вратаря
+   или с ненайденным травмированным). Прогноз победителя и тотал не меняются. Бэктест scripts/backtest.py,
+   6560 матчей 2021–2026: три исхода основного времени — лог-лосс 1,0369 → 1,0322 (лучше во всех 5 сезонах),
+   фаворит в основное время: ждали 46,2% → 48,8%, было 48,4%.
 """
 import json, math, sys, datetime
 from collections import defaultdict
@@ -214,12 +222,21 @@ def fit(games, prior, today, prior_xg=None, txg=None):
     return att, dfn, mu, ha
 
 
+def split_reg(ph, tie, q):
+    """v4.3: разбивка итоговой (после калибровки и слоя долей) вероятности на основное время и ОТ.
+    Шанс ничьей tie — от Пуассона × TIE_K; доля хозяев после ничьей q — как подобрана на 1450 матчах
+    (OT_HOME + OT_K × сырой перевес). Основное время подгоняется так, чтобы phr + tie × q = ph точно."""
+    phr = min(1 - tie, max(0.0, ph - tie * q))
+    return phr, 1 - tie - phr, q
+
+
 def main(ap, dp, pp, gp_=None):
     A = load(ap); D = load(dp); PRF = load(pp); PR = PRF["teams"]; GP = load(gp_)["goalies"] if gp_ else PRF["goalies"]
     games = [g for g in A["games"] if g.get("as") is not None]
     up_day = D.get("upcoming_date") or datetime.date.today().isoformat()
     today = datetime.date.fromisoformat(up_day)
     att, dfn, mu, ha = fit(games, PR, today, PRF.get("teams_xg"), D.get("team_xg"))
+    xg_ok = bool(D.get("team_xg")) and len(D.get("team_xg")) >= 30
 
     # --- вратари
     sv_lg = sum(v[1] * v[2] for v in GP.values()) / sum(v[1] for v in GP.values())
@@ -304,6 +321,9 @@ def main(ap, dp, pp, gp_=None):
                 r, g = ixg_rate(nm)
                 pool[nm.lower()] = (nm, r or 0.0, None, None, g)
         return pool
+
+    def inj_unmatched(team):
+        return any(x.endswith(f"({team})") for x in unmatched["injuries"])
 
     def injury_adj(team, base_for, base_against):
         out = []; d_for = d_against = 0.0
@@ -456,6 +476,8 @@ def main(ap, dp, pp, gp_=None):
         if sh_h and sh_a:
             sh_adj = max(-0.4, min(0.4, SH_C + SH_LDX * (sh_h[0] - sh_a[0]) + SH_CF * (sh_h[1] - sh_a[1]) + (SH_L - 1) * zz))
         ph = 1 / (1 + math.exp(-(zz + sh_adj))); pa = 1 - ph
+        phr_raw, q_raw = phr, q_ot
+        phr, par, q_ot = split_reg(ph, tie, q_ot)   # v4.3: разбивка согласована с итоговой p_home
         odds = m.get("odds") or {}; fon = m.get("fonbet") or {}
         line = fon.get("total") or odds.get("total") or 5.5
         p_over = sum(P[i][j] for i in range(13) for j in range(13) if i + j + (1 if i == j else 0) > line)
@@ -513,8 +535,8 @@ def main(ap, dp, pp, gp_=None):
         x1 = m.get("odds_1x") or {}
         if x1.get("home") and x1.get("draw") and x1.get("away"):
             S = 1 / x1["home"] + 1 / x1["draw"] + 1 / x1["away"]; dr = (1 / x1["draw"]) / S
-            add("1xBet", f"П1 {h} (осн. время)", x1["home"], max(0.01, fair_h - 0.5 * dr))
-            add("1xBet", f"П2 {a} (осн. время)", x1["away"], max(0.01, fair_a - 0.5 * dr))
+            add("1xBet", f"П1 {h} (осн. время)", x1["home"], max(0.01, fair_h - q_ot * dr))
+            add("1xBet", f"П2 {a} (осн. время)", x1["away"], max(0.01, fair_a - (1 - q_ot) * dr))
         books = dict(m.get("books") or {})
         for bk, bo in books.items():
             nm_ = {"marathonbet": "Марафон", "onexbet": "1xBet"}.get(bk, bk)
@@ -522,8 +544,8 @@ def main(ap, dp, pp, gp_=None):
                 add(nm_, f"{h} (с ОТ)", bo["home"], fair_h); add(nm_, f"{a} (с ОТ)", bo["away"], fair_a)
             elif bo.get("home") and bo.get("away") and bo.get("draw"):
                 S3 = 1 / bo["home"] + 1 / bo["draw"] + 1 / bo["away"]; dr3 = (1 / bo["draw"]) / S3
-                add(nm_, f"П1 {h} (осн. время)", bo["home"], max(0.01, fair_h - 0.5 * dr3))
-                add(nm_, f"П2 {a} (осн. время)", bo["away"], max(0.01, fair_a - 0.5 * dr3))
+                add(nm_, f"П1 {h} (осн. время)", bo["home"], max(0.01, fair_h - q_ot * dr3))
+                add(nm_, f"П2 {a} (осн. время)", bo["away"], max(0.01, fair_a - (1 - q_ot) * dr3))
         for nm_, bo in [("1xBet", x1)] + [({"marathonbet": "Марафон"}.get(k, k), v) for k, v in books.items()]:
             if bo.get("total") is not None and bo.get("over") and bo.get("under"):
                 L = bo["total"]; fo = fair_over(L)
@@ -539,6 +561,19 @@ def main(ap, dp, pp, gp_=None):
         r["h2h"] = [dict(date=g["date"], away=g["away"], home=g["home"], score=f'{g["as"]}:{g["hs"]}', end=g.get("end"))
                     for g in games if {g["away"], g["home"]} == {a, h}]
         r.update(id=m.get("id"), date=day, start=m.get("start"))
+        r["p_home_reg_raw"] = round(phr_raw, 3); r["p_ot_home_raw"] = round(q_raw, 3)   # до согласования — для бэктеста
+        miss = []
+        if not xg_ok: miss.append("xg")             # нет командного xG MoneyPuck — сила только по голам
+        if not (sh_h and sh_a): miss.append("shares")
+        for side, nm_g in (("away", gl[0]), ("home", gl[1])):
+            if not nm_g: miss.append(f"goalie_{side}")
+            elif nkey(nm_g) not in gsx_n and nkey(nm_g) not in cur_n: miss.append(f"goalie_{side}_unknown")
+            elif "не подтв" in nm_g: miss.append(f"goalie_{side}_unconfirmed")
+        if inj_unmatched(a) or inj_unmatched(h): miss.append("injuries_unmatched")
+        if "mkt_home" not in r: miss.append("odds")
+        r["missing"] = miss
+        # «неполные данные»: модель считала без существенного входа; неподтверждённый вратарь и отсутствие кэфов — не в счёт
+        r["incomplete"] = any(x in ("xg", "shares", "goalie_away", "goalie_home", "injuries_unmatched") or x.endswith("_unknown") for x in miss)
         r["verdict"] = verdict(r, odds)
         (horizon if m.get("horizon") else out).append(r)
 
@@ -558,7 +593,7 @@ def main(ap, dp, pp, gp_=None):
                         sf_pg=round(t["sf"] / max(t["sgp"], 1), 1), sa_pg=round(t["sa"] / max(t["sgp"], 1), 1),
                         ppg=t["ppg"], ppga=t["ppga"], att=round(math.exp(att[k]), 3), dfn=round(math.exp(dfn[k]), 3),
                         power=round(math.exp(att[k] - dfn[k]), 3))
-    json.dump(dict(version=4, xg_used=bool(D.get("team_xg")), generated=datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%MZ"),
+    json.dump(dict(version=4.3, xg_used=bool(D.get("team_xg")), generated=datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%MZ"),
                    league=dict(goals_pg=round(math.exp(mu), 3), home_adv=round(math.exp(ha) ** 2 - 1, 3), sv=round(sv_lg, 4), games=len(games)),
                    backtest=dict(seasons="2021-22…2025-26", games=6560, accuracy_v4=[0.641, 0.611, 0.617, 0.601, 0.551], accuracy_v3=[0.631, 0.616, 0.600, 0.594, 0.553], logloss_v4=0.6596, logloss_v3=0.6631),
                    games=out, horizon=horizon, teams=teams, unmatched={k: sorted(set(v)) for k, v in unmatched.items()}), sys.stdout, ensure_ascii=False, indent=1)

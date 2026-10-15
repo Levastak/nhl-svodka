@@ -352,15 +352,33 @@ def mp_csv(kind):
     return list(csv.DictReader(io.StringIO(txt)))
 
 
-def f(x):
+MP_BAD = []   # нечитаемые поля MoneyPuck за этот сбор — в лог, а не нулём в данные
+
+
+def f(x, where=""):
+    """Число из CSV MoneyPuck. Пусто или мусор → None (раньше 0.0, и ошибка выглядела как настоящий ноль)."""
     try:
-        return float(x)
+        v = float(x)
+        if v != v or v in (float("inf"), float("-inf")):
+            raise ValueError
+        return v
     except Exception:
-        return 0.0
+        if where:
+            MP_BAD.append(where)
+        return None
+
+
+def rnd(v, n=2):
+    return None if v is None else round(v, n)
+
+
+def num(v):
+    return None if v is None else int(v)
 
 
 def moneypuck():
     team_xg, goalie_xg, skater_xg = {}, {}, {}
+    del MP_BAD[:]
     rows = mp_csv("teams")
     by = {}
     for r in rows:
@@ -370,23 +388,37 @@ def moneypuck():
         a, e = s.get("all"), s.get("5on5")
         if not a or t not in TEAMS:
             continue
-        x = dict(gp=int(f(a["games_played"])), xgf=round(f(a["xGoalsFor"]), 2), xga=round(f(a["xGoalsAgainst"]), 2),
-                 xg_pct=round(f(a["xGoalsPercentage"]) * 100, 1), gf=int(f(a["goalsFor"])), ga=int(f(a["goalsAgainst"])),
-                 ld_xgf=round(f(a.get("lowDangerxGoalsFor")), 2), ld_xga=round(f(a.get("lowDangerxGoalsAgainst")), 2))
+        gp, xgf, xga = f(a.get("games_played"), f"{t} gp"), f(a.get("xGoalsFor"), f"{t} xgf"), f(a.get("xGoalsAgainst"), f"{t} xga")
+        if gp is None or xgf is None or xga is None:
+            continue   # без основы команда в team_xg не попадает; модель при <30 командах считает по голам и ставит метку
+        xp = f(a.get("xGoalsPercentage"), f"{t} xg_pct")
+        x = dict(gp=int(gp), xgf=round(xgf, 2), xga=round(xga, 2), xg_pct=None if xp is None else round(xp * 100, 1),
+                 gf=num(f(a.get("goalsFor"), f"{t} gf")), ga=num(f(a.get("goalsAgainst"), f"{t} ga")),
+                 ld_xgf=rnd(f(a.get("lowDangerxGoalsFor"), f"{t} ld_xgf")), ld_xga=rnd(f(a.get("lowDangerxGoalsAgainst"), f"{t} ld_xga")))
         if e:
-            x.update(xgf_5v5=round(f(e["xGoalsFor"]), 2), xga_5v5=round(f(e["xGoalsAgainst"]), 2),
-                     xg_pct_5v5=round(f(e["xGoalsPercentage"]) * 100, 1),
-                     cf_5v5=int(f(e.get("shotAttemptsFor"))), ca_5v5=int(f(e.get("shotAttemptsAgainst"))))
+            xp5 = f(e.get("xGoalsPercentage"), f"{t} xg_pct_5v5")
+            x.update(xgf_5v5=rnd(f(e.get("xGoalsFor"), f"{t} xgf_5v5")), xga_5v5=rnd(f(e.get("xGoalsAgainst"), f"{t} xga_5v5")),
+                     xg_pct_5v5=None if xp5 is None else round(xp5 * 100, 1),
+                     cf_5v5=num(f(e.get("shotAttemptsFor"), f"{t} cf_5v5")), ca_5v5=num(f(e.get("shotAttemptsAgainst"), f"{t} ca_5v5")))
         team_xg[t] = x
     for r in mp_csv("goalies"):
         if r.get("situation") != "all":
             continue
-        goalie_xg[r["name"]] = dict(team=MP_CODES.get(r["team"], r["team"]), gp=int(f(r["games_played"])),
-                                    xga=round(f(r["xGoals"]), 2), ga=int(f(r["goals"])))
+        nm = r.get("name") or "?"
+        gp, xga, ga = f(r.get("games_played"), f"вр {nm}"), f(r.get("xGoals"), f"вр {nm}"), f(r.get("goals"), f"вр {nm}")
+        if None in (gp, xga, ga):
+            continue
+        goalie_xg[nm] = dict(team=MP_CODES.get(r["team"], r["team"]), gp=int(gp), xga=round(xga, 2), ga=int(ga))
     for r in mp_csv("skaters"):
         if r.get("situation") != "all":
             continue
-        skater_xg[r["name"]] = dict(team=MP_CODES.get(r["team"], r["team"]), gp=int(f(r["games_played"])), ixg=round(f(r["I_F_xGoals"]), 2))
+        nm = r.get("name") or "?"
+        gp, ixg = f(r.get("games_played"), f"ип {nm}"), f(r.get("I_F_xGoals"), f"ип {nm}")
+        if None in (gp, ixg):
+            continue
+        skater_xg[nm] = dict(team=MP_CODES.get(r["team"], r["team"]), gp=int(gp), ixg=round(ixg, 2))
+    if MP_BAD:
+        print(f"MoneyPuck: нечитаемых полей {len(MP_BAD)}: {', '.join(MP_BAD[:12])}{' …' if len(MP_BAD) > 12 else ''}", file=sys.stderr)
     return team_xg, goalie_xg, skater_xg
 
 
