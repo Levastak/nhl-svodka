@@ -138,10 +138,27 @@ def mp_teams(path, seasons):
 
 
 # ------------------------------------------------------------------ MoneyPuck: игроки
+def get_zip(url, zp):
+    """Скачать zip; если пришёл не zip (обрыв, страница ошибки) — ещё две попытки, потом None."""
+    for i in range(3):
+        if not os.path.exists(zp) and not fetch(url, zp):
+            return None
+        if zipfile.is_zipfile(zp):
+            return zp
+        head = open(zp, "rb").read(200)
+        log(f"  {url}: пришёл не zip ({os.path.getsize(zp)} байт, начало {head[:80]!r}), повтор {i + 1}")
+        os.remove(zp); time.sleep(20 * (i + 1))
+    return None
+
+
 def mp_players(kind, season, tmp):
-    zp = os.path.join(tmp, f"{kind}_{season}.zip")
-    if not os.path.exists(zp) and not fetch(ZIP_URL.format(kind=kind, season=season), zp):
-        return None
+    zp = get_zip(ZIP_URL.format(kind=kind, season=season), os.path.join(tmp, f"{kind}_{season}.zip"))
+    if not zp and season <= 2024:
+        log(f"  {kind} {season}: беру общий архив 2008–2024")
+        zp = get_zip(ZIP_URL.format(kind=kind, season="2008_to_2024"), os.path.join(tmp, f"{kind}_2008_to_2024.zip"))
+    if not zp:
+        raise SystemExit(f"{kind} {season}: архив MoneyPuck не скачался")
+    combined = "2008_to_2024" in zp
     rows = []
     with zipfile.ZipFile(zp) as z:
         names = [n for n in z.namelist() if n.lower().endswith(".csv")]
@@ -155,6 +172,8 @@ def mp_players(kind, season, tmp):
                 tcol = "playerTeam" if "playerTeam" in hdr else "team"
                 for r in rd:
                     if r["situation"] != "all":
+                        continue
+                    if combined and str(r.get("season", "")).strip()[:4] != str(season):
                         continue
                     gid = str(r["gameId"])
                     if len(gid) >= 6 and gid[4:6] != "02":
@@ -218,7 +237,7 @@ def main():
                               examples_missing=[g[:4] for g in (miss + miss_g)[:5]])
         log("  ", report[str(s)])
         for k in ("goalies", "skaters"):
-            p = os.path.join(tmp, f"{k}_{s}.zip")
+            p = os.path.join(tmp, f"{k}_{s}.zip")   # общий архив 2008–2024 оставляем до конца
             if os.path.exists(p): os.remove(p)
     json.dump(report, open(os.path.join(a.out, "report.json"), "w"), ensure_ascii=False, indent=1)
     if os.path.exists(tp): os.remove(tp)
