@@ -4,57 +4,37 @@ MoneyPuck: команды по матчам (один большой файл)�
   матчей 107; вратари…
   строк вратарей 227; полевые…
   строк полевых 3851
-/home/runner/work/nhl-svodka/nhl-svodka/scripts/backtest_data.py:344: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+/home/runner/work/nhl-svodka/nhl-svodka/scripts/backtest_data.py:366: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
   pack = dict(season=s, built=dt.datetime.utcnow().strftime("%Y-%m-%dT%H:%MZ"), games=games, team=tm, goalie=goalies, skater=skaters)
    {'games': 107, 'team_rows': 214, 'goalie_rows': 227, 'skater_rows': 3851, 'games_without_team_xg': 0, 'games_without_goalie': 0, 'examples_missing': []}
 Кэфы ESPN 2026-27: 107 матчей…
-   {'espn_events': 107, 'games_with_lines': 107, 'moneyline_both': 107, 'total_with_prices': 107, 'closing_moneyline': 0, 'providers': {'Draft Kings': 107}}
-Кэфы ESPN core 2021-22: 60 матчей…
-   60 {'Bet365': 60, 'Caesars Sportsbook': 54, 'Caesars Sportsbook (Colorado)': 54, 'Caesars Sportsbook (New Jersey)': 60, 'Caesars Sportsbook (Pennsylvania)': 60, 'DraftKings': 60, 'Holland Casino': 9, 'MGM': 3}
-Кэфы ESPN core 2022-23: 60 матчей…
-   60 {'Bet365': 48, 'BetfairSportsbook': 60, 'Caesars Sportsbook': 53, 'Caesars Sportsbook (Colorado)': 60, 'Caesars Sportsbook (New Jersey)': 60, 'DraftKings': 41, 'ESPN BET': 15, 'Holland Casino': 2, 'Caesars Sportsbook (Tennessee)': 21}
-Кэфы ESPN core 2023-24: 60 матчей…
-   60 {'Bet365': 60, 'BetfairSportsbook': 57, 'Caesars Sportsbook (Colorado)': 60, 'Caesars Sportsbook (New Jersey)': 60, 'Caesars Sportsbook (Tennessee)': 60, 'ESPN BET': 4, 'DraftKings': 57, 'Caesars Sportsbook': 1, 'Caesars Sportsbook (New Jersey) - Live Odds': 1}
-Кэфы ESPN core 2024-25: 60 матчей…
-   60 {'ESPN BET': 60, 'ESPN Bet - Live Odds': 59}
-Кэфы ESPN core 2025-26: 60 матчей…
-   60 {'ESPN BET': 20, 'ESPN Bet - Live Odds': 20, 'Draft Kings': 42}
-Кэфы ESPN core 2026-27: 60 матчей…
-   60 {'Draft Kings': 60}
+   {'espn_events': 107, 'games_with_lines': 107, 'moneyline_both': 107, 'total_with_prices': 107, 'closing_moneyline': 0, 'providers': {'DraftKings': 107}}
+Кэфы ESPN core 2021-22: 1312 матчей…
+   1312 {'Caesars Sportsbook': 1168, 'Caesars Sportsbook (Colorado)': 138, 'Caesars Sportsbook (New Jersey)': 6}
+Кэфы ESPN core 2022-23: 1312 матчей…
+   1312 {'Caesars Sportsbook': 1246, 'Caesars Sportsbook (Colorado)': 66}
+Кэфы ESPN core 2023-24: 1312 матчей…
+   1312 {'Caesars Sportsbook (Colorado)': 1289, 'Caesars Sportsbook': 22, 'ESPN BET': 1}
+Кэфы ESPN core 2024-25: 1312 матчей…
+   1312 {'ESPN BET': 1312}
+Кэфы ESPN core 2025-26: 1312 матчей…
+   1312 {'ESPN BET': 376, 'DraftKings': 936}
+Кэфы ESPN core 2026-27: 107 матчей…
+   107 {'DraftKings': 107}
 Проверка кэфов 2021 odds Unibet: {'games': 1312, 'overround_median': 0.827, 'overround_sane_share': 0.0, 'favourite_won': 0.642, 'logloss': 0.6399}
-Проверка кэфов 2021 odds2 Bet365: {'games': 60, 'overround_median': 0.834, 'overround_sane_share': 0.0, 'favourite_won': 0.65, 'logloss': 0.6218}
-Проверка кэфов 2021 odds2 Caesars Sportsbook: {'games': 54, 'overround_median': 1.035, 'overround_sane_share': 1.0, 'favourite_won': 0.648, 'logloss': 0.6235}
-Проверка кэфов 2021 odds2 Caesars Sportsbook (Colorado): {'games': 54, 'overround_median': 1.04, 'overround_sane_share': 1.0, 'favourite_won': 0.648, 'logloss': 0.6146}
-Проверка кэфов 2021 odds2 Caesars Sportsbook (New Jersey): {'games': 60, 'overround_median': 1.04, 'overround_sane_share': 1.0, 'favourite_won': 0.65, 'logloss': 0.6209}
-Проверка кэфов 2021 odds2 Caesars Sportsbook (Pennsylvania): {'games': 60, 'overround_median': 1.036, 'overround_sane_share': 1.0, 'favourite_won': 0.65, 'logloss': 0.6261}
-Проверка кэфов 2021 odds2 DraftKings: {'games': 60, 'overround_median': 0.828, 'overround_sane_share': 0.0, 'favourite_won': 0.65, 'logloss': 0.6162}
-Проверка кэфов 2021 odds2 Holland Casino: {'games': 9, 'overround_median': 0.851, 'overround_sane_share': 0.0, 'favourite_won': 0.778, 'logloss': 0.5146}
-Проверка кэфов 2021 odds2 MGM: {'games': 3, 'overround_median': 1.051, 'overround_sane_share': 1.0, 'favourite_won': 0.333, 'logloss': 0.8405}
+Проверка кэфов 2021 odds2 Caesars Sportsbook: {'games': 1168, 'overround_median': 1.035, 'overround_sane_share': 1.0, 'favourite_won': 0.649, 'logloss': 0.6459}
+Проверка кэфов 2021 odds2 Caesars Sportsbook (Colorado): {'games': 138, 'overround_median': 1.042, 'overround_sane_share': 1.0, 'favourite_won': 0.645, 'logloss': 0.6238}
+Проверка кэфов 2021 odds2 Caesars Sportsbook (New Jersey): {'games': 6, 'overround_median': 1.038, 'overround_sane_share': 1.0, 'favourite_won': 0.833, 'logloss': 0.5007}
 Проверка кэфов 2022 odds Unibet: {'games': 1311, 'overround_median': 0.828, 'overround_sane_share': 0.0, 'favourite_won': 0.617, 'logloss': 0.6517}
-Проверка кэфов 2022 odds2 Bet365: {'games': 48, 'overround_median': 0.832, 'overround_sane_share': 0.0, 'favourite_won': 0.646, 'logloss': 0.6391}
-Проверка кэфов 2022 odds2 BetfairSportsbook: {'games': 60, 'overround_median': 0.847, 'overround_sane_share': 0.0, 'favourite_won': 0.617, 'logloss': 0.6597}
-Проверка кэфов 2022 odds2 Caesars Sportsbook: {'games': 53, 'overround_median': 1.042, 'overround_sane_share': 1.0, 'favourite_won': 0.585, 'logloss': 0.6693}
-Проверка кэфов 2022 odds2 Caesars Sportsbook (Colorado): {'games': 60, 'overround_median': 1.042, 'overround_sane_share': 1.0, 'favourite_won': 0.633, 'logloss': 0.66}
-Проверка кэфов 2022 odds2 Caesars Sportsbook (New Jersey): {'games': 60, 'overround_median': 1.042, 'overround_sane_share': 1.0, 'favourite_won': 0.633, 'logloss': 0.6597}
-Проверка кэфов 2022 odds2 Caesars Sportsbook (Tennessee): {'games': 21, 'overround_median': 1.078, 'overround_sane_share': 1.0, 'favourite_won': 0.619, 'logloss': 0.6246}
-Проверка кэфов 2022 odds2 DraftKings: {'games': 41, 'overround_median': 0.833, 'overround_sane_share': 0.0, 'favourite_won': 0.585, 'logloss': 0.6889}
-Проверка кэфов 2022 odds2 ESPN BET: {'games': 15, 'overround_median': 1.041, 'overround_sane_share': 1.0, 'favourite_won': 0.6, 'logloss': 0.698}
-Проверка кэфов 2022 odds2 Holland Casino: {'games': 2, 'overround_median': 0.848, 'overround_sane_share': 0.0, 'favourite_won': 1.0, 'logloss': 0.5127}
+Проверка кэфов 2022 odds2 Caesars Sportsbook: {'games': 1246, 'overround_median': 1.042, 'overround_sane_share': 1.0, 'favourite_won': 0.615, 'logloss': 0.655}
+Проверка кэфов 2022 odds2 Caesars Sportsbook (Colorado): {'games': 66, 'overround_median': 1.042, 'overround_sane_share': 1.0, 'favourite_won': 0.712, 'logloss': 0.6022}
 Проверка кэфов 2023 odds Unibet: {'games': 1312, 'overround_median': 0.822, 'overround_sane_share': 0.006, 'favourite_won': 0.621, 'logloss': 0.6428}
-Проверка кэфов 2023 odds2 Bet365: {'games': 60, 'overround_median': 0.828, 'overround_sane_share': 0.0, 'favourite_won': 0.5, 'logloss': 0.6906}
-Проверка кэфов 2023 odds2 BetfairSportsbook: {'games': 57, 'overround_median': 1.04, 'overround_sane_share': 0.596, 'favourite_won': 0.544, 'logloss': 0.6806}
-Проверка кэфов 2023 odds2 Caesars Sportsbook: {'games': 1, 'overround_median': 1.041, 'overround_sane_share': 1.0, 'favourite_won': 1.0, 'logloss': 0.5029}
-Проверка кэфов 2023 odds2 Caesars Sportsbook (Colorado): {'games': 60, 'overround_median': 1.043, 'overround_sane_share': 1.0, 'favourite_won': 0.583, 'logloss': 0.6927}
-Проверка кэфов 2023 odds2 Caesars Sportsbook (New Jersey): {'games': 60, 'overround_median': 1.043, 'overround_sane_share': 0.967, 'favourite_won': 0.583, 'logloss': 0.693}
-Проверка кэфов 2023 odds2 Caesars Sportsbook (New Jersey) - Live Odds: {'games': 1, 'overround_median': 0.886, 'overround_sane_share': 0.0, 'favourite_won': 0.0, 'logloss': 0.9259}
-Проверка кэфов 2023 odds2 Caesars Sportsbook (Tennessee): {'games': 60, 'overround_median': 1.078, 'overround_sane_share': 1.0, 'favourite_won': 0.6, 'logloss': 0.6909}
-Проверка кэфов 2023 odds2 DraftKings: {'games': 57, 'overround_median': 0.853, 'overround_sane_share': 0.0, 'favourite_won': 0.561, 'logloss': 0.696}
-Проверка кэфов 2023 odds2 ESPN BET: {'games': 4, 'overround_median': 1.036, 'overround_sane_share': 1.0, 'favourite_won': 0.5, 'logloss': 0.7085}
-Проверка кэфов 2024 odds2 ESPN BET: {'games': 60, 'overround_median': 1.04, 'overround_sane_share': 1.0, 'favourite_won': 0.733, 'logloss': 0.6025}
-Проверка кэфов 2024 odds2 ESPN Bet - Live Odds: {'games': 59, 'overround_median': 1.043, 'overround_sane_share': 1.0, 'favourite_won': 0.864, 'logloss': 0.2526}
+Проверка кэфов 2023 odds2 Caesars Sportsbook: {'games': 22, 'overround_median': 1.043, 'overround_sane_share': 1.0, 'favourite_won': 0.727, 'logloss': 0.6254}
+Проверка кэфов 2023 odds2 Caesars Sportsbook (Colorado): {'games': 1289, 'overround_median': 1.043, 'overround_sane_share': 1.0, 'favourite_won': 0.616, 'logloss': 0.6555}
+Проверка кэфов 2023 odds2 ESPN BET: {'games': 1, 'overround_median': 1.039, 'overround_sane_share': 1.0, 'favourite_won': 0.0, 'logloss': 1.1369}
+Проверка кэфов 2024 odds2 ESPN BET: {'games': 1312, 'overround_median': 1.039, 'overround_sane_share': 1.0, 'favourite_won': 0.613, 'logloss': 0.6582}
 Проверка кэфов 2025 odds DraftKings: {'games': 936, 'overround_median': 1.043, 'overround_sane_share': 1.0, 'favourite_won': 0.557, 'logloss': 0.6806}
-Проверка кэфов 2025 odds2 Draft Kings: {'games': 42, 'overround_median': 1.043, 'overround_sane_share': 1.0, 'favourite_won': 0.571, 'logloss': 0.6588}
-Проверка кэфов 2025 odds2 ESPN BET: {'games': 20, 'overround_median': 1.041, 'overround_sane_share': 1.0, 'favourite_won': 0.7, 'logloss': 0.6203}
-Проверка кэфов 2025 odds2 ESPN Bet - Live Odds: {'games': 20, 'overround_median': 1.03, 'overround_sane_share': 1.0, 'favourite_won': 0.9, 'logloss': 0.1737}
-Проверка кэфов 2026 odds Draft Kings: {'games': 107, 'overround_median': 1.043, 'overround_sane_share': 1.0, 'favourite_won': 0.617, 'logloss': 0.653}
-Проверка кэфов 2026 odds2 Draft Kings: {'games': 60, 'overround_median': 1.043, 'overround_sane_share': 1.0, 'favourite_won': 0.583, 'logloss': 0.6596}
+Проверка кэфов 2025 odds2 DraftKings: {'games': 936, 'overround_median': 1.043, 'overround_sane_share': 1.0, 'favourite_won': 0.557, 'logloss': 0.6806}
+Проверка кэфов 2025 odds2 ESPN BET: {'games': 376, 'overround_median': 1.04, 'overround_sane_share': 1.0, 'favourite_won': 0.543, 'logloss': 0.6842}
+Проверка кэфов 2026 odds DraftKings: {'games': 107, 'overround_median': 1.043, 'overround_sane_share': 1.0, 'favourite_won': 0.617, 'logloss': 0.653}
+Проверка кэфов 2026 odds2 DraftKings: {'games': 107, 'overround_median': 1.043, 'overround_sane_share': 1.0, 'favourite_won': 0.617, 'logloss': 0.653}
