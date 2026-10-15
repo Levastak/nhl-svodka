@@ -1,0 +1,97 @@
+name: Бэктест модели
+
+# Запуск: поправить backtest/run.txt (метка, сезоны, версии модели) и запушить в main.
+# Сайт, расписание и site.yml не затрагиваются; коммитится только backtest/results/.
+on:
+  push:
+    branches: [main]
+    paths: ["backtest/run.txt"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: backtest
+  cancel-in-progress: false
+
+jobs:
+  backtest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Параметры из backtest/run.txt
+        id: cfg
+        run: |
+          python3 - <<'EOF' >> "$GITHUB_OUTPUT"
+          import re
+          label, seasons, models = "latest", "2021-2025", []
+          for ln in open("backtest/run.txt", encoding="utf-8"):
+              ln = ln.split("#")[0].strip()
+              if ":" not in ln: continue
+              k, v = (x.strip() for x in ln.split(":", 1))
+              if k == "label": label = re.sub(r"[^A-Za-z0-9._-]", "-", v) or "latest"
+              elif k == "seasons": seasons = v
+              elif k == "model": models.append(v)
+          print(f"label={label}")
+          print(f"seasons={seasons}")
+          print("models=" + " ".join(f"--model {m}" for m in models or ["v4.2=scripts/model.py"]))
+          EOF
+          cat "$GITHUB_OUTPUT"
+
+      - name: Данные из кеша прошлых запусков
+        uses: actions/cache/restore@v4
+        with:
+          path: bt-data
+          key: btdata-${{ github.run_id }}
+          restore-keys: btdata-
+
+      - name: Сбор данных (НХЛ + MoneyPuck)
+        run: |
+          set -o pipefail
+          mkdir -p "backtest/results/${{ steps.cfg.outputs.label }}"
+          python3 scripts/backtest_data.py --out bt-data --seasons 2016-2026 2>&1 | tee "backtest/results/${{ steps.cfg.outputs.label }}/data.log"
+          cp bt-data/report.json "backtest/results/${{ steps.cfg.outputs.label }}/data_report.json"
+
+      - name: Сохранить данные в кеш
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: bt-data
+          key: btdata-${{ github.run_id }}
+
+      - name: Данные — архивом для скачивания
+        uses: actions/upload-artifact@v4
+        with:
+          name: backtest-data
+          path: |
+            bt-data/*.json.gz
+            bt-data/report.json
+          retention-days: 30
+
+      - name: Бэктест
+        run: |
+          python3 scripts/backtest.py --data bt-data --seasons "${{ steps.cfg.outputs.seasons }}" \
+            ${{ steps.cfg.outputs.models }} --out "backtest/results/${{ steps.cfg.outputs.label }}" --workers 4 \
+            2>&1 | tee "backtest/results/${{ steps.cfg.outputs.label }}/run.log"
+          exit ${PIPESTATUS[0]}
+
+      - name: Результаты в репозиторий
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add backtest/results
+          git diff --cached --quiet && exit 0
+          git commit -m "Бэктест: ${{ steps.cfg.outputs.label }} (${{ job.status }})"
+          for i in 1 2 3 4 5; do
+            git pull --rebase origin main && git push origin HEAD:main && exit 0
+            sleep $((i * 10))
+          done
+          exit 1

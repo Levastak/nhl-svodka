@@ -1,0 +1,7 @@
+# Запуск бэктеста: правка этого файла и пуш в main запускает .github/workflows/backtest.yml.
+# Результаты — backtest/results/<label>/ (report.md, summary.json, preds_<версия>.csv.gz).
+# Первая модель — база, с ней сравниваются остальные на одних и тех же матчах.
+label: v42-vs-v43
+seasons: 2021-2025
+model: v4.2=scripts/model.py
+model: v4.3=backtest/candidates/model_v43.py
