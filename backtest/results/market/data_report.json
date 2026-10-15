@@ -1,0 +1,1691 @@
+{
+ "2022": {
+  "games": 1312,
+  "team_rows": 2624,
+  "goalie_rows": 2785,
+  "skater_rows": 47206,
+  "games_without_team_xg": 0,
+  "games_without_goalie": 0,
+  "examples_missing": [],
+  "odds": {
+   "espn_events": 1332,
+   "games_with_lines": 1311,
+   "moneyline_both": 1311,
+   "total_with_prices": 1311,
+   "closing_moneyline": 0,
+   "providers": {
+    "Unibet": 1311
+   },
+   "sample": [
+    {
+     "provider": {
+      "id": "36",
+      "name": "Unibet",
+      "priority": 0
+     },
+     "details": "NSH -115",
+     "overUnder": 5.5,
+     "overOdds": -130.0,
+     "underOdds": 107.0,
+     "homeTeamOdds": {
+      "favorite": true,
+      "underdog": false,
+      "moneyLine": -115,
+      "spreadOdds": 138.0,
+      "current": {
+       "pointSpread": {
+        "alternateDisplayValue": "-1.5",
+        "american": "-1.5"
+       },
+       "spread": {
+        "alternateDisplayValue": "+138",
+        "american": "+138"
+       },
+       "moneyLine": {
+        "alternateDisplayValue": "-115",
+        "american": "-115"
+       }
+      },
+      "team": {
+       "$ref": "http://sports.core.api.espn.pvt/v2/sports/hockey/leagues/nhl/seasons/2023/teams/27?lang=en&region=us"
+      },
+      "teamId": "27"
+     },
+     "awayTeamOdds": {
+      "favorite": false,
+      "underdog": true,
+      "moneyLine": 250,
+      "spreadOdds": -167.0,
+      "current": {
+       "pointSpread": {
+        "alternateDisplayValue": "+1.5",
+        "american": "+1.5"
+       },
+       "spread": {
+        "alternateDisplayValue": "-167",
+        "american": "-167"
+       },
+       "moneyLine": {
+        "alternateDisplayValue": "+250",
+        "american": "+250"
+       }
+      },
+      "team": {
+       "$ref": "http://sports.core.api.espn.pvt/v2/sports/hockey/leagues/nhl/seasons/2023/teams/18?lang=en&region=us"
+      },
+      "teamId": "18"
+     }
+    }
+   ],
+   "check": {
+    "games": 1311,
+    "overround_median": 0.828,
+    "overround_sane_share": 0.0,
+    "favourite_won": 0.617,
+    "logloss": 0.6517
+   }
+  },
+  "odds_core": {
+   "games_with_lines": 60,
+   "providers": {
+    "Bet365": 48,
+    "BetfairSportsbook": 60,
+    "Caesars Sportsbook": 53,
+    "Caesars Sportsbook (Colorado)": 60,
+    "Caesars Sportsbook (New Jersey)": 60,
+    "DraftKings": 41,
+    "ESPN BET": 15,
+    "Holland Casino": 2,
+    "Caesars Sportsbook (Tennessee)": 21
+   },
+   "sample": [
+    {
+     "provider": {
+      "$ref": "http://sports.core.api.espn.com/v2/sports/hockey/leagues/nhl/providers/50?lang=en&region=us",
+      "id": "50",
+      "name": "BetfairSportsbook",
+      "priority": 0
+     },
+     "overUnder": 6.5,
+     "overOdds": -111.0,
+     "underOdds": -111.0,
+     "homeTeamOdds": {
+      "favorite": true,
+      "underdog": false,
+      "moneyLine": 110,
+      "spreadOdds": 188.0,
+      "current": {
+       "pointSpread": {
+        "alternateDisplayValue": "-1.5",
+        "american": "-1.5"
+       },
+       "spread": {
+        "alternateDisplayValue": "+188",
+        "american": "+188"
+       },
+       "moneyLine": {
+        "alternateDisplayValue": "+110",
+        "american": "+110"
+       }
+      },
+      "team": {
+       "$ref": "http://sports.core.api.espn.com/v2/sports/hockey/leagues/nhl/seasons/2023/teams/23?lang=en&region=us"
+      }
+     },
+     "awayTeamOdds": {
+      "favorite": false,
+      "underdog": true,
+      "moneyLine": 170,
+      "spreadOdds": -250.0,
+      "current": {
+       "pointSpread": {
+        "alternateDisplayValue": "+1.5",
+        "american": "+1.5"
+       },
+       "spread": {
+        "alternateDisplayValue": "-250",
+        "american": "-250"
+       },
+       "moneyLine": {
+        "alternateDisplayValue": "+170",
+        "american": "+170"
+       }
+      },
+      "team": {
+       "$ref": "http://sports.core.api.espn.com/v2/sports/hockey/leagues/nhl/seasons/2023/teams/22?lang=en&region=us"
+      }
+     },
+     "open": null,
+     "close": null,
+     "current": {
+      "over": {
+       "alternateDisplayValue": "-111",
+       "american": "-111"
+      },
+      "under": {
+       "alternateDisplayValue": "-111",
+       "american": "-111"
+      },
+      "total": {
+       "alternateDisplayValue": "6.5",
+       "american": "6.5"
+      }
+     }
+    }
+   ]
+  },
+  "odds_check": {
+   "odds:Unibet": {
+    "games": 1311,
+    "overround_median": 0.828,
+    "overround_sane_share": 0.0,
+    "favourite_won": 0.617,
+    "logloss": 0.6517
+   },
+   "odds2:Bet365": {
+    "games": 48,
+    "overround_median": 0.832,
+    "overround_sane_share": 0.0,
+    "favourite_won": 0.646,
+    "logloss": 0.6391
+   },
+   "odds2:BetfairSportsbook": {
+    "games": 60,
+    "overround_median": 0.847,
+    "overround_sane_share": 0.0,
+    "favourite_won": 0.617,
+    "logloss": 0.6597
+   },
+   "odds2:Caesars Sportsbook": {
+    "games": 53,
+    "overround_median": 1.042,
+    "overround_sane_share": 1.0,
+    "favourite_won": 0.585,
+    "logloss": 0.6693
+   },
+   "odds2:Caesars Sportsbook (Colorado)": {
+    "games": 60,
+    "overround_median": 1.042,
+    "overround_sane_share": 1.0,
+    "favourite_won": 0.633,
+    "logloss": 0.66
+   },
+   "odds2:Caesars Sportsbook (New Jersey)": {
+    "games": 60,
+    "overround_median": 1.042,
+    "overround_sane_share": 1.0,
+    "favourite_won": 0.633,
+    "logloss": 0.6597
+   },
+   "odds2:Caesars Sportsbook (Tennessee)": {
+    "games": 21,
+    "overround_median": 1.078,
+    "overround_sane_share": 1.0,
+    "favourite_won": 0.619,
+    "logloss": 0.6246
+   },
+   "odds2:DraftKings": {
+    "games": 41,
+    "overround_median": 0.833,
+    "overround_sane_share": 0.0,
+    "favourite_won": 0.585,
+    "logloss": 0.6889
+   },
+   "odds2:ESPN BET": {
+    "games": 15,
+    "overround_median": 1.041,
+    "overround_sane_share": 1.0,
+    "favourite_won": 0.6,
+    "logloss": 0.698
+   },
+   "odds2:Holland Casino": {
+    "games": 2,
+    "overround_median": 0.848,
+    "overround_sane_share": 0.0,
+    "favourite_won": 1.0,
+    "logloss": 0.5127
+   }
+  }
+ },
+ "2023": {
+  "games": 1312,
+  "team_rows": 2624,
+  "goalie_rows": 2797,
+  "skater_rows": 47221,
+  "games_without_team_xg": 0,
+  "games_without_goalie": 0,
+  "examples_missing": [],
+  "odds": {
+   "espn_events": 1313,
+   "games_with_lines": 1312,
+   "moneyline_both": 1312,
+   "total_with_prices": 1312,
+   "closing_moneyline": 0,
+   "providers": {
+    "Unibet": 1312
+   },
+   "sample": [
+    {
+     "provider": {
+      "id": "36",
+      "name": "Unibet",
+      "priority": 0
+     },
+     "details": "TB -103",
+     "overUnder": 5.5,
+     "overOdds": -175.0,
+     "underOdds": 143.0,
+     "homeTeamOdds": {
+      "favorite": true,
+      "underdog": false,
+      "moneyLine": -103,
+      "spreadOdds": 155.0,
+      "current": {
+       "pointSpread": {
+        "alternateDisplayValue": "-1.5",
+        "american": "-1.5"
+       },
+       "spread": {
+        "alternateDisplayValue": "+155",
+        "american": "+155"
+       },
+       "moneyLine": {
+        "alternateDisplayValue": "-103",
+        "american": "-103"
+       }
+      },
+      "team": {
+       "$ref": "http://sports.core.api.espn.pvt/v2/sports/hockey/leagues/nhl/seasons/2024/teams/20?lang=en&region=us"
+      },
+      "teamId": "20"
+     },
+     "awayTeamOdds": {
+      "favorite": false,
+      "underdog": true,
+      "moneyLine": 210,
+      "spreadOdds": -195.0,
+      "current": {
+       "pointSpread": {
+        "alternateDisplayValue": "+1.5",
+        "american": "+1.5"
+       },
+       "spread": {
+        "alternateDisplayValue": "-195",
+        "american": "-195"
+       },
+       "moneyLine": {
+        "alternateDisplayValue": "+210",
+        "american": "+210"
+       }
+      },
+      "team": {
+       "$ref": "http://sports.core.api.espn.pvt/v2/sports/hockey/leagues/nhl/seasons/2024/teams/27?lang=en&region=us"
+      },
+      "teamId": "27"
+     }
+    }
+   ],
+   "check": {
+    "games": 1312,
+    "overround_median": 0.822,
+    "overround_sane_share": 0.006,
+    "favourite_won": 0.621,
+    "logloss": 0.6428
+   }
+  },
+  "odds_core": {
+   "games_with_lines": 60,
+   "providers": {
+    "Bet365": 60,
+    "BetfairSportsbook": 57,
+    "Caesars Sportsbook (Colorado)": 60,
+    "Caesars Sportsbook (New Jersey)": 60,
+    "Caesars Sportsbook (Tennessee)": 60,
+    "ESPN BET": 4,
+    "DraftKings": 57,
+    "Caesars Sportsbook": 1,
+    "Caesars Sportsbook (New Jersey) - Live Odds": 1
+   },
+   "sample": [
+    {
+     "provider": {
+      "$ref": "http://sports.core.api.espn.com/v2/sports/hockey/leagues/nhl/providers/1001?lang=en&region=us",
+      "id": "1001",
+      "name": "Bet365",
+      "priority": 0
+     },
+     "overUnder": 6.5,
+     "overOdds": -115.0,
+     "underOdds": -105.0,
+     "homeTeamOdds": {
+      "favorite": true,
+      "underdog": false,
+      "moneyLine": 100,
+      "spreadOdds": 155.0,
+      "current": {
+       "pointSpread": {
+        "alternateDisplayValue": "-1.5",
+        "american": "-1.5"
+       },
+       "spread": {
+        "alternateDisplayValue": "+155",
+        "american": "+155"
+       },
+       "moneyLine": {
+        "alternateDisplayValue": "+100",
+        "american": "+100"
+       }
+      },
+      "team": {
+       "$ref": "http://sports.core.api.espn.com/v2/sports/hockey/leagues/nhl/seasons/2024/teams/20?lang=en&region=us"
+      }
+     },
+     "awayTeamOdds": {
+      "favorite": false,
+      "underdog": true,
+      "moneyLine": 200,
+      "spreadOdds": -175.0,
+      "current": {
+       "pointSpread": {
+        "alternateDisplayValue": "+1.5",
+        "american": "+1.5"
+       },
+       "spread": {
+        "alternateDisplayValue": "-175",
+        "american": "-175"
+       },
+       "moneyLine": {
+        "alternateDisplayValue": "+200",
+        "american": "+200"
+       }
+      },
+      "team": {
+       "$ref": "http://sports.core.api.espn.com/v2/sports/hockey/leagues/nhl/seasons/2024/teams/27?lang=en&region=us"
+      }
+     },
+     "open": null,
+     "close": null,
+     "current": {
+      "over": {
+       "alternateDisplayValue": "-115",
+       "american": "-115"
+      },
+      "under": {
+       "alternateDisplayValue": "-105",
+       "american": "-105"
+      },
+      "total": {
+       "alternateDisplayValue": "6.5",
+       "american": "6.5"
+      }
+     }
+    }
+   ]
+  },
+  "odds_check": {
+   "odds:Unibet": {
+    "games": 1312,
+    "overround_median": 0.822,
+    "overround_sane_share": 0.006,
+    "favourite_won": 0.621,
+    "logloss": 0.6428
+   },
+   "odds2:Bet365": {
+    "games": 60,
+    "overround_median": 0.828,
+    "overround_sane_share": 0.0,
+    "favourite_won": 0.5,
+    "logloss": 0.6906
+   },
+   "odds2:BetfairSportsbook": {
+    "games": 57,
+    "overround_median": 1.04,
+    "overround_sane_share": 0.596,
+    "favourite_won": 0.544,
+    "logloss": 0.6806
+   },
+   "odds2:Caesars Sportsbook": {
+    "games": 1,
+    "overround_median": 1.041,
+    "overround_sane_share": 1.0,
+    "favourite_won": 1.0,
+    "logloss": 0.5029
+   },
+   "odds2:Caesars Sportsbook (Colorado)": {
+    "games": 60,
+    "overround_median": 1.043,
+    "overround_sane_share": 1.0,
+    "favourite_won": 0.583,
+    "logloss": 0.6927
+   },
+   "odds2:Caesars Sportsbook (New Jersey)": {
+    "games": 60,
+    "overround_median": 1.043,
+    "overround_sane_share": 0.967,
+    "favourite_won": 0.583,
+    "logloss": 0.693
+   },
+   "odds2:Caesars Sportsbook (New Jersey) - Live Odds": {
+    "games": 1,
+    "overround_median": 0.886,
+    "overround_sane_share": 0.0,
+    "favourite_won": 0.0,
+    "logloss": 0.9259
+   },
+   "odds2:Caesars Sportsbook (Tennessee)": {
+    "games": 60,
+    "overround_median": 1.078,
+    "overround_sane_share": 1.0,
+    "favourite_won": 0.6,
+    "logloss": 0.6909
+   },
+   "odds2:DraftKings": {
+    "games": 57,
+    "overround_median": 0.853,
+    "overround_sane_share": 0.0,
+    "favourite_won": 0.561,
+    "logloss": 0.696
+   },
+   "odds2:ESPN BET": {
+    "games": 4,
+    "overround_median": 1.036,
+    "overround_sane_share": 1.0,
+    "favourite_won": 0.5,
+    "logloss": 0.7085
+   }
+  }
+ },
+ "2024": {
+  "games": 1312,
+  "team_rows": 2624,
+  "goalie_rows": 2764,
+  "skater_rows": 47224,
+  "games_without_team_xg": 0,
+  "games_without_goalie": 0,
+  "examples_missing": [],
+  "odds": {
+   "espn_events": 1330,
+   "games_with_lines": 0,
+   "moneyline_both": 0,
+   "total_with_prices": 0,
+   "closing_moneyline": 0,
+   "providers": {},
+   "sample": []
+  },
+  "odds_core": {
+   "games_with_lines": 60,
+   "providers": {
+    "ESPN BET": 60,
+    "ESPN Bet - Live Odds": 59
+   },
+   "sample": [
+    {
+     "provider": {
+      "$ref": "http://sports.core.api.espn.com/v2/sports/hockey/leagues/nhl/providers/58?lang=en&region=us",
+      "id": "58",
+      "name": "ESPN BET",
+      "priority": 0
+     },
+     "overUnder": 6.5,
+     "overOdds": 115.0,
+     "underOdds": -135.0,
+     "homeTeamOdds": {
+      "favorite": false,
+      "underdog": true,
+      "moneyLine": 120,
+      "spreadOdds": -250.0,
+      "open": {
+       "favorite": false,
+       "pointSpread": {
+        "value": 1.444,
+        "displayValue": "4/9",
+        "alternateDisplayValue": "+1.5",
+        "decimal": 1.444,
+        "fraction": "4/9",
+        "american": "+1.5"
+       },
+       "spread": {
+        "value": 1.444,
+        "displayValue": "4/9",
+        "alternateDisplayValue": "-225",
+        "decimal": 1.444,
+        "fraction": "4/9",
+        "american": "-225"
+       },
+       "moneyLine": {
+        "value": 2.15,
+        "displayValue": "23/20",
+        "alternateDisplayValue": "+115",
+        "decimal": 2.15,
+        "fraction": "23/20",
+        "american": "+115"
+       }
+      },
+      "close": {
+       "pointSpread": {
+        "alternateDisplayValue": "+1.5",
+        "american": "+1.5"
+       },
+       "spread": {
+        "value": 1.4,
+        "displayValue": "2/5",
+        "alternateDisplayValue": "-250",
+        "decimal": 1.4,
+        "fraction": "2/5",
+        "american": "-250"
+       },
+       "moneyLine": {
+        "value": 2.2,
+        "displayValue": "6/5",
+        "alternateDisplayValue": "+120",
+        "decimal": 2.2,
+        "fraction": "6/5",
+        "american": "+120"
+       }
+      },
+      "current": {
+       "pointSpread": {
+        "alternateDisplayValue": "+1.5",
+        "american": "+1.5"
+       },
+       "spread": {
+        "value": 1.4,
+        "displayValue": "2/5",
+        "alternateDisplayValue": "-250",
+        "decimal": 1.4,
+        "fraction": "2/5",
+        "american": "-250"
+       },
+       "moneyLine": {
+        "value": 2.2,
+        "displayValue": "6/5",
+        "alternateDisplayValue": "+120",
+        "decimal": 2.2,
+        "fraction": "6/5",
+        "american": "+120"
+       }
+      },
+      "team": {
+       "$ref": "http://sports.core.api.espn.com/v2/sports/hockey/leagues/nhl/seasons/2025/teams/129764?lang=en&region=us"
+      }
+     },
+     "awayTeamOdds": {
+      "favorite": true,
+      "underdog": false,
+      "moneyLine": -140,
+      "spreadOdds": 185.0,
+      "open": {
+       "favorite": true,
+       "pointSpread": {
+        "alternateDisplayValue": "-1.5",
+        "american": "-1.5"
+       },
+       "spread": {
+        "value": 2.75,
+        "displayValue": "7/4",
+        "alternateDisplayValue": "+175",
+        "decimal": 2.75,
+        "fraction": "7/4",
+        "american": "+175"
+       },
+       "moneyLine": {
+        "value": 1.741,
+        "displayValue": "20/27",
+        "alternateDisplayValue": "-135",
+        "decimal": 1.741,
+        "fraction": "20/27",
+        "american": "-135"
+       }
+      },
+      "close": {
+       "pointSpread": {
+        "alternateDisplayValue": "-1.5",
+        "american": "-1.5"
+       },
+       "spread": {
+        "value": 2.85,
+        "displayValue": "37/20",
+        "alternateDisplayValue": "+185",
+        "decimal": 2.85,
+        "fraction": "37/20",
+        "american": "+185"
+       },
+       "moneyLine": {
+        "value": 1.714,
+        "displayValue": "5/7",
+        "alternateDisplayValue": "-140",
+        "decimal": 1.714,
+        "fraction": "5/7",
+        "american": "-140"
+       }
+      },
+      "current": {
+       "pointSpread": {
+        "alternateDisplayValue": "-1.5",
+        "american": "-1.5"
+       },
+       "spread": {
+        "value": 2.85,
+        "displayValue": "37/20",
+        "alternateDisplayValue": "+185",
+        "decimal": 2.85,
+        "fraction": "37/20",
+        "american": "+185"
+       },
+       "moneyLine": {
+        "value": 1.714,
+        "displayValue": "5/7",
+        "alternateDisplayValue": "-140",
+        "decimal": 1.714,
+        "fraction": "5/7",
+        "american": "-140"
+       }
+      },
+      "team": {
+       "$ref": "http://sports.core.api.espn.com/v2/sports/hockey/leagues/nhl/seasons/2025/teams/1?lang=en&region=us"
+      }
+     },
+     "open": {
+      "over": {
+       "value": 2.15,
+       "displayValue": "23/20",
+       "alternateDisplayValue": "+115",
+       "decimal": 2.15,
+       "fraction": "23/20",
+       "american": "+115"
+      },
+      "under": {
+       "value": 1.741,
+       "displayValue": "20/27",
+       "alternateDisplayValue": "-135",
+       "decimal": 1.741,
+       "fraction": "20/27",
+       "american": "-135"
+      },
+      "total": {
+       "value": 2.15,
+       "displayValue": "23/20",
+       "alternateDisplayValue": "6.5",
+       "decimal": 2.15,
+       "fraction": "23/20",
+       "american": "6.5"
+      }
+     },
+     "close": {
+      "over": {
+       "value": 2.15,
+       "displayValue": "23/20",
+       "alternateDisplayValue": "+115",
+       "decimal": 2.15,
+       "fraction": "23/20",
+       "american": "+115"
+      },
+      "under": {
+       "value": 1.741,
+       "displayValue": "20/27",
+       "alternateDisplayValue": "-135",
+       "decimal": 1.741,
+       "fraction": "20/27",
+       "american": "-135"
+      },
+      "total": {
+       "alternateDisplayValue": "6.5",
+       "american": "6.5"
+      }
+     },
+     "current": {
+      "over": {
+       "value": 2.15,
+       "displayValue": "23/20",
+       "alternateDisplayValue": "+115",
+       "decimal": 2.15,
+       "fraction": "23/20",
+       "american": "+115"
+      },
+      "under": {
+       "value": 1.741,
+       "displayValue": "20/27",
+       "alternateDisplayValue": "-135",
+       "decimal": 1.741,
+       "fraction": "20/27",
+       "american": "-135"
+      },
+      "total": {
+       "alternateDisplayValue": "6.5",
+       "american": "6.5"
+      }
+     }
+    }
+   ]
+  },
+  "odds_check": {
+   "odds2:ESPN BET": {
+    "games": 60,
+    "overround_median": 1.04,
+    "overround_sane_share": 1.0,
+    "favourite_won": 0.733,
+    "logloss": 0.6025
+   },
+   "odds2:ESPN Bet - Live Odds": {
+    "games": 59,
+    "overround_median": 1.043,
+    "overround_sane_share": 1.0,
+    "favourite_won": 0.864,
+    "logloss": 0.2526
+   }
+  }
+ },
+ "2025": {
+  "games": 1312,
+  "team_rows": 2624,
+  "goalie_rows": 2766,
+  "skater_rows": 47212,
+  "games_without_team_xg": 0,
+  "games_without_goalie": 1,
+  "examples_missing": [
+   [
+    2025020964,
+    "2026-03-03",
+    "CHI",
+    "WPG"
+   ]
+  ],
+  "odds": {
+   "espn_events": 1313,
+   "games_with_lines": 936,
+   "moneyline_both": 936,
+   "total_with_prices": 932,
+   "closing_moneyline": 0,
+   "providers": {
+    "DraftKings": 936
+   },
+   "sample": [
+    {
+     "provider": {
+      "id": "100",
+      "name": "DraftKings",
+      "priority": 1,
+      "logos": [
+       {
+        "href": "https://a.espncdn.com/i/betting/Draftkings_Light.svg",
+        "rel": [
+         "light"
+        ]
+       },
+       {
+        "href": "https://a.espncdn.com/i/betting/Draftkings_Dark.svg",
+        "rel": [
+         "dark"
+        ]
+       }
+      ]
+     },
+     "details": "EDM -135",
+     "overUnder": 5.5,
+     "overOdds": -130.0,
+     "underOdds": 110.0,
+     "homeTeamOdds": {
+      "favorite": true,
+      "underdog": false,
+      "moneyLine": -135,
+      "spreadOdds": 180.0,
+      "team": {
+       "$ref": "http://sports.core.api.espn.pvt/v2/sports/hockey/leagues/nhl/seasons/2026/teams/6?lang=en&region=us"
+      },
+      "teamId": "6",
+      "favoriteAtOpen": true
+     },
+     "awayTeamOdds": {
+      "favorite": false,
+      "underdog": true,
+      "moneyLine": 114,
+      "spreadOdds": -205.0,
+      "team": {
+       "$ref": "http://sports.core.api.espn.pvt/v2/sports/hockey/leagues/nhl/seasons/2026/teams/9?lang=en&region=us"
+      },
+      "teamId": "9",
+      "favoriteAtOpen": false
+     }
+    }
+   ],
+   "check": {
+    "games": 936,
+    "overround_median": 1.043,
+    "overround_sane_share": 1.0,
+    "favourite_won": 0.557,
+    "logloss": 0.6806
+   }
+  },
+  "odds_core": {
+   "games_with_lines": 60,
+   "providers": {
+    "ESPN BET": 20,
+    "ESPN Bet - Live Odds": 20,
+    "Draft Kings": 42
+   },
+   "sample": [
+    {
+     "provider": {
+      "$ref": "http://sports.core.api.espn.com/v2/sports/hockey/leagues/nhl/providers/58?lang=en&region=us",
+      "id": "58",
+      "name": "ESPN BET",
+      "priority": 0
+     },
+     "overUnder": 5.5,
+     "overOdds": -135.0,
+     "underOdds": 115.0,
+     "homeTeamOdds": {
+      "favorite": true,
+      "underdog": false,
+      "moneyLine": -155,
+      "spreadOdds": 160.0,
+      "open": {
+       "favorite": true,
+       "pointSpread": {
+        "value": 2.7,
+        "displayValue": "17/10",
+        "alternateDisplayValue": "-1.5",
+        "decimal": 2.7,
+        "fraction": "17/10",
+        "american": "-1.5"
+       },
+       "spread": {
+        "value": 2.7,
+        "displayValue": "17/10",
+        "alternateDisplayValue": "+170",
+        "decimal": 2.7,
+        "fraction": "17/10",
+        "american": "+170"
+       },
+       "moneyLine": {
+        "value": 1.714,
+        "displayValue": "5/7",
+        "alternateDisplayValue": "-140",
+        "decimal": 1.714,
+        "fraction": "5/7",
+        "american": "-140"
+       }
+      },
+      "close": {
+       "pointSpread": {
+        "alternateDisplayValue": "-1.5",
+        "american": "-1.5"
+       },
+       "spread": {
+        "value": 2.6,
+        "displayValue": "8/5",
+        "alternateDisplayValue": "+160",
+        "decimal": 2.6,
+        "fraction": "8/5",
+        "american": "+160"
+       },
+       "moneyLine": {
+        "value": 1.645,
+        "displayValue": "20/31",
+        "alternateDisplayValue": "-155",
+        "decimal": 1.645,
+        "fraction": "20/31",
+        "american": "-155"
+       }
+      },
+      "current": {
+       "pointSpread": {
+        "alternateDisplayValue": "-1.5",
+        "american": "-1.5"
+       },
+       "spread": {
+        "value": 2.6,
+        "displayValue": "8/5",
+        "alternateDisplayValue": "+160",
+        "decimal": 2.6,
+        "fraction": "8/5",
+        "american": "+160"
+       },
+       "moneyLine": {
+        "value": 1.645,
+        "displayValue": "20/31",
+        "alternateDisplayValue": "-155",
+        "decimal": 1.645,
+        "fraction": "20/31",
+        "american": "-155"
+       }
+      },
+      "team": {
+       "$ref": "http://sports.core.api.espn.com/v2/sports/hockey/leagues/nhl/seasons/2026/teams/11?lang=en&region=us"
+      }
+     },
+     "awayTeamOdds": {
+      "favorite": false,
+      "underdog": true,
+      "moneyLine": 135,
+      "spreadOdds": -190.0,
+      "open": {
+       "favorite": false,
+       "pointSpread": {
+        "alternateDisplayValue": "+1.5",
+        "american": "+1.5"
+       },
+       "spread": {
+        "value": 1.465,
+        "displayValue": "20/43",
+        "alternateDisplayValue": "-215",
+        "decimal": 1.465,
+        "fraction": "20/43",
+        "american": "-215"
+       },
+       "moneyLine": {
+        "value": 2.2,
+        "displayValue": "6/5",
+        "alternateDisplayValue": "+120",
+        "decimal": 2.2,
+        "fraction": "6/5",
+        "american": "+120"
+       }
+      },
+      "close": {
+       "pointSpread": {
+        "alternateDisplayValue": "+1.5",
+        "american": "+1.5"
+       },
+       "spread": {
+        "value": 1.526,
+        "displayValue": "10/19",
+        "alternateDisplayValue": "-190",
+        "decimal": 1.526,
+        "fraction": "10/19",
+        "american": "-190"
+       },
+       "moneyLine": {
+        "value": 2.35,
+        "displayValue": "27/20",
+        "alternateDisplayValue": "+135",
+        "decimal": 2.35,
+        "fraction": "27/20",
+        "american": "+135"
+       }
+      },
+      "current": {
+       "pointSpread": {
+        "alternateDisplayValue": "+1.5",
+        "american": "+1.5"
+       },
+       "spread": {
+        "value": 1.526,
+        "displayValue": "10/19",
+        "alternateDisplayValue": "-190",
+        "decimal": 1.526,
+        "fraction": "10/19",
+        "american": "-190"
+       },
+       "moneyLine": {
+        "value": 2.35,
+        "displayValue": "27/20",
+        "alternateDisplayValue": "+135",
+        "decimal": 2.35,
+        "fraction": "27/20",
+        "american": "+135"
+       }
+      },
+      "team": {
+       "$ref": "http://sports.core.api.espn.com/v2/sports/hockey/leagues/nhl/seasons/2026/teams/26?lang=en&region=us"
+      }
+     },
+     "open": {
+      "over": {
+       "value": 2.1,
+       "displayValue": "11/10",
+       "alternateDisplayValue": "+110",
+       "decimal": 2.1,
+       "fraction": "11/10",
+       "american": "+110"
+      },
+      "under": {
+       "value": 1.769,
+       "displayValue": "10/13",
+       "alternateDisplayValue": "-130",
+       "decimal": 1.769,
+       "fraction": "10/13",
+       "american": "-130"
+      },
+      "total": {
+       "value": 2.1,
+       "displayValue": "11/10",
+       "alternateDisplayValue": "6.5",
+       "decimal": 2.1,
+       "fraction": "11/10",
+       "american": "6.5"
+      }
+     },
+     "close": {
+      "over": {
+       "value": 1.741,
+       "displayValue": "20/27",
+       "alternateDisplayValue": "-135",
+       "decimal": 1.741,
+       "fraction": "20/27",
+       "american": "-135"
+      },
+      "under": {
+       "value": 2.15,
+       "displayValue": "23/20",
+       "alternateDisplayValue": "+115",
+       "decimal": 2.15,
+       "fraction": "23/20",
+       "american": "+115"
+      },
+      "total": {
+       "alternateDisplayValue": "5.5",
+       "american": "5.5"
+      }
+     },
+     "current": {
+      "over": {
+       "value": 1.741,
+       "displayValue": "20/27",
+       "alternateDisplayValue": "-135",
+       "decimal": 1.741,
+       "fraction": "20/27",
+       "american": "-135"
+      },
+      "under": {
+       "value": 2.15,
+       "displayValue": "23/20",
+       "alternateDisplayValue": "+115",
+       "decimal": 2.15,
+       "fraction": "23/20",
+       "american": "+115"
+      },
+      "total": {
+       "alternateDisplayValue": "5.5",
+       "american": "5.5"
+      }
+     }
+    }
+   ]
+  },
+  "odds_check": {
+   "odds:DraftKings": {
+    "games": 936,
+    "overround_median": 1.043,
+    "overround_sane_share": 1.0,
+    "favourite_won": 0.557,
+    "logloss": 0.6806
+   },
+   "odds2:Draft Kings": {
+    "games": 42,
+    "overround_median": 1.043,
+    "overround_sane_share": 1.0,
+    "favourite_won": 0.571,
+    "logloss": 0.6588
+   },
+   "odds2:ESPN BET": {
+    "games": 20,
+    "overround_median": 1.041,
+    "overround_sane_share": 1.0,
+    "favourite_won": 0.7,
+    "logloss": 0.6203
+   },
+   "odds2:ESPN Bet - Live Odds": {
+    "games": 20,
+    "overround_median": 1.03,
+    "overround_sane_share": 1.0,
+    "favourite_won": 0.9,
+    "logloss": 0.1737
+   }
+  }
+ },
+ "2026": {
+  "games": 107,
+  "team_rows": 214,
+  "goalie_rows": 227,
+  "skater_rows": 3851,
+  "games_without_team_xg": 0,
+  "games_without_goalie": 0,
+  "examples_missing": [],
+  "odds": {
+   "espn_events": 107,
+   "games_with_lines": 107,
+   "moneyline_both": 107,
+   "total_with_prices": 107,
+   "closing_moneyline": 0,
+   "providers": {
+    "Draft Kings": 107
+   },
+   "sample": [
+    {
+     "provider": {
+      "id": "100",
+      "name": "Draft Kings",
+      "priority": 1,
+      "logos": [
+       {
+        "href": "https://a.espncdn.com/i/betting/Draftkings_Light.svg",
+        "rel": [
+         "light"
+        ]
+       },
+       {
+        "href": "https://a.espncdn.com/i/betting/Draftkings_Dark.svg",
+        "rel": [
+         "dark"
+        ]
+       }
+      ]
+     },
+     "details": "CAR -130",
+     "overUnder": 6.5,
+     "overOdds": 105.0,
+     "underOdds": -125.0,
+     "homeTeamOdds": {
+      "favorite": true,
+      "underdog": false,
+      "moneyLine": -130,
+      "spreadOdds": 190.0,
+      "team": {
+       "$ref": "http://sports.core.api.espn.pvt/v2/sports/hockey/leagues/nhl/seasons/2027/teams/7?lang=en&region=us"
+      },
+      "teamId": "7",
+      "favoriteAtOpen": true
+     },
+     "awayTeamOdds": {
+      "favorite": false,
+      "underdog": true,
+      "moneyLine": 110,
+      "spreadOdds": -230.0,
+      "team": {
+       "$ref": "http://sports.core.api.espn.pvt/v2/sports/hockey/leagues/nhl/seasons/2027/teams/26?lang=en&region=us"
+      },
+      "teamId": "26",
+      "favoriteAtOpen": false
+     }
+    }
+   ]
+  },
+  "odds_core": {
+   "games_with_lines": 60,
+   "providers": {
+    "Draft Kings": 60
+   },
+   "sample": [
+    {
+     "provider": {
+      "$ref": "http://sports.core.api.espn.com/v2/sports/hockey/leagues/nhl/providers/100?lang=en&region=us",
+      "id": "100",
+      "name": "Draft Kings",
+      "priority": 1
+     },
+     "overUnder": 5.5,
+     "overOdds": -130.0,
+     "underOdds": 110.0,
+     "homeTeamOdds": {
+      "favorite": true,
+      "underdog": false,
+      "moneyLine": -110,
+      "spreadOdds": 215.0,
+      "open": {
+       "favorite": true,
+       "pointSpread": {
+        "alternateDisplayValue": "-1.5",
+        "american": "-1.5"
+       },
+       "spread": {
+        "value": 2.8,
+        "displayValue": "9/5",
+        "alternateDisplayValue": "+180",
+        "decimal": 2.8,
+        "fraction": "9/5",
+        "american": "+180"
+       },
+       "moneyLine": {
+        "value": 1.7,
+        "displayValue": "50/71",
+        "alternateDisplayValue": "-142",
+        "decimal": 1.7,
+        "fraction": "50/71",
+        "american": "-142"
+       }
+      },
+      "close": {
+       "pointSpread": {
+        "alternateDisplayValue": "-1.5",
+        "american": "-1.5"
+       },
+       "spread": {
+        "value": 3.15,
+        "displayValue": "43/20",
+        "alternateDisplayValue": "+215",
+        "decimal": 3.15,
+        "fraction": "43/20",
+        "american": "+215"
+       },
+       "moneyLine": {
+        "value": 1.9,
+        "displayValue": "10/11",
+        "alternateDisplayValue": "-110",
+        "decimal": 1.9,
+        "fraction": "10/11",
+        "american": "-110"
+       }
+      },
+      "current": {
+       "pointSpread": {
+        "alternateDisplayValue": "-1.5",
+        "american": "-1.5"
+       },
+       "spread": {
+        "value": 3.15,
+        "displayValue": "43/20",
+        "alternateDisplayValue": "+215",
+        "decimal": 3.15,
+        "fraction": "43/20",
+        "american": "+215"
+       },
+       "moneyLine": {
+        "value": 1.9,
+        "displayValue": "10/11",
+        "alternateDisplayValue": "-110",
+        "decimal": 1.9,
+        "fraction": "10/11",
+        "american": "-110"
+       }
+      },
+      "team": {
+       "$ref": "http://sports.core.api.espn.com/v2/sports/hockey/leagues/nhl/seasons/2027/teams/1?lang=en&region=us"
+      }
+     },
+     "awayTeamOdds": {
+      "favorite": false,
+      "underdog": true,
+      "moneyLine": -110,
+      "spreadOdds": -265.0,
+      "open": {
+       "favorite": false,
+       "pointSpread": {
+        "alternateDisplayValue": "+1.5",
+        "american": "+1.5"
+       },
+       "spread": {
+        "value": 1.45,
+        "displayValue": "50/109",
+        "alternateDisplayValue": "-218",
+        "decimal": 1.45,
+        "fraction": "50/109",
+        "american": "-218"
+       },
+       "moneyLine": {
+        "value": 2.2,
+        "displayValue": "6/5",
+        "alternateDisplayValue": "+120",
+        "decimal": 2.2,
+        "fraction": "6/5",
+        "american": "+120"
+       }
+      },
+      "close": {
+       "pointSpread": {
+        "alternateDisplayValue": "+1.5",
+        "american": "+1.5"
+       },
+       "spread": {
+        "value": 1.37,
+        "displayValue": "20/53",
+        "alternateDisplayValue": "-265",
+        "decimal": 1.37,
+        "fraction": "20/53",
+        "american": "-265"
+       },
+       "moneyLine": {
+        "value": 1.9,
+        "displayValue": "10/11",
+        "alternateDisplayValue": "-110",
+        "decimal": 1.9,
+        "fraction": "10/11",
+        "american": "-110"
+       }
+      },
+      "current": {
+       "pointSpread": {
+        "alternateDisplayValue": "+1.5",
+        "american": "+1.5"
+       },
+       "spread": {
+        "value": 1.37,
+        "displayValue": "20/53",
+        "alternateDisplayValue": "-265",
+        "decimal": 1.37,
+        "fraction": "20/53",
+        "american": "-265"
+       },
+       "moneyLine": {
+        "value": 1.9,
+        "displayValue": "10/11",
+        "alternateDisplayValue": "-110",
+        "decimal": 1.9,
+        "fraction": "10/11",
+        "american": "-110"
+       }
+      },
+      "team": {
+       "$ref": "http://sports.core.api.espn.com/v2/sports/hockey/leagues/nhl/seasons/2027/teams/13?lang=en&region=us"
+      }
+     },
+     "open": {
+      "over": {
+       "value": 1.83,
+       "displayValue": "5/6",
+       "alternateDisplayValue": "-120",
+       "decimal": 1.83,
+       "fraction": "5/6",
+       "american": "-120"
+      },
+      "under": {
+       "value": 2.0,
+       "displayValue": "1/1",
+       "alternateDisplayValue": "+100",
+       "decimal": 2.0,
+       "fraction": "1/1",
+       "american": "+100"
+      },
+      "total": {
+       "alternateDisplayValue": "5.5",
+       "american": "5.5"
+      }
+     },
+     "close": {
+      "over": {
+       "value": 1.76,
+       "displayValue": "10/13",
+       "alternateDisplayValue": "-130",
+       "decimal": 1.76,
+       "fraction": "10/13",
+       "american": "-130"
+      },
+      "under": {
+       "value": 2.1,
+       "displayValue": "11/10",
+       "alternateDisplayValue": "+110",
+       "decimal": 2.1,
+       "fraction": "11/10",
+       "american": "+110"
+      },
+      "total": {
+       "alternateDisplayValue": "5.5",
+       "american": "5.5"
+      }
+     },
+     "current": {
+      "over": {
+       "value": 1.76,
+       "displayValue": "10/13",
+       "alternateDisplayValue": "-130",
+       "decimal": 1.76,
+       "fraction": "10/13",
+       "american": "-130"
+      },
+      "under": {
+       "value": 2.1,
+       "displayValue": "11/10",
+       "alternateDisplayValue": "+110",
+       "decimal": 2.1,
+       "fraction": "11/10",
+       "american": "+110"
+      },
+      "total": {
+       "alternateDisplayValue": "5.5",
+       "american": "5.5"
+      }
+     }
+    }
+   ]
+  },
+  "odds_check": {
+   "odds:Draft Kings": {
+    "games": 107,
+    "overround_median": 1.043,
+    "overround_sane_share": 1.0,
+    "favourite_won": 0.617,
+    "logloss": 0.653
+   },
+   "odds2:Draft Kings": {
+    "games": 60,
+    "overround_median": 1.043,
+    "overround_sane_share": 1.0,
+    "favourite_won": 0.583,
+    "logloss": 0.6596
+   }
+  }
+ },
+ "2021": {
+  "odds": {
+   "espn_events": 1377,
+   "games_with_lines": 1312,
+   "moneyline_both": 1312,
+   "total_with_prices": 1310,
+   "closing_moneyline": 0,
+   "providers": {
+    "Unibet": 1312
+   },
+   "sample": [
+    {
+     "provider": {
+      "id": "36",
+      "name": "Unibet",
+      "priority": 0
+     },
+     "details": "TB -162",
+     "overUnder": 5.5,
+     "overOdds": -130.0,
+     "underOdds": 108.0,
+     "homeTeamOdds": {
+      "favorite": true,
+      "underdog": false,
+      "moneyLine": -162,
+      "spreadOdds": -103.0,
+      "current": {
+       "pointSpread": {
+        "alternateDisplayValue": "-1.5",
+        "american": "-1.5"
+       },
+       "spread": {
+        "alternateDisplayValue": "-103",
+        "american": "-103"
+       },
+       "moneyLine": {
+        "alternateDisplayValue": "-162",
+        "american": "-162"
+       }
+      },
+      "team": {
+       "$ref": "http://sports.core.api.espn.pvt/v2/sports/hockey/leagues/nhl/seasons/2022/teams/20?lang=en&region=us"
+      },
+      "teamId": "20"
+     },
+     "awayTeamOdds": {
+      "favorite": false,
+      "underdog": true,
+      "moneyLine": 350,
+      "spreadOdds": -121.0,
+      "current": {
+       "pointSpread": {
+        "alternateDisplayValue": "+1.5",
+        "american": "+1.5"
+       },
+       "spread": {
+        "alternateDisplayValue": "-121",
+        "american": "-121"
+       },
+       "moneyLine": {
+        "alternateDisplayValue": "+350",
+        "american": "+350"
+       }
+      },
+      "team": {
+       "$ref": "http://sports.core.api.espn.pvt/v2/sports/hockey/leagues/nhl/seasons/2022/teams/16?lang=en&region=us"
+      },
+      "teamId": "16"
+     }
+    }
+   ],
+   "check": {
+    "games": 1312,
+    "overround_median": 0.827,
+    "overround_sane_share": 0.0,
+    "favourite_won": 0.642,
+    "logloss": 0.6399
+   }
+  },
+  "odds_core": {
+   "games_with_lines": 60,
+   "providers": {
+    "Bet365": 60,
+    "Caesars Sportsbook": 54,
+    "Caesars Sportsbook (Colorado)": 54,
+    "Caesars Sportsbook (New Jersey)": 60,
+    "Caesars Sportsbook (Pennsylvania)": 60,
+    "DraftKings": 60,
+    "Holland Casino": 9,
+    "MGM": 3
+   },
+   "sample": [
+    {
+     "provider": {
+      "$ref": "http://sports.core.api.espn.com/v2/sports/hockey/leagues/nhl/providers/1001?lang=en&region=us",
+      "id": "1001",
+      "name": "Bet365",
+      "priority": 0
+     },
+     "overUnder": 5.5,
+     "overOdds": 125.0,
+     "underOdds": -145.0,
+     "homeTeamOdds": {
+      "favorite": true,
+      "underdog": false,
+      "moneyLine": 105,
+      "spreadOdds": 155.0,
+      "current": {
+       "pointSpread": {
+        "alternateDisplayValue": "-1.5",
+        "american": "-1.5"
+       },
+       "spread": {
+        "alternateDisplayValue": "+155",
+        "american": "+155"
+       },
+       "moneyLine": {
+        "alternateDisplayValue": "+105",
+        "american": "+105"
+       }
+      },
+      "team": {
+       "$ref": "http://sports.core.api.espn.com/v2/sports/hockey/leagues/nhl/seasons/2022/teams/9?lang=en&region=us"
+      }
+     },
+     "awayTeamOdds": {
+      "favorite": false,
+      "underdog": true,
+      "moneyLine": 210,
+      "spreadOdds": -175.0,
+      "current": {
+       "pointSpread": {
+        "alternateDisplayValue": "+1.5",
+        "american": "+1.5"
+       },
+       "spread": {
+        "alternateDisplayValue": "-175",
+        "american": "-175"
+       },
+       "moneyLine": {
+        "alternateDisplayValue": "+210",
+        "american": "+210"
+       }
+      },
+      "team": {
+       "$ref": "http://sports.core.api.espn.com/v2/sports/hockey/leagues/nhl/seasons/2022/teams/8?lang=en&region=us"
+      }
+     },
+     "open": null,
+     "close": null,
+     "current": {
+      "over": {
+       "alternateDisplayValue": "+125",
+       "american": "+125"
+      },
+      "under": {
+       "alternateDisplayValue": "-145",
+       "american": "-145"
+      },
+      "total": {
+       "alternateDisplayValue": "5.5",
+       "american": "5.5"
+      }
+     }
+    }
+   ]
+  },
+  "odds_check": {
+   "odds:Unibet": {
+    "games": 1312,
+    "overround_median": 0.827,
+    "overround_sane_share": 0.0,
+    "favourite_won": 0.642,
+    "logloss": 0.6399
+   },
+   "odds2:Bet365": {
+    "games": 60,
+    "overround_median": 0.834,
+    "overround_sane_share": 0.0,
+    "favourite_won": 0.65,
+    "logloss": 0.6218
+   },
+   "odds2:Caesars Sportsbook": {
+    "games": 54,
+    "overround_median": 1.035,
+    "overround_sane_share": 1.0,
+    "favourite_won": 0.648,
+    "logloss": 0.6235
+   },
+   "odds2:Caesars Sportsbook (Colorado)": {
+    "games": 54,
+    "overround_median": 1.04,
+    "overround_sane_share": 1.0,
+    "favourite_won": 0.648,
+    "logloss": 0.6146
+   },
+   "odds2:Caesars Sportsbook (New Jersey)": {
+    "games": 60,
+    "overround_median": 1.04,
+    "overround_sane_share": 1.0,
+    "favourite_won": 0.65,
+    "logloss": 0.6209
+   },
+   "odds2:Caesars Sportsbook (Pennsylvania)": {
+    "games": 60,
+    "overround_median": 1.036,
+    "overround_sane_share": 1.0,
+    "favourite_won": 0.65,
+    "logloss": 0.6261
+   },
+   "odds2:DraftKings": {
+    "games": 60,
+    "overround_median": 0.828,
+    "overround_sane_share": 0.0,
+    "favourite_won": 0.65,
+    "logloss": 0.6162
+   },
+   "odds2:Holland Casino": {
+    "games": 9,
+    "overround_median": 0.851,
+    "overround_sane_share": 0.0,
+    "favourite_won": 0.778,
+    "logloss": 0.5146
+   },
+   "odds2:MGM": {
+    "games": 3,
+    "overround_median": 1.051,
+    "overround_sane_share": 1.0,
+    "favourite_won": 0.333,
+    "logloss": 0.8405
+   }
+  }
+ }
+}
