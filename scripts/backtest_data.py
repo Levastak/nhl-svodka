@@ -250,21 +250,43 @@ def core_pick(it):
             dec(ml(a, "open")), dec(ml(h, "open"))]
 
 
-def espn_core(eid, sample):
+PROV = {}   # id конторы ESPN → название (узнаём по ходу, чтобы не качать лишнее)
+
+
+def good_provider(name):
+    """Только линии до матча у контор с нормальной маржой (проверено пробой 15.10): Caesars, ESPN BET, DraftKings, MGM.
+    «Live Odds» — кэфы по ходу игры, «знают» результат; Unibet/Bet365/старый DraftKings у ESPN хранятся поломанными."""
+    n = (name or "").lower()
+    if "live" in n: return False
+    return any(k in n for k in ("caesars", "espn bet", "draft kings", "draftkings", "mgm"))
+
+
+def espn_core(eid, sample, season=0):
     raw = fetch(CORE.format(e=eid))
     js = json.loads(raw) if raw else {}
     out = []
-    for it in js.get("items", [])[:6]:
+    for it in js.get("items", [])[:12]:
         if set(it) <= {"$ref"}:
-            r2 = fetch(it["$ref"].replace(".pvt", ".com").replace("http://", "https://"))
+            ref = it["$ref"].replace(".pvt", ".com").replace("http://", "https://")
+            pid = ref.split("?")[0].rstrip("/").split("/")[-1]
+            if pid in PROV and not good_provider(PROV[pid]):
+                continue
+            r2 = fetch(ref)
             it = json.loads(r2) if r2 else {}
-        if it:
-            out.append(core_pick(it))
-            if len(sample) < 2: sample.append({k: it.get(k) for k in ("provider", "overUnder", "overOdds", "underOdds", "homeTeamOdds", "awayTeamOdds", "open", "close", "current")})
+            nm = (it.get("provider") or {}).get("name")
+            if nm: PROV[pid] = nm
+        if not it or not good_provider((it.get("provider") or {}).get("name")):
+            continue
+        nm = (it.get("provider") or {}).get("name", "")
+        if "draft" in nm.lower() and season < 2025:
+            continue
+        out.append(core_pick(it))
+        if len(sample) < 2: sample.append({k: it.get(k) for k in ("provider", "overUnder", "homeTeamOdds", "awayTeamOdds", "close")})
+        break   # одной нормальной линии на матч достаточно
     return out
 
 
-def espn_odds(games, sample, core=False):
+def espn_odds(games, sample, core=False, season=0):
     """Кэфы ESPN по матчам сезона: табло по дням → id события ESPN → summary (pickcenter)."""
     from concurrent.futures import ThreadPoolExecutor
     ev = {}
@@ -287,7 +309,7 @@ def espn_odds(games, sample, core=False):
             return g[0], None, None
         if core:
             try:
-                return g[0], espn_core(eid, sample), None
+                return g[0], espn_core(eid, sample, season), None
             except Exception:
                 return g[0], None, None
         raw = fetch(f"{ESPN}/summary?event={eid}")
@@ -385,7 +407,7 @@ def main():
         log(f"Кэфы ESPN core {s}-{(s + 1) % 100:02d}: {len(games)} матчей…")
         sample = []
         try:
-            odds, nev = espn_odds(games, sample, core=True)
+            odds, nev = espn_odds(games, sample, core=True, season=s)
         except Exception as e:
             log(f"  не вышло: {e}"); continue
         with gzip.open(op, "wt", encoding="utf-8") as fh:

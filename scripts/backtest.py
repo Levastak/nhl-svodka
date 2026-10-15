@@ -203,12 +203,13 @@ def build_day(pk, day, gmode="actual", odds=None):
 def load_odds(data, s):
     """Кэфы сезона (ESPN): по матчу берём первую нормальную линию — маржа 0–12%, обе стороны есть."""
     out = {}
-    for fn in ("odds", "odds2"):
+    for fn in ("odds2", "odds"):     # сначала раздел core (закрытие), потом pickcenter
         p = os.path.join(data, f"{fn}_{s}.json.gz")
         if not os.path.exists(p): continue
         for gid, picks in json.load(gzip.open(p, "rt", encoding="utf-8"))["odds"].items():
             if gid in out: continue
             for pv, a, h, t, o, u, *_ in picks:
+                if "live" in (pv or "").lower(): continue          # кэфы по ходу игры — подглядывают в результат
                 if a and h and 1.0 <= 1 / a + 1 / h <= 1.12:
                     x = dict(away=a, home=h, source=f"ESPN {pv}")
                     if t and o and u and 1.0 <= 1 / o + 1 / u <= 1.15: x.update(total=float(t), over=o, under=u)
