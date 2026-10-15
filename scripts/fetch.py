@@ -121,13 +121,15 @@ def build_game(g):
         if (x.get("goalModifier") or "") == "empty-net":
             strength = "en"
         ast = ",".join(((y.get("lastName") or {}).get("default")) or surname((y.get("name") or {}).get("default")) for y in x.get("assists", []))
+        aid = ",".join(str(y.get("playerId") or "") for y in x.get("assists", []))
+        # [фамилия, команда, тип, период, время, ассистенты, id автора, id ассистентов] — id различают однофамильцев (Ткачуки)
         row = [name, x.get("teamAbbrev") if isinstance(x.get("teamAbbrev"), str) else (x.get("teamAbbrev") or {}).get("default"),
-               strength, per, x.get("timeInPeriod", ""), ast]
+               strength, per, x.get("timeInPeriod", ""), ast, x.get("playerId") or "", aid]
         (so if ptype == "SO" or per == 5 else goals).append(row)
     if end == "SO":
         win = a["abbrev"] if a["score"] > h["score"] else h["abbrev"]
         w = [x for x in so if x[1] == win]
-        goals.append([(w[-1][0] if w else ""), win, "ev", 5, "00:00", ""])
+        goals.append([(w[-1][0] if w else ""), win, "ev", 5, "00:00", "", (w[-1][6] if w else ""), ""])
     rec = dict(id=g["id"], date=g.get("gameDate"), away=a["abbrev"], home=h["abbrev"], **{"as": a["score"], "hs": h["score"]},
                end=end, sog=[a.get("sog"), h.get("sog")], goals=goals)
     if g.get("threeMinRecap"):
@@ -690,8 +692,27 @@ def pm():
     save(f"{SITE}/lines.json", lines)
     save(f"{SITE}/data.json", data)
     run_model()
+    auto_texts(data, evening=True)
     data["fetch"] = dict(mode="pm", t=iso(), ok=LOG["ok"], fail=LOG["fail"])
     save(f"{SITE}/data.json", data)
+
+
+def auto_texts(data, evening=False):
+    """Тексты без ИИ (scripts/texts.py): запасное утро, если тексты Claude не вышли; вечером — финальный прогноз."""
+    try:
+        sys.path.insert(0, os.path.join(ROOT, "scripts"))
+        import texts
+        model = load(f"{SITE}/model.json", {})
+        archive = load(f"{SITE}/archive.json", {"games": []})
+        box = load(f"{SITE}/box.json", {})
+        if texts.fallback(data, model, archive, box):
+            save(f"{SITE}/archive.json", archive)
+            LOG["ok"].append("запасные тексты")
+        if evening:
+            n, c = texts.final(data, model)
+            LOG["ok"].append(f"финал: {n} матчей, изменений {c}")
+    except Exception as e:
+        LOG["fail"].append(f"тексты: {e}")
 
 
 SNAP_KEYS = ("upcoming", "upcoming_date", "week", "standings", "skaters", "goalies", "teams", "team_stats", "team_xg",
@@ -946,6 +967,27 @@ if __name__ == "__main__":
         sys.exit(0)
     if mode == "hist":
         hist()
+        print(json.dumps(LOG, ensure_ascii=False))
+        sys.exit(0)
+    if mode == "ids":
+        # разово: дописать id игроков к голам архива (различать однофамильцев)
+        arc = load(f"{SITE}/archive.json", {"games": []})
+        byid = {g["id"]: g for g in arc["games"]}
+        n = 0
+        for day in sorted({g["date"] for g in arc["games"]}):
+            sc, _ = get(f"https://api-web.nhle.com/v1/score/{day}", label=f"score {day}")
+            for g in (sc or {}).get("games", []):
+                if g["id"] in byid and g.get("goals"):
+                    byid[g["id"]]["goals"] = build_game(g)["goals"]
+                    n += 1
+        save(f"{SITE}/archive.json", arc)
+        LOG["ok"].append(f"ids: {n} матчей")
+        print(json.dumps(LOG, ensure_ascii=False))
+        sys.exit(0)
+    if mode == "auto":
+        d = load(f"{SITE}/data.json", {})
+        auto_texts(d)
+        save(f"{SITE}/data.json", d)
         print(json.dumps(LOG, ensure_ascii=False))
         sys.exit(0)
     if mode == "img":

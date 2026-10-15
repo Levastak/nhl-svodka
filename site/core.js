@@ -97,6 +97,10 @@ function lineHtml(line){const m=/^\s*(\d+)\s*\+\s*(\d+)\s*$/.exec(String(line||"
 let RUNN=null;
 function pn(name){if(!name)return"";if(RUN[name])return RUN[name];if(!RUNN){RUNN={};for(const k in RUN)RUNN[nrm(k)]=RUN[k]}return RUNN[nrm(name)]||name}
 function ps(name){const r=pn(name);if(r===name&&!/[А-яЁё]/.test(r))return String(name).split(" ").slice(-1)[0];const p=r.split(" ");return p.length>1?p.slice(1).join(" "):r}
+/* id игрока из пути фото (heads: "сезон/КОМ/id") — различает однофамильцев */
+let _PID=null;function pidMap(){if(_PID)return _PID;_PID={byId:{},byName:{}};const H=(D&&D.heads)||{};for(const n in H){const id=String(H[n]).split("/").pop();if(id){_PID.byId[id]=n;_PID.byName[n]=id}}return _PID}
+function idName(id){return id?pidMap().byId[String(id)]||null:null}
+function nameId(n){return pidMap().byName[n]||null}
 function findP(s,team){if(!s)return null;s=String(s).trim();const all=[...((D&&D.skaters)||[]),...((D&&D.goalies)||[])];if(all.some(x=>x.name===s))return s;
   const k=nrm(s),last=x=>nrm(String(x.name).split(" ").slice(-1)[0]),full=x=>nrm(x.name);
   let c=all.filter(x=>(!team||x.team===team)&&(full(x)===k||last(x)===k||full(x).endsWith(k)));if(c.length===1)return c[0].name;

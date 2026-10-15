@@ -5,6 +5,9 @@ on:
     - cron: "52 5 * * *"    # 08:52 по Кирову — утренний сбор (последние матчи заканчиваются около 08:45) ok
     - cron: "19 20 * * *"   # 23:19 по Кирову — предматчевый сбор
     - cron: "41 7 * * 1"     # понедельник 10:41 по Кирову — истории клубов и карьеры игроков
+    - cron: "8 7 * * *"     # 10:08 по Кирову — запасные тексты, если утренние тексты Claude не вышли
+    - cron: "40 22 * * *"   # 01:40 по Кирову — запуск ночного дозора
+    - cron: "10 4 * * *"    # 07:10 по Кирову — второй дозор до последних матчей
     - cron: "*/15 0-6 * * *"    # ночь по Кирову (03:00–09:59): закончился матч — сразу итоги, таблица, лидеры
     - cron: "*/15 16-23 * * *"  # дневные матчи выходных (19:00–02:59 по Кирову)
   workflow_dispatch:
@@ -18,6 +21,7 @@ on:
 
 permissions:
   contents: write
+  actions: write
   pages: write
   id-token: write
 
@@ -40,7 +44,7 @@ jobs:
         id: mode
         run: |
           if [ "${{ github.event_name }}" = "schedule" ]; then
-            case "${{ github.event.schedule }}" in "17 8 * * *") M=am;; "19 20 * * *") M=pm;; "41 7 * * 1") M=weekly;; *) M=night;; esac
+            case "${{ github.event.schedule }}" in "52 5 * * *") M=am;; "19 20 * * *") M=pm;; "41 7 * * 1") M=weekly;; "8 7 * * *") M=auto;; "40 22 * * *"|"10 4 * * *") M=watch;; *) M=night;; esac
             # trigger/skip: «дата режим» — пропустить один плановый сбор (например «2026-10-12 pm»)
             if grep -qx "$(date -u +%F) $M" trigger/skip 2>/dev/null; then M=deploy; fi
             echo "mode=$M" >> $GITHUB_OUTPUT
@@ -56,8 +60,13 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+      - name: Ночной дозор
+        if: steps.mode.outputs.mode == 'watch'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run watch.yml
       - name: Сбор данных и модель
-        if: steps.mode.outputs.mode != 'deploy'
+        if: steps.mode.outputs.mode != 'deploy' && steps.mode.outputs.mode != 'watch'
         env:
           ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
         run: python3 scripts/fetch.py ${{ steps.mode.outputs.mode }}
@@ -75,14 +84,14 @@ jobs:
           echo "changed=1" >> $GITHUB_OUTPUT
           for i in 1 2 3; do git pull --rebase -X theirs origin main && git push && break; sleep 5; done
       - name: Версия скриптов
-        if: steps.mode.outputs.mode != 'night' || steps.save.outputs.changed == '1'
+        if: (steps.mode.outputs.mode != 'night' && steps.mode.outputs.mode != 'watch') || steps.save.outputs.changed == '1'
         run: echo "${{ github.run_id }}" > site/version.txt
       - uses: actions/configure-pages@v5
-        if: steps.mode.outputs.mode != 'night' || steps.save.outputs.changed == '1'
+        if: (steps.mode.outputs.mode != 'night' && steps.mode.outputs.mode != 'watch') || steps.save.outputs.changed == '1'
       - uses: actions/upload-pages-artifact@v3
-        if: steps.mode.outputs.mode != 'night' || steps.save.outputs.changed == '1'
+        if: (steps.mode.outputs.mode != 'night' && steps.mode.outputs.mode != 'watch') || steps.save.outputs.changed == '1'
         with:
           path: site
       - uses: actions/deploy-pages@v4
-        if: steps.mode.outputs.mode != 'night' || steps.save.outputs.changed == '1'
+        if: (steps.mode.outputs.mode != 'night' && steps.mode.outputs.mode != 'watch') || steps.save.outputs.changed == '1'
         id: deploy

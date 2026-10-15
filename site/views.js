@@ -193,7 +193,7 @@ function goalList(items,away,home,so){if(!items.length)return"";let sa=0,sh=0;co
     const as=[...new Set(String(x.as||"").split(",").map(s=>s.trim()).filter(Boolean))];const kd=ST[x.kind]||(["бол.","мен.","п.в."].includes(x.kind)?x.kind:"");const left=x.team===away;
     return `<div class="goal"><time>${+k===5?"Б":esc(x.time)}</time>${logo(x.team,32)}<span class="who"><b>${pref(x.who,x.team)}</b>${kd?`<em>${esc(kd)}</em>`:""}${as.length?`<small>${as.map(a=>pref(a,x.team,true)).join(", ")}</small>`:+k===5?"":`<small>без передач</small>`}</span>${+k===5?"":`<span class="gsc"><b class="${left?"on":""}">${sa}</b>:<b class="${left?"":"on"}">${sh}</b></span>`}</div>`}).join("")}`).join("")}</div>`}
 function goalsBlock(g){if(!g.goals||!g.goals.length)return g.end==="SO"&&g.as+g.hs===1?'<p class="note">Голов в игре не было, победа в серии буллитов.</p>':"";
-  return goalList(g.goals.map(x=>({per:x[3],time:x[4],team:x[1],who:x[0],kind:x[2],as:x[5]})),g.away,g.home)}
+  return goalList(g.goals.map(x=>({per:x[3],time:x[4],team:x[1],who:idName(x[6])||x[0],kind:x[2],as:x[7]?String(x[7]).split(",").map((id,i)=>idName(id)||String(x[5]||"").split(",")[i]||"").join(","):x[5]})),g.away,g.home)}
 /* статистика: значения по краям, полосы расходятся от центра; сторона и цвет команды постоянны */
 function sbar(l,v,a,h,parse=x=>x){const x=+parse(v[0])||0,y=+parse(v[1])||0;const mx=Math.max(x,y)||1;
   const [ca,ch]=tpair(a,h);
@@ -258,9 +258,10 @@ function vTeams(){return `<div class="col">${back()}<section class="sec"><div cl
   <button class="inp sopen" data-search>🔍 Найти игрока или команду</button>
   ${DIVS.map(d=>`<div class="sec"><div class="hd"><h3>${d[1]} дивизион</h3></div><div class="teams">${d[2].map(a=>`<button data-team="${a}">${logo(a,48)}<span>${EN[a]}</span></button>`).join("")}</div></div>`).join("")}</section></div>`}
 function lastNPoints(n=5){const teamG={};A.games.slice().sort((x,y)=>x.date<y.date?-1:1).forEach(g=>{for(const t of [g.away,g.home])(teamG[t]=teamG[t]||[]).push(g)});
-  const pts={};for(const t in teamG)for(const g of teamG[t].slice(-n))for(const x of (g.goals||[])){if(x[1]!==t||x[3]===5)continue;const add=(s,k)=>{s=String(s||"").trim();if(!s)return;const key=t+"|"+s;pts[key]=pts[key]||{g:0,a:0};pts[key][k]++};add(x[0],"g");String(x[5]||"").split(",").forEach(s=>add(s,"a"))}
+  const pts={};for(const t in teamG)for(const g of teamG[t].slice(-n))for(const x of (g.goals||[])){if(x[1]!==t||x[3]===5)continue;const add=(s,k)=>{s=String(s||"").trim();if(!s)return;const key=t+"|"+s;pts[key]=pts[key]||{g:0,a:0};pts[key][k]++};
+    if(x[6]){add("#"+x[6],"g");String(x[7]||"").split(",").forEach(s=>s&&add("#"+s,"a"))}else{add(x[0],"g");String(x[5]||"").split(",").forEach(s=>add(s,"a"))}}
   return pts}
-function hotList(){const L=lastNPoints(5);const rows=(D.skaters||[]).filter(s=>s.gp>=3).map(s=>{const p=L[s.team+"|"+s.name.split(" ").slice(1).join(" ")]||L[s.team+"|"+s.name.split(" ").pop()]||{g:0,a:0};return {...s,l5g:p.g,l5a:p.a,l5:p.g+p.a}});
+function hotList(){const L=lastNPoints(5);const rows=(D.skaters||[]).filter(s=>s.gp>=3).map(s=>{const id=nameId(s.name),a=id&&L[s.team+"|#"+id],b=L[s.team+"|"+s.name.split(" ").slice(1).join(" ")]||L[s.team+"|"+s.name.split(" ").pop()];const p=a||b?{g:(a?a.g:0)+(b?b.g:0),a:(a?a.a:0)+(b?b.a:0)}:{g:0,a:0};return {...s,l5g:p.g,l5a:p.a,l5:p.g+p.a}});
   return {hot:rows.slice().sort((a,b)=>b.l5-a.l5||b.l5g-a.l5g||b.pts-a.pts).slice(0,10),cold:rows.filter(r=>r.l5===0).sort((a,b)=>b.pts/b.gp-a.pts/a.gp).slice(0,10)}}
 function vLead(){const {hot,cold}=hotList();const list=HOT_MODE==="hot"?hot:cold;
   return `<div class="col">${back()}<section class="sec"><div class="hd"><h1>Лидеры<small>текущий сезон</small></h1></div><div class="tgrid">
@@ -325,8 +326,8 @@ function teamSheet(a){const t=TEAMS[a],md=(M.teams||{})[a],r=(D.teams||{})[a]||{
     ${(r.injuries||[]).length?`<div class="sec"><h4 class="sub">Травмы</h4><ul class="ul">${r.injuries.map(x=>`<li><b>${pref(x.name,a)}</b> · ${esc(x.status)}</li>`).join("")}</ul></div>`:""}
     ${rus.length?`<div class="sec"><h4 class="sub">Россияне</h4><div class="acts">${rus.map(x=>`<button class="btn" data-player="${esc(x.name)}" data-pteam="${a}">${photo(x.name,a,32)}${esc(pn(x.name))}</button>`).join("")}</div></div>`:""}
    </div>`);fillTeamHist(a)}
-function playerGames(name,tm){const ln=name.split(" ").slice(1).join(" ")||name;const short=name.split(" ").pop();const out=[];
-  for(const g of A.games.slice().sort((x,y)=>x.date<y.date?-1:1)){if(g.away!==tm&&g.home!==tm)continue;let G=0,As=0;for(const x of g.goals||[]){if(x[1]!==tm||x[3]===5)continue;if(x[0]===ln||x[0]===short)G++;if(String(x[5]||"").split(",").map(s=>s.trim()).some(s=>s===ln||s===short))As++}out.push({g,G,As})}return out}
+function playerGames(name,tm){const id=nameId(name);const ln=name.split(" ").slice(1).join(" ")||name;const short=name.split(" ").pop();const out=[];
+  for(const g of A.games.slice().sort((x,y)=>x.date<y.date?-1:1)){if(g.away!==tm&&g.home!==tm)continue;let G=0,As=0;for(const x of g.goals||[]){if(x[1]!==tm||x[3]===5)continue;if(x[6]&&id){if(String(x[6])===id)G++;if(String(x[7]||"").split(",").includes(id))As++;continue}if(x[0]===ln||x[0]===short)G++;if(String(x[5]||"").split(",").map(s=>s.trim()).some(s=>s===ln||s===short))As++}out.push({g,G,As})}return out}
 /* шапка игрока как в профиле НХЛ: цвет клуба → чёрный, фактура джерси, призрачный логотип, фото снизу */
 const CTRY={RUS:["RU","РОС"],CAN:["CA","КАН"],USA:["US","США"],SWE:["SE","ШВЕ"],FIN:["FI","ФИН"],CZE:["CZ","ЧЕХ"],SVK:["SK","СЛК"],DEU:["DE","ГЕР"],CHE:["CH","ШВА"],AUT:["AT","АВС"],DNK:["DK","ДАН"],NOR:["NO","НОР"],LVA:["LV","ЛАТ"],BLR:["BY","БЛР"],FRA:["FR","ФРА"],GBR:["GB","ВБР"],AUS:["AU","АВЛ"],KAZ:["KZ","КАЗ"],UKR:["UA","УКР"],SVN:["SI","СЛО"],NLD:["NL","НИД"],JPN:["JP","ЯПО"],POL:["PL","ПОЛ"],ITA:["IT","ИТА"],LTU:["LT","ЛИТ"],EST:["EE","ЭСТ"],HUN:["HU","ВЕН"],KOR:["KR","КОР"],CHN:["CN","КИТ"],BRA:["BR","БРА"],JAM:["JM","ЯМА"],NGA:["NG","НИГ"],ZAF:["ZA","ЮАР"]};
 const flag=iso2=>iso2?String.fromCodePoint(...[...iso2].map(c=>127397+c.charCodeAt(0))):"";
