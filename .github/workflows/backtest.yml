@@ -92,7 +92,7 @@ jobs:
           git diff --cached --quiet && exit 0
           git commit -m "Бэктест: ${{ steps.cfg.outputs.label }} (${{ job.status }})"
           for i in 1 2 3 4 5; do
-            git pull --rebase origin main && git push origin HEAD:main && exit 0
+            git pull --rebase -X theirs origin main && git push origin HEAD:main && exit 0
             sleep $((i * 10))
           done
           exit 1
