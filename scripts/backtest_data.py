@@ -332,6 +332,25 @@ def main():
         r["odds"] = dict(espn_events=nev, games_with_lines=len(odds), moneyline_both=full, total_with_prices=tot, closing_moneyline=cls, providers=prov,
                          sample=[{k: x.get(k) for k in ("provider", "details", "overUnder", "overOdds", "underOdds", "homeTeamOdds", "awayTeamOdds")} for x in sample[:1]])
         log("  ", {k: v for k, v in r["odds"].items() if k != "sample"})
+    # проверка кэфов на «подглядывание»: линия до матча — маржа 2–8%, фаворит выигрывает ~60%, лог-лосс ~0,66;
+    # кэфы по ходу/после матча — маржа странная и «угадывают» результат
+    import math, statistics
+    for s in seasons:
+        op = os.path.join(a.out, f"odds_{s}.json.gz"); sp = os.path.join(a.out, f"season_{s}.json.gz")
+        if not (os.path.exists(op) and os.path.exists(sp)): continue
+        odds = json.load(gzip.open(op, "rt", encoding="utf-8"))["odds"]
+        res = {str(g[0]): g for g in json.load(gzip.open(sp, "rt", encoding="utf-8"))["games"]}
+        ov, ll, fav, n, sane = [], 0.0, 0, 0, 0
+        for gid, picks in odds.items():
+            p_ = next((p for p in picks if p[1] and p[2]), None); g = res.get(str(gid))
+            if not p_ or not g: continue
+            ia, ih = 1 / p_[1], 1 / p_[2]; ov.append(ia + ih); ph = ih / (ia + ih); hw = g[5] > g[4]
+            ll -= math.log(max(1e-9, ph if hw else 1 - ph)); fav += (ph >= .5) == hw; n += 1; sane += 1.0 <= ia + ih <= 1.10
+        if n:
+            report.setdefault(str(s), {}).setdefault("odds", {})["check"] = dict(
+                games=n, overround_median=round(statistics.median(ov), 3), overround_sane_share=round(sane / n, 3),
+                favourite_won=round(fav / n, 3), logloss=round(ll / n, 4))
+            log(f"Проверка кэфов {s}:", report[str(s)]["odds"]["check"])
     json.dump(report, open(os.path.join(a.out, "report.json"), "w"), ensure_ascii=False, indent=1)
     if os.path.exists(tp): os.remove(tp)
 
