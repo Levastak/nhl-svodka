@@ -7,15 +7,10 @@ MoneyPuck: команды по матчам (один большой файл)�
 /home/runner/work/nhl-svodka/nhl-svodka/scripts/backtest_data.py:301: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
   pack = dict(season=s, built=dt.datetime.utcnow().strftime("%Y-%m-%dT%H:%MZ"), games=games, team=tm, goalie=goalies, skater=skaters)
    {'games': 107, 'team_rows': 214, 'goalie_rows': 227, 'skater_rows': 3851, 'games_without_team_xg': 0, 'games_without_goalie': 0, 'examples_missing': []}
-Кэфы ESPN 2021-22: 1312 матчей…
-   {'espn_events': 1377, 'games_with_lines': 1312, 'moneyline_both': 1312, 'total_with_prices': 1310, 'closing_moneyline': 0, 'providers': {'Unibet': 1312}}
-Кэфы ESPN 2022-23: 1312 матчей…
-   {'espn_events': 1332, 'games_with_lines': 1311, 'moneyline_both': 1311, 'total_with_prices': 1311, 'closing_moneyline': 0, 'providers': {'Unibet': 1311}}
-Кэфы ESPN 2023-24: 1312 матчей…
-   {'espn_events': 1313, 'games_with_lines': 1312, 'moneyline_both': 1312, 'total_with_prices': 1312, 'closing_moneyline': 0, 'providers': {'Unibet': 1312}}
-Кэфы ESPN 2024-25: 1312 матчей…
-   {'espn_events': 1330, 'games_with_lines': 0, 'moneyline_both': 0, 'total_with_prices': 0, 'closing_moneyline': 0, 'providers': {}}
-Кэфы ESPN 2025-26: 1312 матчей…
-   {'espn_events': 1313, 'games_with_lines': 936, 'moneyline_both': 936, 'total_with_prices': 932, 'closing_moneyline': 0, 'providers': {'DraftKings': 936}}
 Кэфы ESPN 2026-27: 107 матчей…
    {'espn_events': 107, 'games_with_lines': 107, 'moneyline_both': 107, 'total_with_prices': 107, 'closing_moneyline': 0, 'providers': {'DraftKings': 107}}
+Проверка кэфов 2021: {'games': 1312, 'overround_median': 0.827, 'overround_sane_share': 0.0, 'favourite_won': 0.642, 'logloss': 0.6399}
+Проверка кэфов 2022: {'games': 1311, 'overround_median': 0.828, 'overround_sane_share': 0.0, 'favourite_won': 0.617, 'logloss': 0.6517}
+Проверка кэфов 2023: {'games': 1312, 'overround_median': 0.822, 'overround_sane_share': 0.006, 'favourite_won': 0.621, 'logloss': 0.6428}
+Проверка кэфов 2025: {'games': 936, 'overround_median': 1.043, 'overround_sane_share': 1.0, 'favourite_won': 0.557, 'logloss': 0.6806}
+Проверка кэфов 2026: {'games': 107, 'overround_median': 1.043, 'overround_sane_share': 1.0, 'favourite_won': 0.617, 'logloss': 0.653}
