@@ -61,6 +61,15 @@ def feed(LOG):
                                                 tags=[c.get("description") for c in a.get("categories") or [] if c.get("description")][:10])
     except Exception as ex:
         LOG["fail"].append(f"feed espn: {ex!r}"[:150])
+    # дубли одной истории (одинаковый заголовок у разных разделов) — оставляем одну
+    seen, uniq = set(), {}
+    for x in sorted(items.values(), key=lambda x: str(x.get("time"))):
+        k = re.sub(r"\W+", "", str(x.get("title") or "").lower())
+        if k in seen:
+            continue
+        seen.add(k)
+        uniq[x["id"]] = x
+    items = uniq
     cut = (dt.datetime.now(dt.timezone.utc) - dt.timedelta(days=2)).strftime("%Y-%m-%dT%H:%M")
     keep = sorted([x for x in items.values() if str(x.get("time") or "") >= cut], key=lambda x: str(x.get("time")), reverse=True)
     os.makedirs(TG, exist_ok=True)
