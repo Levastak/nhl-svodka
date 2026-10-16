@@ -128,6 +128,18 @@ body{font-family:G,sans-serif;color:#EDEFF2;background:#0D0F12;position:relative
 .mw .m b{font-family:F;font-weight:700;font-size:34px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .mw .m small{display:block;font-size:22px;color:#A9AFB8}
 .mw .m em{font-style:normal;font-family:F;font-weight:800;font-size:40px}
+/* модель против рынка */
+.vm{display:flex;flex-direction:column;height:100%;gap:16px}
+.vm .rc{font-size:28px;color:#A9AFB8}.vm .rc b{color:#fff;font-family:F;font-weight:800;font-size:40px}
+.vm .g{flex:1;max-height:420px;background:rgba(255,255,255,.05);border-radius:22px;padding:var(--gp,20px) 26px;display:flex;flex-direction:column;gap:14px;justify-content:center}
+.vm .g .hd{display:flex;align-items:center;gap:12px;font-family:F;font-weight:800;font-size:var(--hf)}
+.vm .g .hd .k{margin-left:auto;font-size:22px;letter-spacing:.1em;text-transform:uppercase;color:#0D0F12;background:#F2B33D;border-radius:8px;padding:3px 10px;white-space:nowrap}
+.vm .two{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.vm .sd{border-radius:16px;padding:calc(var(--gp,20px)*.6) 18px;background:rgba(255,255,255,.05);display:flex;align-items:center;gap:16px}
+.vm .sd.m{background:rgba(255,74,85,.14);border:1px solid rgba(255,74,85,.35)}
+.vm .sd small{display:block;font-size:22px;letter-spacing:.1em;text-transform:uppercase;color:#A9AFB8;font-family:F;font-weight:700}
+.vm .sd b{display:block;font-family:F;font-weight:800;font-size:var(--bf);line-height:1}
+.vm .sd span{display:block;font-size:26px;color:#C3C7CE}
 /* три звезды */
 .stars{display:grid;grid-template-columns:repeat(var(--n,3),minmax(0,1fr));gap:20px;height:100%}
 .sc3{border-radius:26px;overflow:hidden;background:#16191E;display:flex;flex-direction:column;border:1px solid rgba(255,255,255,.08)}
@@ -374,8 +386,39 @@ def card_modelweek(spec, logos):
     return page(body, "Счёт <b>модели</b>", spec.get("date", ""))
 
 
+def card_vsmarket(spec, logos):
+    """Матчи вечера, где модель спорит с рынком: за кого модель и за кого рынок, с процентами."""
+    rows = (spec.get("rows") or [])[:3]
+    n = max(len(rows), 1)
+    hf, bf, lz = (52, 110, 110) if n == 1 else (44, 84, 84) if n == 2 else (34, 54, 54)
+    out = []
+    for r in rows:
+        h, a = r["home"], r["away"]
+        k = {"исход": "спор об исходе", "тотал": "спор о тотале", "сила": "модель увереннее"}[r["kind"]]
+        if r["kind"] == "тотал":
+            t = r.get("total") or {}
+            S = lambda x: "больше" if x == "over" else "меньше"
+            ln = str(t.get("line")).replace(".", ",")
+            sides = [("Модель", None, f"{S(t.get('side'))} {ln}", f"{round((t.get('p') or 0) * 100)}%", True),
+                     ("Рынок", None, f"{S(t.get('mkt_side'))} {ln}", f"{round(t['mkt_p'] * 100)}%" if t.get("mkt_p") else "", False)]
+        else:
+            fm = "home" if r["p_home"] >= r["p_away"] else "away"
+            fk = "home" if r["mkt_home"] >= r["mkt_away"] else "away"
+            sides = [("Модель", r[fm], RU.get(r[fm]), f"{round(r['p_' + fm] * 100)}%", True),
+                     ("Рынок", r[fk], RU.get(r[fk]), f"{round(r['mkt_' + fk] * 100)}%", False)]
+        sd = "".join(f'<div class="sd {"m" if hl else ""}">{logo(t, logos, lz) if t else ""}<div><small>{lbl}</small><b>{e(pct) or e(name)}</b>'
+                     f'<span>{"за «" + e(name) + "»" if t else ("за «" + e(name) + "»" if pct else "")}</span></div></div>'
+                     for lbl, t, name, pct, hl in sides)
+        out.append(f'<div class="g"><div class="hd">{logo(h, logos, int(hf * 1.3))}{e(RU.get(h))} — {e(RU.get(a))}{logo(a, logos, int(hf * 1.3))}'
+                   f'<span class="k">{k}</span></div><div class="two">{sd}</div></div>')
+    rec = spec.get("rec")
+    rc = (f'<div class="rc">В спорах с рынком в этом сезоне модель права в <b>{rec[0]} из {rec[1]}</b>. Хозяева — первыми.</div>'
+          if rec and rec[1] else '<div class="rc">Хозяева — первыми.</div>')
+    return page(f'<div class="vm" style="--hf:{hf}px;--bf:{bf}px;{"justify-content:center" if n == 1 else ""}{";--gp:12px" if n >= 3 else ""}">{rc}{"".join(out)}</div>', "Модель против <b>рынка</b>", spec.get("date", ""))
+
+
 KINDS = {"russians": card_russians, "scores": card_scores, "stars": card_stars, "number": card_number, "match": card_match,
-         "column": card_column, "changes": card_changes, "modelweek": card_modelweek}
+         "column": card_column, "changes": card_changes, "modelweek": card_modelweek, "vsmarket": card_vsmarket}
 
 
 def render(specs, outdir, logos=None):

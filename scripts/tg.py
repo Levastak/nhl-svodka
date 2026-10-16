@@ -584,6 +584,17 @@ def build(D, A, M, E, S, N):
                 first = min(dt.datetime.fromisoformat(u["start"].replace("Z", "+00:00")) for u in part)
                 out.append(dict(key=f"games:{ud}:{k}", due=min(base + dt.timedelta(minutes=45 * k), first - dt.timedelta(minutes=60)),
                                 expires=first, text=text + FOOT, specs=[spec_for(part[0], game_info(part[0], M))]))
+    # 7а. Модель против рынка — перед превью (18:30 мск), только если в матчах вечера модель спорит с рынком (решение Льва 16.10)
+    if ups:
+        vsm = vs_market_rows(ups, M)
+        if vsm and tgv(D, "vs_market"):  # без разбора Opus пост не выходит — голые проценты без «почему» не нужны
+            first = min(dt.datetime.fromisoformat(u["start"].replace("Z", "+00:00")) for u in ups)
+            rec = vs_market_record(D)
+            body = tgv(D, "vs_market")
+            head_t = "Модель против рынка" + (f" · в спорах сезона права в {rec[0]} из {rec[1]}" if rec and rec[1] else "")
+            txt = f"<b>{e(head_t)}</b>\n\n{e(body)}\n\n👉 <b><a href=\"{URL}#games\">Как считала модель</a></b>"
+            out.append(dict(key=f"vsm:{ud}", due=min(msk(ud, 18, 30), first - dt.timedelta(minutes=90)), expires=first, text=txt + FOOT,
+                            specs=[dict(kind="vsmarket", date=night, rows=vsm, rec=rec)]))
     # 7б. Видео ночи — официальные клипы НХЛ (склейка хет-трика, голы в ОТ и в концовке): 11:00, 14:30, 17:30
     hl = D.get("highlights") or {}
     if hl.get("date") == rd and rd:
@@ -664,6 +675,44 @@ def leaders5(D, u, N):
     return out if len(out) == 2 else {}
 
 
+
+
+def vs_market_rows(ups, M):
+    """Матчи, где модель спорит с рынком: другая сторона в исходе или тотале; либо та же сторона, но модель увереннее на 7+ п.п."""
+    mg = {x.get("id"): x for x in M.get("games") or []}
+    rows = []
+    for u in ups:
+        m = mg.get(u["id"]) or {}
+        v = m.get("verdict") or {}
+        if m.get("mkt_home") is None:
+            continue
+        fav, mf = v.get("fav"), v.get("mkt_fav")
+        pm, pk = m.get(f"p_{fav}"), m.get(f"mkt_{fav}")
+        tm, tk = v.get("total") or {}, None
+        kind, line = None, ""
+        T = lambda side: RU.get(u[side])
+        if fav and mf and fav != mf:
+            kind = "исход"
+            line = f"модель за «{T(fav)}» ({round(pm * 100)}%), рынок — за «{T(mf)}» ({round(m.get(f'mkt_{mf}') * 100)}%)"
+        elif tm.get("side") and tm.get("mkt_side") and tm["side"] != tm["mkt_side"]:
+            kind = "тотал"
+            S = lambda x: "больше" if x == "over" else "меньше"
+            line = f"тотал {num(tm.get('line'))}: модель за «{S(tm['side'])}» ({round((tm.get('p') or 0) * 100)}%), рынок — за «{S(tm['mkt_side'])}»"
+        elif pm and pk and pm - pk >= 0.07:
+            kind = "сила"
+            line = f"обе стороны за «{T(fav)}», но модель увереннее: {round(pm * 100)}% против {round(pk * 100)}% у рынка"
+        if kind:
+            rows.append(dict(id=u["id"], home=u["home"], away=u["away"], kind=kind, line=line, p_home=m.get("p_home"), p_away=m.get("p_away"),
+                             mkt_home=m.get("mkt_home"), mkt_away=m.get("mkt_away"), total=dict(tm, mkt_p=m.get("mkt_over") if tm.get("mkt_side") == "over" else (1 - m["mkt_over"]) if m.get("mkt_over") else None) if kind == "тотал" else None))
+    order = {"исход": 0, "тотал": 1, "сила": 2}
+    return sorted(rows, key=lambda r: order[r["kind"]])[:3]
+
+
+def vs_market_record(D):
+    """Счёт сезона в спорах с рынком по журналу: (права модель, всего)."""
+    J = [x for x in D.get("journal") or [] if x.get("type") in ("win", "total") and x.get("mkt_side") and x.get("side")
+         and x["mkt_side"] != x["side"] and x.get("result") in ("hit", "miss")]
+    return (sum(1 for x in J if x["result"] == "hit"), len(J)) if J else None
 
 
 def game_info(u, M):

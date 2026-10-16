@@ -109,6 +109,18 @@ def main():
         news=[dict(title=n.get("title"), summary=n.get("summary"), url=n.get("url"), time=n.get("time"), body=(n.get("body") or [])[:2]) for n in D.get("news") or []],
         column=arts[0] if arts else None, motd=D.get("motd"), games=games,
         skater_xg={}, tg_prev=prev_tg(rd))
+    # модель против рынка: те же матчи, что попадут в вечерний пост (tg.py vs_market_rows), и счёт сезона в таких спорах
+    try:
+        import sys as _sys
+        _sys.path.insert(0, os.path.join(ROOT, "scripts"))
+        import tg as _tg
+        ups = [u for u in D.get("upcoming") or [] if u.get("date") == ud]
+        rows = _tg.vs_market_rows(ups, M)
+        if rows:
+            ctx["vs_market"] = dict(rows=rows, season_record=_tg.vs_market_record(D),
+                                    note="kind: исход — модель и рынок за разные команды; тотал — за разные стороны тотала; сила — за одну команду, но модель увереннее на 7+ п.п. Подробности матча — в games по id.")
+    except Exception as ex:
+        ctx["vs_market_error"] = repr(ex)[:200]
     # по понедельникам (results_date — воскресенье): честный счёт модели за неделю для tg.model_week
     import datetime as _dt
     W = load(f"{SITE}/weekly.json", {}) or {}
