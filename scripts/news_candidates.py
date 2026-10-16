@@ -27,7 +27,7 @@ EN = {"ANA": "Anaheim Ducks", "BOS": "Boston Bruins", "BUF": "Buffalo Sabres", "
       "WPG": "Winnipeg Jets", "WSH": "Washington Capitals"}
 NICK = {a: n.split(" ")[-1] for a, n in EN.items()}
 NICK.update({"TOR": "Maple Leafs", "DET": "Red Wings", "CBJ": "Blue Jackets", "VGK": "Golden Knights", "UTA": "Mammoth"})
-JUNK = r"projected lineup|daily digest|fantasy|betting|odds|best bets|picks|prop|power rankings|mailbag|notebook|prospect|chl |ahl |ohl |whl |qmjhl|podcast|quiz|how to watch|watch:|tickets|hockey fights cancer"
+JUNK = r"betmgm|draftkings|fanduel|sportsbook|projected lineup|daily digest|fantasy|betting|odds|best bets|picks|prop|power rankings|mailbag|notebook|prospect|chl |ahl |ohl |whl |qmjhl|podcast|quiz|how to watch|watch:|tickets|hockey fights cancer"
 HOT = r"\b(record|milestone|first ever|suspend|suspension|fired|hired|named coach|head coach|trade[ds]?|acquire[ds]?|sign(s|ed)?|extension|contract|surgery|out for season|out indefinitely|injur|retire)"
 
 
@@ -99,8 +99,12 @@ def main():
         teams = [a for a in EN if norm(EN[a]) in nt or re.search(r"\b" + norm(NICK[a]) + r"\b", nt)]
         tier = 4
         why = []
-        if found & rus:
-            tier, why = 1, [f"россиянин: {', '.join(NR.get(n, n) for n in found & rus)}"]
+        ttl = norm(x.get("title") or "")
+        rus_title = {n for n in found & rus if norm(n.split(" ")[-1]) in ttl}
+        if rus_title:
+            tier, why = 1, [f"россиянин в заголовке: {', '.join(NR.get(n, n) for n in rus_title)}"]
+        elif found & rus:
+            tier, why = 2, [f"упоминается россиянин: {', '.join(NR.get(n, n) for n in found & rus)}"]
         elif found & stars or re.search(r"commissioner|bettman|suspend|fired|named coach|head coach|\brecord", nt):
             tier, why = 2, [f"звёзды: {', '.join(NR.get(n, n) for n in found & stars)}" if found & stars else "лига / тренеры / рекорд"]
         elif any(place.get(t, (99,))[0] <= 8 for t in teams):
