@@ -27,7 +27,6 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE = os.path.join(ROOT, "site")
 TG = os.path.join(ROOT, "tg")
 URL = "https://levastak.github.io/nhl-svodka/"
-KIROV = ZoneInfo("Europe/Kirov")
 TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN", "").strip()
 LOG = {"t": None, "mode": None, "ok": [], "fail": []}
 FOOT = f'\n\n🏒 <a href="{URL}">NHL-STATS.RU</a> — статистика, прогнозы и аналитика НХЛ по-русски'
@@ -67,9 +66,6 @@ def ru_date(d):
     x = dt.date.fromisoformat(d)
     return f"{x.day} {MON[x.month - 1]}"
 
-
-def kirov_time(iso):
-    return dt.datetime.fromisoformat(iso.replace("Z", "+00:00")).astimezone(KIROV).strftime("%H:%M")
 
 
 def pct(p):
@@ -642,11 +638,6 @@ def leaders5(D, u, N):
     return out if len(out) == 2 else {}
 
 
-def form5(A, t, before):
-    gs = [g for g in A.get("games", []) if t in (g.get("away"), g.get("home")) and g.get("as") is not None and g["date"] < before]
-    gs = sorted(gs, key=lambda g: g["date"])[-5:]
-    w = sum(1 for g in gs if (g["as"] > g["hs"]) == (g["away"] == t))
-    return f"{w}-{len(gs) - w} в последних {len(gs)}" if gs else ""
 
 
 def game_info(u, M):

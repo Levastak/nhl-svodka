@@ -3,7 +3,7 @@
 Формат — квадрат 1080×1080 (рендер ×2 для чёткости): одинаково крупно и без полей и на телефоне, и на компьютере.
 Порядок команд везде: хозяева слева, гости справа.
 Виды: scores (итоги ночи), stars (три звезды — коллекционные карточки как на сайте), number (цифра дня),
-match (превью матча), column (колонка / рубрика), player (одна звезда), changes (вечерние изменения).
+match (превью матча), column (колонка / рубрика), changes (вечерние изменения).
 Логотипы — SVG НХЛ (тёмная версия), фото игроков — assets.nhle.com (вырезанные портреты);
 не загрузилось — логотип или кружок с аббревиатурой в цвете клуба. Шрифты лежат рядом (Golos Text, Fira Sans Extra Condensed, OFL).
 """
@@ -315,8 +315,6 @@ def card_column(spec, logos):
                 e(spec.get("kicker", "Колонка")), spec.get("date", ""), c1=c1, c2=c2)
 
 
-def card_player(spec, logos):
-    return card_stars(dict(stars=[dict(spec)], date=spec.get("date", "")), logos, kicker=e(spec.get("kicker", "Звезда ночи")))
 
 
 def card_changes(spec, logos):
@@ -350,7 +348,7 @@ def card_russians(spec, logos):
 
 
 KINDS = {"russians": card_russians, "scores": card_scores, "stars": card_stars, "number": card_number, "match": card_match,
-         "column": card_column, "player": card_player, "changes": card_changes}
+         "column": card_column, "changes": card_changes}
 
 
 def render(specs, outdir, logos=None):

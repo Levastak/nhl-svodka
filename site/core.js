@@ -66,7 +66,6 @@ function state(iso){const ms=Date.now()-new Date(iso);return ms<0?"pre":ms<3.6*3
 function nhlDate(iso){return new Date(new Date(iso)-6*36e5).toISOString().slice(0,10)}
 const endTag=e=>e==="OT"?"ОТ":e==="SO"?"Б":"";
 const endLong=e=>e==="OT"?"овертайм":e==="SO"?"буллиты":"";
-function ls(k,v){try{if(v===undefined)return JSON.parse(localStorage.getItem(k)||"null");localStorage.setItem(k,JSON.stringify(v))}catch(e){return null}}
 const sideTeam=(m,s)=>s==="home"?m.home:m.away;
 
 /* ---------- логотипы и фото ---------- */
