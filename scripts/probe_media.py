@@ -3,7 +3,17 @@ import json, os, re, subprocess, sys, urllib.request
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 lines = open(os.path.join(ROOT, "trigger", "tg")).read().split("\n")
 stage = (lines[2].strip() if len(lines) > 2 else "") or "stage1"
-if stage == "music2":
+if stage == "dns":
+    rep = {}
+    for q in ["nhl-stats.ru&type=CAA", "nhl-stats.ru&type=A", "nhl-stats.ru&type=AAAA", "www.nhl-stats.ru&type=CNAME", "_github-pages-challenge-levastak.nhl-stats.ru&type=TXT"]:
+        try:
+            rep[q] = urllib.request.urlopen("https://dns.google/resolve?name=" + q, timeout=30).read().decode()[:500]
+        except Exception as ex:
+            rep[q] = repr(ex)
+    for cmd in ["curl -sI https://nhl-stats.ru/ | head -3", "curl -sI http://nhl-stats.ru/ | head -3", "curl -sI http://www.nhl-stats.ru/ | head -4"]:
+        rep[cmd] = subprocess.run(cmd, shell=True, capture_output=True, text=True, timeout=40).stdout + subprocess.run(cmd.replace("-sI", "-sIv").split("|")[0] + " 2>&1 | grep -i 'subject\\|issuer\\|SSL' | head -4", shell=True, capture_output=True, text=True, timeout=40).stdout
+    json.dump(rep, open(os.path.join(ROOT, "tg", "dns_probe.json"), "w"), ensure_ascii=False, indent=1)
+elif stage == "music2":
     import urllib.parse
     names = ["Volatile Reaction", "Movement Proposition", "Take a Chance", "Exhilarate", "Hit n Smash", "Rhinoceros", "Crusade - Heavy Industry",
              "Big Rock", "Hard Boiled", "Interloper", "Raving Energy", "Rock Angel", "Rollin at 5", "Hot Swing", "Overcast", "Ready Aim Fire",
