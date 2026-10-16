@@ -355,7 +355,15 @@ def goals(pid):
 
 if __name__ == "__main__":
     a = sys.argv[1] if len(sys.argv) > 1 else "stage1"
-    if a.startswith("tail:"):  # контактные листы хвоста клипов (повторы крупным планом)
+    if a.startswith("win:"):  # плотные листы окон: cid@с-по,...  (4 кадра/с, исходное время)
+        media.tools(LOG)
+        for w in a[4:].split(","):
+            cid, rng = w.split("@"); a0, a1 = map(float, rng.split("-"))
+            fn = clip_hq(int(cid))
+            if fn:
+                sh(f"ffmpeg -y -loglevel error -ss {a0} -t {a1 - a0} -i {fn} -vf \"fps=4,scale=200:-2,drawtext=text='%{{eif\\:t+{a0}\\:d}}.%{{eif\\:mod((t+{a0})*100\\,100)\\:d\\:2}}':x=4:y=4:fontsize=20:fontcolor=yellow:box=1:boxcolor=black,tile=8x{int((a1 - a0) * 4 / 8) + 1}\" -frames:v 1 {OUT}/win_{cid}_{int(a0)}.jpg")
+        json.dump(dict(log=LOG), open(f"{OUT}/sheets.json", "w"), ensure_ascii=False, indent=1)
+    elif a.startswith("tail:"):  # контактные листы хвоста клипов (повторы крупным планом)
         media.tools(LOG)
         for cid in [int(x) for x in a[5:].split(",") if x]:
             fn = media.clip(cid, TMP)
