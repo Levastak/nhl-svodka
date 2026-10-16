@@ -754,7 +754,20 @@ def main(mode, arg=None):
         # перерисовать картинку и подпись у уже выложенных постов (editMessageMedia), arg — префиксы ключей через запятую
         pre = tuple(x for x in str(arg or "").split(",") if x)
         for x in items:
-            if not pre or not x["key"].startswith(pre) or not MSG.get(x["key"]) or not x.get("specs"):
+            if not pre or not x["key"].startswith(pre) or not MSG.get(x["key"]):
+                continue
+            if not x.get("specs"):
+                # пост без нашей картинки (новость с фото из статьи) — правим только подпись
+                try:
+                    _call("editMessageCaption", dict(chat_id=chat, message_id=MSG[x["key"]][0], caption=x["text"], parse_mode="HTML"))
+                    LOG["ok"].append(f"подпись обновлена {x['key']}")
+                except Exception as ex:
+                    try:
+                        _call("editMessageText", dict(chat_id=chat, message_id=MSG[x["key"]][0], text=x["text"], parse_mode="HTML",
+                                                      link_preview_options={"url": x.get("photo"), "prefer_large_media": True, "show_above_text": True} if x.get("photo") else {"is_disabled": True}))
+                        LOG["ok"].append(f"текст обновлён {x['key']}")
+                    except Exception as ex2:
+                        LOG["fail"].append(f"{x['key']}: {ex} / {ex2}"[:300])
                 continue
             try:
                 img = cards(x["specs"][:1], D)[0]
