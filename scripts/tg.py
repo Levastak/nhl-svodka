@@ -29,7 +29,7 @@ URL = "https://levastak.github.io/nhl-svodka/"
 KIROV = ZoneInfo("Europe/Kirov")
 TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN", "").strip()
 LOG = {"t": None, "mode": None, "ok": [], "fail": []}
-FOOT = f'\n\n<a href="{URL}">NHL-STATS.RU</a> — статистика, прогнозы и аналитика НХЛ по-русски'
+FOOT = f'\n\n🏒 <a href="{URL}">NHL-STATS.RU</a> — статистика, прогнозы и аналитика НХЛ по-русски'
 
 RU = {"ANA": "Анахайм", "BOS": "Бостон", "BUF": "Баффало", "CAR": "Каролина", "CBJ": "Коламбус", "CGY": "Калгари",
       "CHI": "Чикаго", "COL": "Колорадо", "DAL": "Даллас", "DET": "Детройт", "EDM": "Эдмонтон", "FLA": "Флорида",
@@ -209,7 +209,7 @@ def cards(specs, D):
 
 # ---------------------------------------------------------------- посты
 # Каждый пост — dict(key, due, expires, text, specs | photo, credit). Одна картинка на пост.
-# Расписание (по Москве): итоги 09:15, три звезды 10:30, цифра дня 12:00, главная новость 13:30, колонка 15:00,
+# Расписание (по Москве): итоги 09:45, три звезды 10:45, цифра дня 12:00, главная новость 13:30, колонка 15:00,
 # история 16:30, матчи с 19:00 каждые 30 минут (больше 4 — двумя постами), «вечером передумали» — после 23:19.
 MSK = ZoneInfo("Europe/Moscow")
 
@@ -234,6 +234,26 @@ def words(line):
         s, sh = int(m.group(1)), int(m.group(2))
         return f"{s} {plural(s, 'сейв', 'сейва', 'сейвов')} из {sh} {plural(sh, 'броска', 'бросков', 'бросков')}"
     return str(line or "")
+
+
+RU_GEN = {"ANA": "Анахаймом", "BOS": "Бостоном", "BUF": "Баффало", "CAR": "Каролиной", "CBJ": "Коламбусом", "CGY": "Калгари",
+          "CHI": "Чикаго", "COL": "Колорадо", "DAL": "Далласом", "DET": "Детройтом", "EDM": "Эдмонтоном", "FLA": "Флоридой",
+          "LAK": "Лос-Анджелесом", "MIN": "Миннесотой", "MTL": "Монреалем", "NJD": "Нью-Джерси", "NSH": "Нэшвиллом",
+          "NYI": "Айлендерс", "NYR": "Рейнджерс", "OTT": "Оттавой", "PHI": "Филадельфией", "PIT": "Питтсбургом",
+          "SEA": "Сиэтлом", "SJS": "Сан-Хосе", "STL": "Сент-Луисом", "TBL": "Тампой", "TOR": "Торонто", "UTA": "Ютой",
+          "VAN": "Ванкувером", "VGK": "Вегасом", "WPG": "Виннипегом", "WSH": "Вашингтоном"}
+
+
+def match_note(gs, t):
+    """«победа над «Ванкувером» 3:2 ОТ» / «поражение от …» — для карточки звезды."""
+    g = next((g for g in gs if t in (g.get("away"), g.get("home"))), None)
+    if not g:
+        return ""
+    mine, other = (g["as"], g["hs"]) if g["away"] == t else (g["hs"], g["as"])
+    opp = g["home"] if g["away"] == t else g["away"]
+    end = {"OT": " ОТ", "SO": " Б"}.get(g.get("end"), "")
+    return (f"победа над «{RU_GEN.get(opp, opp)}» {mine}:{other}{end}" if mine > other
+            else f"матч с «{RU_GEN.get(opp, opp)}», {mine}:{other}{end}")
 
 
 def tgv(D, k, day=None):
@@ -267,8 +287,8 @@ def build(D, A, M, E, S, N):
                 parts.append(n["worst_team"]["text"])
             human = " ".join(parts) or f"За ночь — {len(gs)} {plural(len(gs), 'матч', 'матча', 'матчей')}."
         txt = f"<b>Итоги ночи · {ru_date(rd)}</b>\n\n{e(human)}\n\n<a href=\"{URL}#results\">Протоколы всех матчей</a>"
-        out.append(dict(key=f"am:{rd}", due=msk(dt.date.fromisoformat(rd).isoformat(), 9, 15) + dt.timedelta(days=1),
-                        text=txt + FOOT, specs=[dict(kind="scores", date=ru_date(rd), games=gs)]))
+        out.append(dict(key=f"am:{rd}", due=msk(rd, 9, 45) + dt.timedelta(days=1),
+                        text=txt + FOOT, specs=[dict(kind="scores", date=ru_date(rd), games=gs)], needs_tg=True))
     # 2. Три звезды — фото из матча первой звезды
     hs = (n.get("heroes") or [])[:3]
     if hs:
@@ -278,18 +298,11 @@ def build(D, A, M, E, S, N):
             body = st.get(h["name"]) or f"{words(h.get('line')).capitalize()}. {h.get('text') or ''}".strip()
             L.append(f"<b>{i + 1}. {e(N.full(h['name']))}</b>, {e(T(h['team']))}\n{e(body)}")
             L.append("")
-        photo, credit = None, None
-        for x in news:
-            if hs[0]["name"] in (x.get("players") or []) and x.get("image"):
-                photo, credit = x["image"], x.get("image_source") or x.get("source")
-                break
-        if credit:
-            L.append(f"<i>Фото: {e(credit)}</i>")
         L.append(f"<a href=\"{URL}#results\">Все герои и неудачники ночи</a>")
-        spec = None if photo else dict(kind="player", kicker="Первая звезда", name=N.full(hs[0]["name"]), team=hs[0]["team"],
-                                       head_path=head_path(D, hs[0]["name"]), line=words(hs[0].get("line")), date=ru_date(rd))
-        out.append(dict(key=f"stars:{rd}", due=msk(rd, 10, 30) + dt.timedelta(days=1), text="\n".join(L) + FOOT,
-                        photo=photo, specs=[spec] if spec else None))
+        spec = dict(kind="stars", date=ru_date(rd),
+                    stars=[dict(name=N.full(h["name"]), team=h["team"], head_path=head_path(D, h["name"]),
+                                stat=words(h.get("line"))[:1].upper() + words(h.get("line"))[1:], note=match_note(gs, h["team"])) for h in hs])
+        out.append(dict(key=f"stars:{rd}", due=msk(rd, 10, 45) + dt.timedelta(days=1), text="\n".join(L) + FOOT, specs=[spec], needs_tg=True))
     # 3. Цифра дня — отдельной карточкой
     num_d = n.get("number") or {}
     f = ((E or {}).get("findings") or [None])[0]
@@ -303,7 +316,7 @@ def build(D, A, M, E, S, N):
         spec = dict(kind="number", big=src["big"], unit=src.get("unit"), sub=src.get("sub"), head=head_t, teams=src.get("teams"),
                     player=N.full(pl) if pl else None, head_path=head_path(D, pl) if pl else None,
                     date=f"по матчам до {ru_date(src['date'])}" if src.get("date") else "")
-        out.append(dict(key=f"number:{rd}", due=msk(rd, 12, 0) + dt.timedelta(days=1), text=txt + FOOT, specs=[spec]))
+        out.append(dict(key=f"number:{rd}", due=msk(rd, 12, 0) + dt.timedelta(days=1), text=txt + FOOT, specs=[spec], needs_tg=True))
     # 4. Главная новость — фото из статьи (не пересказ матча, если есть; иначе — выбор Claude)
     pick = tgv(D, "news", rd)
     item = None
@@ -316,7 +329,7 @@ def build(D, A, M, E, S, N):
         body = body or item.get("summary")
         txt = (f"<b>{e(item['title'])}</b>\n\n{e(body)}\n\n<i>Фото: {e(item.get('image_source') or item.get('source'))}</i>\n"
                f"<a href=\"{URL}#news\">Все новости дня</a>")
-        out.append(dict(key=f"news:{item.get('url')}", due=msk(rd, 13, 30) + dt.timedelta(days=1), text=txt + FOOT, photo=item["image"]))
+        out.append(dict(key=f"news:{item.get('url')}", due=msk(rd, 13, 30) + dt.timedelta(days=1), text=txt + FOOT, photo=item["image"], needs_tg=True))
     # 5. Колонка / «Под микроскопом» / «Итоги недели»
     col = next((a for a in D.get("articles") or [] if (a.get("kind") or "column") == "column"), None)
     if col and col.get("time"):
@@ -324,7 +337,7 @@ def build(D, A, M, E, S, N):
         body = tgv(D, "column", rd) or col.get("dek")
         txt = f"<b>{e(kick)}. {e(col.get('title'))}</b>\n\n{e(body)}\n\n<a href=\"{URL}#a=col\">Читать полностью</a>"
         cday = dt.datetime.fromisoformat(str(col["time"]).replace("Z", "+00:00")).astimezone(MSK).date().isoformat()
-        out.append(dict(key=f"col:{col.get('title')}", due=msk(cday, 15, 0), text=txt + FOOT,
+        out.append(dict(key=f"col:{col.get('title')}", due=msk(cday, 15, 0), text=txt + FOOT, needs_tg=True,
                         specs=[dict(kind="column", kicker=kick, title=col.get("title"), teams=col.get("teams"), date=ru_date(cday))]))
     # 6. История — с обложкой
     s = (S or [None])[0]
@@ -527,7 +540,10 @@ def main(mode, arg=None):
     else:
         last = state.get("last_post")
         gap = (now - dt.datetime.fromisoformat(last)).total_seconds() / 60 if last else 999
-        due = [x for x in items if x["key"] not in P and x["due"] <= now and (not x.get("expires") or now < x["expires"])]
+        tg_ready = (D.get("tg") or {}).get("date") == D.get("results_date")
+        late = now.astimezone(MSK).hour * 60 + now.astimezone(MSK).minute >= 11 * 60 + 30
+        due = [x for x in items if x["key"] not in P and x["due"] <= now and (not x.get("expires") or now < x["expires"])
+               and (not x.get("needs_tg") or tg_ready or late)]
         # дневные посты, у которых прошло больше 8 часов от срока, не догоняем
         due = [x for x in due if x.get("expires") or (now - x["due"]).total_seconds() < 8 * 3600]
         due.sort(key=lambda x: x["due"])
