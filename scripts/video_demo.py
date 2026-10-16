@@ -10,8 +10,8 @@ TMP = "/tmp/demo"
 os.makedirs(OUT, exist_ok=True); os.makedirs(TMP, exist_ok=True)
 LOG = {"ok": [], "fail": []}
 D = json.load(open(os.path.join(ROOT, "site", "data.json")))
-HT = next(x for x in D["highlights"]["items"] if x["kind"] == "hattrick")
-CLIPS = [c["id"] for c in HT["clips"]]
+HT = next((x for x in D["highlights"]["items"] if x["kind"] == "hattrick"), None)
+CLIPS = [c["id"] for c in HT["clips"]] if HT else []
 
 def sh(cmd, t=600):
     r = subprocess.run(cmd, shell=True, capture_output=True, text=True, timeout=t)
@@ -50,6 +50,22 @@ SCENES = [
     dict(kind="cta", say="Все наши в НХЛ — на эн-эйч-эл стэтс точка ру и в нашем телеграме.",
          show="Все наши в НХЛ — на NHL&#8209;STATS.RU и в Telegram"),
 ]
+PRESETS = {
+    "nashi": dict(scenes=None, title_bg=(0, 42), out="nashi_rvut_nhl_v3.mp4"),
+    "ovi": dict(title_bg=(6371144441112, 17.5), out="ovechkin_930.mp4", scenes=[
+        dict(kind="title", chip_t="легенда в цифрах", fs=170, lines='ОВЕЧКИН<br><span style="color:#FF4A55">930</span><br>ГОЛОВ', say="Девятьсот тридцать голов в НХЛ. Александр Овечкин!"),
+        dict(kind="video", chip="Гол № 895", name="Александр Овечкин", team="WSH", stat="6 апреля 2025 · рекорд Гретцки побит",
+             say="Апрель двадцать пятого: восемьсот девяносто пятый гол, и рекорд Уэйна Гретцки побит. Сам Гретцки аплодирует на трибуне.",
+             cuts=[(6371144441112, 6.0, 3.2), (6371144441112, 17.0, 2.2), (6371144441112, 26.0, 3.6)]),
+        dict(kind="video", chip="Сезон 2026/27", name="Александр Овечкин", team="WSH", stat="1 гол · 10 бросков · 7 матчей",
+             say="А новый сезон начался тяжело: один гол и всего десять бросков за семь матчей.",
+             cuts=[(6406659994112, 6.5, 3.0), (6406659994112, 18.0, 2.0)]),
+        dict(kind="card", player="Alex Ovechkin", name="Александр Овечкин", team="WSH", big="13:56", bfs=200, unit="в среднем на льду за матч",
+             sub="за карьеру — 20:25", say="И играет он почти на семь минут меньше, чем привык за карьеру."),
+        dict(kind="cta", say="Следим за каждым матчем Овечкина и всех наших: эн-эйч-эл стэтс точка ру и наш телеграм.",
+             show="Следим за каждым матчем Овечкина — NHL&#8209;STATS.RU и Telegram"),
+    ]),
+}
 FONTS = os.path.join(ROOT, "scripts", "cards", "fonts")
 CSS = f"""@font-face{{font-family:G;src:url(file://{FONTS}/GolosText.ttf)}}@font-face{{font-family:F;src:url(file://{FONTS}/FiraSansExtraCondensed-ExtraBold.ttf);font-weight:800}}
 *{{margin:0;padding:0;box-sizing:border-box}}html,body{{width:{W}px;height:{H}px;overflow:hidden;background:transparent;font-family:G;color:#fff}}
@@ -59,7 +75,7 @@ CSS = f"""@font-face{{font-family:G;src:url(file://{FONTS}/GolosText.ttf)}}@font
   background:rgba(11,13,17,.72);border-radius:24px;padding:22px 30px;text-wrap:balance}}
 .chip{{display:inline-block;font-family:F;font-weight:800;font-size:46px;letter-spacing:.08em;text-transform:uppercase;background:#FF4A55;color:#fff;border-radius:14px;padding:6px 22px}}
 """
-TEAMC = {"TOR": "#00205B", "MIN": "#154734", "VGK": "#B4975A"}
+TEAMC = {"TOR": "#00205B", "MIN": "#154734", "VGK": "#B4975A", "WSH": "#8F0A1F"}
 
 def mark():
     import base64
@@ -70,7 +86,7 @@ def html_for(sc):
     sub = f'<div class="sub">{sc.get("show") or sc["say"]}</div>'
     if sc["kind"] == "title":
         return f"""<style>{CSS}</style>{brand}<div style="position:absolute;left:60px;right:60px;top:620px;text-align:center">
-<div class="chip">ночь на 16 октября</div><h1 style="font-family:F;font-weight:800;font-size:190px;line-height:.92;margin-top:40px;text-shadow:0 10px 40px rgba(0,0,0,.6)">НАШИ<br><span style="color:#FF4A55">РВУТ</span><br>НХЛ</h1></div>"""
+<div class="chip">{sc.get('chip_t', 'ночь на 16 октября')}</div><h1 style="font-family:F;font-weight:800;font-size:{sc.get('fs', 190)}px;line-height:.92;margin-top:40px;text-shadow:0 10px 40px rgba(0,0,0,.6)">{sc.get('lines', 'НАШИ<br><span style="color:#FF4A55">РВУТ</span><br>НХЛ')}</h1></div>"""
     if sc["kind"] == "video":
         return f"""<style>{CSS}</style>{brand}<div style="position:absolute;left:60px;right:60px;top:330px;text-align:center"><span class="chip">{sc['chip']}</span>
 <div style="font-family:F;font-weight:800;font-size:96px;margin-top:22px;text-shadow:0 6px 24px rgba(0,0,0,.7)">{sc['name']}</div>
@@ -82,7 +98,7 @@ def html_for(sc):
 <img src="https://assets.nhle.com/logos/nhl/svg/{sc['team']}_dark.svg" style="position:absolute;right:-160px;top:180px;width:760px;opacity:.12">
 <img src="https://assets.nhle.com/mugs/nhl/{hp}.png" style="position:absolute;left:50%;transform:translateX(-50%);top:230px;width:620px;height:620px;border-radius:50%;object-fit:cover;object-position:50% 0;border:10px solid rgba(255,255,255,.25);background:{c}">
 <div style="position:absolute;left:60px;right:60px;top:900px;text-align:center"><div style="font-family:F;font-weight:800;font-size:96px">{sc['name']}</div>
-<div style="font-family:F;font-weight:800;font-size:230px;line-height:1;color:#FF4A55;margin-top:10px">{sc['big']}</div>
+<div style="font-family:F;font-weight:800;font-size:{sc.get('bfs', 230)}px;line-height:1;color:#FF4A55;margin-top:10px">{sc['big']}</div>
 <div style="font-size:52px;color:#E2E5EA">{sc['unit']}</div><div style="font-size:40px;color:#A9AFB8;margin-top:14px">{sc['sub']}</div></div>{sub}"""
     return f"""<style>{CSS} body{{background:radial-gradient(1100px 1100px at 50% 35%,#14335E,#0B0D11 70%)}}</style>
 <div style="position:absolute;left:60px;right:60px;top:380px;text-align:center"><img src="{mark()}" style="width:260px;height:260px">
@@ -105,11 +121,15 @@ def render_pngs():
 def dur(f):
     return float(sh(f"ffprobe -v error -show_entries format=duration -of csv=p=0 {f}").strip() or 0)
 
-def stage2():
+def stage2(preset="nashi"):
+    global SCENES
+    P = PRESETS[preset]
+    if P['scenes']:
+        SCENES = P['scenes']
     media.tools(LOG)
     sh("pip install -q edge-tts")
     render_pngs()
-    ids = {c for sc in SCENES for c, _, _ in sc.get("cuts", [])} | set(CLIPS)
+    ids = {c for sc in SCENES for c, _, _ in sc.get("cuts", [])} | (set(CLIPS) if not P['scenes'] else set()) | ({P['title_bg'][0]} if P['scenes'] else set())
     clips = {cid: media.clip(cid, TMP) for cid in ids}
     clips.update({i: clips[cid] for i, cid in enumerate(CLIPS)})
     segs, auds = [], []
@@ -143,7 +163,7 @@ def stage2():
             ln = ad + (0.45 if sc["kind"] != "title" else 0.2)
             if sc["kind"] == "title":
                 # фон — размытый кадр празднования
-                sh(f"ffmpeg -y -loglevel error -ss 42 -i {clips[0]} -frames:v 1 {TMP}/t.jpg")
+                sh(f"ffmpeg -y -loglevel error -ss {P['title_bg'][1]} -i {clips[P['title_bg'][0]]} -frames:v 1 {TMP}/t.jpg")
                 src = f"-loop 1 -i {TMP}/t.jpg -loop 1 -i {TMP}/s{i}.png"
                 fc = (f"[0:v]scale={W}:{H}:force_original_aspect_ratio=increase,crop={W}:{H},boxblur=12:2,eq=brightness=-0.25,"
                       f"zoompan=z='1+0.0015*on':d=1:s={W}x{H}:fps=30[bg];[bg][1:v]overlay=0:0,trim=duration={ln:.2f}[v]")
@@ -170,10 +190,10 @@ def stage2():
        f"\"[1:a]atrim=duration={total:.2f},volume=0.55,afade=t=in:d=0.4,afade=t=out:st={total - 1.6:.2f}:d=1.6,aformat=sample_rates=44100:channel_layouts=stereo[m];"
        f"[0:a]asplit=2[v1][v2];[m][v2]sidechaincompress=threshold=0.03:ratio=6:attack=20:release=350[md];[v1][md]amix=inputs=2:duration=first:normalize=0,alimiter=limit=0.95[a]\" "
        f"-map [a] -c:a pcm_s16le {TMP}/mix.wav")
-    sh(f"ffmpeg -y -loglevel error -i {TMP}/v.mp4 -i {TMP}/mix.wav -c:v copy -c:a aac -b:a 192k -shortest -movflags +faststart {OUT}/nashi_rvut_nhl_v3.mp4")
+    sh(f"ffmpeg -y -loglevel error -i {TMP}/v.mp4 -i {TMP}/mix.wav -c:v copy -c:a aac -b:a 192k -shortest -movflags +faststart {OUT}/{P['out']}")
     for i in range(len(SCENES)):
         sh(f"cp {TMP}/s{i}.png {OUT}/overlay_{i}.png")
-    json.dump(dict(len=dur(f"{OUT}/nashi_rvut_nhl_v3.mp4"), log=LOG), open(f"{OUT}/stage2.json", "w"), ensure_ascii=False, indent=1)
+    json.dump(dict(len=dur(f"{OUT}/{P['out']}"), log=LOG), open(f"{OUT}/stage2.json", "w"), ensure_ascii=False, indent=1)
 
 def stage3():
     """Клипы Капризова и передач Барбашёва (gamecenter) + контактные листы; пробы голосов."""
@@ -234,4 +254,7 @@ if __name__ == "__main__":
     if a.startswith("sheets:"):
         sheets([int(x) for x in a[7:].split(",") if x])
     else:
-        {"stage1": stage1, "stage2": stage2, "stage3": stage3}[a]()
+        if a.startswith("stage2:"):
+            stage2(a[7:])
+        else:
+            {"stage1": stage1, "stage2": stage2, "stage3": stage3}[a]()
