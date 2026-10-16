@@ -1,0 +1,34 @@
+{
+ "info": {
+  "Kaprizov_0847": {
+   "id": 6406938424112,
+   "d": 47
+  },
+  "Bowman_1103": {
+   "id": 6406945716112,
+   "d": 46
+  },
+  "Stone_0106": {
+   "id": 6406946555112,
+   "d": 40
+  },
+  "Stone_1210": {
+   "id": 6406947847112,
+   "d": 53
+  }
+ },
+ "log": {
+  "ok": [],
+  "fail": [
+   [
+    "edge-tts --voice ru-RU-DmitryNeural --rate=+18% --pitch=+6Hz --text \"Наши рвут Н",
+    "  async for message in self.__stream():\n  File \"/opt/hostedtoolcache/Python/3.12.15/x64/lib/python3.12/site-packages/edge_tts/communicate.py\", line 562, in __stream\n    raise NoAudioReceived(\nedge_tts.exceptions.NoAudioReceived: No audio was received. Please verify that your parameters are correct.\n"
+   ],
+   [
+    "edge-tts --voice ru-RU-DariyaNeural --rate=+15% --pitch=+4Hz --text \"Наши рвут Н",
+    "  async for message in self.__stream():\n  File \"/opt/hostedtoolcache/Python/3.12.15/x64/lib/python3.12/site-packages/edge_tts/communicate.py\", line 562, in __stream\n    raise NoAudioReceived(\nedge_tts.exceptions.NoAudioReceived: No audio was received. Please verify that your parameters are correct.\n"
+   ],
+   "silero: EOFError('EOF when reading a line')"
+  ]
+ }
+}
