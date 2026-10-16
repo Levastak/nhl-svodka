@@ -29,7 +29,7 @@ URL = "https://levastak.github.io/nhl-svodka/"
 KIROV = ZoneInfo("Europe/Kirov")
 TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN", "").strip()
 LOG = {"t": None, "mode": None, "ok": [], "fail": []}
-FOOT = f'\n\n🏒 <a href="{URL}">NHL-STATS.RU</a> — статистика, прогнозы и аналитика НХЛ по-русски'
+FOOT = f'\n\n<a href="{URL}">NHL-STATS.RU</a> — статистика, прогнозы и аналитика НХЛ по-русски'
 
 RU = {"ANA": "Анахайм", "BOS": "Бостон", "BUF": "Баффало", "CAR": "Каролина", "CBJ": "Коламбус", "CGY": "Калгари",
       "CHI": "Чикаго", "COL": "Колорадо", "DAL": "Даллас", "DET": "Детройт", "EDM": "Эдмонтон", "FLA": "Флорида",
@@ -131,6 +131,13 @@ def _call(method, fields, files=None):
 def send(chat, text, images=None, photo_url=None):
     """Пост: альбом из картинок (подпись у первой), одна картинка, фото по адресу или текст. Возвращает id сообщений."""
     images = [p for p in images or [] if p]
+    import re as _re
+    vis = len(_re.sub("<[^>]+>", "", html.unescape(text)))
+    if vis > 1024 and photo_url and not images:
+        # длинный текст: фото крупным превью над текстом (лимит 4096 вместо 1024)
+        r = _call("sendMessage", dict(chat_id=chat, text=text[:4096], parse_mode="HTML",
+                                      link_preview_options={"url": photo_url, "prefer_large_media": True, "show_above_text": True}))
+        return [r["message_id"]]
     try:
         if len(images) > 1:
             media = [dict(type="photo", media=f"attach://f{i}", **({"caption": text[:1024], "parse_mode": "HTML"} if i == 0 else {}))
@@ -200,58 +207,212 @@ def cards(specs, D):
         return [None] * len(specs)
 
 
-# ---------------------------------------------------------------- посты: (подпись, [карточки])
+# ---------------------------------------------------------------- посты
+# Каждый пост — dict(key, due, expires, text, specs | photo, credit). Одна картинка на пост.
+# Расписание (по Москве): итоги 09:15, три звезды 10:30, цифра дня 12:00, главная новость 13:30, колонка 15:00,
+# история 16:30, матчи с 19:00 каждые 30 минут (больше 4 — двумя постами), «вечером передумали» — после 23:19.
+MSK = ZoneInfo("Europe/Moscow")
+
+
+def msk(day, hh, mm):
+    return dt.datetime.combine(dt.date.fromisoformat(day), dt.time(hh, mm), MSK)
+
+
+def words(line):
+    """«3+0» → «три гола», «1+2» → «гол и две передачи», «36 из 39» → «36 сейвов из 39 бросков»."""
+    import re
+    m = re.match(r"^\s*(\d+)\s*\+\s*(\d+)", str(line or ""))
+    if m:
+        g, a = int(m.group(1)), int(m.group(2))
+        num_w = {1: "", 2: "два", 3: "три", 4: "четыре", 5: "пять"}
+        num_f = {1: "", 2: "две", 3: "три", 4: "четыре", 5: "пять"}
+        gs = ("гол" if g == 1 else f"{num_w.get(g, g)} {plural(g, 'гол', 'гола', 'голов')}") if g else ""
+        as_ = ("передача" if a == 1 else f"{num_f.get(a, a)} {plural(a, 'передача', 'передачи', 'передач')}") if a else ""
+        return " и ".join(x for x in (gs, as_) if x).strip() or str(line)
+    m = re.match(r"^\s*(\d+)\s*из\s*(\d+)", str(line or ""))
+    if m:
+        s, sh = int(m.group(1)), int(m.group(2))
+        return f"{s} {plural(s, 'сейв', 'сейва', 'сейвов')} из {sh} {plural(sh, 'броска', 'бросков', 'бросков')}"
+    return str(line or "")
+
+
+def tgv(D, k, day=None):
+    t = D.get("tg") or {}
+    if day and t.get("date") != day:
+        return None
+    return t.get(k)
+
+
+def head_path(D, name):
+    return (D.get("heads") or {}).get(name)
+
+
+def build(D, A, M, E, S, N):
+    out = []
+    rd, ud = D.get("results_date"), D.get("upcoming_date")
+    n = D.get("daily") or {}
+    n = n if n.get("date") == rd else {}
+    news = D.get("news") or []
+    # 1. Итоги ночи — картинка со счетами
+    gs = [g for g in A.get("games", []) if g.get("date") == rd and g.get("as") is not None]
+    if rd and gs:
+        human = tgv(D, "morning", rd)
+        if not human:
+            parts = []
+            if n.get("best", {}).get("text"):
+                parts.append(n["best"]["text"])
+            if n.get("best_team", {}).get("text"):
+                parts.append(n["best_team"]["text"])
+            if n.get("worst_team", {}).get("text"):
+                parts.append(n["worst_team"]["text"])
+            human = " ".join(parts) or f"За ночь — {len(gs)} {plural(len(gs), 'матч', 'матча', 'матчей')}."
+        txt = f"<b>Итоги ночи · {ru_date(rd)}</b>\n\n{e(human)}\n\n<a href=\"{URL}#results\">Протоколы всех матчей</a>"
+        out.append(dict(key=f"am:{rd}", due=msk(dt.date.fromisoformat(rd).isoformat(), 9, 15) + dt.timedelta(days=1),
+                        text=txt + FOOT, specs=[dict(kind="scores", date=ru_date(rd), games=gs)]))
+    # 2. Три звезды — фото из матча первой звезды
+    hs = (n.get("heroes") or [])[:3]
+    if hs:
+        st = {x.get("name"): x.get("text") for x in tgv(D, "stars", rd) or [] if isinstance(x, dict)}
+        L = [f"<b>Три звезды ночи</b>", ""]
+        for i, h in enumerate(hs):
+            body = st.get(h["name"]) or f"{words(h.get('line')).capitalize()}. {h.get('text') or ''}".strip()
+            L.append(f"<b>{i + 1}. {e(N.full(h['name']))}</b>, {e(T(h['team']))}\n{e(body)}")
+            L.append("")
+        photo, credit = None, None
+        for x in news:
+            if hs[0]["name"] in (x.get("players") or []) and x.get("image"):
+                photo, credit = x["image"], x.get("image_source") or x.get("source")
+                break
+        if credit:
+            L.append(f"<i>Фото: {e(credit)}</i>")
+        L.append(f"<a href=\"{URL}#results\">Все герои и неудачники ночи</a>")
+        spec = None if photo else dict(kind="player", kicker="Первая звезда", name=N.full(hs[0]["name"]), team=hs[0]["team"],
+                                       head_path=head_path(D, hs[0]["name"]), line=words(hs[0].get("line")), date=ru_date(rd))
+        out.append(dict(key=f"stars:{rd}", due=msk(rd, 10, 30) + dt.timedelta(days=1), text="\n".join(L) + FOOT,
+                        photo=photo, specs=[spec] if spec else None))
+    # 3. Цифра дня — отдельной карточкой
+    num_d = n.get("number") or {}
+    f = ((E or {}).get("findings") or [None])[0]
+    src = num_d if num_d.get("big") else f
+    if src and src.get("big") and rd:
+        pl = (src.get("players") or [None])[0]
+        body = tgv(D, "number", rd) or num_d.get("text") or (f or {}).get("line")
+        head_t = num_d.get("head") or src.get("head")
+        when = f"По матчам до {ru_date(src['date'])}." if src.get("date") and src.get("date") != rd else ""
+        txt = f"<b>Цифра дня — {e(src['big'])}{e(src.get('unit') or '')}. {e(head_t)}</b>\n\n{e(body)}" + (f"\n\n<i>{when} Данные — трекинг НХЛ EDGE.</i>" if when else "\n\n<i>Данные — трекинг НХЛ EDGE.</i>")
+        spec = dict(kind="number", big=src["big"], unit=src.get("unit"), sub=src.get("sub"), head=head_t, teams=src.get("teams"),
+                    player=N.full(pl) if pl else None, head_path=head_path(D, pl) if pl else None,
+                    date=f"по матчам до {ru_date(src['date'])}" if src.get("date") else "")
+        out.append(dict(key=f"number:{rd}", due=msk(rd, 12, 0) + dt.timedelta(days=1), text=txt + FOOT, specs=[spec]))
+    # 4. Главная новость — фото из статьи (не пересказ матча, если есть; иначе — выбор Claude)
+    pick = tgv(D, "news", rd)
+    item = None
+    if isinstance(pick, dict) and pick.get("url"):
+        item = next((x for x in news if x.get("url") == pick["url"]), None)
+    if not item:
+        item = next((x for x in news if "game-recap" not in str(x.get("url")) and x.get("image")), None)
+    if item and item.get("image"):
+        body = (pick or {}).get("text") if isinstance(pick, dict) and pick.get("url") == item.get("url") else None
+        body = body or item.get("summary")
+        txt = (f"<b>{e(item['title'])}</b>\n\n{e(body)}\n\n<i>Фото: {e(item.get('image_source') or item.get('source'))}</i>\n"
+               f"<a href=\"{URL}#news\">Все новости дня</a>")
+        out.append(dict(key=f"news:{item.get('url')}", due=msk(rd, 13, 30) + dt.timedelta(days=1), text=txt + FOOT, photo=item["image"]))
+    # 5. Колонка / «Под микроскопом» / «Итоги недели»
+    col = next((a for a in D.get("articles") or [] if (a.get("kind") or "column") == "column"), None)
+    if col and col.get("time"):
+        kick = col.get("kicker") if col.get("kicker") and col.get("kicker") != "Колонка Claude" else "Колонка"
+        body = tgv(D, "column", rd) or col.get("dek")
+        txt = f"<b>{e(kick)}. {e(col.get('title'))}</b>\n\n{e(body)}\n\n<a href=\"{URL}#a=col\">Читать полностью</a>"
+        cday = dt.datetime.fromisoformat(str(col["time"]).replace("Z", "+00:00")).astimezone(MSK).date().isoformat()
+        out.append(dict(key=f"col:{col.get('title')}", due=msk(cday, 15, 0), text=txt + FOOT,
+                        specs=[dict(kind="column", kicker=kick, title=col.get("title"), teams=col.get("teams"), date=ru_date(cday))]))
+    # 6. История — с обложкой
+    s = (S or [None])[0]
+    if s and s.get("time"):
+        sday = dt.datetime.fromisoformat(str(s["time"]).replace("Z", "+00:00")).astimezone(MSK)
+        txt = f"<b>История. {e(s.get('title'))}</b>\n\n{e(s.get('dek'))}\n\n<a href=\"{URL}#a=s{e(s.get('id'))}\">Читать историю</a>"
+        cover = (s.get("cover") or {}).get("url")
+        credit = (s.get("cover") or {}).get("credit")
+        if credit:
+            txt = txt.replace("\n\n<a href", f"\n\n<i>Фото: {e(credit)}</i>\n<a href", 1)
+        out.append(dict(key=f"story:{s.get('id')}", due=max(sday + dt.timedelta(minutes=30), msk(sday.date().isoformat(), 16, 30)),
+                        expires=sday + dt.timedelta(hours=36), text=txt + FOOT, photo=cover,
+                        specs=None if cover else [dict(kind="column", kicker="История", title=s.get("title"), teams=s.get("teams"), date="")]))
+    # 7. Матчи — с 19:00 по Москве, каждые 30 минут; больше 4 — кратко двумя постами
+    ups = sorted([u for u in D.get("upcoming") or [] if u.get("date") == ud], key=lambda u: u["start"])
+    if ups:
+        motd = D.get("motd") or {}
+        is_m = lambda u: motd.get("away") == u["away"] and motd.get("home") == u["home"]
+        ups = sorted(ups, key=lambda u: (not is_m(u), u["start"]))
+        tgg = tgv(D, "games") or {}
+        base = msk(ud, 19, 0)
+        night = f"в ночь на {ru_date((dt.date.fromisoformat(ud) + dt.timedelta(days=1)).isoformat())}"
+
+        def spec_for(u, gi):
+            return dict(kind="match", away=u["away"], home=u["home"], time=dt.datetime.fromisoformat(u["start"].replace("Z", "+00:00")).astimezone(MSK).strftime("%H:%M"),
+                        date=night, p_away=gi["m"].get("p_away"), p_home=gi["m"].get("p_home"), motd=is_m(u), sure=bool(gi["v"].get("sure")),
+                        rec_a=form5(A, u["away"], ud), rec_h=form5(A, u["home"], ud))
+
+        def tmsk(u):
+            return dt.datetime.fromisoformat(u["start"].replace("Z", "+00:00")).astimezone(MSK).strftime("%H:%M")
+
+        if len(ups) <= 4:
+            for i, u in enumerate(ups):
+                gi = game_info(u, M)
+                start = dt.datetime.fromisoformat(u["start"].replace("Z", "+00:00"))
+                body = tgg.get(str(u["id"]))
+                if not body:
+                    body = (motd.get("text") if is_m(u) else None) or " ".join((u.get("factors") or [])[:2])
+                    if u.get("lean"):
+                        body += " " + u["lean"]
+                pred = f"Прогноз модели: {T(gi['pick'])}" + (f", {pct(gi['p'])}" if gi["p"] else "")
+                if gi["tot"]:
+                    pred += f"; тотал — {gi['tot']}"
+                pred += ". " + ("Рынок с ней не согласен." if gi["v"].get("vs_market") else "Рынок согласен.") if gi["m"].get("mkt_home") else "."
+                if gi["v"].get("sure"):
+                    pred += " Это сигнал «уверенный фаворит»: модель заметно увереннее рынка."
+                head_t = ("Матч дня. " if is_m(u) else "") + f"{RU.get(u['away'])} — {RU.get(u['home'])}, {tmsk(u)} мск"
+                txt = f"<b>{e(head_t)}</b>\n\n{e(body)}\n\n{e(pred)}\n\n<a href=\"{URL}#games\">Как считала модель</a>"
+                out.append(dict(key=f"game:{ud}:{u['id']}", due=min(base + dt.timedelta(minutes=30 * i), start - dt.timedelta(minutes=60)),
+                                expires=start, text=txt + FOOT, specs=[spec_for(u, gi)]))
+        else:
+            half = (len(ups) + 1) // 2
+            for k, part in enumerate((ups[:half], ups[half:])):
+                L = [f"<b>Матчи {night}</b>", ""]
+                lead = tgv(D, "games_lead") if k == 0 else None
+                if lead:
+                    L += [e(lead), ""]
+                for u in part:
+                    gi = game_info(u, M)
+                    L.append(f"<b>{e(RU.get(u['away']))} — {e(RU.get(u['home']))}</b>, {tmsk(u)} мск" + (" — матч дня" if is_m(u) else ""))
+                    note = tgg.get(str(u["id"]))
+                    L.append(e(note) if note else f"Модель за {e(T(gi['pick']))}" + (f" ({pct(gi['p'])})" if gi["p"] else "") + ".")
+                    L.append("")
+                L.append(f"<a href=\"{URL}#games\">Прогнозы модели и разборы</a>")
+                text = "\n".join(L)
+                if len(re.sub("<[^>]+>", "", text + FOOT)) > 1024:
+                    text = "\n".join(x for x in L if not x or x.startswith("<b>") or x.startswith("<a"))
+                first = min(dt.datetime.fromisoformat(u["start"].replace("Z", "+00:00")) for u in part)
+                out.append(dict(key=f"games:{ud}:{k}", due=min(base + dt.timedelta(minutes=45 * k), first - dt.timedelta(minutes=60)),
+                                expires=first, text=text + FOOT, specs=[spec_for(part[0], game_info(part[0], M))]))
+    # 8. Вечером передумали
+    fin = D.get("final") or {}
+    pf = p_final(D) if fin.get("t") else None
+    if pf and ud:
+        ft = dt.datetime.fromisoformat(fin["t"].replace("Z", "+00:00"))
+        first = min((dt.datetime.fromisoformat(u["start"].replace("Z", "+00:00")) for u in ups), default=ft + dt.timedelta(hours=3))
+        out.append(dict(key=f"final:{ud}", due=ft, expires=first, text=pf[0], specs=pf[1]))
+    return out
+
+
+import re  # noqa: E402
+
+
 def form5(A, t, before):
     gs = [g for g in A.get("games", []) if t in (g.get("away"), g.get("home")) and g.get("as") is not None and g["date"] < before]
     gs = sorted(gs, key=lambda g: g["date"])[-5:]
     w = sum(1 for g in gs if (g["as"] > g["hs"]) == (g["away"] == t))
     return f"{w}-{len(gs) - w} в последних {len(gs)}" if gs else ""
-
-
-def p_morning(D, A, E, N):
-    day = D.get("results_date")
-    gs = [g for g in A.get("games", []) if g.get("date") == day and g.get("as") is not None]
-    if not gs:
-        return None
-    n = D.get("daily") or {}
-    n = n if n.get("date") == day else {}
-    human = (D.get("tg") or {}).get("morning") if (D.get("tg") or {}).get("date") == day else None
-    L = []
-    if human:
-        L.append(e(human))
-    else:
-        ot = sum(1 for g in gs if g.get("end") in ("OT", "SO"))
-        lead = f"Доброе утро! За ночь — {len(gs)} {plural(len(gs), 'матч', 'матча', 'матчей')}"
-        lead += f", {ot} из них дошли до овертайма или буллитов." if ot else "."
-        h = (n.get("heroes") or [None])[0]
-        if h and h.get("text"):
-            t = h["text"].strip()
-            lead += f" Главный герой — {e(N.full(h['name']))}: {e(t[:1].lower() + t[1:])}"
-        L.append(lead)
-    if n.get("heroes"):
-        L += ["", "⭐ " + " · ".join(f"{e(N.last(h['name']))} {e(h.get('line'))}" for h in n["heroes"][:3])]
-    if n.get("russian"):
-        r = n["russian"]
-        L.append(f"🇷🇺 {e(N.full(r['name']))} — {e(r.get('line'))}")
-    if n.get("sensation") and n["sensation"].get("head"):
-        L.append(f"⚡ {e(n['sensation']['head'])}")
-    L.append(f'\n👉 <a href="{URL}#results">Все итоги, протоколы и герои дня</a>')
-    specs = [dict(kind="scores", date=ru_date(day), games=gs)]
-    # цифра дня — второй картинкой
-    num_d = n.get("number")
-    f = ((E or {}).get("findings") or [None])[0]
-    src = num_d if num_d and num_d.get("big") else f
-    if src and src.get("big"):
-        pl = (src.get("players") or [None])[0]
-        hp = (D.get("heads") or {}).get(pl) if pl else None
-        specs.append(dict(kind="number", big=src["big"], unit=src.get("unit"), sub=src.get("sub"),
-                          head=(num_d or {}).get("head") or src.get("head"), teams=src.get("teams"),
-                          player=N.full(pl) if pl else None, head_path=hp,
-                          date=f"по матчам до {ru_date(src['date'])}" if src.get("date") else ""))
-        txt = (num_d or {}).get("text") or (f or {}).get("line")
-        if txt:
-            L.insert(-1, f"\n🔢 <b>Цифра дня.</b> {e(txt)}")
-    return "\n".join(L) + FOOT, specs
 
 
 def game_info(u, M):
@@ -262,97 +423,8 @@ def game_info(u, M):
     t = u.get("total_pick") or {}
     tline = t.get("line", (v.get("total") or {}).get("line"))
     tside = t.get("side") or (v.get("total") or {}).get("side")
-    tp = m.get("p_over" if tside == "over" else "p_under")
     tot = f"{'больше' if tside == 'over' else 'меньше'} {num(tline)}" if tside and tline else ""
-    return dict(m=m, v=v, side=side, pick=pick, p=m.get(f"p_{side}") if side else None, tot=tot, tp=tp)
-
-
-def p_games(D, M, A):
-    ups = sorted([u for u in D.get("upcoming") or [] if u.get("date") == D.get("upcoming_date")], key=lambda u: u["start"])
-    if not ups:
-        return []
-    motd = D.get("motd") or {}
-    day = D.get("upcoming_date")
-    tgt = (D.get("tg") or {}).get("games") or {}
-    night = f"в ночь на {ru_date((dt.date.fromisoformat(day) + dt.timedelta(days=1)).isoformat())}"
-    out = []
-    if len(ups) <= 4:
-        for u in ups:
-            gi = game_info(u, M)
-            is_motd = motd.get("away") == u["away"] and motd.get("home") == u["home"]
-            L = [f"{'🔥 <b>Матч дня.</b> ' if is_motd else '🏒 '}<b>{e(RU.get(u['away']))} — {e(RU.get(u['home']))}</b>, {kirov_time(u['start'])} по Кирову", ""]
-            human = tgt.get(str(u["id"]))
-            if human:
-                L.append(e(human))
-            elif is_motd and motd.get("text"):
-                L.append(e(motd["text"]))
-            else:
-                L.append(e((u.get("factors") or [""])[0]))
-            if not human:
-                for x in (u.get("factors") or [])[1:3]:
-                    L.append(f"• {e(x)}")
-            s = f"\n📊 Модель за {e(T(gi['pick']))}" + (f" — {pct(gi['p'])}" if gi["p"] else "")
-            if gi["tot"]:
-                s += f", тотал {gi['tot']}" + (f" — {pct(gi['tp'])}" if gi["tp"] else "")
-            s += ". " + ("Рынок думает иначе." if gi["v"].get("vs_market") else "Рынок с ней согласен.") if gi["m"].get("mkt_home") else "."
-            L.append(s)
-            if gi["v"].get("sure"):
-                L.append("✅ Сигнал «уверенный фаворит»: модель заметно увереннее рынка.")
-            L.append(f'\n👉 <a href="{URL}#games">Как считала модель и линия</a>')
-            text = "\n".join(L)
-            if len(text) + len(FOOT) > 1024:  # подпись к картинке — до 1024 знаков
-                text = "\n".join(x for x in L if not x.startswith("• "))
-            spec = dict(kind="match", away=u["away"], home=u["home"], time=kirov_time(u["start"]), date=night,
-                        p_away=gi["m"].get("p_away"), p_home=gi["m"].get("p_home"),
-                        total=f"тотал {gi['tot']} — {pct(gi['tp'])}" if gi["tot"] and gi["tp"] else "",
-                        motd=is_motd, sure=bool(gi["v"].get("sure")),
-                        rec_a=form5(A, u["away"], day), rec_h=form5(A, u["home"], day))
-            out.append((text + FOOT, [spec]))
-        return out
-    # больше 4 матчей — кратко, двумя постами, картинка — матч дня (или первый матч части)
-    half = (len(ups) + 1) // 2
-    for k, part in enumerate((ups[:half], ups[half:])):
-        L = [f"🏒 <b>Матчи {night}</b> · {k + 1}/2", ""]
-        if k == 0 and (D.get("tg") or {}).get("games_lead"):
-            L += [e(D["tg"]["games_lead"]), ""]
-        pic = None
-        for u in part:
-            gi = game_info(u, M)
-            is_motd = motd.get("away") == u["away"] and motd.get("home") == u["home"]
-            L.append(f"{'🔥 ' if is_motd else ''}<b>{e(RU.get(u['away']))} — {e(RU.get(u['home']))}</b>, {kirov_time(u['start'])}")
-            L.append(f"Модель: {e(T(gi['pick']))}" + (f" {pct(gi['p'])}" if gi["p"] else "") + (f", {gi['tot']}" if gi["tot"] else "")
-                     + (" ✅" if gi["v"].get("sure") else ""))
-            if is_motd or pic is None:
-                pic = dict(kind="match", away=u["away"], home=u["home"], time=kirov_time(u["start"]), date=night,
-                           p_away=gi["m"].get("p_away"), p_home=gi["m"].get("p_home"),
-                           total=f"тотал {gi['tot']} — {pct(gi['tp'])}" if gi["tot"] and gi["tp"] else "",
-                           motd=is_motd, sure=bool(gi["v"].get("sure")), rec_a=form5(A, u["away"], day), rec_h=form5(A, u["home"], day))
-        L.append(f'\n👉 <a href="{URL}#games">Все матчи и разборы модели</a>')
-        out.append(("\n".join(L) + FOOT, [pic]))
-    return out
-
-
-def p_column(D):
-    col = next((a for a in D.get("articles") or [] if (a.get("kind") or "column") == "column"), None)
-    if not col:
-        return None, None
-    kick = col.get("kicker") if col.get("kicker") and col.get("kicker") != "Колонка Claude" else "Колонка"
-    icon = {"Под микроскопом": "🔬", "Итоги недели": "📅"}.get(kick, "✍️")
-    human = (D.get("tg") or {}).get("column")
-    txt = f"{icon} <b>{e(col.get('title'))}</b>\n\n{e(human or col.get('dek'))}\n\n👉 <a href=\"{URL}#a=col\">Читать полностью</a>"
-    spec = dict(kind="column", kicker=kick, title=col.get("title"), teams=col.get("teams"),
-                date=ru_date(str(col.get("time") or dt.date.today().isoformat())[:10]))
-    return (txt + FOOT, [spec]), col.get("title")
-
-
-def p_story(S):
-    s = (S or [None])[0]
-    if not s:
-        return None, None
-    txt = f"📜 <b>История.</b> {e(s.get('title'))}\n\n{e(s.get('dek'))}\n\n👉 <a href=\"{URL}#a=s{e(s.get('id'))}\">Читать историю</a>"
-    cover = (s.get("cover") or {}).get("url")
-    spec = None if cover else dict(kind="column", kicker="История", title=s.get("title"), teams=s.get("teams"), date="")
-    return (txt + FOOT, cover, spec), s.get("id")
+    return dict(m=m, v=v, side=side, pick=pick, p=m.get(f"p_{side}") if side else None, tot=tot)
 
 
 def p_final(D):
@@ -370,17 +442,17 @@ def p_final(D):
             t = u.get("total_pick") or {}
             new = f"тотал теперь {'больше' if c.get('to') == 'over' else 'меньше'} {num(t.get('line', ''))}"
             short = f"тотал {'больше' if c.get('to') == 'over' else 'меньше'} {num(t.get('line', ''))}"
-        rows.append(f"• <b>{e(RU.get(u['away']))} — {e(RU.get(u['home']))}</b>: {e(new)} ({e(c.get('why') or 'вратари и поздняя линия')})")
+        rows.append(f"<b>{e(RU.get(u['away']))} — {e(RU.get(u['home']))}</b>: {e(new)}. Причина — {e(c.get('why') or 'вратари и поздняя линия')}.")
         items.append(dict(away=u["away"], home=u["home"], new=short))
     if not rows:
         return None
-    txt = ("🔄 <b>Вечером передумали</b>\n\nОбъявили вратарей, сдвинулась линия — и модель пересчитала прогноз:\n" + "\n".join(rows)
-           + f'\n\n👉 <a href="{URL}#games">Финальные прогнозы на ночь</a>')
+    txt = ("<b>Вечером модель передумала</b>\n\nОбъявили стартовых вратарей, сдвинулась линия — и прогноз пересчитан:\n\n" + "\n".join(rows)
+           + f'\n\n<a href="{URL}#games">Финальные прогнозы на ночь</a>')
     return txt + FOOT, [dict(kind="changes", items=items, date=ru_date(D.get("upcoming_date")))]
 
 
 # ---------------------------------------------------------------- запуск
-def main(mode):
+def main(mode, arg=None):
     now = dt.datetime.now(dt.timezone.utc)
     LOG["t"], LOG["mode"] = now.strftime("%Y-%m-%dT%H:%M:%SZ"), mode
     state = load(f"{TG}/state.json", {"posted": {}}) or {"posted": {}}
@@ -393,24 +465,19 @@ def main(mode):
     S = load(f"{SITE}/stories.json", []) or []
     S = sorted(S if isinstance(S, list) else S.get("stories", []), key=lambda x: str(x.get("time")), reverse=True)
     N = Names()
+    items = build(D, A, M, E, S, N)
+    LOG["plan"] = [dict(key=x["key"], due=x["due"].astimezone(MSK).strftime("%d.%m %H:%M"), done=x["key"] in P) for x in items]
 
     if mode == "preview":
-        specs = []
-        pm = p_morning(D, A, E, N)
-        if pm:
-            specs += pm[1]
-        for _, sp in p_games(D, M, A):
-            specs += sp
-        pc, _ = p_column(D)
-        if pc:
-            specs += pc[1]
+        specs = [s for x in items for s in (x.get("specs") or []) if s]
         out = cards(specs, D)
         import shutil
         os.makedirs(f"{TG}/preview", exist_ok=True)
         for p in out:
             if p:
                 shutil.copy(p, f"{TG}/preview/{os.path.basename(p)}")
-        LOG["ok"].append(f"превью: {sum(1 for p in out if p)} из {len(out)}")
+        save(f"{TG}/preview/texts.json", [dict(key=x["key"], text=x["text"], photo=x.get("photo")) for x in items])
+        LOG["ok"].append(f"превью: {sum(1 for p in out if p)} карточек, {len(items)} постов")
         return
 
     cfg = load(f"{TG}/config.json", {}) or {}
@@ -420,56 +487,48 @@ def main(mode):
             return
     chat = cfg["chat_id"]
 
-    def mark(k, ids=None):
-        P[k] = LOG["t"]
-        if ids:
-            MSG[k] = ids
-
-    def post(k, text, specs=None, photo_url=None):
+    def post(x):
         try:
-            imgs = cards([s for s in specs or [] if s], D) if specs else []
-            ids = send(chat, text, images=imgs, photo_url=photo_url)
-            mark(k, ids)
-            LOG["ok"].append(k)
+            imgs = cards([s for s in x.get("specs") or [] if s], D) if x.get("specs") else []
+            ids = send(chat, x["text"], images=imgs[:1], photo_url=None if imgs and imgs[0] else x.get("photo"))
+            P[x["key"]] = LOG["t"]
+            MSG[x["key"]] = ids
+            state["last_post"] = dt.datetime.now(dt.timezone.utc).isoformat()
+            LOG["ok"].append(x["key"])
         except Exception as ex:
-            LOG["fail"].append(f"{k}: {ex}"[:300])
+            LOG["fail"].append(f"{x['key']}: {ex}"[:300])
 
-    rd, ud = D.get("results_date"), D.get("upcoming_date")
-    k_now = now.astimezone(KIROV)
-    claude_ready = (D.get("daily") or {}).get("date") == rd and not D.get("auto_texts")
-    fallback_ok = bool(D.get("auto_texts")) and k_now.hour * 60 + k_now.minute >= 10 * 60 + 15
-    fresh = rd and (k_now.date() - dt.date.fromisoformat(rd)).days <= 1
-    morning_ok = mode == "test" or (fresh and (claude_ready or fallback_ok) and 8 <= k_now.hour < 18)
-
-    if morning_ok and rd and f"am:{rd}" not in P:
-        pm = p_morning(D, A, E, N)
-        if pm:
-            post(f"am:{rd}", pm[0], pm[1])
-    if morning_ok and ud and f"games:{ud}" not in P and (mode == "test" or k_now.date().isoformat() <= ud):
-        ps = p_games(D, M, A)
-        for i, (t, sp) in enumerate(ps):
-            post(f"games:{ud}:{i}", t, sp)
-        if ps:
-            mark(f"games:{ud}")
-    pc, ctitle = p_column(D)
-    if pc and morning_ok and f"col:{ctitle}" not in P:
-        col = next((a for a in D.get("articles") or [] if (a.get("kind") or "column") == "column"), {})
-        if mode == "test" or str(col.get("time") or "")[:10] >= (now - dt.timedelta(hours=20)).strftime("%Y-%m-%d"):
-            post(f"col:{ctitle}", pc[0], pc[1])
-    ps_, sid = p_story(S)
-    if ps_ and f"story:{sid}" not in P:
-        stime = str(S[0].get("time") or "")
-        if mode == "auto" and stime and (now - dt.datetime.fromisoformat(stime.replace("Z", "+00:00"))).total_seconds() < 36 * 3600:
-            post(f"story:{sid}", ps_[0], [ps_[2]] if ps_[2] else None, photo_url=ps_[1])
-        else:
-            mark(f"story:{sid}")  # старую статью не постим
-    f = D.get("final") or {}
-    if mode == "auto" and ud and f.get("t", "")[:10] == now.strftime("%Y-%m-%d") and f"final:{ud}" not in P:
-        pf = p_final(D)
-        if pf:
-            post(f"final:{ud}", pf[0], pf[1])
-        else:
-            mark(f"final:{ud}")
+    if mode == "cleanup":
+        for mid in [int(v) for v in str(arg or "").split(",") if v.strip().isdigit()]:
+            try:
+                _call("deleteMessage", dict(chat_id=chat, message_id=mid))
+                LOG["ok"].append(f"удалено {mid}")
+            except Exception as ex:
+                LOG["fail"].append(f"{mid}: {ex}"[:120])
+    elif mode == "test":
+        # удаляем прошлые версии тех же постов и публикуем весь набор сразу
+        for x in items:
+            for mid in MSG.get(x["key"], []):
+                try:
+                    _call("deleteMessage", dict(chat_id=chat, message_id=mid))
+                except Exception:
+                    pass
+            P.pop(x["key"], None)
+        for x in items:
+            if x.get("expires") and now > x["expires"]:
+                continue
+            post(x)
+    else:
+        last = state.get("last_post")
+        gap = (now - dt.datetime.fromisoformat(last)).total_seconds() / 60 if last else 999
+        due = [x for x in items if x["key"] not in P and x["due"] <= now and (not x.get("expires") or now < x["expires"])]
+        # дневные посты, у которых прошло больше 8 часов от срока, не догоняем
+        due = [x for x in due if x.get("expires") or (now - x["due"]).total_seconds() < 8 * 3600]
+        due.sort(key=lambda x: x["due"])
+        if due:
+            x = due[0]
+            if x["key"].startswith("final:") or gap >= 20:
+                post(x)
     cut = (now - dt.timedelta(days=30)).strftime("%Y-%m-%d")
     state["posted"] = {k: v for k, v in P.items() if v[:10] >= cut}
     state["messages"] = {k: v for k, v in MSG.items() if k in state["posted"]}
@@ -479,8 +538,9 @@ def main(mode):
 if __name__ == "__main__":
     m = sys.argv[1] if len(sys.argv) > 1 else "auto"
     try:
-        main(m)
+        main(m, sys.argv[2] if len(sys.argv) > 2 else None)
     except Exception as ex:
-        LOG["fail"].append(f"{ex!r}"[:300])
+        import traceback
+        LOG["fail"].append(traceback.format_exc()[-400:])
     save(f"{TG}/last.json", LOG)
     print(json.dumps(LOG, ensure_ascii=False))

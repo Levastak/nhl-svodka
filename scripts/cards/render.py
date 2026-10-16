@@ -170,16 +170,16 @@ def card_match(spec, logos):
     a, h = spec["away"], spec["home"]
     ca, ch = (COLORS.get(a) or ["#30353E"])[0], (COLORS.get(h) or ["#30353E"])[0]
     pa, ph = spec.get("p_away"), spec.get("p_home")
-    badges = "".join([f'<span class="badge">Матч дня</span>' if spec.get("motd") else "",
+    badges = "".join(["",
                       f'<span class="badge g">Уверенный фаворит</span>' if spec.get("sure") else ""])
     bar = ""
     if pa is not None and ph is not None:
-        bar = (f'<div class="bar"><div class="lbl"><b>{round(pa * 100)}%</b><span>оценка модели · {e(spec.get("total") or "")}</span><b>{round(ph * 100)}%</b></div>'
+        bar = (f'<div class="bar"><div class="lbl"><b>{round(pa * 100)}%</b><span>шансы на победу по оценке модели</span><b>{round(ph * 100)}%</b></div>'
                f'<div class="tr"><i style="width:{pa * 100}%;background:{ca}"></i><i style="flex:1;background:{ch}"></i></div></div>')
-    return page(f'<div class="top"><span class="kick">Матч <b>вечера</b></span><span class="date">{e(spec.get("date", ""))}</span></div>'
+    return page(f'<div class="top"><span class="kick">{"Матч <b>дня</b>" if spec.get("motd") else "Матч <b>ночи</b>"}</span><span class="date">{e(spec.get("date", ""))}</span></div>'
                 f'<div class="badges">{badges}</div>'
                 f'<div class="mt"><div class="side">{logo(a, logos, 220)}<b>{e(RU.get(a))}</b><small>{e(spec.get("rec_a") or "в гостях")}</small></div>'
-                f'<div class="mid"><span class="vs">VS</span><span class="t">{e(spec["time"])}</span><span class="k">по Кирову</span></div>'
+                f'<div class="mid"><span class="vs">VS</span><span class="t">{e(spec["time"])}</span><span class="k">по Москве</span></div>'
                 f'<div class="side">{logo(h, logos, 220)}<b>{e(RU.get(h))}</b><small>{e(spec.get("rec_h") or "дома")}</small></div></div>{bar}',
                 c1=dark(ca), c2=dark(ch))
 
@@ -201,7 +201,17 @@ def card_changes(spec, logos):
     return page(f'<div class="top"><span class="kick">Вечером <b>передумали</b></span><span class="date">{e(spec.get("date", ""))}</span></div><div class="chg">{items}</div>')
 
 
-KINDS = {"scores": card_scores, "number": card_number, "match": card_match, "column": card_column, "changes": card_changes}
+def card_player(spec, logos):
+    t = spec.get("team")
+    c = (COLORS.get(t) or ["#30353E"])[0]
+    return page(f'<div class="top"><span class="kick">{e(spec.get("kicker", "Звезда ночи"))}</span><span class="date">{e(spec.get("date", ""))}</span></div>'
+                f'<div class="num" style="grid-template-columns:auto 1fr"><div>{head(spec.get("head_path"), t, 360)}</div>'
+                f'<div><h2 style="font-size:72px">{e(spec.get("name"))}</h2><div class="who">{logo(t, logos, 72)}<span>«{e(RU.get(t, t))}»</span></div>'
+                f'<div class="sub" style="font-size:40px;color:#EDEFF2;margin-top:28px;font-family:F;font-weight:700">{e(spec.get("line") or "")}</div></div></div>',
+                c1=dark(c, .6))
+
+
+KINDS = {"player": card_player, "scores": card_scores, "number": card_number, "match": card_match, "column": card_column, "changes": card_changes}
 
 
 def render(specs, outdir, logos=None):
