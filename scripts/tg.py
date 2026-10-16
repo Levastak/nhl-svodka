@@ -364,6 +364,51 @@ def build(D, A, M, E, S, N):
                     stars=[dict(name=N.full(h["name"]), team=h["team"], head_path=head_path(D, h["name"]),
                                 stat=stat_parts(h.get("line"))[0], stat2=stat_parts(h.get("line"))[1], note=match_note(gs, h["team"])) for h in hs])
         out.append(dict(key=f"stars:{rd}", due=msk(rd, 10, 45) + dt.timedelta(days=1), text="\n".join(L) + FOOT, specs=[spec], needs_tg=True))
+    # 2б. Россияне ночи — все наши игроки по протоколам (box.json), текст — Opus (tg.russians)
+    box = load(f"{SITE}/box.json", {}) or {}
+    rus = {x.get("name") for x in D.get("russians") or []}
+    if rd and box.get("date") == rd and rus:
+        rows, rest = [], []
+        for g in box.get("games") or []:
+            for p in g.get("players") or []:
+                if p.get("name") not in rus:
+                    continue
+                opp = g["home"] if p.get("team") == g["away"] else g["away"]
+                vs = f"с «{RU_GEN.get(opp, opp)}»"
+                if p.get("pos") == "G":
+                    if not p.get("shots"):
+                        continue
+                    a_, b_ = stat_parts(f"{p.get('saves', 0)} из {p.get('shots', 0)}")
+                    rows.append(dict(k=5 + (p["saves"] / p["shots"] if p["shots"] else 0), name=N.full(p["name"]), team=p["team"],
+                                     head_path=head_path(D, p["name"]), stat=a_, stat2=b_, vs=vs, raw=p))
+                    continue
+                pts = (p.get("g") or 0) + (p.get("a") or 0)
+                if pts:
+                    a_, b_ = stat_parts(f"{p.get('g', 0)}+{p.get('a', 0)}")
+                    rows.append(dict(k=pts * 10 + (p.get("g") or 0), name=N.full(p["name"]), team=p["team"], head_path=head_path(D, p["name"]),
+                                     stat=a_, stat2=b_, vs=vs, raw=p))
+                else:
+                    rest.append(N.last(p["name"]))
+        rows.sort(key=lambda r: -r["k"])
+        if rows:
+            extra = rows[9:]
+            parts = []
+            ep = [N.last(r["raw"]["name"]) for r in extra if r["raw"].get("pos") != "G"]
+            eg = [f"{N.last(r['raw']['name'])} {r['raw'].get('saves')} из {r['raw'].get('shots')}" for r in extra if r["raw"].get("pos") == "G"]
+            if ep:
+                parts.append("ещё с очками: " + ", ".join(ep))
+            if eg:
+                parts.append("вратари: " + ", ".join(eg))
+            if rest:
+                parts.append(f"без очков — {len(rest)} {plural(len(rest), 'игрок', 'игрока', 'игроков')}")
+            rest_txt = "; ".join(parts)
+            rest_txt = rest_txt[:1].upper() + rest_txt[1:]
+            body = tgv(D, "russians", rd)
+            if not body:
+                body = "; ".join(f"{r['name'].split(' ', 1)[-1]} ({T(r['team'])}) — {words(str(r['raw'].get('g', 0)) + '+' + str(r['raw'].get('a', 0)) if r['raw'].get('pos') != 'G' else str(r['raw'].get('saves')) + ' из ' + str(r['raw'].get('shots'))).lower()}" for r in rows[:6]) + "."
+            txt = f"<b>Россияне ночи · {ru_date(rd)}</b>\n\n{e(body)}" + (f"\n\n<i>{e(rest_txt)}.</i>" if rest_txt else "") + f"\n\n<a href=\"{URL}#rus\">Все россияне в НХЛ</a>"
+            out.append(dict(key=f"rus:{rd}", due=msk(rd, 11, 30) + dt.timedelta(days=1), text=txt + FOOT, needs_tg=True,
+                            specs=[dict(kind="russians", date=ru_date(rd), rows=rows, rest=rest_txt)]))
     # 3. Цифра дня — отдельной карточкой
     num_d = n.get("number") or {}
     f = ((E or {}).get("findings") or [None])[0]

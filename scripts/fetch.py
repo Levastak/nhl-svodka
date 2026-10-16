@@ -667,8 +667,58 @@ def am():
     save(f"{SITE}/data.json", data)
     edge_run(yesterday)
     weekly_run()
+    preview_data(data)
+    save(f"{SITE}/data.json", data)
     data["fetch"] = dict(mode="am", t=iso(), ok=LOG["ok"], fail=LOG["fail"])
     save(f"{SITE}/data.json", data)
+
+
+def preview_data(data):
+    """Предыстория матчей вечера для превью (сайт и Telegram): data.preview[id] из gamecenter НХЛ (landing + right-rail)."""
+    def nm(x):
+        f, l = (x.get("firstName") or {}).get("default", ""), (x.get("lastName") or {}).get("default", "")
+        return f"{f} {l}".strip()
+    out = {}
+    for u in data.get("upcoming") or []:
+        gid = u["id"]
+        land, _ = get(f"https://api-web.nhle.com/v1/gamecenter/{gid}/landing", label=f"preview {gid}")
+        rail, _ = get(f"https://api-web.nhle.com/v1/gamecenter/{gid}/right-rail", label=f"preview rail {gid}")
+        if not land and not rail:
+            continue
+        p = {}
+        mu = (land or {}).get("matchup") or {}
+        lead = {}
+        for c in (mu.get("skaterComparison") or {}).get("leaders") or []:
+            lead[c.get("category")] = {side: dict(name=nm(c.get(f"{side}Leader") or {}), value=(c.get(f"{side}Leader") or {}).get("value"))
+                                       for side in ("away", "home") if c.get(f"{side}Leader")}
+        if lead:
+            p["leaders_last5"] = lead
+        gk = {}
+        for side in ("away", "home"):
+            g = ((mu.get("goalieComparison") or {}).get(f"{side}Team") or {})
+            if g:
+                gk[side] = dict(team=g.get("teamTotals"), goalies=[dict(name=nm(x), gp=x.get("gamesPlayed"), record=x.get("record"),
+                                                                       gaa=x.get("gaa"), sv=x.get("savePctg"), so=x.get("shutouts"))
+                                                                  for x in (g.get("leaders") or [])[:2]])
+        if gk:
+            p["goalies"] = gk
+        r = rail or {}
+        p["series"] = [dict(date=x.get("gameDate"), away=(x.get("awayTeam") or {}).get("abbrev"), home=(x.get("homeTeam") or {}).get("abbrev"),
+                            away_score=(x.get("awayTeam") or {}).get("score"), home_score=(x.get("homeTeam") or {}).get("score"),
+                            end=(x.get("gameOutcome") or {}).get("lastPeriodType"), state=x.get("gameState"))
+                       for x in r.get("seasonSeries") or []]
+        p["series_wins"] = r.get("seasonSeriesWins")
+        l10 = r.get("last10Record") or {}
+        p["last10"] = {side: dict(record=(l10.get(f"{side}Team") or {}).get("record"), streak=f"{(l10.get(f'{side}Team') or {}).get('streakType', '')}{(l10.get(f'{side}Team') or {}).get('streak', '')}")
+                       for side in ("away", "home") if l10.get(f"{side}Team")}
+        ts = r.get("teamSeasonStats") or {}
+        p["team_stats"] = {side: ts.get(f"{side}Team") for side in ("away", "home") if ts.get(f"{side}Team")}
+        gi = r.get("gameInfo") or {}
+        p["coaches"] = {side: ((gi.get(f"{side}Team") or {}).get("headCoach") or {}).get("default") for side in ("away", "home")}
+        out[str(gid)] = p
+    if out:
+        data["preview"] = out
+        LOG["ok"].append(f"preview {len(out)}")
 
 
 def weekly_run():
@@ -1063,6 +1113,12 @@ if __name__ == "__main__":
         sys.exit(0)
     if mode == "week":
         weekly_run()
+        print(json.dumps(LOG, ensure_ascii=False))
+        sys.exit(0)
+    if mode == "preview":
+        d = load(f"{SITE}/data.json", {})
+        preview_data(d)
+        save(f"{SITE}/data.json", d)
         print(json.dumps(LOG, ensure_ascii=False))
         sys.exit(0)
     if mode == "edge":

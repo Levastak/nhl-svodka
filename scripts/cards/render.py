@@ -107,12 +107,12 @@ body{font-family:G,sans-serif;color:#EDEFF2;background:#0D0F12;position:relative
 .body{position:absolute;left:56px;right:56px;top:122px;bottom:118px}
 /* итоги ночи */
 .list{display:grid;grid-template-columns:repeat(var(--cols),1fr);grid-template-rows:repeat(var(--rows),minmax(0,1fr));grid-auto-flow:column;gap:10px 18px;height:100%}
-.row{display:grid;grid-template-columns:var(--l) minmax(0,1fr) auto minmax(0,1fr) var(--l);align-items:center;gap:12px;background:rgba(255,255,255,.05);border-radius:16px;padding:0 16px;max-height:120px}
+.row{display:grid;grid-template-columns:var(--l) minmax(0,1fr) auto minmax(0,1fr) var(--l);column-gap:28px;align-items:center;gap:12px;background:rgba(255,255,255,.05);border-radius:16px;padding:0 16px;max-height:120px}
 .row .n{font-family:F;font-weight:600;font-size:var(--fs);color:#9AA0A9;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .row .n.r{text-align:right}
 .row .n.w{color:#fff;font-weight:800}
-.row .sc{font-family:F;font-weight:800;font-size:calc(var(--fs)*1.2);text-align:center;white-space:nowrap}
-.row .sc small{font-size:calc(var(--fs)*.6);color:#FF4A55;margin-left:4px}
+.row .sc{position:relative;font-family:F;font-weight:800;font-size:calc(var(--fs)*1.2);text-align:center;white-space:nowrap;width:calc(var(--fs)*2.6);font-variant-numeric:tabular-nums}
+.row .sc small{position:absolute;left:100%;bottom:.12em;font-size:calc(var(--fs)*.6);color:#FF4A55;margin-left:4px}
 .legend{position:absolute;left:0;right:0;bottom:-44px;text-align:center;font-size:22px;color:#6A707A}
 /* три звезды */
 .stars{display:grid;grid-template-columns:repeat(var(--n,3),minmax(0,1fr));gap:20px;height:100%}
@@ -133,6 +133,16 @@ body{font-family:G,sans-serif;color:#EDEFF2;background:#0D0F12;position:relative
 .sc3 .st{font-family:F;font-weight:800;font-size:48px;line-height:1;color:#FF4A55;white-space:nowrap}
 .sc3 .st2{font-family:F;font-weight:700;font-size:30px;line-height:1.1;color:#EDEFF2;white-space:nowrap}
 .sc3 .nt{font-size:21px;color:#A9AFB8;line-height:1.3;align-self:start;padding-top:4px}
+/* россияне */
+.ru{display:flex;flex-direction:column;gap:10px;height:100%}
+.rr{flex:1;display:grid;grid-template-columns:var(--h) minmax(0,1fr) auto;align-items:center;gap:18px;background:rgba(255,255,255,.05);border-radius:16px;padding:0 18px;max-height:120px}
+.rr .hs{border-width:3px}
+.rr .w{display:flex;flex-direction:column;gap:4px;min-width:0}
+.rr .w b{font-family:F;font-weight:800;font-size:var(--fs);line-height:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rr .w span{display:flex;align-items:center;gap:8px;font-size:calc(var(--fs)*.5);color:#A9AFB8}
+.rr .v{text-align:right;font-family:F;font-weight:800;font-size:calc(var(--fs)*.9);color:#FF4A55;white-space:nowrap}
+.rr .v small{display:block;font-weight:700;font-size:calc(var(--fs)*.55);color:#EDEFF2}
+.rest{font-size:24px;color:#8C929C;line-height:1.35;padding:4px 6px 0}
 /* цифра дня */
 .num{display:flex;flex-direction:column;height:100%;justify-content:center;gap:16px}
 .num .big{font-family:F;font-weight:800;line-height:.82;color:#FF4A55;white-space:nowrap}
@@ -272,7 +282,22 @@ def card_changes(spec, logos):
     return page(f'<div class="chg">{items}</div>', "Вечером <b>передумали</b>", spec.get("date", ""))
 
 
-KINDS = {"scores": card_scores, "stars": card_stars, "number": card_number, "match": card_match,
+def card_russians(spec, logos):
+    rows = spec["rows"][:9]
+    n = max(len(rows), 4)
+    fs = 44 if n <= 5 else 38 if n <= 7 else 33
+    hsz = 84 if n <= 5 else 72 if n <= 7 else 62
+    out = []
+    for r in rows:
+        t = r.get("team")
+        out.append(f'<div class="rr">{head(r.get("head_path"), t, hsz)}<div class="w"><b>{e(r["name"])}</b>'
+                   f'<span>{logo(t, logos, int(hsz * .42))}{e(RU.get(t, t))} · {e(r.get("vs") or "")}</span></div>'
+                   f'<div class="v">{e(r.get("stat") or "")}<small>{e(r.get("stat2") or "")}</small></div></div>')
+    rest = f'<div class="rest">{e(spec["rest"])}</div>' if spec.get("rest") else ""
+    return page(f'<div class="ru" style="--fs:{fs}px;--h:{hsz}px">{"".join(out)}{rest}</div>', "Россияне <b>ночи</b>", spec.get("date", ""))
+
+
+KINDS = {"russians": card_russians, "scores": card_scores, "stars": card_stars, "number": card_number, "match": card_match,
          "column": card_column, "player": card_player, "changes": card_changes}
 
 
