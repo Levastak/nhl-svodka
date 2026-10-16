@@ -134,6 +134,25 @@ function lastDate(){return A.games.reduce((m,g)=>g.date>m?g.date:m,"")}
 function dates(){return [...new Set(A.games.map(g=>g.date))].sort()}
 const skater=n=>(D.skaters||[]).find(s=>s.name===n);
 const goalie=n=>(D.goalies||[]).find(s=>s.name===n);
+/* Сезонная статистика НХЛ (club-stats) обновляется с опозданием: матчи ночи уже в архиве, а очки игроков — ещё вчерашние.
+   Если у клуба в архиве матчей больше, чем игр у его самого играющего игрока, досчитываем последний игровой день из протоколов box.json.
+   Как только НХЛ обновит цифры, разрыв исчезнет и досчёт сам выключится. */
+function patchFromBox(B){if(!B||!B.date||!(B.games||[]).length||!D)return;const S=D.skaters||(D.skaters=[]),G=D.goalies||(D.goalies=[]);
+  const tg={},mx={},ld={};for(const g of A.games)for(const t of [g.away,g.home]){tg[t]=(tg[t]||0)+1;if(!ld[t]||g.date>ld[t])ld[t]=g.date}
+  for(const s of S)mx[s.team]=Math.max(mx[s.team]||0,s.gp||0);for(const g of G)mx[g.team]=Math.max(mx[g.team]||0,g.gp||0);
+  const sec=t=>{const m=/^(\d+):(\d+)$/.exec(t||"");return m?+m[1]*60+ +m[2]:0};let n=0;
+  for(const b of B.games){const g=A.games.find(x=>x.id===b.id);if(!g)continue;
+    for(const tm of [g.away,g.home]){if(!mx[tm]||(tg[tm]||0)-mx[tm]<1||g.date!==ld[tm])continue;const won=(tm===g.home?g.hs>g.as:g.as>g.hs);
+      for(const p of (b.players||[]).filter(p=>p.team===tm)){
+        if(p.pos==="G"){let x=G.find(s=>s.name===p.name&&s.team===tm);if(!x){x={team:tm,name:p.name,gp:0,w:0,l:0,otl:0,sv:0,gaa:0,so:0};G.push(x)}
+          const ga0=(x.gaa||0)*x.gp,sa0=x.sv<1?ga0/(1-(x.sv||0)):0,sa=sa0+(p.shots||0),ga=ga0+(p.ga||0);x.gp++;
+          if(p.starter!==false){if(won)x.w++;else if(g.end==="REG")x.l++;else x.otl++;if(!p.ga&&won)x.so=(x.so||0)+1}
+          x.sv=sa?Math.round((sa-ga)/sa*1000)/1000:x.sv;x.gaa=Math.round(ga/x.gp*100)/100;x.live=1;continue}
+        let x=S.find(s=>s.name===p.name&&s.team===tm);if(!x){x={team:tm,name:p.name,pos:p.pos,gp:0,g:0,a:0,pts:0,pm:0,toi:0,toi_s:0};S.push(x)}
+        const t=sec(p.toi);x.toi_s=Math.round(((x.toi_s||0)*x.gp+t)/(x.gp+1));x.toi=Math.round(x.toi_s/6)/10;
+        x.gp++;x.g+=p.g||0;x.a+=p.a||0;x.pts=x.g+x.a;x.pm+=p.pm||0;x.live=1}
+      n++}}
+  if(n)D.stats_patched=B.date}
 
 /* ---------- модель ---------- */
 function modelOf(m){return (M.games||[]).find(x=>x.away===m.away&&x.home===m.home)||(M.horizon||[]).find(x=>(m.id&&x.id===m.id)||(x.away===m.away&&x.home===m.home&&x.date===m.date))}
