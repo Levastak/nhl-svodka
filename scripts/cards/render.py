@@ -3,7 +3,7 @@
 Формат — квадрат 1080×1080 (рендер ×2 для чёткости): одинаково крупно и без полей и на телефоне, и на компьютере.
 Порядок команд везде: хозяева слева, гости справа.
 Виды: scores (итоги ночи), stars (три звезды — коллекционные карточки как на сайте), number (цифра дня),
-match (матч ночи), column (колонка / рубрика), player (одна звезда), changes (вечерние изменения).
+match (превью матча), column (колонка / рубрика), player (одна звезда), changes (вечерние изменения).
 Логотипы — SVG НХЛ (тёмная версия), фото игроков — assets.nhle.com (вырезанные портреты);
 не загрузилось — логотип или кружок с аббревиатурой в цвете клуба. Шрифты лежат рядом (Golos Text, Fira Sans Extra Condensed, OFL).
 """
@@ -140,8 +140,12 @@ body{font-family:G,sans-serif;color:#EDEFF2;background:#0D0F12;position:relative
 .rr .w{display:flex;flex-direction:column;gap:4px;min-width:0}
 .rr .w b{font-family:F;font-weight:800;font-size:var(--fs);line-height:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .rr .w span{display:flex;align-items:center;gap:8px;font-size:calc(var(--fs)*.5);color:#A9AFB8}
-.rr .v{text-align:right;font-family:F;font-weight:800;font-size:calc(var(--fs)*.9);color:#FF4A55;white-space:nowrap}
-.rr .v small{display:block;font-weight:700;font-size:calc(var(--fs)*.55);color:#EDEFF2}
+.rr .v{display:flex;align-items:center;gap:14px}
+.rr .tg{font-family:F;font-weight:800;font-size:calc(var(--fs)*.5);letter-spacing:.06em;text-transform:uppercase;color:#fff;background:#C8323C;border-radius:8px;padding:3px 10px;white-space:nowrap}
+.rr .cl{display:flex;flex-direction:column;align-items:center;width:calc(var(--fs)*2.3)}
+.rr .cl b{font-family:F;font-weight:800;font-size:calc(var(--fs)*1.05);line-height:1;font-variant-numeric:tabular-nums}
+.rr .cl b.z{color:#5A606A}
+.rr .cl small{font-size:calc(var(--fs)*.42);color:#8C929C;margin-top:2px;white-space:nowrap}
 .rest{font-size:24px;color:#8C929C;line-height:1.35;padding:4px 6px 0}
 /* цифра дня */
 .num{display:flex;flex-direction:column;height:100%;justify-content:center;gap:16px}
@@ -152,20 +156,28 @@ body{font-family:G,sans-serif;color:#EDEFF2;background:#0D0F12;position:relative
 .num .who{display:flex;align-items:center;gap:22px;font-size:34px;color:#C3C7CE;margin-top:10px}
 .num .who small{display:block;color:#8C929C;font-size:26px}
 /* матч */
-.mt{display:flex;flex-direction:column;height:100%;justify-content:space-between}
-.teams{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:10px}
-.side{display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center}
-.side b{font-family:F;font-weight:800;font-size:62px;line-height:1}
-.side .hg{font-family:F;font-weight:800;font-size:24px;letter-spacing:.12em;color:#0D0F12;background:#EDEFF2;border-radius:8px;padding:4px 12px}
-.side small{font-size:26px;color:#A9AFB8}
-.when{text-align:center;display:flex;flex-direction:column;gap:4px}
-.when .t{font-family:F;font-weight:800;font-size:110px;line-height:1}
-.when .k{font-size:26px;color:#A9AFB8}
-.bar .lbl{display:flex;justify-content:space-between;align-items:baseline;font-family:F;font-weight:800;font-size:60px;margin-bottom:12px}
-.bar .lbl span{color:#A9AFB8;font-family:G;font-weight:500;font-size:26px}
-.bar .tr{display:flex;height:24px;border-radius:12px;overflow:hidden;background:#2A2E35}
-.badges{display:flex;gap:12px;justify-content:center}
-.badge{font-family:F;font-weight:800;font-size:28px;letter-spacing:.05em;text-transform:uppercase;padding:6px 20px;border-radius:999px;background:#1E8E5A;color:#fff}
+.mp .bgx{position:absolute;inset:0;background:radial-gradient(ellipse 55% 85% at 0% 45%,color-mix(in srgb,var(--h) 60%,transparent),transparent 72%),radial-gradient(ellipse 55% 85% at 100% 45%,color-mix(in srgb,var(--a) 60%,transparent),transparent 72%),#0B0D11}
+.mp .bgx:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,13,17,.1),rgba(11,13,17,.75) 85%)}
+.mp .wm{position:absolute;top:330px;opacity:.16;filter:blur(4px)}.mp .wm.h{left:-200px;transform:translateY(-50%) rotate(-10deg)}.mp .wm.a{right:-200px;transform:translateY(-50%) rotate(10deg)}
+.mp .vs{position:absolute;left:40px;right:40px;top:150px;display:grid;grid-template-columns:1fr 230px 1fr;align-items:start}
+.mp .sd{display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;min-width:0}
+.mp .sd .lg{filter:drop-shadow(0 18px 30px rgba(0,0,0,.5))}
+.mp .sd b{font-family:F;font-weight:800;font-size:64px;line-height:1;white-space:nowrap}.mp .sd small{font-size:25px;color:#C3C8CF}
+.mp .hg{font-family:F;font-weight:800;font-size:22px;letter-spacing:.14em;color:#A9AFB8;border:2px solid rgba(255,255,255,.25);border-radius:8px;padding:2px 10px}
+.mp .mid{text-align:center;padding-top:80px}.mp .mid b{font-family:F;font-weight:800;font-size:104px;line-height:1;display:block}.mp .mid small{font-size:26px;color:#A9AFB8}
+.mp .pb{position:absolute;left:56px;right:56px;top:640px}
+.mp .pb .l{display:flex;justify-content:space-between;align-items:baseline;font-family:F;font-weight:800;font-size:56px}
+.mp .pb .l span{font-family:G;font-weight:500;font-size:24px;color:#A9AFB8}
+.mp .pb .tr{display:flex;height:20px;border-radius:10px;overflow:hidden;margin-top:8px;gap:4px}
+.mp .pb .mk{font-size:23px;color:#8C929C;text-align:center;margin-top:10px}
+.mp .pls{position:absolute;left:56px;right:56px;top:800px;display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.mp .pl{display:flex;align-items:center;gap:16px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:10px 16px;min-width:0}
+.mp .pl.a{flex-direction:row-reverse;text-align:right}
+.mp .pl .hs{border:3px solid rgba(255,255,255,.5)}
+.mp .pl div{min-width:0}.mp .pl b{font-family:F;font-weight:800;font-size:34px;display:block;line-height:1.05;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.mp .pl small{font-size:22px;color:#C3C8CF}
+.chip{display:inline-block;font-family:F;font-weight:800;font-size:30px;letter-spacing:.08em;text-transform:uppercase;padding:6px 18px;border-radius:999px;line-height:1.1}
+.chip.gold{background:#F2B33D;color:#16120A}.chip.ghost{background:rgba(255,255,255,.1);color:#EDEFF2}.chip.green{background:#1E8E5A;color:#fff}
+.mp .top{align-items:center;z-index:5}.mp .brand,.mp .tag{z-index:5}.mp .kick{display:flex;gap:12px;align-items:center}
 /* колонка */
 .col{display:flex;flex-direction:column;height:100%;justify-content:center;gap:52px}
 .col h1{font-family:F;font-weight:800;line-height:1.02;text-wrap:balance}
@@ -250,21 +262,41 @@ def card_number(spec, logos):
 
 
 def card_match(spec, logos):
+    """Превью матча — как «Матч дня» на сайте: цвета клубов, логотипы, время по Москве, шансы модели и рынка, лучшие игроки последних 5 матчей."""
     a, h = spec["away"], spec["home"]
     ca, ch = bright(a), bright(h)
     pa, ph = spec.get("p_away"), spec.get("p_home")
+
+    def side(t, s):
+        sub = " · ".join(x for x in (spec.get(f"rec_{s}"), spec.get(f"place_{s}")) if x)
+        return (f'<div class="sd">{logo(t, logos, 270)}<b>{e(RU.get(t))}</b><small>{e(sub)}</small>'
+                f'<span class="hg">{"ДОМА" if s == "h" else "В ГОСТЯХ"}</span></div>')
+
     bar = ""
     if pa is not None and ph is not None:
-        bar = (f'<div class="bar"><div class="lbl"><b>{round(ph * 100)}%</b><span>шансы по оценке модели</span><b>{round(pa * 100)}%</b></div>'
-               f'<div class="tr"><i style="width:{ph * 100}%;background:{ch}"></i><i style="flex:1;background:{ca}"></i></div></div>')
-    badges = '<div class="badges"><span class="badge">Уверенный фаворит</span></div>' if spec.get("sure") else ""
-    body = (f'<div class="mt"><div class="teams">'
-            f'<div class="side">{logo(h, logos, 290)}<b>{e(RU.get(h))}</b><span class="hg">ДОМА</span><small>{e(spec.get("rec_h") or "")}</small></div>'
-            f'<div class="when"><div class="t">{e(spec["time"])}</div><div class="k">по Москве</div></div>'
-            f'<div class="side">{logo(a, logos, 290)}<b>{e(RU.get(a))}</b><span class="hg">В ГОСТЯХ</span><small>{e(spec.get("rec_a") or "")}</small></div></div>'
-            f'{badges}{bar}</div>')
-    kick = "Матч <b>дня</b>" if spec.get("motd") else "Матч <b>ночи</b>"
-    return page(body, kick, spec.get("date", ""), c1=dark(main_c(h)), c2=dark(main_c(a)))
+        mk = (f'<div class="mk">рынок: {round(spec["mkt_home"] * 100)}% — {round(spec["mkt_away"] * 100)}%</div>'
+              if spec.get("mkt_home") is not None and spec.get("mkt_away") is not None else "")
+        bar = (f'<div class="pb"><div class="l"><b>{round(ph * 100)}%</b><span>шансы по оценке модели</span><b>{round(pa * 100)}%</b></div>'
+               f'<div class="tr"><i style="width:{ph * 100}%;background:{ch}"></i><i style="flex:1;background:{ca}"></i></div>{mk}</div>')
+    pls = ""
+    lead = spec.get("leaders") or {}
+    if lead.get("h") and lead.get("a"):
+        def pl(s, t):
+            x = lead[s]
+            v = x.get("value") or 0
+            return (f'<div class="pl {s}">{head(x.get("head_path"), t, 96)}<div><b>{e(x["name"])}</b>'
+                    f'<small>{v} {"очко" if v % 10 == 1 and v % 100 != 11 else "очка" if 2 <= v % 10 <= 4 and not 12 <= v % 100 <= 14 else "очков"} в 5 последних матчах</small></div></div>')
+        pls = f'<div class="pls">{pl("h", h)}{pl("a", a)}</div>'
+    chips = '<span class="chip gold">Матч дня</span>' if spec.get("motd") else '<span class="chip ghost">Превью</span>'
+    if spec.get("sure"):
+        chips += '<span class="chip green">Уверенный фаворит</span>'
+    body = (f'<div class="bgx"></div><div class="wm h">{logo(h, logos, 560)}</div><div class="wm a">{logo(a, logos, 560)}</div>'
+            f'<div class="vs">{side(h, "h")}<div class="mid"><b>{e(spec["time"])}</b><small>по Москве</small></div>{side(a, "a")}</div>{bar}{pls}')
+    doc = page(body, chips, spec.get("date", ""))
+    doc = doc.replace('<body style="', f'<body class="mp" style="--h:{ch};--a:{ca};', 1)
+    # слой с фоном — на всю карточку, а не внутри поля .body
+    doc = doc.replace('<div class="body"><div class="bgx"></div><div class="wm h">', '<div class="bgx"></div><div class="body" style="position:static"><div class="wm h">', 1)
+    return doc
 
 
 def card_column(spec, logos):
@@ -301,11 +333,20 @@ def card_russians(spec, logos):
     out = []
     for r in rows:
         t = r.get("team")
+        if r.get("pos") == "G":
+            sv, sh = r.get("saves") or 0, r.get("shots") or 0
+            cells = (f'<div class="cl"><b>{sv}</b><small>из {sh}</small></div>'
+                     f'<div class="cl"><b>{("%.3f" % (sv / sh)).lstrip("0") if sh else "—"}</b><small>отражено</small></div>')
+        else:
+            g, a_ = r.get("g") or 0, r.get("a") or 0
+            cells = (f'<div class="cl"><b class="{"" if g else "z"}">{g}</b><small>{"гол" if g == 1 else "гола" if 2 <= g <= 4 else "голов"}</small></div>'
+                     f'<div class="cl"><b class="{"" if a_ else "z"}">{a_}</b><small>{"передача" if a_ == 1 else "передачи" if 2 <= a_ <= 4 else "передач"}</small></div>')
+        tag = f'<span class="tg">{e(r["tag"])}</span>' if r.get("tag") else ""
         out.append(f'<div class="rr">{head(r.get("head_path"), t, hsz)}<div class="w"><b>{e(r["name"])}</b>'
                    f'<span>{logo(t, logos, int(hsz * .42))}{e(RU.get(t, t))} · {e(r.get("vs") or "")}</span></div>'
-                   f'<div class="v">{e(r.get("stat") or "")}<small>{e(r.get("stat2") or "")}</small></div></div>')
+                   f'<div class="v">{tag}{cells}</div></div>')
     rest = f'<div class="rest">{e(spec["rest"])}</div>' if spec.get("rest") else ""
-    return page(f'<div class="ru" style="--fs:{fs}px;--h:{hsz}px">{"".join(out)}{rest}</div>', "Россияне <b>ночи</b>", spec.get("date", ""))
+    return page(f'<div class="ru" style="--fs:{fs}px;--h:{hsz}px">{"".join(out)}{rest}</div>', "Наши в <b>НХЛ</b>", spec.get("date", ""))
 
 
 KINDS = {"russians": card_russians, "scores": card_scores, "stars": card_stars, "number": card_number, "match": card_match,

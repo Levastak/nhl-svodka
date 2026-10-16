@@ -5,6 +5,7 @@
              (утро, матчи дня, колонка, история, вечерние изменения);
   test     — опубликовать утренний набор прямо сейчас и отметить его опубликованным;
   preview  — только нарисовать карточки текущего дня в tg/preview/ (ничего не постит);
+  recard   — перерисовать картинки (и подписи) уже выложенных постов; третьей строкой trigger/tg — префиксы ключей;
   discover — найти канал, куда бота добавили админом (getUpdates), и записать tg/config.json.
 Подписи «по-человечески» пишет утренняя задача Claude в data.tg (morning, games{id}, column); нет — шаблоны ниже.
 Картинки — scripts/cards/render.py (Playwright, ставится сам при первом посте).
@@ -406,7 +407,7 @@ def build(D, A, M, E, S, N):
                     stars=[dict(name=N.full(h["name"]), team=h["team"], head_path=head_path(D, h["name"]),
                                 stat=stat_parts(h.get("line"))[0], stat2=stat_parts(h.get("line"))[1], note=match_note(gs, h["team"])) for h in hs])
         out.append(dict(key=f"stars:{rd}", due=msk(rd, 10, 45) + dt.timedelta(days=1), text="\n".join(L) + FOOT, specs=[spec], needs_tg=True))
-    # 2б. Россияне ночи — все наши игроки по протоколам (box.json), текст — Opus (tg.russians)
+    # 2б. Наши в НХЛ (россияне ночи) — все наши игроки по протоколам (box.json), текст — Opus (tg.russians)
     box = load(f"{SITE}/box.json", {}) or {}
     rus = {x.get("name") for x in D.get("russians") or []}
     if rd and box.get("date") == rd and rus:
@@ -422,13 +423,16 @@ def build(D, A, M, E, S, N):
                         continue
                     a_, b_ = stat_parts(f"{p.get('saves', 0)} из {p.get('shots', 0)}")
                     rows.append(dict(k=5 + (p["saves"] / p["shots"] if p["shots"] else 0), name=N.full(p["name"]), team=p["team"],
-                                     head_path=head_path(D, p["name"]), stat=a_, stat2=b_, vs=vs, raw=p))
+                                     head_path=head_path(D, p["name"]), stat=a_, stat2=b_, vs=vs, raw=p, pos="G", saves=p.get("saves"), shots=p.get("shots"),
+                                     tag="Сухарь" if p.get("saves") == p.get("shots") and p["shots"] >= 15 else ""))
                     continue
                 pts = (p.get("g") or 0) + (p.get("a") or 0)
                 if pts:
                     a_, b_ = stat_parts(f"{p.get('g', 0)}+{p.get('a', 0)}")
-                    rows.append(dict(k=pts * 10 + (p.get("g") or 0), name=N.full(p["name"]), team=p["team"], head_path=head_path(D, p["name"]),
-                                     stat=a_, stat2=b_, vs=vs, raw=p))
+                    gg = p.get("g") or 0
+                    rows.append(dict(k=pts * 10 + gg, name=N.full(p["name"]), team=p["team"], head_path=head_path(D, p["name"]),
+                                     stat=a_, stat2=b_, vs=vs, raw=p, g=gg, a=p.get("a") or 0,
+                                     tag={2: "Дубль", 3: "Хет-трик", 4: "Покер"}.get(gg, "Пять голов" if gg >= 5 else "")))
                 else:
                     rest.append(N.last(p["name"]))
         rows.sort(key=lambda r: -r["k"])
@@ -448,7 +452,7 @@ def build(D, A, M, E, S, N):
             body = tgv(D, "russians", rd)
             if not body:
                 body = "; ".join(f"{r['name'].split(' ', 1)[-1]} ({T(r['team'])}) — {words(str(r['raw'].get('g', 0)) + '+' + str(r['raw'].get('a', 0)) if r['raw'].get('pos') != 'G' else str(r['raw'].get('saves')) + ' из ' + str(r['raw'].get('shots'))).lower()}" for r in rows[:6]) + "."
-            txt = f"<b>Россияне ночи · {ru_date(rd)}</b>\n\n{e(body)}" + (f"\n\n<i>{e(rest_txt)}.</i>" if rest_txt else "") + f"\n\n<a href=\"{URL}#rus\">Все россияне в НХЛ</a>"
+            txt = f"<b>Наши в НХЛ · {ru_date(rd)}</b>\n\n{e(body)}" + (f"\n\n<i>{e(rest_txt)}.</i>" if rest_txt else "") + f"\n\n<a href=\"{URL}#rus\">Все россияне в НХЛ</a>"
             out.append(dict(key=f"rus:{rd}", due=msk(rd, 11, 30) + dt.timedelta(days=1), text=txt + FOOT, needs_tg=True,
                             specs=[dict(kind="russians", date=ru_date(rd), rows=rows, rest=rest_txt)]))
     # 3. Цифра дня — отдельной карточкой
@@ -512,7 +516,9 @@ def build(D, A, M, E, S, N):
         def spec_for(u, gi):
             return dict(kind="match", away=u["away"], home=u["home"], time=dt.datetime.fromisoformat(u["start"].replace("Z", "+00:00")).astimezone(MSK).strftime("%H:%M"),
                         date=night, p_away=gi["m"].get("p_away"), p_home=gi["m"].get("p_home"), motd=is_m(u), sure=bool(gi["v"].get("sure")),
-                        rec_a=form5(A, u["away"], ud), rec_h=form5(A, u["home"], ud))
+                        mkt_home=gi["m"].get("mkt_home"), mkt_away=gi["m"].get("mkt_away"),
+                        rec_h=season_rec(D, u["home"]), rec_a=season_rec(D, u["away"]), place_h=conf_place(D, u["home"]), place_a=conf_place(D, u["away"]),
+                        leaders=leaders5(D, u, N))
 
         def tmsk(u):
             return dt.datetime.fromisoformat(u["start"].replace("Z", "+00:00")).astimezone(MSK).strftime("%H:%M")
@@ -532,7 +538,7 @@ def build(D, A, M, E, S, N):
                 pred += ". " + ("Рынок с ней не согласен." if gi["v"].get("vs_market") else "Рынок согласен.") if gi["m"].get("mkt_home") else "."
                 if gi["v"].get("sure"):
                     pred += " Это сигнал «уверенный фаворит»: модель заметно увереннее рынка."
-                head_t = ("Матч дня. " if is_m(u) else "") + f"{RU.get(u['home'])} — {RU.get(u['away'])}, {tmsk(u)} мск"
+                head_t = f"{RU.get(u['home'])} — {RU.get(u['away'])}, {tmsk(u)} мск"
                 txt = f"<b>{e(head_t)}</b>\n\n{e(body)}\n\n{e(pred)}\n\n<a href=\"{URL}#games\">Как считала модель</a>"
                 out.append(dict(key=f"game:{ud}:{u['id']}", due=min(base + dt.timedelta(minutes=30 * i), start - dt.timedelta(minutes=60)),
                                 expires=start, text=txt + FOOT, specs=[spec_for(u, gi)]))
@@ -594,6 +600,37 @@ def build(D, A, M, E, S, N):
 
 
 import re  # noqa: E402
+
+
+CONF = {"Atlantic": "E", "Metropolitan": "E", "Central": "W", "Pacific": "W"}
+
+
+def season_rec(D, t):
+    s = next((x for x in D.get("standings") or [] if x.get("abbr") == t), None)
+    return f"{s['w']}-{s['l']}-{s['otl']}" if s else ""
+
+
+def conf_place(D, t):
+    """«5-е на Западе» — место в конференции по очкам, как в таблице сайта."""
+    st = D.get("standings") or []
+    me = next((x for x in st if x.get("abbr") == t), None)
+    if not me or not me.get("gp"):
+        return ""
+    c = CONF.get(me.get("div"))
+    rows = sorted([x for x in st if CONF.get(x.get("div")) == c], key=lambda x: (-x.get("pts", 0), x.get("gp", 0), -(x.get("gf", 0) - x.get("ga", 0))))
+    i = next(k for k, x in enumerate(rows) if x["abbr"] == t) + 1
+    return f"{i}-е на {'Западе' if c == 'W' else 'Востоке'}"
+
+
+def leaders5(D, u, N):
+    """Лучшие по очкам за последние 5 матчей у хозяев и гостей (gamecenter, data.preview)."""
+    lp = (((D.get("preview") or {}).get(str(u["id"])) or {}).get("leaders_last5") or {}).get("points") or {}
+    out = {}
+    for s, k in (("home", "h"), ("away", "a")):
+        x = lp.get(s) or {}
+        if x.get("name") and x.get("value"):
+            out[k] = dict(name=N.full(x["name"]), head_path=head_path(D, x["name"]), value=x["value"])
+    return out if len(out) == 2 else {}
 
 
 def form5(A, t, before):
@@ -713,6 +750,22 @@ def main(mode, arg=None):
                 LOG["fail"].append(f"закрепить не вышло: {ex}"[:200])
         except Exception as ex:
             LOG["fail"].append(f"закреп: {ex}"[:300])
+    elif mode == "recard":
+        # перерисовать картинку и подпись у уже выложенных постов (editMessageMedia), arg — префиксы ключей через запятую
+        pre = tuple(x for x in str(arg or "").split(",") if x)
+        for x in items:
+            if not pre or not x["key"].startswith(pre) or not MSG.get(x["key"]) or not x.get("specs"):
+                continue
+            try:
+                img = cards(x["specs"][:1], D)[0]
+                if not img:
+                    raise RuntimeError("карточка не нарисовалась")
+                vis = len(re.sub("<[^>]+>", "", html.unescape(x["text"])))
+                media = dict(type="photo", media="attach://photo", **({"caption": x["text"], "parse_mode": "HTML"} if vis <= 1024 else {}))
+                _call("editMessageMedia", dict(chat_id=chat, message_id=MSG[x["key"]][0], media=media), {"photo": img})
+                LOG["ok"].append(f"обновлено {x['key']} ({MSG[x['key']][0]})")
+            except Exception as ex:
+                LOG["fail"].append(f"{x['key']}: {ex}"[:300])
     elif mode == "cleanup":
         for mid in [int(v) for v in str(arg or "").split(",") if v.strip().isdigit()]:
             try:
