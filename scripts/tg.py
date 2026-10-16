@@ -293,11 +293,16 @@ def build(D, A, M, E, S, N):
     hs = (n.get("heroes") or [])[:3]
     if hs:
         st = {x.get("name"): x.get("text") for x in tgv(D, "stars", rd) or [] if isinstance(x, dict)}
-        L = [f"<b>Три звезды ночи</b>", ""]
-        for i, h in enumerate(hs):
-            body = st.get(h["name"]) or f"{words(h.get('line')).capitalize()}. {h.get('text') or ''}".strip()
-            L.append(f"<b>{i + 1}. {e(N.full(h['name']))}</b>, {e(T(h['team']))}\n{e(body)}")
-            L.append("")
+        bodies = [st.get(h["name"]) or f"{words(h.get('line')).capitalize()}. {h.get('text') or ''}".strip() for h in hs]
+        # подпись под картинкой — до 1024 знаков: если длинно, оставляем у каждой звезды меньше предложений
+        for keep in (9, 3, 2, 1):
+            cut = [" ".join(re.split(r"(?<=[.!?…])\s+", b)[:keep]) for b in bodies]
+            L = ["<b>Три звезды ночи</b>", ""]
+            for i, h in enumerate(hs):
+                L.append(f"<b>{i + 1}. {e(N.full(h['name']))}</b>, {e(T(h['team']))}\n{e(cut[i])}")
+                L.append("")
+            if len(re.sub("<[^>]+>", "", "\n".join(L) + FOOT)) < 960:
+                break
         L.append(f"<a href=\"{URL}#results\">Все герои и неудачники ночи</a>")
         spec = dict(kind="stars", date=ru_date(rd),
                     stars=[dict(name=N.full(h["name"]), team=h["team"], head_path=head_path(D, h["name"]),
