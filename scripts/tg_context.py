@@ -118,7 +118,7 @@ def main():
         rows = _tg.vs_market_rows(ups, M)
         if rows:
             ctx["vs_market"] = dict(rows=rows, season_record=_tg.vs_market_record(D),
-                                    note="kind: исход — модель и рынок за разные команды; тотал — за разные стороны тотала; сила — за одну команду, но модель увереннее на 7+ п.п. Подробности матча — в games по id.")
+                                    note="kind: исход — модель и рынок за разные команды; тотал — за разные стороны тотала. Подробности матча — в games по id.")
     except Exception as ex:
         ctx["vs_market_error"] = repr(ex)[:200]
     # по понедельникам (results_date — воскресенье): честный счёт модели за неделю для tg.model_week

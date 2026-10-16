@@ -394,7 +394,7 @@ def card_vsmarket(spec, logos):
     out = []
     for r in rows:
         h, a = r["home"], r["away"]
-        k = {"исход": "спор об исходе", "тотал": "спор о тотале", "сила": "модель увереннее"}[r["kind"]]
+        k = {"исход": "спор об исходе", "тотал": "спор о тотале"}[r["kind"]]
         if r["kind"] == "тотал":
             t = r.get("total") or {}
             S = lambda x: "больше" if x == "over" else "меньше"

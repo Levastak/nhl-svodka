@@ -678,7 +678,7 @@ def leaders5(D, u, N):
 
 
 def vs_market_rows(ups, M):
-    """Матчи, где модель спорит с рынком: другая сторона в исходе или тотале; либо та же сторона, но модель увереннее на 7+ п.п."""
+    """Матчи, где модель спорит с рынком: другая сторона в исходе или в тотале (решение Льва 16.10 — только настоящий спор)."""
     mg = {x.get("id"): x for x in M.get("games") or []}
     rows = []
     for u in ups:
@@ -698,13 +698,10 @@ def vs_market_rows(ups, M):
             kind = "тотал"
             S = lambda x: "больше" if x == "over" else "меньше"
             line = f"тотал {num(tm.get('line'))}: модель за «{S(tm['side'])}» ({round((tm.get('p') or 0) * 100)}%), рынок — за «{S(tm['mkt_side'])}»"
-        elif pm and pk and pm - pk >= 0.07:
-            kind = "сила"
-            line = f"обе стороны за «{T(fav)}», но модель увереннее: {round(pm * 100)}% против {round(pk * 100)}% у рынка"
         if kind:
             rows.append(dict(id=u["id"], home=u["home"], away=u["away"], kind=kind, line=line, p_home=m.get("p_home"), p_away=m.get("p_away"),
                              mkt_home=m.get("mkt_home"), mkt_away=m.get("mkt_away"), total=dict(tm, mkt_p=m.get("mkt_over") if tm.get("mkt_side") == "over" else (1 - m["mkt_over"]) if m.get("mkt_over") else None) if kind == "тотал" else None))
-    order = {"исход": 0, "тотал": 1, "сила": 2}
+    order = {"исход": 0, "тотал": 1}
     return sorted(rows, key=lambda r: order[r["kind"]])[:3]
 
 
