@@ -90,6 +90,7 @@ document.addEventListener("visibilitychange",()=>{if(!document.hidden&&Date.now(
     try{BOX=await fetch(DATA+"box.json"+v).then(r=>r.ok?r.json():null);patchFromBox(BOX)}catch(e){}
     rerenderKeep()}catch(e){}
   try{ST=await fetch(DATA+"stories.json"+v).then(r=>r.ok?r.json():[]);ST=(Array.isArray(ST)?ST:ST.stories||[]).slice().sort((a,b)=>String(b.time).localeCompare(String(a.time)));if(ST.length)rerenderKeep()}catch(e){ST=[]}
+  try{EDGE=await fetch(DATA+"edge.json"+v).then(r=>r.ok?r.json():null);if(EDGE&&VIEW==="home")rerenderKeep()}catch(e){EDGE=null}
   liveLoop();
   setInterval(()=>{if(["home","games"].includes(VIEW)&&$("#sheet").hidden&&!needLive())rerenderKeep()},60000);
 })();

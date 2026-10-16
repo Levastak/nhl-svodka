@@ -205,7 +205,16 @@ function leaderRows(k,n=10){const S=(D.skaters||[]).filter(s=>s.gp>0);
 function lrow(r,i,v,sub){return `<div class="lr"><span class="n">${i+1}</span><span class="who">${photo(r.name,r.team,52)}<span class="nm2"><span>${plink(r.name,r.team)}${posTag(r.name,r.pos)}</span><small>${esc(sub||"")}</small></span></span><span class="v">${v}</span></div>`}
 function leadersW(){return `<section class="box"><div class="wg-h"><h3>Лидеры</h3><button class="lnk" data-go="lead">Все</button></div><div class="pills wg-pills">${LTABS.map(([k,l])=>`<button data-rlead="${k}" aria-pressed="${RAIL_LEAD===k}">${l}</button>`).join("")}</div>${leaderRows(RAIL_LEAD,6).map((r,i)=>lrow(r,i,r.v,`${EN[r.team]} · ${r.sub}`)).join("")}</section>`}
 function staleBanner(){const f=freshness();return f.old?`<div class="banner">Данные давно не обновлялись — последний сбор ${esc(kdt(D.generated))}. Счёт матчей обновляется сам, остальное подтянется со следующим сбором.</div>`:""}
-function vHome(){return `${staleBanner()}<div class="home"><div class="col">${posterSec()}${todaySec()}${nightSec()}${heroesSec()}${newsSec()}</div><aside class="col">${accW()}${standW()}${leadersW()}</aside></div>`}
+/* «Цифра дня» — NHL EDGE: текст Claude (data.daily.number) или запасная строка из находок скрипта (edge.json) */
+function numberDay(){const n=(D.daily||{}).number;const f=EDGE&&EDGE.findings&&EDGE.findings[0];
+  const fresh=f&&EDGE.night&&(!D.daily||!D.daily.date||EDGE.night>=D.daily.date);
+  const x=n&&n.big?n:fresh?{head:f.head,text:f.line,big:f.big,unit:f.unit,sub:f.sub,teams:f.teams,players:f.players}:null;if(!x)return"";
+  const pl=(x.players||[])[0],tm=(x.teams||[])[0];
+  const pic=pl?photo(pl,tm,64):tm?logo(tm,56):"";
+  return `<section class="sec"><div class="hd"><h2>Цифра дня<small>трекинг НХЛ EDGE${EDGE&&EDGE.data_date?` · матчи по ${esc(dShort(EDGE.data_date))}`:""}</small></h2></div><div class="box numd">
+   <div class="nv"><b>${esc(x.big)}${x.unit?`<i>${esc(x.unit)}</i>`:""}</b>${x.sub?`<small>${esc(x.sub)}</small>`:""}</div>
+   <div class="nt"><div class="nh">${pic}<span><h3>${esc(x.head||"Цифра дня")}</h3>${pl?`<span class="nm3">${plink(pl,tm)}${tm?` · ${esc(FULL[tm]||tm)}`:""}</span>`:tm?`<button class="plink" data-team="${tm}">${esc(FULL[tm]||tm)}</button>`:""}</span></div><p>${esc(x.text||"")}</p></div></div></section>`}
+function vHome(){return `${staleBanner()}<div class="home"><div class="col">${posterSec()}${todaySec()}${nightSec()}${heroesSec()}${numberDay()}${newsSec()}</div><aside class="col">${accW()}${standW()}${leadersW()}</aside></div>`}
 
 /* ===================== итоги ===================== */
 /* голы: время · клуб · автор (ассистенты ниже) · счёт после гола */

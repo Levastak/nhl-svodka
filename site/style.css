@@ -613,3 +613,17 @@ table.st tbody tr:hover td{background:var(--soft);cursor:pointer}
 .sc1 .r{gap:8px}.sc1 .r .nm{font-style:normal;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;letter-spacing:-.01em}
 .jday{margin-top:12px}.jday>summary{margin-bottom:8px;flex-wrap:wrap;row-gap:2px}.jday>summary small{white-space:nowrap}
 .inj{color:var(--mute)}.inj.IR,.inj.LTIR,.inj.OUT{color:var(--loss)}
+
+/* «Цифра дня» */
+.numd{display:grid;grid-template-columns:minmax(0,auto) minmax(0,1fr);gap:14px 22px;padding:18px 16px;align-items:start}
+.numd .nv{display:flex;flex-direction:column;gap:4px;min-width:96px;max-width:180px}
+.numd .nv b{font-family:var(--f-disp);font-weight:800;font-size:56px;line-height:.95;color:var(--red);font-variant-numeric:tabular-nums;white-space:nowrap}
+.numd .nv b i{font-style:normal;font-size:22px;margin-left:4px;color:var(--ink2)}
+.numd .nv small{font-size:var(--fs-xs);color:var(--mute);font-weight:600;line-height:1.3}
+.numd .nt{display:flex;flex-direction:column;gap:8px;min-width:0}
+.numd .nh{display:flex;gap:12px;align-items:center;min-width:0}
+.numd .nh>span{display:flex;flex-direction:column;gap:2px;min-width:0}
+.numd .nt h3{font-family:var(--f-disp);font-weight:700;font-size:22px;line-height:1.1}
+.numd .nm3{font-size:var(--fs-s);color:var(--mute)}
+.numd .nt p{font-size:var(--fs-s);color:var(--ink2);line-height:1.5}
+@media (max-width:520px){.numd{grid-template-columns:1fr}.numd .nv{max-width:none;flex-direction:row;align-items:baseline;gap:10px;flex-wrap:wrap}}

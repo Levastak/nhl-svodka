@@ -27,7 +27,6 @@ TOPS = {
     "shot": ("skater-shot-speed-top-10/all/max/now", "hardestShot", "км/ч"),
     "shot_F": ("skater-shot-speed-top-10/F/max/now", "hardestShot", "км/ч"),
     "dist": ("skater-distance-top-10/all/all/total/now", "distanceTotal", "км"),
-    "dist_game": ("skater-distance-top-10/all/all/max-per-game/now", "distanceMaxPerGame", "км"),
     "ozone": ("skater-zone-time-top-10/all/all/offensive/now", "offensiveZoneTime", "%"),
     "ozone_D": ("skater-zone-time-top-10/D/all/offensive/now", "offensiveZoneTime", "%"),
 }
@@ -154,6 +153,17 @@ def _pct(x, n=1):
     return f"{x * 100:.{n}f}".replace(".", ",")
 
 
+MON = ["января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря"]
+
+
+def ru_date(d):
+    try:
+        x = dt.date.fromisoformat(d)
+        return f"{x.day} {MON[x.month - 1]}"
+    except Exception:
+        return d or ""
+
+
 def _f(x, n=1):
     return f"{x:.{n}f}".replace(".", ",")
 
@@ -180,10 +190,10 @@ def findings(e, prev, night, russians, standings, names_ru, archive_games):
                 continue
             what = TOP_RU[key]
             sc = (92 if r["rank"] == 1 else 74 - r["rank"] * 2) - (6 if key.endswith(("_D", "_F")) else 0)
-            line = (f"{_f(r['v'])} км/ч — {what}: {ru_name(r['name'])} («{RU.get(r['team'], r['team'])}»), "
+            line = (f"{_f(r['v'])} км/ч — {what}: {ru_name(r['name'])} («{RU.get(r['team'], r['team'])}»), {ru_date(night)}, "
                     + ("лучший результат сезона в лиге" if r["rank"] == 1 else f"{r['rank']}-е место в лиге за сезон")
                     + f", {g.get('period')}-й период, {g.get('time')}.")
-            out.append(dict(kind="record_night", score=sc, head="Рекорд ночи" if r["rank"] == 1 else "Цифра ночи", line=line,
+            out.append(dict(kind="record_night", score=sc, head="Рекорд сезона" if r["rank"] == 1 else "В топ-10 сезона", line=line,
                             facts=dict(list=key, what=what, value=r["v"], unit="км/ч", rank=r["rank"], game=g,
                                        new_in_top=r.get("id") not in prev_top.get(key, set())),
                             teams=[r["team"]], players=[r["name"]]))
@@ -202,10 +212,10 @@ def findings(e, prev, night, russians, standings, names_ru, archive_games):
         prevday = (dt.date.fromisoformat(night) - dt.timedelta(days=1)).isoformat()
         b2b = prevday in played.get(a, set())
         more = dev > 0
-        line = (f"«{RU[a]}»: {_f(cur[0]['km'])} км пробега на всю команду в матче с «{RU.get(cur[0]['opp'], cur[0]['opp'])}» — "
+        line = (f"«{RU[a]}»: {_f(cur[0]['km'])} км пробега на всю команду в матче с «{RU.get(cur[0]['opp'], cur[0]['opp'])}» {ru_date(night)} — "
                 f"на {_f(abs(dev) * 100, 0)}% {'больше' if more else 'меньше'} своей нормы ({_f(avg)} км)" + (", и это второй матч за два дня." if b2b else "."))
         out.append(dict(kind="team_distance", score=min(70, 40 + abs(dev) * 250) + (8 if b2b and not more else 0),
-                        head="Пробег ночи", line=line,
+                        head="Пробег команды", line=line,
                         facts=dict(km=cur[0]["km"], norm=round(avg, 1), dev_pct=round(dev * 100, 1), opp=cur[0]["opp"], home=cur[0]["home"], b2b=b2b, games_in_norm=len(rest)),
                         teams=[a, cur[0]["opp"]], players=[]))
 
@@ -265,10 +275,37 @@ def findings(e, prev, night, russians, standings, names_ru, archive_games):
                         line=f"{ru_name(r['name'])} («{RU.get(r['team'], r['team'])}») — лучший в лиге: {what} — {val}.",
                         facts=dict(what=what, value=r["v"], new_leader=new), teams=[r["team"]], players=[r["name"]]))
 
-    out.sort(key=lambda x: -x["score"])
     for x in out:
+        f, k = x["facts"], x["kind"]
+        if k in ("record_night", "russian_top"):
+            u = f.get("unit")
+            x["big"], x["unit"] = (_f(f["value"]), "%" if u == "%" else u)
+            x["sub"] = f.get("what")
+        elif k == "team_distance":
+            x["big"], x["unit"], x["sub"] = _f(f["km"]), "км", f"пробег команды, норма {_f(f['norm'])} км"
+        elif k == "pressure_no_goals":
+            x["big"], x["unit"], x["sub"] = _pct(f["off"]), "%", "времени в чужой зоне"
+        elif k == "goals_no_shots":
+            x["big"], x["unit"], x["sub"] = _pct(f["pct"]), "%", "реализация бросков"
+        elif k == "bursts":
+            x["big"], x["unit"], x["sub"] = str(f["bursts_over_35"]), "", "разгонов быстрее 35 км/ч"
+        elif k == "goalie_hd":
+            pc = "процент" in f["what"]
+            x["big"], x["unit"], x["sub"] = (_pct(f["value"]) if pc else str(f["value"])), ("%" if pc else ""), f["what"]
+    out.sort(key=lambda x: -x["score"])
+    # разнообразие: не больше двух находок одного вида и одна на игрока
+    res, kinds, seen = [], {}, set()
+    for x in out:
+        pl = tuple(x.get("players") or [])
+        if kinds.get(x["kind"], 0) >= 2 or (pl and pl in seen):
+            continue
+        kinds[x["kind"]] = kinds.get(x["kind"], 0) + 1
+        if pl:
+            seen.add(pl)
         x["score"] = round(x["score"])
-    return out[:12]
+        x["date"] = night
+        res.append(x)
+    return res[:10]
 
 
 def run(get, LOG, SITE, ROOT, night):
@@ -290,12 +327,14 @@ def run(get, LOG, SITE, ROOT, night):
         games = json.load(open(f"{SITE}/archive.json", encoding="utf-8")).get("games", [])
     except Exception:
         games = []
-    # находки сравниваем со снимком прошлого дня, а не с повторным запуском того же утра
-    base = prev.get("prev") if prev.get("night") == night else prev
-    e["findings"] = findings(e, base, night, data.get("russians"), data.get("standings"), names_ru, games)
+    # EDGE отстаёт от результатов на 1–2 дня: «свежий» день — последний матч, который уже есть в трекинге
+    dd = max([g.get("date") or "" for t in e["teams"].values() for g in t.get("games") or []] or [""]) or night
+    # находки сравниваем со снимком, где трекинг был на прошлом дне, а не с повторным запуском на тех же данных
+    base = prev.get("prev") if prev.get("data_date") == dd else prev
+    e["findings"] = findings(e, base, dd, data.get("russians"), data.get("standings"), names_ru, games)
     e["t"] = dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
-    e["night"] = night
-    e["prev"] = {k: (base or {}).get(k) for k in ("top", "leaders", "night")} if base else None
+    e["night"], e["data_date"] = night, dd
+    e["prev"] = {k: (base or {}).get(k) for k in ("top", "leaders", "data_date")} if base else None
     with open(f"{SITE}/edge.json", "w", encoding="utf-8") as fh:
         json.dump(e, fh, ensure_ascii=False, separators=(",", ":"))
     os.makedirs(f"{ROOT}/history", exist_ok=True)

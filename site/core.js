@@ -35,7 +35,7 @@ const NAV=[["home","Главная"],["games","Матчи"],["news","Новос�
 const MORE=[["teams","Команды","составы, звенья, календарь"],["lead","Лидеры","очки, голы, вратари, форма"],["inj","Травмы","кто пропускает матчи"],["rus","Россияне","все наши в НХЛ"]];
 
 /* ---------- состояние ---------- */
-let D=null,A={games:[]},M={games:[],horizon:[],teams:{}},ST=[],RUN={},BOX=null;
+let D=null,A={games:[]},M={games:[],horizon:[],teams:{}},ST=[],RUN={},BOX=null,EDGE=null;
 let VIEW="home",RES_DATE=null,TBL_MODE="div",JF="all",HERO_TAB="stars",RAIL_CONF="Восток",RAIL_LEAD="points",HOT_MODE="hot";
 const OPEN=new Set();
 const $=s=>document.querySelector(s);
@@ -205,7 +205,7 @@ function coverHtml(x,cls="cover",withCap=true){const ts=(x.teams||[]).filter(t=>
   if(x.image)return `<div class="${cls}"><img src="${esc(x.image)}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.parentNode.classList.add('art');this.remove()">${withCap?`<span class="cap">Фото: ${esc(x.image_src||x.source||"источник")}</span>`:""}</div>`;
   const [c1,c2]=ts.length===2?pair(ts[0],ts[1]):ts.length?[tdeep(ts[0]),shade(tdeep(ts[0]),.6)]:["#20242B","#30353E"];
   return `<div class="${cls} art" style="--c1:${c1};--c2:${c2}">${ts.map(t=>`<span class="lgw">${logo(t,"72%")}</span>`).join("")}</div>`}
-function metaHtml(x){return `<span class="meta">${x.kind==="column"?'<span class="k">Колонка</span>':x.kind==="story"?'<span class="k st">История</span>':""}${(x.teams||[]).slice(0,2).map(t=>logo(t,24)).join("")}${x.source&&x.kind!=="column"&&x.kind!=="story"?`<span>${esc(x.source)}</span>`:""}${x.time?`<span>${String(x.time).length>10?esc(kdt(x.time)):esc(dShort(String(x.time).slice(0,10)))}</span>`:""}</span>`}
+function metaHtml(x){return `<span class="meta">${x.kind==="column"?`<span class="k">${esc(x.kicker&&x.kicker!=="Колонка Claude"?x.kicker:"Колонка")}</span>`:x.kind==="story"?'<span class="k st">История</span>':""}${(x.teams||[]).slice(0,2).map(t=>logo(t,24)).join("")}${x.source&&x.kind!=="column"&&x.kind!=="story"?`<span>${esc(x.source)}</span>`:""}${x.time?`<span>${String(x.time).length>10?esc(kdt(x.time)):esc(dShort(String(x.time).slice(0,10)))}</span>`:""}</span>`}
 
 /* ---------- обновление данных ---------- */
 function freshness(){if(!D||!D.generated)return {txt:"",old:false};const g=new Date(D.generated);const h=(Date.now()-g)/36e5;
