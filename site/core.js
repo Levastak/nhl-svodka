@@ -32,10 +32,10 @@ const IC={
  chev:'<svg class="chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>'
 };
 const NAV=[["home","Главная"],["games","Матчи"],["news","Новости"],["results","Итоги"],["table","Таблица"],["picks","Прогнозы"],["more","Ещё"]];
-const MORE=[["teams","Команды","составы, звенья, календарь"],["lead","Лидеры","очки, голы, вратари, форма"],["power","Сила команд","рейтинг модели"],["inj","Травмы","кто пропускает матчи"],["rus","Россияне","все наши в НХЛ"]];
+const MORE=[["teams","Команды","составы, звенья, календарь"],["lead","Лидеры","очки, голы, вратари, форма"],["inj","Травмы","кто пропускает матчи"],["rus","Россияне","все наши в НХЛ"]];
 
 /* ---------- состояние ---------- */
-let D=null,A={games:[]},M={games:[],horizon:[],teams:{}},ST=[],RUN={};
+let D=null,A={games:[]},M={games:[],horizon:[],teams:{}},ST=[],RUN={},BOX=null;
 let VIEW="home",RES_DATE=null,TBL_MODE="div",JF="all",HERO_TAB="stars",RAIL_CONF="Восток",RAIL_LEAD="points",HOT_MODE="hot";
 const OPEN=new Set();
 const $=s=>document.querySelector(s);

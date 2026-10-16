@@ -87,7 +87,7 @@ document.addEventListener("visibilitychange",()=>{if(!document.hidden&&Date.now(
   for(const s of D.standings||[])if(s.logo)LOGO[s.abbr]=s.logo;
   buildTeams();render();
   try{A=await fetch(DATA+"archive.json"+v).then(r=>r.json());buildTeams();
-    try{patchFromBox(await fetch(DATA+"box.json"+v).then(r=>r.ok?r.json():null))}catch(e){}
+    try{BOX=await fetch(DATA+"box.json"+v).then(r=>r.ok?r.json():null);patchFromBox(BOX)}catch(e){}
     rerenderKeep()}catch(e){}
   try{ST=await fetch(DATA+"stories.json"+v).then(r=>r.ok?r.json():[]);ST=(Array.isArray(ST)?ST:ST.stories||[]).slice().sort((a,b)=>String(b.time).localeCompare(String(a.time)));if(ST.length)rerenderKeep()}catch(e){ST=[]}
   liveLoop();
