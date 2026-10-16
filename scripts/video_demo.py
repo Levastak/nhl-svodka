@@ -37,16 +37,17 @@ def stage1():
 
 # ---------------------------------------------------------------- стадия 2: сборка
 W, H = 1080, 1920
+VOICE = ("ru-RU-DmitryNeural", "+22%", "+10Hz")
 SCENES = [
     dict(kind="title", say="Наши рвут НХЛ!"),
-    dict(kind="video", say="Кирилл Марченко оформил первый хет-трик за «Торонто» — три шайбы за один вечер.",
-         cuts=[(0, 36.5, 6.0), (2, 40.0, 4.0)], chip="Хет-трик", name="Кирилл Марченко", team="TOR"),
-    dict(kind="card", player="Kirill Kaprizov", name="Кирилл Капризов", team="MIN", big="1 + 2", unit="гол и две передачи",
-         sub="9 голов в 8 матчах сезона", say="Кирилл Капризов — гол и две передачи. У него уже девять голов в восьми матчах."),
-    dict(kind="card", player="Ivan Barbashev", name="Иван Барбашёв", team="VGK", big="3", unit="голевые передачи",
-         sub="в разгроме «Калгари» 6:2", say="Иван Барбашёв раздал три голевые в разгроме «Калгари»."),
-    dict(kind="cta", say="Вся статистика наших и прогнозы на каждый матч — на сайте эн-эйч-эл стэтс точка ру и в нашем телеграм-канале.",
-         show="Вся статистика наших и прогнозы на каждый матч — на NHL-STATS.RU и в нашем Telegram"),
+    dict(kind="video", say="Марченко — хет-трик, первый за «Торонто»!", stat="3 гола за вечер",
+         cuts=[(6406931425112, 37.0, 4.5), (6406935824112, 41.0, 3.0)], chip="Хет-трик", name="Кирилл Марченко", team="TOR"),
+    dict(kind="video", say="Капризов — гол и две передачи. Уже девять шайб в восьми матчах!", stat="1 гол · 2 передачи",
+         cuts=[(6406938424112, 32.5, 4.5), (6406938424112, 44.0, 2.5)], chip="Гол + 2 передачи", name="Кирилл Капризов", team="MIN"),
+    dict(kind="video", say="Барбашёв раздаёт: три голевые в разгроме «Калгари»!", stat="3 передачи · «Вегас» 6:2",
+         cuts=[(6406945716112, 35.0, 6.0)], chip="3 передачи", name="Иван Барбашёв", team="VGK"),
+    dict(kind="cta", say="Все наши в НХЛ — на эн-эйч-эл стэтс точка ру и в нашем телеграме.",
+         show="Все наши в НХЛ — на NHL&#8209;STATS.RU и в Telegram"),
 ]
 FONTS = os.path.join(ROOT, "scripts", "cards", "fonts")
 CSS = f"""@font-face{{font-family:G;src:url(file://{FONTS}/GolosText.ttf)}}@font-face{{font-family:F;src:url(file://{FONTS}/FiraSansExtraCondensed-ExtraBold.ttf);font-weight:800}}
@@ -71,7 +72,8 @@ def html_for(sc):
 <div class="chip">ночь на 16 октября</div><h1 style="font-family:F;font-weight:800;font-size:190px;line-height:.92;margin-top:40px;text-shadow:0 10px 40px rgba(0,0,0,.6)">НАШИ<br><span style="color:#FF4A55">РВУТ</span><br>НХЛ</h1></div>"""
     if sc["kind"] == "video":
         return f"""<style>{CSS}</style>{brand}<div style="position:absolute;left:60px;right:60px;top:330px;text-align:center"><span class="chip">{sc['chip']}</span>
-<div style="font-family:F;font-weight:800;font-size:96px;margin-top:22px;text-shadow:0 6px 24px rgba(0,0,0,.7)">{sc['name']}</div></div>{sub}"""
+<div style="font-family:F;font-weight:800;font-size:96px;margin-top:22px;text-shadow:0 6px 24px rgba(0,0,0,.7)">{sc['name']}</div>
+<div style="font-size:46px;color:#E2E5EA;margin-top:6px;text-shadow:0 4px 18px rgba(0,0,0,.8)">{sc.get('stat', '')}</div></div>{sub}"""
     if sc["kind"] == "card":
         hp = D["heads"].get(sc["player"])
         c = TEAMC.get(sc["team"], "#1a1f27")
@@ -84,7 +86,7 @@ def html_for(sc):
     return f"""<style>{CSS} body{{background:radial-gradient(1100px 1100px at 50% 35%,#14335E,#0B0D11 70%)}}</style>
 <div style="position:absolute;left:60px;right:60px;top:380px;text-align:center"><img src="{mark()}" style="width:260px;height:260px">
 <div style="font-family:F;font-weight:800;font-size:150px;margin-top:30px">NHL-STATS<span style="color:#FF4A55">.RU</span></div>
-<div style="font-size:50px;color:#C3C8CF;margin-top:16px">статистика · прогнозы модели · наши в НХЛ</div>
+<div style="font-size:50px;color:#C3C8CF;margin-top:16px">все наши в НХЛ · статистика · разборы</div>
 <div style="display:inline-flex;align-items:center;gap:18px;margin-top:70px;background:#229ED9;border-radius:999px;padding:22px 46px;font-family:F;font-weight:800;font-size:64px">Telegram @nhlstatsru</div></div>{sub}"""
 
 def render_pngs():
@@ -106,11 +108,17 @@ def stage2():
     media.tools(LOG)
     sh("pip install -q edge-tts")
     render_pngs()
-    clips = {i: media.clip(cid, TMP) for i, cid in enumerate(CLIPS)}
+    ids = {c for sc in SCENES for c, _, _ in sc.get("cuts", [])} | set(CLIPS)
+    clips = {cid: media.clip(cid, TMP) for cid in ids}
+    clips.update({i: clips[cid] for i, cid in enumerate(CLIPS)})
     segs, auds = [], []
     for i, sc in enumerate(SCENES):
         a = f"{TMP}/a{i}.mp3"
-        sh(f"edge-tts --voice ru-RU-DmitryNeural --rate=+12% --text \"{sc['say']}\" --write-media {a}")
+        for _ in range(4):
+            sh(f"edge-tts --voice {VOICE[0]} --rate={VOICE[1]} --pitch={VOICE[2]} --text \"{sc['say']}\" --write-media {a}")
+            if os.path.exists(a) and os.path.getsize(a) > 1000:
+                break
+            import time; time.sleep(3)
         ad = dur(a)
         if sc["kind"] == "video":
             parts = []
@@ -123,11 +131,11 @@ def stage2():
             open(f"{TMP}/p{i}.txt", "w").write("".join(f"file '{x}'\n" for x in parts))
             raw = f"{TMP}/raw{i}.mp4"
             sh(f"ffmpeg -y -loglevel error -f concat -safe 0 -i {TMP}/p{i}.txt -c copy {raw}")
-            ln = max(dur(raw), ad + 0.4)
+            ln = max(dur(raw), ad + 0.3)
             seg = f"{TMP}/seg{i}.mp4"
             sh(f"ffmpeg -y -loglevel error -i {raw} -loop 1 -i {TMP}/s{i}.png -filter_complex \"[0:v]tpad=stop_mode=clone:stop_duration=5[b];[b][1:v]overlay=0:0,trim=duration={ln:.2f},setpts=PTS-STARTPTS[v]\" -map [v] -c:v libx264 -preset veryfast -crf 22 -pix_fmt yuv420p -r 30 {seg}")
         else:
-            ln = ad + (0.6 if sc["kind"] != "title" else 0.5)
+            ln = ad + (0.5 if sc["kind"] != "title" else 0.25)
             if sc["kind"] == "title":
                 # фон — размытый кадр празднования
                 sh(f"ffmpeg -y -loglevel error -ss 42 -i {clips[0]} -frames:v 1 {TMP}/t.jpg")
@@ -147,10 +155,10 @@ def stage2():
     open(f"{TMP}/as.txt", "w").write("".join(f"file '{x}'\n" for x in auds))
     sh(f"ffmpeg -y -loglevel error -f concat -safe 0 -i {TMP}/vs.txt -c copy {TMP}/v.mp4")
     sh(f"ffmpeg -y -loglevel error -f concat -safe 0 -i {TMP}/as.txt -c:a pcm_s16le {TMP}/a.wav")
-    sh(f"ffmpeg -y -loglevel error -i {TMP}/v.mp4 -i {TMP}/a.wav -c:v copy -c:a aac -b:a 160k -shortest -movflags +faststart {OUT}/nashi_rvut_nhl.mp4")
+    sh(f"ffmpeg -y -loglevel error -i {TMP}/v.mp4 -i {TMP}/a.wav -c:v copy -c:a aac -b:a 160k -shortest -movflags +faststart {OUT}/nashi_rvut_nhl_v2.mp4")
     for i in range(len(SCENES)):
         sh(f"cp {TMP}/s{i}.png {OUT}/overlay_{i}.png")
-    json.dump(dict(len=dur(f"{OUT}/nashi_rvut_nhl.mp4"), log=LOG), open(f"{OUT}/stage2.json", "w"), ensure_ascii=False, indent=1)
+    json.dump(dict(len=dur(f"{OUT}/nashi_rvut_nhl_v2.mp4"), log=LOG), open(f"{OUT}/stage2.json", "w"), ensure_ascii=False, indent=1)
 
 def stage3():
     """Клипы Капризова и передач Барбашёва (gamecenter) + контактные листы; пробы голосов."""
@@ -182,7 +190,7 @@ def stage3():
     sh("pip install -q torch --index-url https://download.pytorch.org/whl/cpu && pip install -q omegaconf", 900)
     try:
         import torch
-        m, _ = torch.hub.load("snakers4/silero-models", "silero_tts", language="ru", speaker="v4_ru")
+        m, _ = torch.hub.load("snakers4/silero-models", "silero_tts", language="ru", speaker="v4_ru", trust_repo=True)
         for spk in ("eugene", "aidar", "xenia"):
             a = m.apply_tts(text=txt, speaker=spk, sample_rate=48000)
             import wave, numpy as np
