@@ -666,8 +666,18 @@ def am():
     sure_signals(data)
     save(f"{SITE}/data.json", data)
     edge_run(yesterday)
+    weekly_run()
     data["fetch"] = dict(mode="am", t=iso(), ok=LOG["ok"], fail=LOG["fail"])
     save(f"{SITE}/data.json", data)
+
+
+def weekly_run():
+    """«Итоги недели»: цифры за 7 игровых дней → site/weekly.json (scripts/weekly.py). Без сети."""
+    try:
+        import weekly
+        weekly.run(LOG, SITE, ROOT)
+    except Exception as ex:
+        LOG["fail"].append(f"weekly: {ex!r}"[:200])
 
 
 def edge_run(night):
@@ -1049,6 +1059,10 @@ if __name__ == "__main__":
         d = load(f"{SITE}/data.json", {})
         auto_texts(d)
         save(f"{SITE}/data.json", d)
+        print(json.dumps(LOG, ensure_ascii=False))
+        sys.exit(0)
+    if mode == "week":
+        weekly_run()
         print(json.dumps(LOG, ensure_ascii=False))
         sys.exit(0)
     if mode == "edge":
