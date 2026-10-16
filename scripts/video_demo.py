@@ -65,6 +65,27 @@ PRESETS = {
         dict(kind="cta", say="Следим за каждым матчем Овечкина и всех наших: эн-эйч-эл стэтс точка ру и наш телеграм.",
              show="Следим за каждым матчем Овечкина — NHL&#8209;STATS.RU и Telegram"),
     ]),
+    "ovi_s": dict(silent=True, title_bg=(6371144441112, 17.5), out="ovechkin_hype.mp4", scenes=[
+        dict(kind="video", len=2.8, hook="Гретцки <b>встал</b><br>и хлопал ему", cuts=[(6371144441112, 26.2, 2.8)]),
+        dict(kind="video", len=3.2, chip="6 апреля 2025", hook="Гол <b>№ 895</b>", cuts=[(6371144441112, 6.0, 3.2)]),
+        dict(kind="video", len=2.6, hook="Рекорд, который<br>держался <b>26 лет</b>", cuts=[(6371144441112, 17.0, 2.6)]),
+        dict(kind="video", len=3.0, chip="Сезон 2026/27", hook="Ему <b>41</b>.<br>И он всё ещё забивает", cuts=[(6406659994112, 6.5, 3.0)]),
+        dict(kind="video", len=2.2, hook="<b>930</b> голов", cuts=[(6406659994112, 18.0, 2.2)]),
+        dict(kind="cta", len=2.6, hook="Добьёт до <b>1000</b>?<br>Пиши в комменты", say=""),
+    ]),
+    "kap9": dict(silent=True, title_bg=(6406938424112, 17.0), out="kaprizov_9.mp4", scenes=[
+        dict(kind="video", len=2.4, chip="Капризов · 2026/27", hook="<b>9 голов</b><br>за 8 матчей", cuts=[(6406938424112, 17.0, 2.4)]),
+        dict(kind="video", len=1.9, chip="Гол 1/9 · «Нэшвилл»", hook="Подставил клюшку", cuts=[(6406080640112, 9.2, 1.9)]),
+        dict(kind="video", len=2.1, chip="Гол 2/9 · «Бостон»", hook="В большинстве", cuts=[(6406192865112, 12.2, 2.1)]),
+        dict(kind="video", len=2.3, chip="Гол 3/9 · «Бостон»", hook="Дубль <b>с бэкхенда</b>", cuts=[(6406196705112, 10.0, 2.3)]),
+        dict(kind="video", len=2.0, chip="Гол 4/9 · «Флорида»", hook="Броском<br>в большинстве", cuts=[(6406619102112, 12.0, 2.0)]),
+        dict(kind="video", len=2.2, chip="Гол 5/9 · «Флорида»", hook="Второй<br>за вечер", cuts=[(6406620824112, 9.6, 2.2)]),
+        dict(kind="video", len=2.0, chip="Гол 6/9 · «Флорида»", hook="<b>ХЕТ-ТРИК</b>", cuts=[(6406624192112, 9.5, 2.0)]),
+        dict(kind="video", len=2.3, chip="Гол 7/9 · «Виннипег»", hook="Сбил шайбу<br><b>с воздуха</b>", cuts=[(6406805779112, 6.6, 2.3)]),
+        dict(kind="video", len=2.0, chip="Гол 8/9 · «Виннипег»", hook="И снова<br>у ворот", cuts=[(6406809088112, 13.0, 2.0)]),
+        dict(kind="video", len=2.4, chip="Гол 9/9 · «Сент-Луис»", hook="Гол <b>№ 9</b>", cuts=[(6406938424112, 14.6, 2.4)]),
+        dict(kind="cta", len=2.6, hook="<b>Лучший снайпер</b> НХЛ — наш.<br>Сколько забьёт за сезон?", say=""),
+    ]),
 }
 FONTS = os.path.join(ROOT, "scripts", "cards", "fonts")
 CSS = f"""@font-face{{font-family:G;src:url(file://{FONTS}/GolosText.ttf)}}@font-face{{font-family:F;src:url(file://{FONTS}/FiraSansExtraCondensed-ExtraBold.ttf);font-weight:800}}
@@ -73,6 +94,8 @@ CSS = f"""@font-face{{font-family:G;src:url(file://{FONTS}/GolosText.ttf)}}@font
 .brand img{{width:68px;height:68px}}.brand span{{color:#FF4A55}}
 .sub{{position:absolute;left:60px;right:60px;bottom:230px;font-family:F;font-weight:800;font-size:58px;line-height:1.12;text-align:center;
   background:rgba(11,13,17,.72);border-radius:24px;padding:22px 30px;text-wrap:balance}}
+.hook{{position:absolute;left:50px;right:50px;bottom:300px;font-family:F;font-weight:800;font-size:92px;line-height:1.02;text-align:center;text-transform:uppercase;
+  text-shadow:0 0 2px #000,0 6px 0 #000,0 10px 40px rgba(0,0,0,.9);-webkit-text-stroke:3px #000;paint-order:stroke fill;text-wrap:balance}}.hook b{{color:#FFD23F}}
 .chip{{display:inline-block;font-family:F;font-weight:800;font-size:46px;letter-spacing:.08em;text-transform:uppercase;background:#FF4A55;color:#fff;border-radius:14px;padding:6px 22px}}
 """
 TEAMC = {"TOR": "#00205B", "MIN": "#154734", "VGK": "#B4975A", "WSH": "#8F0A1F"}
@@ -83,10 +106,12 @@ def mark():
 
 def html_for(sc):
     brand = f'<div class="brand"><img src="{mark()}">NHL-STATS<span>.RU</span></div>'
-    sub = f'<div class="sub">{sc.get("show") or sc["say"]}</div>'
+    sub = f'<div class="sub">{sc.get("show") or sc["say"]}</div>' if not sc.get("hook") else f'<div class="hook">{sc["hook"]}</div>'
     if sc["kind"] == "title":
         return f"""<style>{CSS}</style>{brand}<div style="position:absolute;left:60px;right:60px;top:620px;text-align:center">
 <div class="chip">{sc.get('chip_t', 'ночь на 16 октября')}</div><h1 style="font-family:F;font-weight:800;font-size:{sc.get('fs', 190)}px;line-height:.92;margin-top:40px;text-shadow:0 10px 40px rgba(0,0,0,.6)">{sc.get('lines', 'НАШИ<br><span style="color:#FF4A55">РВУТ</span><br>НХЛ')}</h1></div>"""
+    if sc["kind"] == "video" and not sc.get("name"):
+        return f"""<style>{CSS}</style>{brand}{f'<div style="position:absolute;left:0;right:0;top:330px;text-align:center"><span class="chip">{sc["chip"]}</span></div>' if sc.get("chip") else ""}{sub}"""
     if sc["kind"] == "video":
         return f"""<style>{CSS}</style>{brand}<div style="position:absolute;left:60px;right:60px;top:330px;text-align:center"><span class="chip">{sc['chip']}</span>
 <div style="font-family:F;font-weight:800;font-size:96px;margin-top:22px;text-shadow:0 6px 24px rgba(0,0,0,.7)">{sc['name']}</div>
@@ -104,7 +129,7 @@ def html_for(sc):
 <div style="position:absolute;left:60px;right:60px;top:380px;text-align:center"><img src="{mark()}" style="width:260px;height:260px">
 <div style="font-family:F;font-weight:800;font-size:150px;margin-top:30px">NHL-STATS<span style="color:#FF4A55">.RU</span></div>
 <div style="font-size:50px;color:#C3C8CF;margin-top:16px">все наши в НХЛ · статистика · разборы</div>
-<div style="display:inline-flex;align-items:center;gap:18px;margin-top:70px;background:#229ED9;border-radius:999px;padding:22px 46px;font-family:F;font-weight:800;font-size:64px">Telegram @nhlstatsru</div></div>{sub}<div style="position:absolute;left:0;right:0;bottom:120px;text-align:center;font-size:26px;color:#7A808A">Видео: NHL · Музыка: Kevin MacLeod (incompetech.com), CC BY 4.0</div>"""
+<div style="display:inline-flex;align-items:center;gap:18px;margin-top:70px;background:#229ED9;border-radius:999px;padding:22px 46px;font-family:F;font-weight:800;font-size:64px">Telegram @nhlstatsru</div></div>{sub}<div style="position:absolute;left:0;right:0;bottom:120px;text-align:center;font-size:26px;color:#7A808A">{"Видео: NHL" if sc.get("hook") else "Видео: NHL · Музыка: Kevin MacLeod (incompetech.com), CC BY 4.0"}</div>"""
 
 def render_pngs():
     import tg
@@ -135,15 +160,15 @@ def stage2(preset="nashi"):
     segs, auds = [], []
     for i, sc in enumerate(SCENES):
         a = f"{TMP}/a{i}.mp3"
-        for _ in range(4):
+        for _ in range(0 if P.get("silent") else 4):
             sh(f"edge-tts --voice {VOICE[0]} --rate={VOICE[1]} --pitch={VOICE[2]} --text \"{sc['say']}\" --write-media {a}")
             if os.path.exists(a) and os.path.getsize(a) > 1000:
                 break
             import time; time.sleep(8)
-        ad = dur(a)
+        ad = sc["len"] - 0.4 if P.get("silent") else dur(a)
         if sc["kind"] == "video":
             parts = []
-            target = max(ad + 0.4, min(sum(c[2] for c in sc['cuts']), ad + 1.6))  # после фразы — до 1,6 с картинки под музыку, без пустоты
+            target = sc["len"] if P.get("silent") else max(ad + 0.4, min(sum(c[2] for c in sc['cuts']), ad + 1.6))  # после фразы — до 1,6 с картинки под музыку, без пустоты
             total = sum(c[2] for c in sc["cuts"])
             k_fit = min(1.0, target / total)  # длинные нарезки ужимаем под голос, короткие тянем последним кадром
             for k, (ci, ss, ln) in enumerate(sc["cuts"]):
@@ -160,7 +185,7 @@ def stage2(preset="nashi"):
             seg = f"{TMP}/seg{i}.mp4"
             sh(f"ffmpeg -y -loglevel error -i {raw} -loop 1 -i {TMP}/s{i}.png -filter_complex \"[0:v]tpad=stop_mode=clone:stop_duration=5[b];[b][1:v]overlay=0:0,trim=duration={ln:.2f},setpts=PTS-STARTPTS[v]\" -map [v] -c:v libx264 -preset veryfast -crf 22 -pix_fmt yuv420p -r 30 {seg}")
         else:
-            ln = ad + (0.45 if sc["kind"] != "title" else 0.2)
+            ln = sc["len"] if P.get("silent") else ad + (0.45 if sc["kind"] != "title" else 0.2)
             if sc["kind"] == "title":
                 # фон — размытый кадр празднования
                 sh(f"ffmpeg -y -loglevel error -ss {P['title_bg'][1]} -i {clips[P['title_bg'][0]]} -frames:v 1 {TMP}/t.jpg")
@@ -174,12 +199,20 @@ def stage2(preset="nashi"):
             sh(f"ffmpeg -y -loglevel error {src} -filter_complex \"{fc}\" -map [v] -c:v libx264 -preset veryfast -crf 22 -pix_fmt yuv420p -r 30 {seg}")
         sl = dur(seg)
         aa = f"{TMP}/aa{i}.wav"
+        if P.get("silent"):
+            sh(f"ffmpeg -y -loglevel error -f lavfi -i anullsrc=r=44100:cl=stereo -t {sl:.3f} {aa}")
+            segs.append(seg); auds.append(aa)
+            continue
         sh(f"ffmpeg -y -loglevel error -i {a} -af apad=whole_dur={sl:.3f} -ar 44100 -ac 2 {aa}")
         segs.append(seg); auds.append(aa)
     open(f"{TMP}/vs.txt", "w").write("".join(f"file '{x}'\n" for x in segs))
     open(f"{TMP}/as.txt", "w").write("".join(f"file '{x}'\n" for x in auds))
     sh(f"ffmpeg -y -loglevel error -f concat -safe 0 -i {TMP}/vs.txt -c copy {TMP}/v.mp4")
     sh(f"ffmpeg -y -loglevel error -f concat -safe 0 -i {TMP}/as.txt -c:a pcm_s16le {TMP}/a.wav")
+    if P.get("silent"):
+        sh(f"ffmpeg -y -loglevel error -i {TMP}/v.mp4 -i {TMP}/a.wav -c:v copy -c:a aac -b:a 128k -shortest -movflags +faststart {OUT}/{P['out']}")
+        json.dump(dict(len=dur(f"{OUT}/{P['out']}"), log=LOG), open(f"{OUT}/stage2.json", "w"), ensure_ascii=False, indent=1)
+        return
     # музыка: свободный рок (CC BY), тише под голосом (sidechain), затухание в конце
     import urllib.parse, urllib.request
     mus = f"{TMP}/music.mp3"
