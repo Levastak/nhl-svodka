@@ -41,9 +41,13 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+      - name: Разведка медиа
+        if: steps.mode.outputs.mode == 'probe'
+        run: python3 scripts/probe_media.py
       - name: Посты
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+        if: steps.mode.outputs.mode != 'probe'
         run: python3 scripts/tg.py ${{ steps.mode.outputs.mode }} ${{ steps.mode.outputs.arg }}
       - name: Сохранить отметки
         run: |
