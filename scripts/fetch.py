@@ -664,8 +664,19 @@ def am():
     save(f"{SITE}/data.json", data)
     run_model()
     sure_signals(data)
+    save(f"{SITE}/data.json", data)
+    edge_run(yesterday)
     data["fetch"] = dict(mode="am", t=iso(), ok=LOG["ok"], fail=LOG["fail"])
     save(f"{SITE}/data.json", data)
+
+
+def edge_run(night):
+    """NHL EDGE → site/edge.json с находками дня (scripts/edge.py). Сбой не мешает остальному сбору."""
+    try:
+        import edge
+        edge.run(get, LOG, SITE, ROOT, night)
+    except Exception as ex:
+        LOG["fail"].append(f"edge: {ex!r}"[:200])
 
 
 def pm():
@@ -1037,6 +1048,13 @@ if __name__ == "__main__":
     if mode == "auto":
         d = load(f"{SITE}/data.json", {})
         auto_texts(d)
+        save(f"{SITE}/data.json", d)
+        print(json.dumps(LOG, ensure_ascii=False))
+        sys.exit(0)
+    if mode == "edge":
+        edge_run((now_utc().astimezone(ET).date() - dt.timedelta(days=1)).isoformat())
+        d = load(f"{SITE}/data.json", {})
+        d.setdefault("fetch", {})["edge"] = dict(t=iso(), ok=LOG["ok"], fail=LOG["fail"])
         save(f"{SITE}/data.json", d)
         print(json.dumps(LOG, ensure_ascii=False))
         sys.exit(0)
