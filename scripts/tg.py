@@ -909,7 +909,9 @@ def main(mode, arg=None):
         due = [x for x in due if x.get("expires") or (now - x["due"]).total_seconds() < 8 * 3600]
         # лента новостей: не больше FEED_CAP в день (по Москве); «горячие» и про россиян (hot) — вне лимита и первыми в очереди
         today = now.astimezone(MSK).date()
-        fed = sum(1 for k, v in P.items() if k.startswith("feed:") and dt.datetime.fromisoformat(v.replace("Z", "+00:00")).astimezone(MSK).date() == today)
+        hotq = {f"feed:{x.get('id')}" for x in (load(f"{TG}/news_queue.json", {}) or {}).get("items", []) if x.get("hot")}
+        fed = sum(1 for k, v in P.items() if k.startswith("feed:") and k not in hotq  # горячие не съедают лимит
+                  and dt.datetime.fromisoformat(v.replace("Z", "+00:00")).astimezone(MSK).date() == today)
         if fed >= FEED_CAP:
             due = [x for x in due if not x["key"].startswith("feed:") or x.get("hot")]
         due.sort(key=lambda x: (not x.get("hot"), x["due"]))

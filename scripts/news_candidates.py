@@ -54,7 +54,9 @@ def main():
     done_ids = {q.get("id") for q in queue} | {k[5:] for k in P if k.startswith("feed:")}
     site_urls = {n.get("url") for n in D.get("news") or []}
     today = now.astimezone(MSK).date()
-    fed_today = sum(1 for k, v in P.items() if k.startswith("feed:") and dt.datetime.fromisoformat(v.replace("Z", "+00:00")).astimezone(MSK).date() == today)
+    hotq = {f"feed:{q.get('id')}" for q in queue if q.get("hot")}
+    fed_today = sum(1 for k, v in P.items() if k.startswith("feed:") and k not in hotq
+                    and dt.datetime.fromisoformat(v.replace("Z", "+00:00")).astimezone(MSK).date() == today)
     queued = [q for q in queue if f"feed:{q.get('id')}" not in P]  # написаны, но ещё не вышли
 
     # кто есть кто
