@@ -6,6 +6,7 @@
   test     — опубликовать утренний набор прямо сейчас и отметить его опубликованным;
   preview  — только нарисовать карточки текущего дня в tg/preview/ (ничего не постит);
   recard   — перерисовать картинки (и подписи) уже выложенных постов; третьей строкой trigger/tg — префиксы ключей;
+  admin    — запомнить личный чат Льва с ботом для оповещений о сбоях (сначала написать боту /start);
   discover — найти канал, куда бота добавили админом (getUpdates), и записать tg/config.json.
 Подписи «по-человечески» пишет утренняя задача Claude в data.tg (morning, games{id}, column); нет — шаблоны ниже.
 Картинки — scripts/cards/render.py (Playwright, ставится сам при первом посте).
@@ -913,12 +914,100 @@ def main(mode, arg=None):
     save(f"{TG}/state.json", state)
 
 
+# ---------------------------------------------------------------- оповещения Льву о сбоях (решение 16.10)
+def health(mode):
+    """Проверки после каждого запуска канала; при сбое — сообщение в личку Льву (tg/config.json → admin_chat_id).
+    Каждая проблема сообщается один раз в день (tg/state.json → alerts)."""
+    cfg = load(f"{TG}/config.json", {}) or {}
+    admin = cfg.get("admin_chat_id")
+    if not admin or not TOKEN:
+        return
+    now = dt.datetime.now(dt.timezone.utc)
+    m = now.astimezone(MSK)
+    mins = m.hour * 60 + m.minute
+    day = m.date().isoformat()
+    D = load(f"{SITE}/data.json", {}) or {}
+    state = load(f"{TG}/state.json", {}) or {}
+    P = state.get("posted") or {}
+    probs = []
+    rd = D.get("results_date")
+    gen = str(D.get("generated") or "")
+    # 1. Сбой workflow «Сводка НХЛ» (сбор данных, публикация сайта)
+    try:
+        ev = json.load(open(os.environ.get("GITHUB_EVENT_PATH", "")))
+        wr = ev.get("workflow_run") or {}
+        if wr.get("conclusion") in ("failure", "timed_out", "startup_failure"):
+            probs.append((f"wf:{wr.get('id')}", f"Упал запуск «{wr.get('name')}» ({wr.get('display_title') or ''})", wr.get("html_url")))
+    except Exception:
+        pass
+    # 2. Утренний сбор: к 09:40 мск данные сайта должны быть свежими
+    if mins >= 9 * 60 + 40 and gen[:10] < (now - dt.timedelta(hours=6)).strftime("%Y-%m-%d"):
+        probs.append(("am_fetch", f"Утренний сбор данных не прошёл: данные сайта от {gen[:16].replace('T', ' ')} UTC", None))
+    f = D.get("fetch") or {}
+    if f.get("fail") and str(f.get("t") or "")[:10] == now.strftime("%Y-%m-%d"):
+        probs.append((f"fetch_fail:{f.get('t')}", "Сбор данных с ошибками: " + "; ".join(map(str, f["fail"]))[:500], None))
+    # 3. Утренние тексты Sonnet: к 10:15 мск
+    daily = D.get("daily") or {}
+    if mins >= 10 * 60 + 15 and rd and (daily.get("date") != rd or D.get("auto_texts")):
+        probs.append(("am_texts", "Утренние тексты Claude (Sonnet) не вышли — на сайте запасные шаблоны", None))
+    # 4. Подписи Opus для канала: к 10:45 мск
+    if mins >= 10 * 60 + 45 and rd and (D.get("tg") or {}).get("date") != rd:
+        probs.append(("tg_texts", "Подписи Opus для канала не вышли — посты идут с запасными текстами", None))
+    # 5. Утренний пост: к 10:30 мск должен выйти
+    if mins >= 10 * 60 + 30 and rd and any(g.get("date") == rd for g in (load(f"{SITE}/archive.json", {}) or {}).get("games", [])[-40:]) and f"am:{rd}" not in P:
+        probs.append(("am_post", "Утренний пост «Итоги ночи» не вышел в канал", None))
+    # 6. Ошибки самого канала в этом запуске
+    for x in LOG.get("fail") or []:
+        if "картинка не ушла" in x:
+            continue
+        probs.append((f"tg_fail:{hash(x[:120]) & 0xffffffff}", f"Канал ({mode}): {x}"[:600], None))
+    seen = state.setdefault("alerts", {})
+    new = [(k, t, u) for k, t, u in probs if seen.get(k) != day]
+    if not new:
+        return
+    txt = "⚠️ <b>NHL-STATS: что-то пошло не так</b>\n\n" + "\n\n".join(f"• {html.escape(t)}" + (f"\n<a href=\"{u}\">подробнее</a>" if u else "") for k, t, u in new)
+    try:
+        _call("sendMessage", dict(chat_id=admin, text=txt, parse_mode="HTML", link_preview_options={"is_disabled": True}))
+        for k, _, _ in new:
+            seen[k] = day
+        state["alerts"] = {k: v for k, v in seen.items() if v >= (m.date() - dt.timedelta(days=3)).isoformat()}
+        save(f"{TG}/state.json", state)
+        LOG["ok"].append(f"оповещение Льву: {len(new)}")
+    except Exception as ex:
+        LOG["fail"].append(f"оповещение: {ex}"[:200])
+
+
+def admin_setup():
+    """Режим admin: найти личный чат Льва с ботом (он пишет боту /start) и сохранить admin_chat_id."""
+    cfg = load(f"{TG}/config.json", {}) or {}
+    me = _call("getMe", {})
+    LOG["ok"].append(f"бот: @{me.get('username')}")
+    ups = _call("getUpdates", dict(allowed_updates=["message"]))
+    priv = [u["message"]["chat"] for u in ups if (u.get("message") or {}).get("chat", {}).get("type") == "private"]
+    if not priv:
+        LOG["fail"].append(f"личных сообщений боту нет — напиши @{me.get('username')} /start и запусти режим admin снова")
+        return
+    c = priv[-1]
+    cfg["admin_chat_id"] = c["id"]
+    save(f"{TG}/config.json", cfg)
+    _call("sendMessage", dict(chat_id=c["id"], text="Готово: сюда будут приходить оповещения NHL-STATS.RU, если что-то сломается."))
+    LOG["ok"].append(f"оповещения: личный чат {c.get('first_name') or ''} сохранён")
+
+
 if __name__ == "__main__":
     m = sys.argv[1] if len(sys.argv) > 1 else "auto"
     try:
-        main(m, sys.argv[2] if len(sys.argv) > 2 else None)
+        if m == "admin":
+            admin_setup()
+        else:
+            main(m, sys.argv[2] if len(sys.argv) > 2 else None)
     except Exception as ex:
         import traceback
         LOG["fail"].append(traceback.format_exc()[-400:])
+    try:
+        if m in ("auto", "feed"):
+            health(m)
+    except Exception as ex:
+        LOG["fail"].append(f"health: {ex!r}"[:200])
     save(f"{TG}/last.json", LOG)
     print(json.dumps(LOG, ensure_ascii=False))
