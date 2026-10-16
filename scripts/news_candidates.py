@@ -105,7 +105,8 @@ def main():
             tier, why = 2, [f"звёзды: {', '.join(NR.get(n, n) for n in found & stars)}" if found & stars else "лига / тренеры / рекорд"]
         elif any(place.get(t, (99,))[0] <= 8 for t in teams):
             tier, why = 3, ["клуб из первой восьмёрки конференции"]
-        cands.append(dict(id=x["id"], tier=tier, why="; ".join(why), maybe_hot=hot or None, source=x.get("source"), kind=x.get("kind"),
+        cands.append(dict(id=x["id"], tier=tier, why="; ".join(why), maybe_hot=hot or None, insider=x.get("kind") == "insider" or None,
+                          source=x.get("source"), kind=x.get("kind"),
                           time=x.get("time"), title=x.get("title"), summary=x.get("summary"), url=x.get("url"), image=x.get("image"),
                           players=[{k: v for k, v in dict(name=n, ru=NR.get(n), team=team_of.get(n), russian=n in rus or None, star=n in stars or None).items() if v}
                                    for n in sorted(found)],

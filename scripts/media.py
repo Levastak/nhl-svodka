@@ -1,6 +1,6 @@
 """Медиа для Telegram-канала: лента новостей (NHL.com + ESPN) и видео голов (официальные клипы НХЛ на Brightcove).
 
-feed()        — свежие истории с фото → tg/feed.json (хранится 2 дня); новости из неё выбирает и пишет задача Claude (content/prompts/tg-news.md).
+feed()        — свежие истории с фото (NHL.com, ESPN, инсайды и издания по RSS, поиск по россиянам) → tg/feed.json (хранится 2 дня); новости из неё выбирает и пишет задача Claude (content/prompts/tg-news.md).
 highlights()  — выбор моментов ночи из gamecenter НХЛ: хет-трики (склейка всех голов), голы в овертайме, сравнивания в концовке,
                 голы россиян → data.highlights; подписи пишет задача Opus (data.tg.videos).
 clip()/concat()/probe() — скачать клип (yt-dlp через плеер Brightcove НХЛ), склеить (ffmpeg), узнать размер и длительность.
@@ -12,6 +12,7 @@ import re
 import shutil
 import subprocess
 import sys
+import urllib.parse
 import urllib.request
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -33,6 +34,79 @@ def _load(p, d):
 
 
 # ---------------------------------------------------------------- лента новостей
+# Источники (разведка 16.10): официальные (NHL.com, ESPN), инсайды и издания (ProHockeyRumors — сводка слухов и
+# сообщений инсайдеров с источником, Sportsnet — Фридман, Daily Faceoff, The Hockey News), RMNB — «Вашингтон»
+# и его россияне, плюс поиск Bing News по фамилиям всех россиян лиги (любые издания).
+RSS = [("ProHockeyRumors", "https://www.prohockeyrumors.com/feed"),
+       ("Sportsnet", "https://www.sportsnet.ca/hockey/nhl/feed/"),
+       ("Daily Faceoff", "https://www.dailyfaceoff.com/feed"),
+       ("The Hockey News", "https://thehockeynews.com/.rss/full/"),
+       ("RMNB", "https://russianmachineneverbreaks.com/feed/")]
+INSIDER = r"friedman|lebrun|seravalli|dreger|pagnotta|kypreos|mckenzie|32 thoughts|insider|rumou?r|reportedly|according to|keeping tabs|interest in|trade talk|could be moved|on the block|request(ed)? a trade"
+BUA = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124 Safari/537.36"}
+
+
+def _txt(url, n=600000, timeout=30):
+    with urllib.request.urlopen(urllib.request.Request(url, headers=BUA), timeout=timeout) as r:
+        return r.read(n).decode("utf-8", "replace")
+
+
+def _iso(pub):
+    from email.utils import parsedate_to_datetime
+    try:
+        return parsedate_to_datetime(pub).astimezone(dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    except Exception:
+        return None
+
+
+def _rss(source, url, LOG, limit=40):
+    import html as _h
+    import xml.etree.ElementTree as ET
+    MR = "{http://search.yahoo.com/mrss/}"
+    out = []
+    try:
+        root = ET.fromstring(_txt(url).encode("utf-8"))
+    except Exception as ex:
+        LOG["fail"].append(f"лента {source}: {ex!r}"[:150])
+        return out
+    for it in root.findall(".//item")[:limit]:
+        link = (it.findtext("link") or "").strip()
+        title = _h.unescape((it.findtext("title") or "").strip())
+        if not link or not title or "sn-collection" in link or title.lower().endswith("featured"):
+            continue
+        src = source
+        if "bing.com" in link:  # Bing отдаёт ссылку-переадресацию, настоящий адрес — в параметре url
+            q = urllib.parse.parse_qs(urllib.parse.urlparse(link).query)
+            link = (q.get("url") or [link])[0]
+            src = (it.findtext("{http://www.bing.com:80/news/search/}Source") or urllib.parse.urlparse(link).netloc.replace("www.", ""))
+        img = None
+        for tag in (MR + "content", MR + "thumbnail", "enclosure"):
+            el = it.find(tag)
+            if el is not None and el.get("url") and (tag != "enclosure" or "image" in (el.get("type") or "image")):
+                img = el.get("url")
+                break
+        desc = re.sub(r"<[^>]+>", " ", _h.unescape(it.findtext("description") or ""))
+        desc = re.sub(r"\s+", " ", desc).strip()[:600]
+        cats = [c.text for c in it.findall("category") if c.text][:10]
+        blob = f"{title} {desc}".lower()
+        out.append(dict(id=f"{source.lower().replace(' ', '')}:{re.sub(r'[^a-z0-9]+', '-', urllib.parse.urlparse(link).path.lower()).strip('-')[-80:]}",
+                        source=src, title=title, summary=desc, image=img, url=link, time=_iso(it.findtext("pubDate")),
+                        kind="insider" if re.search(INSIDER, blob) else "story", tags=cats))
+    return out
+
+
+def _og(url):
+    import html as _h
+    try:
+        t = _txt(url, 300000, 20)
+    except Exception:
+        return None
+    m = (re.search(r'<meta[^>]+property=["\']og:image["\'][^>]+content=["\']([^"\']+)', t)
+         or re.search(r'content=["\']([^"\']+)["\'][^>]+property=["\']og:image', t))
+    u = _h.unescape(m.group(1)) if m else None
+    return u if u and not re.search(r"logo|\.svg", u, re.I) else None
+
+
 def feed(LOG):
     items = {x["id"]: x for x in _load(f"{TG}/feed.json", {}).get("items", [])}
     n0 = len(items)
@@ -61,21 +135,48 @@ def feed(LOG):
                                                 tags=[c.get("description") for c in a.get("categories") or [] if c.get("description")][:10])
     except Exception as ex:
         LOG["fail"].append(f"feed espn: {ex!r}"[:150])
-    # дубли одной истории (одинаковый заголовок у разных разделов) — оставляем одну
+    # инсайды и издания
+    for src, url in RSS:
+        for x in _rss(src, url, LOG):
+            items.setdefault(x["id"], x)
+    # россияне — поиск Bing News по фамилиям (группами по 6), любые издания
+    try:
+        D = _load(os.path.join(ROOT, "site", "data.json"), {})
+        last = sorted({r["name"].split(" ")[-1] for r in D.get("russians") or [] if r.get("name")})
+        for i in range(0, len(last), 6):
+            q = "(" + " OR ".join(last[i:i + 6]) + ") NHL"
+            for x in _rss("Bing", "https://www.bing.com/news/search?format=rss&q=" + urllib.parse.quote(q), LOG, 25):
+                x["id"] = "web:" + re.sub(r"[^a-z0-9]+", "-", (urllib.parse.urlparse(x["url"]).netloc + urllib.parse.urlparse(x["url"]).path).lower()).strip("-")[-90:]
+                x["russian_search"] = True
+                items.setdefault(x["id"], x)
+    except Exception as ex:
+        LOG["fail"].append(f"feed bing: {ex!r}"[:150])
+    # дубли одной истории (одинаковый заголовок у разных разделов и изданий) — оставляем первую по времени
     seen, uniq = set(), {}
     for x in sorted(items.values(), key=lambda x: str(x.get("time"))):
-        k = re.sub(r"\W+", "", str(x.get("title") or "").lower())
+        k = re.sub(r"\W+", "", str(x.get("title") or "").lower())[:80]
         if k in seen:
             continue
         seen.add(k)
         uniq[x["id"]] = x
     items = uniq
     cut = (dt.datetime.now(dt.timezone.utc) - dt.timedelta(days=2)).strftime("%Y-%m-%dT%H:%M")
-    keep = sorted([x for x in items.values() if str(x.get("time") or "") >= cut], key=lambda x: str(x.get("time")), reverse=True)
+    keep = sorted([x for x in items.values() if str(x.get("time") or "") >= cut], key=lambda x: str(x.get("time")), reverse=True)[:250]
+    # фото: у кого нет картинки в ленте — берём обложку статьи (og:image), не больше 25 запросов за запуск
+    tries = 0
+    for x in keep:
+        if x.get("image") or x.get("og_tried") or tries >= 25:
+            continue
+        tries += 1
+        x["image"] = _og(x["url"])
+        x["og_tried"] = True
     os.makedirs(TG, exist_ok=True)
-    json.dump(dict(t=dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"), items=keep[:120]),
+    json.dump(dict(t=dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"), items=keep),
               open(f"{TG}/feed.json", "w", encoding="utf-8"), ensure_ascii=False, indent=0)
-    LOG["ok"].append(f"лента: {len(keep)} историй, новых {max(0, len(items) - n0)}")
+    by = {}
+    for x in keep:
+        by[x["source"]] = by.get(x["source"], 0) + 1
+    LOG["ok"].append(f"лента: {len(keep)} историй, новых {max(0, len(keep) - n0)}; " + ", ".join(f"{k} {v}" for k, v in sorted(by.items(), key=lambda kv: -kv[1])[:8]))
 
 
 # ---------------------------------------------------------------- моменты ночи
