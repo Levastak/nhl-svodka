@@ -1,9 +1,6 @@
-"""Разведка: DNS и ответ nhl-stats.ru. Пишет tg/dns_probe.json. Ничего не постит."""
-import json, os, subprocess
+"""Разведка/эксперименты медиа. Сейчас: тестовый ролик (scripts/video_demo.py, стадия — третья строка trigger/tg). Ничего не постит."""
+import os, subprocess, sys
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-rep = {}
-for cmd in ["curl -s 'https://dns.google/resolve?name=nhl-stats.ru&type=A'", "curl -s 'https://dns.google/resolve?name=www.nhl-stats.ru&type=CNAME'",
-            "curl -sI http://nhl-stats.ru/ | head -5", "curl -sI https://levastak.github.io/nhl-svodka/ | head -4"]:
-    rep[cmd] = subprocess.run(cmd, shell=True, capture_output=True, text=True, timeout=40).stdout[-700:]
-json.dump(rep, open(os.path.join(ROOT, "tg", "dns_probe.json"), "w"), ensure_ascii=False, indent=1)
-print(json.dumps(rep, ensure_ascii=False))
+lines = open(os.path.join(ROOT, "trigger", "tg")).read().split("\n")
+stage = (lines[2].strip() if len(lines) > 2 else "") or "stage1"
+subprocess.run([sys.executable, os.path.join(ROOT, "scripts", "video_demo.py"), stage])
