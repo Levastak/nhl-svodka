@@ -119,11 +119,11 @@ def stage2():
             sh(f"edge-tts --voice {VOICE[0]} --rate={VOICE[1]} --pitch={VOICE[2]} --text \"{sc['say']}\" --write-media {a}")
             if os.path.exists(a) and os.path.getsize(a) > 1000:
                 break
-            import time; time.sleep(3)
+            import time; time.sleep(8)
         ad = dur(a)
         if sc["kind"] == "video":
             parts = []
-            target = ad + 0.35
+            target = max(ad + 0.4, min(sum(c[2] for c in sc['cuts']), ad + 1.6))  # после фразы — до 1,6 с картинки под музыку, без пустоты
             total = sum(c[2] for c in sc["cuts"])
             k_fit = min(1.0, target / total)  # длинные нарезки ужимаем под голос, короткие тянем последним кадром
             for k, (ci, ss, ln) in enumerate(sc["cuts"]):
@@ -136,7 +136,7 @@ def stage2():
             open(f"{TMP}/p{i}.txt", "w").write("".join(f"file '{x}'\n" for x in parts))
             raw = f"{TMP}/raw{i}.mp4"
             sh(f"ffmpeg -y -loglevel error -f concat -safe 0 -i {TMP}/p{i}.txt -c copy {raw}")
-            ln = ad + 0.35
+            ln = target
             seg = f"{TMP}/seg{i}.mp4"
             sh(f"ffmpeg -y -loglevel error -i {raw} -loop 1 -i {TMP}/s{i}.png -filter_complex \"[0:v]tpad=stop_mode=clone:stop_duration=5[b];[b][1:v]overlay=0:0,trim=duration={ln:.2f},setpts=PTS-STARTPTS[v]\" -map [v] -c:v libx264 -preset veryfast -crf 22 -pix_fmt yuv420p -r 30 {seg}")
         else:
