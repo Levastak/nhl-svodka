@@ -402,7 +402,7 @@ def build(D, A, M, E, S, N):
                 L.append("")
             if len(re.sub("<[^>]+>", "", "\n".join(L) + FOOT)) < 960:
                 break
-        L.append(f"<a href=\"{URL}#results\">Все герои и неудачники ночи</a>")
+        L.append(f"👉 <b><a href=\"{URL}#results\">Все герои и неудачники ночи</a></b>")
         spec = dict(kind="stars", date=ru_date(rd),
                     stars=[dict(name=N.full(h["name"]), team=h["team"], head_path=head_path(D, h["name"]),
                                 stat=stat_parts(h.get("line"))[0], stat2=stat_parts(h.get("line"))[1], note=match_note(gs, h["team"])) for h in hs])
@@ -452,7 +452,7 @@ def build(D, A, M, E, S, N):
             body = tgv(D, "russians", rd)
             if not body:
                 body = "; ".join(f"{r['name'].split(' ', 1)[-1]} ({T(r['team'])}) — {words(str(r['raw'].get('g', 0)) + '+' + str(r['raw'].get('a', 0)) if r['raw'].get('pos') != 'G' else str(r['raw'].get('saves')) + ' из ' + str(r['raw'].get('shots'))).lower()}" for r in rows[:6]) + "."
-            txt = f"<b>Наши в НХЛ · {ru_date(rd)}</b>\n\n{e(body)}" + (f"\n\n<i>{e(rest_txt)}.</i>" if rest_txt else "") + f"\n\n<a href=\"{URL}#rus\">Все россияне в НХЛ</a>"
+            txt = f"<b>Наши в НХЛ · {ru_date(rd)}</b>\n\n{e(body)}" + (f"\n\n<i>{e(rest_txt)}.</i>" if rest_txt else "") + f"\n\n👉 <b><a href=\"{URL}#rus\">Все россияне в НХЛ</a></b>"
             out.append(dict(key=f"rus:{rd}", due=msk(rd, 11, 30) + dt.timedelta(days=1), text=txt + FOOT, needs_tg=True,
                             specs=[dict(kind="russians", date=ru_date(rd), rows=rows, rest=rest_txt)]))
     # 3. Цифра дня — отдельной карточкой
@@ -487,7 +487,7 @@ def build(D, A, M, E, S, N):
     if col and col.get("time"):
         kick = col.get("kicker") if col.get("kicker") and col.get("kicker") != "Колонка Claude" else "Колонка"
         body = tgv(D, "column", rd) or col.get("dek")
-        txt = f"<b>{e(kick)}. {e(col.get('title'))}</b>\n\n{e(body)}\n\n<a href=\"{URL}#a=col\">Читать полностью</a>"
+        txt = f"<b>{e(kick)}. {e(col.get('title'))}</b>\n\n{e(body)}\n\n📖 <b><a href=\"{URL}#a=col\">Читать колонку целиком</a></b>"
         cday = dt.datetime.fromisoformat(str(col["time"]).replace("Z", "+00:00")).astimezone(MSK).date().isoformat()
         out.append(dict(key=f"col:{col.get('title')}", due=msk(cday, 15, 0), text=txt + FOOT, needs_tg=True,
                         specs=[dict(kind="column", kicker=kick, title=col.get("title"), teams=col.get("teams"), date=ru_date(cday), **col_photo(col, news))]))
@@ -495,11 +495,11 @@ def build(D, A, M, E, S, N):
     s = (S or [None])[0]
     if s and s.get("time"):
         sday = dt.datetime.fromisoformat(str(s["time"]).replace("Z", "+00:00")).astimezone(MSK)
-        txt = f"<b>История. {e(s.get('title'))}</b>\n\n{e(s.get('dek'))}\n\n<a href=\"{URL}#a=s{e(s.get('id'))}\">Читать историю</a>"
+        txt = f"<b>История. {e(s.get('title'))}</b>\n\n{e(s.get('dek'))}\n\n📖 <b><a href=\"{URL}#a=s{e(s.get('id'))}\">Читать историю целиком</a></b>"
         cover = (s.get("cover") or {}).get("url")
         credit = (s.get("cover") or {}).get("credit")
         if credit:
-            txt = txt.replace("\n\n<a href", f"\n\n<i>Фото: {e(credit)}</i>\n<a href", 1)
+            txt += f"\n\n<i>Фото: {e(credit)}</i>"
         out.append(dict(key=f"story:{s.get('id')}", due=max(sday + dt.timedelta(minutes=30), msk(sday.date().isoformat(), 16, 30)),
                         expires=sday + dt.timedelta(hours=36), text=txt + FOOT, photo=cover,
                         specs=None if cover else [dict(kind="column", kicker="История", title=s.get("title"), teams=s.get("teams"), date="")]))
@@ -539,7 +539,7 @@ def build(D, A, M, E, S, N):
                 if gi["v"].get("sure"):
                     pred += " Это сигнал «уверенный фаворит»: модель заметно увереннее рынка."
                 head_t = f"{RU.get(u['home'])} — {RU.get(u['away'])}, {tmsk(u)} мск"
-                txt = f"<b>{e(head_t)}</b>\n\n{e(body)}\n\n{e(pred)}\n\n<a href=\"{URL}#games\">Как считала модель</a>"
+                txt = f"<b>{e(head_t)}</b>\n\n{e(body)}\n\n{e(pred)}\n\n👉 <b><a href=\"{URL}#games\">Как считала модель</a></b>"
                 out.append(dict(key=f"game:{ud}:{u['id']}", due=min(base + dt.timedelta(minutes=30 * i), start - dt.timedelta(minutes=60)),
                                 expires=start, text=txt + FOOT, specs=[spec_for(u, gi)]))
         else:
@@ -555,7 +555,7 @@ def build(D, A, M, E, S, N):
                     note = tgg.get(str(u["id"]))
                     L.append(e(note) if note else f"Модель за {e(T(gi['pick']))}" + (f" ({pct(gi['p'])})" if gi["p"] else "") + ".")
                     L.append("")
-                L.append(f"<a href=\"{URL}#games\">Прогнозы модели и разборы</a>")
+                L.append(f"👉 <b><a href=\"{URL}#games\">Прогнозы модели и разборы</a></b>")
                 text = "\n".join(L)
                 if len(re.sub("<[^>]+>", "", text + FOOT)) > 1024:
                     text = "\n".join(x for x in L if not x or x.startswith("<b>") or x.startswith("<a"))
