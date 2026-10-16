@@ -51,7 +51,7 @@ function gRow(m,{mo=false,nav=false}={}){const key=`${m.away}-${m.home}`,open=!n
   return `<div class="mr${mo?" mo":""}${L&&L.flash?" flash":""}" id="g-${key}" style="--ca:${ca};--ch:${ch};--fc:${L&&L.flash?tcol(L.flash)+"55":"transparent"}"><button class="row" ${btn}>${timeCell(m,L)}
     <span class="tms">${tmLine(m.away,{p:pa,f:fa,sc:lv?L.as:null,lo:lv&&L.state==="post"&&!aw})}${tmLine(m.home,{p:ph,f:!fa,sc:lv?L.hs:null,lo:lv&&L.state==="post"&&aw})}</span>
     <span class="pcs">${pa!=null?pcLine(m.away,pa,fa)+pcLine(m.home,ph,!fa):""}</span>
-    <span class="pk">${p&&p.verdict&&p.verdict.sure&&!lv?`<span class="chip win">Уверенный фаворит: ${RU[sideTeam(m,p.verdict.sure.side)]}</span>`:""}${pickT?`<span class="k"><small>Модель</small>${RU[pickT]}${po?` · ${f2(po)}`:""}</span>`:""}${tp?`<span class="k"><small>Тотал</small>${tp.side==="over"?"Больше":"Меньше"} ${esc(tp.line)}${tp.odds?` · ${f2(tp.odds)}`:""}</span>`:""}${lv?liveChips(m,L):""}${vs&&!lv&&(vs.win||vs.tot)?`<span class="chip gold">Против рынка: ${[vs.win?"исход":"",vs.tot?"тотал":""].filter(Boolean).join(" и ")}</span>`:""}</span>${IC.chev}
+    <span class="pk">${p&&p.verdict&&p.verdict.sure&&!lv?`<span class="chip win">Уверенный фаворит: ${RU[sideTeam(m,p.verdict.sure.side)]}</span>`:""}${pickT?`<span class="k"><small>Модель</small>${RU[pickT]}${po?` · ${f2(po)}`:""}</span>`:""}${tp?`<span class="k"><small>Тотал</small>${tp.side==="over"?"Больше":"Меньше"} ${esc(dc(tp.line))}${tp.odds?` · ${f2(tp.odds)}`:""}</span>`:""}${lv?liveChips(m,L):""}${vs&&!lv&&(vs.win||vs.tot)?`<span class="chip gold">Против рынка: ${[vs.win?"исход":"",vs.tot?"тотал":""].filter(Boolean).join(" и ")}</span>`:""}</span>${IC.chev}
     ${mo&&D.motd&&D.motd.text?`<span class="mo-t"><b>Матч дня.</b> ${esc(D.motd.text)}</span>`:""}</button>${open?gDetail(m,p,L):""}</div>`}
 function liveChips(m,L){const out=[];const ps=m.pick_side;const tp=m.total_pick;
   const st=(r,fin,lab)=>`<span class="chip ${r==="hit"?"win":r==="miss"?"loss":""}">${lab}: ${r==="hit"?(fin?"угадан":"заходит"):r==="miss"?(fin?"мимо":"не заходит"):"ничья"}</span>`;
@@ -72,7 +72,11 @@ function booksTable(m){const o=m.odds,x=m.odds_1x,bk=m.books||{};if(!o&&!x&&!Obj
   return `<table class="mt"><thead><tr><th>Линия</th><th>${EN[m.away]}</th><th>${EN[m.home]}</th><th>Тотал Б / М</th></tr></thead><tbody>
    ${o?r("Линия 1","ориентир, победа с ОТ",o.away,o.home,o):""}${x&&x.home?r("Линия 2",`основное время, ничья ${f2(x.draw)}`,x.away,x.home,x):""}
    ${Object.entries(bk).filter(([k])=>k!=="onexbet"||!x).map(([k,b])=>r(BN[k]||esc(k),b.draw?`основное время, ничья ${f2(b.draw)}`:"с ОТ",b.away,b.home,b)).join("")}</tbody></table>`}
-function injOut(a){return (((D.teams||{})[a]||{}).injuries||[]).filter(x=>/IR|Out|LTIR|DTD/i.test(x.status||""))}
+/* травмы: без дублей (Daily Faceoff повторяет игроков), статус по-русски; у дублей берём самый тяжёлый статус */
+const INJ_RU={LTIR:"долго вне игры",IR:"в лазарете",OUT:"не сыграет",DTD:"под вопросом"},INJ_W={LTIR:4,IR:3,OUT:2,DTD:1};
+function injList(a){const m=new Map();for(const x of (((D.teams||{})[a]||{}).injuries||[])){const st=String(x.status||"").trim().toUpperCase();if(!INJ_W[st]||!x.name)continue;const k=nrm(x.name),o=m.get(k);if(!o||INJ_W[st]>INJ_W[o.st])m.set(k,{...x,st,ru:INJ_RU[st]})}
+  return [...m.values()].sort((x,y)=>INJ_W[y.st]-INJ_W[x.st])}
+function injOut(a){return injList(a)}
 const MISS={xg:"нет xG команд (сила только по голам)",shares:"нет долей игры 5 на 5",goalie_away:"вратарь гостей неизвестен",goalie_home:"вратарь хозяев неизвестен",goalie_away_unknown:"вратаря гостей нет в данных",goalie_home_unknown:"вратаря хозяев нет в данных",injuries_unmatched:"травмированный игрок не найден в данных"};
 function incNote(p){if(!p.incomplete)return"";const w=(p.missing||[]).map(k=>MISS[k]).filter(Boolean);return `<p class="note">Неполные данные${w.length?": "+w.join("; "):""} — оценка менее надёжна.</p>`}
 function modelBlk(p,m,openIt){if(!p)return"";const es=essayOf(p);const h2h=p.h2h||[];
@@ -83,7 +87,7 @@ function modelBlk(p,m,openIt){if(!p)return"";const es=essayOf(p);const h2h=p.h2h
      ${h2h.length?`<h4>Личные встречи в сезоне</h4><ul class="ul">${h2h.map(g=>`<li>${esc(dShort(g.date))}: ${EN[g.away]} — ${EN[g.home]} <b>${esc(g.score)}</b>${g.end&&g.end!=="REG"?" "+endTag(g.end):""}</li>`).join("")}</ul>`:""}</div></div></details>`}
 function gDetail(m,p,L){const tp=m.total_pick;const pickT=m.pick_side?sideTeam(m,m.pick_side):(p?fcOf(p,m).t:null);const po=oddsOf(m,m.pick_side);
   const ga=m.goalies||[];const injA=injOut(m.away),injH=injOut(m.home);
-  const pick=pickT||tp?`<div class="picks full">${pickT?`<div><small>Прогноз модели на исход</small><b>${RU[pickT]}${po?`<em>${f2(po)}</em>`:""}</b>${m.lean?`<p>${esc(m.lean)}</p>`:""}</div>`:""}${tp?`<div><small>Прогноз модели на тотал</small><b>${tp.side==="over"?"Больше":"Меньше"} ${esc(tp.line)}${tp.odds?`<em>${f2(tp.odds)}</em>`:""}</b>${tp.lean?`<p>${esc(tp.lean)}</p>`:""}</div>`:""}</div>`:"";
+  const pick=pickT||tp?`<div class="picks full">${pickT?`<div><small>Прогноз модели на исход</small><b>${RU[pickT]}${po?`<em>${f2(po)}</em>`:""}</b>${m.lean?`<p>${esc(m.lean)}</p>`:""}</div>`:""}${tp?`<div><small>Прогноз модели на тотал</small><b>${tp.side==="over"?"Больше":"Меньше"} ${esc(dc(tp.line))}${tp.odds?`<em>${f2(tp.odds)}</em>`:""}</b>${tp.lean?`<p>${esc(tp.lean)}</p>`:""}</div>`:""}</div>`:"";
   const fac=(m.factors||[]).length?`<div class="blk"><h4>Почему так</h4><ul class="ul">${m.factors.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div>`:"";
   const gl=`<div class="blk"><h4>Вратари</h4><div class="kv">${[0,1].map(i=>{const t=i?m.home:m.away;const gp=p&&(i?p.goalie_home:p.goalie_away);const nm=String(ga[i]||"").split(" (")[0];
       return `<div><small>${EN[t]}</small><span style="display:flex;align-items:center;gap:8px">${nm&&nm!=="не объявлен"?photo(nm,t,44):""}<b style="font-family:var(--f-body);font-size:var(--fs-s)">${esc(ga[i]||"не объявлен")}</b></span>${gp&&gp.sv?`<small>${nz(gp.sv*100)}% отражённых · ${gp.gp} и.</small>`:""}</div>`}).join("")}</div>
@@ -121,7 +125,7 @@ function posterSec(){const mo=D.motd;if(!mo)return"";const m=(D.upcoming||[]).fi
     <div class="lab"><span>Матч дня</span><span>${esc(dLong(D.upcoming_date))}</span><button class="go" data-go="games" data-open="${m.away}-${m.home}">Разбор матча →</button></div>
     <div class="vs">${side(m.away,"a")}<div class="mid">${mid}</div>${side(m.home,"h")}</div>
     ${pa!=null&&!lv?`<div class="pbs">${pbar("Модель",pa,ph,"var(--ta)","var(--th)")}${p.mkt_home!=null?pbar("Рынок",p.mkt_away,p.mkt_home,"var(--ta)","var(--th)"):""}${(()=>{const mt=modTot(p),kt2=mktTot(p);const tl=(m.total_pick||{}).line??(m.odds||{}).total;if(!mt||tl==null)return"";const S=s=>s==="over"?"больше":"меньше";
-      return `<div class="ptot">Тотал ${esc(tl)}: модель за ${S(mt.side)} (${pct(mt.p)})${kt2?`, рынок ${kt2.side===mt.side?"тоже":"за "+S(kt2.side)} (${pct(kt2.p)})`:""}</div>`})()}</div>`:""}
+      return `<div class="ptot">Тотал ${esc(dc(tl))}: модель за ${S(mt.side)} (${pct(mt.p)})${kt2?`, рынок ${kt2.side===mt.side?"тоже":"за "+S(kt2.side)} (${pct(kt2.p)})`:""}</div>`})()}</div>`:""}
     <div class="stars">${pl(m.away,"a")}${pl(m.home,"h")}</div>
     ${mo.text?`<p>${esc(mo.text)}</p>`:""}</div></section>`}
 function todaySec(){const u=todayGames();if(!u.length)return noGames();const mo=D.motd?u.find(x=>x.away===D.motd.away&&x.home===D.motd.home):null;
@@ -129,7 +133,7 @@ function todaySec(){const u=todayGames();if(!u.length)return noGames();const mo=
     <div class="box">${u.map(m=>gRow(m,{nav:true,mo:m===mo&&false})).join("")}</div>${confLine()}</section>`}
 function nightSec(){const d=lastDate();if(!d)return"";/* пока идёт игровой день, его финалы уже видны в «Сегодня» — блок «Ночь» не дублируем */if(D.upcoming_date&&d>=D.upcoming_date)return"";const gs=A.games.filter(g=>g.date===d);
   return `<section class="sec"><div class="hd"><h2>Ночь<small>${esc(dLong(d))}</small></h2><button class="lnk" data-go="results">Итоги и протоколы</button></div>
-    <div class="box"><div class="scores">${gs.map(g=>{const aw=g.as>g.hs;return `<button class="sc1" data-res="${g.date}" data-gid="${g.id}"><span class="r ${aw?"":"lo"}">${logo(g.away,40)}${EN[g.away]}<b>${g.as}</b></span><span class="r ${aw?"lo":""}">${logo(g.home,40)}${EN[g.home]}<b>${g.hs}</b></span>${endTag(g.end)?`<small>${endLong(g.end)}</small>`:""}</button>`}).join("")}</div></div></section>`}
+    <div class="box"><div class="scores">${gs.map(g=>{const aw=g.as>g.hs;return `<button class="sc1" data-res="${g.date}" data-gid="${g.id}"><span class="r ${aw?"":"lo"}">${logo(g.away,34)}<i class="nm">${EN[g.away]}</i><b>${g.as}</b></span><span class="r ${aw?"lo":""}">${logo(g.home,34)}<i class="nm">${EN[g.home]}</i><b>${g.hs}</b></span>${endTag(g.end)?`<small>${endLong(g.end)}</small>`:""}</button>`}).join("")}</div></div></section>`}
 
 /* герои игрового дня */
 /* Сенсация дня: самый неожиданный результат ночи.
@@ -254,6 +258,10 @@ function vsJournal(all){if(JF==="express"||JF==="sure")return"";const TYL={all:"
 function sureJournal(all){const xs=all.filter(x=>x.type==="sure"&&!x.cancelled);const done=xs.filter(x=>x.result&&x.result!=="void");
   const hit=done.filter(x=>x.result==="hit").length;const wo=done.filter(x=>x.odds);const roi=wo.length?wo.reduce((s,x)=>s+plOf(x.result,x.odds),0)/wo.length:null;
   return `<div class="box pad"><h4 class="sub">Уверенный фаворит модели</h4>${done.length?`<div class="sum"><div><b>${hit}/${done.length}</b><small>угадано</small></div><div><b class="${sgn(roi)}">${roi==null?"—":(roi>0?"+":"")+Math.round(roi*100)+"%"}</b><small>условная доходность</small></div><div><b>${xs.length-done.length}</b><small>ждут матча</small></div></div>`:""}<p class="note" style="margin:8px 0 0">Сигнал: модель даёт команде 65% и больше, и это минимум на 3 п.п. выше рынка. Прогноз — победа с учётом овертайма и буллитов. На истории 5 сезонов (1008 таких матчей, кэфы американских контор) условная доходность +4%, в плюсе каждый сезон; правило найдено по истории, поэтому с 16 октября счёт ведётся вперёд — здесь видно, держится ли он на новых матчах.</p></div>`}
+/* журнал по дням: два свежих дня раскрыты, остальные свёрнуты */
+function jDays(list){const by=new Map();for(const x of list.slice().reverse())(by.get(x.date)||by.set(x.date,[]).get(x.date)).push(x);
+  return [...by.entries()].map(([d,xs],k)=>{const done=xs.filter(x=>x.result&&x.result!=="void"),hit=done.filter(x=>x.result==="hit").length;
+    return `<details class="day jday"${k<2?" open":""}><summary>${esc(dLong(d))}<small>${plural(xs.length,"прогноз","прогноза","прогнозов")}${done.length?` · угадано ${hit} из ${done.length}`:""}</small></summary><div class="box">${xs.map(x=>jRow((D.journal||[]).find(y=>y.date===x.date&&y.type===x.type&&y.pick===x.pick&&y.away===x.away)||x)).join("")}</div></details>`}).join("")}
 function vPicks(){const all=jAll();const list=all.filter(x=>JF==="all"?(x.type||"win")!=="sure":(x.type||"win")===JF);const done=list.filter(x=>x.result&&x.result!=="void");
   const hit=done.filter(x=>x.result==="hit").length;const withOdds=done.filter(x=>x.odds);const roi=withOdds.length?withOdds.reduce((s,x)=>s+plOf(x.result,x.odds),0)/withOdds.length:null;
   const ch=all.filter(x=>x.changed&&x.result&&x.result!=="void"&&(x.type||"win")!=="express");
@@ -264,7 +272,7 @@ function vPicks(){const all=jAll();const list=all.filter(x=>JF==="all"?(x.type||
    ${sureJournal(all)}
    ${vsJournal(all)}
    ${am}
-   <div class="box">${list.length?list.slice().reverse().map(x=>jRow((D.journal||[]).find(y=>y.date===x.date&&y.type===x.type&&y.pick===x.pick&&y.away===x.away)||x)).join(""):'<div class="empty">Пока пусто.</div>'}</div>
+   ${list.length?jDays(list):'<div class="box"><div class="empty">Пока пусто.</div></div>'}
    <p class="note">Прогноз фиксируется до начала матча и задним числом не меняется. Условная доходность — если бы на каждый прогноз шла одна и та же единица по коэффициенту линии-ориентира. Исход — победа с учётом овертайма и буллитов; тотал — все голы, включая овертайм; «уверенные исходы» засчитываются, только если сыграли все.</p></section></div>`}
 
 /* ===================== ещё ===================== */
@@ -286,11 +294,11 @@ function vLead(){const {hot,cold}=hotList();const list=HOT_MODE==="hot"?hot:cold
    ${list.map((r,i)=>lrow(r,i,HOT_MODE==="hot"?r.l5:"0",HOT_MODE==="hot"?`${EN[r.team]} · ${r.l5g} Г · ${r.l5a} П за 5 игр · сезон ${r.pts}`:`${EN[r.team]} · сезон ${r.g} Г · ${r.a} П · ${r.gp} И`)).join("")}</section></div></section></div>`}
 function vPower(){const t=Object.entries(M.teams||{}).sort((a,b)=>b[1].power-a[1].power);const mx=Math.max(...t.map(x=>Math.max(x[1].att,1/x[1].dfn)),1.3);
   return `<div class="col">${back()}<section class="sec"><div class="hd"><h1>Сила команд<small>${M.league?`${M.league.games} матчей, ${nz(M.league.goals_pg,2)} гола на команду за игру`:""}</small></h1></div>
-  <div class="box">${t.map(([a,v],i)=>`<div class="pw"><span class="mute" style="font-weight:700">${i+1}</span><div style="display:flex;flex-direction:column;gap:6px;min-width:0"><button class="tm" data-team="${a}">${logo(a,34)}<b>${EN[a]}</b></button><div class="bars"><span class="bar2" style="--c:var(--blue)"><i style="--w:${v.att/mx*100}%"></i></span><span class="bar2" style="--c:var(--win)"><i style="--w:${(1/v.dfn)/mx*100}%"></i></span></div><small class="mute">голы ${v.gf_pg}–${v.ga_pg} · броски ${v.sf_pg}–${v.sa_pg} за игру</small></div><span class="v">${Math.round(v.power*100)}</span></div>`).join("")}</div>
+  <div class="box">${t.map(([a,v],i)=>`<div class="pw"><span class="mute" style="font-weight:700">${i+1}</span><div style="display:flex;flex-direction:column;gap:6px;min-width:0"><button class="tm" data-team="${a}">${logo(a,34)}<b>${EN[a]}</b></button><div class="bars"><span class="bar2" style="--c:var(--blue)"><i style="--w:${v.att/mx*100}%"></i></span><span class="bar2" style="--c:var(--win)"><i style="--w:${(1/v.dfn)/mx*100}%"></i></span></div><small class="mute">голы ${nz(v.gf_pg,2)} – ${nz(v.ga_pg,2)} · броски ${nz(v.sf_pg,1)} – ${nz(v.sa_pg,1)} за игру</small></div><span class="v">${Math.round(v.power*100)}</span></div>`).join("")}</div>
   <p class="note">Индекс 100 — средняя команда лиги. Синяя полоса — атака, зелёная — оборона (длиннее — лучше). Индекс считается по всем матчам сезона: 70% веса — ожидаемые голы (xG MoneyPuck), 30% — реальные голы, с поправкой на соперников и на уровень прошлого сезона, которая слабеет с каждым матчем.</p></section></div>`}
-function vInj(){const rows=ALL.map(a=>[a,(((D.teams||{})[a]||{}).injuries||[])]).filter(x=>x[1].length);
-  return `<div class="col">${back()}<section class="sec"><div class="hd"><h1>Травмы<small>по данным Daily Faceoff</small></h1></div><div class="tgrid">${rows.map(([a,l])=>`<div class="box pad" style="display:flex;flex-direction:column;gap:10px"><button class="tm" data-team="${a}">${logo(a,40)}<b>${FULL[a]}</b></button><ul class="ul">${l.map(x=>`<li><b>${pref(x.name,a)}</b> · ${esc(x.status)}</li>`).join("")}</ul></div>`).join("")}</div>
-  <p class="note">IR и LTIR — список травмированных, Out — точно не сыграет, DTD — решение принимают перед игрой.</p></section></div>`}
+function vInj(){const rows=ALL.map(a=>[a,injList(a)]).filter(x=>x[1].length);
+  return `<div class="col">${back()}<section class="sec"><div class="hd"><h1>Травмы<small>по данным Daily Faceoff</small></h1></div><div class="tgrid">${rows.map(([a,l])=>`<div class="box pad" style="display:flex;flex-direction:column;gap:10px"><button class="tm" data-team="${a}">${logo(a,40)}<b>${FULL[a]}</b></button><ul class="ul">${l.map(x=>`<li><b>${pref(x.name,a)}</b> · <span class="inj ${x.st}">${x.ru}</span></li>`).join("")}</ul></div>`).join("")}</div>
+  <p class="note">«В лазарете» и «долго вне игры» — игрок в списке травмированных клуба, «не сыграет» — точно пропустит ближайший матч, «под вопросом» — решение примут перед игрой.</p></section></div>`}
 function vRus(){const r=(D.russians||[]).map(x=>({...x,s:skater(x.name),g:goalie(x.name)}));const sk=r.filter(x=>!x.g).sort((a,b)=>((b.s||{}).pts||0)-((a.s||{}).pts||0)),gk=r.filter(x=>x.g);
   return `<div class="col">${back()}<section class="sec"><div class="hd"><h1>Россияне<small>${plural(r.length,"игрок","игрока","игроков")}</small></h1></div><div class="tgrid">
   <section class="box"><div class="wg-h"><h3>Полевые · очки</h3></div>${sk.map((x,i)=>lrow({...x,pos:x.s&&x.s.pos},i,x.s?gaHtml(x.s.g,x.s.a):"—",`${EN[x.team]}${x.s?` · ${x.s.gp} и · ${x.s.pm>0?"+":""}${x.s.pm}`:""}`)).join("")}</section>
@@ -339,7 +347,7 @@ function teamSheet(a){const t=TEAMS[a],md=(M.teams||{})[a],r=(D.teams||{})[a]||{
     ${rosterBlock(a)}
     <div id="thist"><p class="note">Загружаю историю клуба…</p></div>
     ${r.forwards?`<div class="sec"><h4 class="sub">Звенья</h4><div class="lines">${(r.forwards||[]).map((l,i)=>ln(`${i+1}-е`,l)).join("")}${(r.defense||[]).map((l,i)=>ln(`З${i+1}`,l)).join("")}${ln("Вр",r.goalies)}${ln("ПП1",r.pp1)}${ln("ПП2",r.pp2)}</div><p class="note">Звенья по Daily Faceoff${r.updated?`, обновлено ${esc(dShort(r.updated.slice(0,10)))}`:""}.</p></div>`:""}
-    ${(r.injuries||[]).length?`<div class="sec"><h4 class="sub">Травмы</h4><ul class="ul">${r.injuries.map(x=>`<li><b>${pref(x.name,a)}</b> · ${esc(x.status)}</li>`).join("")}</ul></div>`:""}
+    ${injList(a).length?`<div class="sec"><h4 class="sub">Травмы</h4><ul class="ul">${injList(a).map(x=>`<li><b>${pref(x.name,a)}</b> · <span class="inj ${x.st}">${x.ru}</span></li>`).join("")}</ul></div>`:""}
     ${rus.length?`<div class="sec"><h4 class="sub">Россияне</h4><div class="acts">${rus.map(x=>`<button class="btn" data-player="${esc(x.name)}" data-pteam="${a}">${photo(x.name,a,32)}${esc(pn(x.name))}</button>`).join("")}</div></div>`:""}
    </div>`);fillTeamHist(a)}
 function playerGames(name,tm){const id=nameId(name);const ln=name.split(" ").slice(1).join(" ")||name;const short=name.split(" ").pop();const out=[];
@@ -354,7 +362,7 @@ function playerHero(name,tm,s){const h=headOf(name),n=pnum(name,s&&s.pos),pos=po
   const age=ageOf(bio[2]);const meta=[n?"#"+n:"",POSRU[pos]||pos,age?plural(age,"год","года","лет"):"",bio[0]?bio[0]+" см":"",bio[1]?bio[1]+" кг":""].filter(Boolean);
   return `<div class="ph-hero" style="--c:${tdeep(tm)};--c2:${tcol(tm)}"><span class="mesh"></span><img class="ghost" src="${esc(logoUrl(tm,true))}" alt="" aria-hidden="true">
    ${h?`<img class="cut" src="${MG}${esc(h)}.png" alt="" onerror="this.outerHTML='<span class=&quot;num&quot;>${n?"#"+n:""}</span>'">`:`<span class="num">${n?"#"+n:""}</span>`}
-   <div class="tx"><small class="fn">${esc(first)}</small><h2>${esc(last)}</h2><p>${meta.map(esc).join(" · ")}${cc||bio[3]?` · <span class="ctry"><span class="fl">${cc?flag(cc[0]):""}</span>${esc(cc?cc[1]:bio[3])}</span>`:""}</p><button class="tm" data-team="${tm}">${esc(FULL[tm]||tm)}</button></div>
+   <div class="tx"><small class="fn">${esc(first)}</small><h2${last.length>10?' class="lng"':""}>${esc(last)}</h2><p>${meta.map(esc).join(" · ")}${cc||bio[3]?` · <span class="ctry"><span class="fl">${cc?flag(cc[0]):""}</span>${esc(cc?cc[1]:bio[3])}</span>`:""}</p><button class="tm" data-team="${tm}">${esc(FULL[tm]||tm)}</button></div>
    <img class="tlogo" src="${esc(logoUrl(tm,true))}" alt="${esc(FULL[tm]||tm)}"><button class="sh-x" data-close aria-label="Закрыть">×</button></div>`}
 
 /* ===================== история: клубы и карьеры ===================== */

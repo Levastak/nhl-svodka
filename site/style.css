@@ -421,7 +421,8 @@ table.st .tn{display:flex;align-items:center;gap:10px;font-weight:600}
 table.st tbody tr:hover td{background:var(--soft);cursor:pointer}
 @container (max-width:640px){table.st .c-form{display:none}}
 @container (max-width:480px){table.st .c-gd{display:none}table.st td,table.st th{padding-inline:6px}}
-@container (max-width:360px){table.st .c-otl{display:none}}
+@container (max-width:380px){table.st td,table.st th{padding-inline:4px}table.st .tn{gap:7px}}
+@container (max-width:290px){table.st .c-otl{display:none}}
 
 /* ===== итоги ===== */
 .dates{display:flex;align-items:center;gap:6px}
@@ -545,8 +546,8 @@ table.st tbody tr:hover td{background:var(--soft);cursor:pointer}
 .ph-hero p{margin:0;font-size:var(--fs-s);opacity:.9}
 .ph-hero .tm{margin-top:10px;font-size:var(--fs-xs);font-weight:700;color:#fff;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);padding:4px 10px;border-radius:999px}
 .ph-hero .tlogo{flex:none;align-self:center;width:110px;height:110px;object-fit:contain;margin-right:36px;filter:drop-shadow(0 6px 16px rgba(0,0,0,.35))}
-@media (max-width:640px){.ph-hero{min-height:160px;padding:0 14px;gap:10px}.ph-hero .cut{height:140px;margin-left:-8px}.ph-hero .tlogo{position:absolute;right:12px;top:52px;width:48px;height:48px;margin:0;opacity:.95}
- .ph-hero h2{font-size:32px}.ph-hero .fn{font-size:16px}.ph-hero .tx{padding:44px 0 16px}.ph-hero .ghost{width:340px;height:340px;left:60%}}
+@media (max-width:640px){.ph-hero{min-height:160px;padding:0 14px;gap:10px}.ph-hero .cut{height:140px;margin-left:-8px}.ph-hero .tlogo{position:absolute;right:58px;top:12px;width:38px;height:38px;margin:0;opacity:.95}
+ .ph-hero h2{font-size:32px;overflow-wrap:anywhere}.ph-hero h2.lng{font-size:26px}.ph-hero .fn{font-size:16px}.ph-hero .tx{padding:44px 0 16px}.ph-hero .ghost{width:340px;height:340px;left:60%}}
 /* карьера игрока */
 .tw{overflow-x:auto}.st5{width:100%}.st5 td,.st5 th{text-align:center;white-space:nowrap}.st5 td:first-child,.st5 th:first-child{text-align:left}
 .st5 .tmi{display:inline-flex;vertical-align:middle;margin:0 1px}
@@ -605,3 +606,10 @@ table.st tbody tr:hover td{background:var(--soft);cursor:pointer}
 .poster .side .lgd{filter:drop-shadow(0 8px 20px rgba(0,0,0,.45))}
 .mr .tm .lg{margin-right:2px}
 @media (max-width:640px){.poster .side .lgd{--s:76px!important}.mr .tm .lg{--s:38px!important}.sg{min-width:150px;padding:9px 12px}.sg .r{font-size:15px}.sg .r b{font-size:19px}}
+/* имя и значок позиции — одной строкой; длинное имя сокращается многоточием, значок не уезжает вниз */
+.nm2>span:first-child{display:flex;align-items:flex-end;min-width:0}
+.nm2>span:first-child>.plink{min-width:0}
+.nm2>span:first-child>.pp{flex:none;margin-bottom:3px}
+.sc1 .r{gap:8px}.sc1 .r .nm{font-style:normal;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;letter-spacing:-.01em}
+.jday{margin-top:12px}.jday>summary{margin-bottom:8px;flex-wrap:wrap;row-gap:2px}.jday>summary small{white-space:nowrap}
+.inj{color:var(--mute)}.inj.IR,.inj.LTIR,.inj.OUT{color:var(--loss)}

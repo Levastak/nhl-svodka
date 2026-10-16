@@ -50,7 +50,8 @@ function cdist(x,y){const p=h=>{const n=parseInt(String(h).slice(1),16);return [
 /* цвета двух команд, которые не сливаются: при похожих хозяева берут второй цвет клуба */
 function tpair(a,h){const ca=tcol(a);let ch=tcol(h);if(cdist(ca,ch)<90){const alt=(COLORS[h]||[])[1];const ok=alt&&lum(alt)>.05&&lum(alt)<.85&&cdist(ca,alt)>=90;ch=ok?alt:"#9AA3AE"}return [ca,ch]}
 function pair(a,b){let x=tdeep(a),y=tdeep(b);if(Math.abs(lum(x)-lum(y))<.012&&x.toLowerCase()===y.toLowerCase())y=shade(y,.6);return [x,y]}
-const f2=x=>x==null||isNaN(x)?"—":Number(x).toFixed(2);
+const dc=x=>x==null?"":String(x).replace(".",",");
+const f2=x=>x==null||isNaN(x)?"—":Number(x).toFixed(2).replace(".",",");
 const pct=x=>x==null||isNaN(x)?"—":Math.round(x*100)+"%";
 const nz=(x,d=1)=>String((+x).toFixed(d)).replace(".",",");
 const sgn=v=>v>0?"pos":v<0?"neg":"";
@@ -183,7 +184,7 @@ function modelWhy(m,p){const out=[];const ra=p.rating_away,rh=p.rating_home;cons
 /* ---------- журнал ---------- */
 function pickLabel(j){const t=j.type||"win";
   if(t==="win"||t==="sure")return j.side?RU[sideTeam(j,j.side)]:esc(j.pick);
-  if(t==="total")return `${(j.side==="over")?"Больше":"Меньше"} ${j.line}`;
+  if(t==="total")return `${(j.side==="over")?"Больше":"Меньше"} ${dc(j.line)}`;
   if(t==="express")return (j.legs||[]).map(l=>l.side?RU[sideTeam(l,l.side)]:l.pick).join(" + ");
   return esc(j.pick||"")}
 function matchLabel(j){if((j.type)==="express")return (j.legs||[]).map(l=>`${RU[l.away]} — ${RU[l.home]}`).join(" · ");return j.away?`${RU[j.away]} — ${RU[j.home]}`:""}
@@ -204,7 +205,7 @@ function coverHtml(x,cls="cover",withCap=true){const ts=(x.teams||[]).filter(t=>
   if(x.image)return `<div class="${cls}"><img src="${esc(x.image)}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.parentNode.classList.add('art');this.remove()">${withCap?`<span class="cap">Фото: ${esc(x.image_src||x.source||"источник")}</span>`:""}</div>`;
   const [c1,c2]=ts.length===2?pair(ts[0],ts[1]):ts.length?[tdeep(ts[0]),shade(tdeep(ts[0]),.6)]:["#20242B","#30353E"];
   return `<div class="${cls} art" style="--c1:${c1};--c2:${c2}">${ts.map(t=>`<span class="lgw">${logo(t,"72%")}</span>`).join("")}</div>`}
-function metaHtml(x){return `<span class="meta">${x.kind==="column"?'<span class="k">Колонка Claude</span>':x.kind==="story"?'<span class="k st">История</span>':""}${(x.teams||[]).slice(0,2).map(t=>logo(t,24)).join("")}${x.source&&x.kind!=="column"&&x.kind!=="story"?`<span>${esc(x.source)}</span>`:""}${x.time?`<span>${String(x.time).length>10?esc(kdt(x.time)):esc(dShort(String(x.time).slice(0,10)))}</span>`:""}</span>`}
+function metaHtml(x){return `<span class="meta">${x.kind==="column"?'<span class="k">Колонка</span>':x.kind==="story"?'<span class="k st">История</span>':""}${(x.teams||[]).slice(0,2).map(t=>logo(t,24)).join("")}${x.source&&x.kind!=="column"&&x.kind!=="story"?`<span>${esc(x.source)}</span>`:""}${x.time?`<span>${String(x.time).length>10?esc(kdt(x.time)):esc(dShort(String(x.time).slice(0,10)))}</span>`:""}</span>`}
 
 /* ---------- обновление данных ---------- */
 function freshness(){if(!D||!D.generated)return {txt:"",old:false};const g=new Date(D.generated);const h=(Date.now()-g)/36e5;
