@@ -1,0 +1,99 @@
+{
+ "google nhl-stats.ru NS": {
+  "Status": 3,
+  "TC": false,
+  "RD": true,
+  "RA": true,
+  "AD": false,
+  "CD": false,
+  "Question": [
+   {
+    "name": "nhl-stats.ru.",
+    "type": 2
+   }
+  ],
+  "Authority": [
+   {
+    "name": "ru.",
+    "type": 6,
+    "TTL": 1800,
+    "data": "a.dns.ripn.net. hostmaster.ripn.net. 4070745 86400 14400 2592000 3600"
+   }
+  ],
+  "Comment": "Response from 193.232.156.17."
+ },
+ "google nhl-stats.ru A": {
+  "Status": 3,
+  "TC": false,
+  "RD": true,
+  "RA": true,
+  "AD": false,
+  "CD": false,
+  "Question": [
+   {
+    "name": "nhl-stats.ru.",
+    "type": 1
+   }
+  ],
+  "Authority": [
+   {
+    "name": "ru.",
+    "type": 6,
+    "TTL": 1800,
+    "data": "a.dns.ripn.net. hostmaster.ripn.net. 4070745 86400 14400 2592000 3600"
+   }
+  ],
+  "Comment": "Response from 193.232.156.17."
+ },
+ "google www.nhl-stats.ru CNAME": {
+  "Status": 3,
+  "TC": false,
+  "RD": true,
+  "RA": true,
+  "AD": false,
+  "CD": false,
+  "Question": [
+   {
+    "name": "www.nhl-stats.ru.",
+    "type": 5
+   }
+  ],
+  "Authority": [
+   {
+    "name": "ru.",
+    "type": 6,
+    "TTL": 1800,
+    "data": "a.dns.ripn.net. hostmaster.ripn.net. 4070745 86400 14400 2592000 3600"
+   }
+  ],
+  "Comment": "Response from 193.232.156.17."
+ },
+ "google nhl-stats.ru SOA": {
+  "Status": 3,
+  "TC": false,
+  "RD": true,
+  "RA": true,
+  "AD": false,
+  "CD": false,
+  "Question": [
+   {
+    "name": "nhl-stats.ru.",
+    "type": 6
+   }
+  ],
+  "Authority": [
+   {
+    "name": "ru.",
+    "type": 6,
+    "TTL": 1800,
+    "data": "a.dns.ripn.net. hostmaster.ripn.net. 4070745 86400 14400 2592000 3600"
+   }
+  ],
+  "Comment": "Response from 193.232.156.17."
+ },
+ "dig +short NS nhl-stats.ru": "",
+ "dig +short A nhl-stats.ru @ns1.reg.ru": "185.199.108.153\n185.199.109.153\n185.199.110.153\n185.199.111.153\n",
+ "dig +short CNAME www.nhl-stats.ru @ns1.reg.ru": "levastak.github.io.\n",
+ "dig +short NS nhl-stats.ru @a.dns.ripn.net": "",
+ "whois nhl-stats.ru": "/bin/sh: 1: whois: not found\n"
+}
