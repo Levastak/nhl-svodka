@@ -91,7 +91,11 @@ document.addEventListener("visibilitychange",()=>{if(!document.hidden&&Date.now(
     rerenderKeep()}catch(e){}
   try{ST=await fetch(DATA+"stories.json"+v).then(r=>r.ok?r.json():[]);ST=(Array.isArray(ST)?ST:ST.stories||[]).slice().sort((a,b)=>String(b.time).localeCompare(String(a.time)));if(ST.length)rerenderKeep()}catch(e){ST=[]}
   try{EDGE=await fetch(DATA+"edge.json"+v).then(r=>r.ok?r.json():null);if(EDGE&&VIEW==="home")rerenderKeep()}catch(e){EDGE=null}
+  try{openFromHash()}catch(e){}
   liveLoop();
   setInterval(()=>{if(["home","games"].includes(VIEW)&&$("#sheet").hidden&&!needLive())rerenderKeep()},60000);
 })();
-window.addEventListener("hashchange",()=>{const h=(location.hash||"").slice(1);closeSheet();if(VIEWS[h]&&h!==VIEW){VIEW=h;render();window.scrollTo(0,0)}});
+/* прямые ссылки на статьи (из Telegram-канала): #a=col — свежая колонка, #a=s<id> — статья «Истории» */
+function openFromHash(){const h=(location.hash||"").slice(1);if(!h.startsWith("a="))return false;const k=decodeURIComponent(h.slice(2));
+  const arts=articles();const x=k==="col"?arts.find(a=>a.kind==="column"):arts.find(a=>a.k===k);if(x){openArticle(x.k);return true}return false}
+window.addEventListener("hashchange",()=>{const h=(location.hash||"").slice(1);if(h.startsWith("a=")){openFromHash();return}closeSheet();if(VIEWS[h]&&h!==VIEW){VIEW=h;render();window.scrollTo(0,0)}});

@@ -1,0 +1,52 @@
+name: Telegram-канал
+
+# Посты в канал из готовых текстов сайта (scripts/tg.py). Ручной запуск — первой строкой в trigger/tg режим (test / discover / auto), второй — время.
+on:
+  push:
+    branches: [main]
+    paths: ["trigger/tg"]
+  workflow_run:
+    workflows: ["Сводка НХЛ"]
+    types: [completed]
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "auto / test / discover"
+        default: auto
+
+permissions:
+  contents: write
+
+concurrency:
+  group: telegram
+  cancel-in-progress: false
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Режим
+        id: mode
+        run: |
+          if [ "${{ github.event_name }}" = "push" ]; then M=$(head -n1 trigger/tg | tr -d '[:space:]');
+          elif [ "${{ github.event_name }}" = "workflow_dispatch" ]; then M="${{ github.event.inputs.mode }}";
+          else M=auto; fi
+          echo "mode=${M:-auto}" >> $GITHUB_OUTPUT
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Посты
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+        run: python3 scripts/tg.py ${{ steps.mode.outputs.mode }}
+      - name: Сохранить отметки
+        run: |
+          git config user.name "svodka-bot"
+          git config user.email "svodka-bot@users.noreply.github.com"
+          git add tg
+          git diff --cached --quiet && exit 0
+          git commit -m "Telegram: ${{ steps.mode.outputs.mode }} $(date -u +%Y-%m-%dT%H:%MZ)"
+          for i in 1 2 3; do git pull --rebase -X theirs origin main && git push && break; sleep 5; done
