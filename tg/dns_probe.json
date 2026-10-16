@@ -20,7 +20,7 @@
     "data": "a.dns.ripn.net. hostmaster.ripn.net. 4070745 86400 14400 2592000 3600"
    }
   ],
-  "Comment": "Response from 193.232.156.17."
+  "Comment": "Response from 2001:678:14:0:193:232:156:17."
  },
  "google nhl-stats.ru A": {
   "Status": 3,
@@ -43,10 +43,10 @@
     "data": "a.dns.ripn.net. hostmaster.ripn.net. 4070745 86400 14400 2592000 3600"
    }
   ],
-  "Comment": "Response from 193.232.156.17."
+  "Comment": "Response from 2001:678:14:0:193:232:156:17."
  },
- "google www.nhl-stats.ru CNAME": {
-  "Status": 3,
+ "google nhl-stats.online NS": {
+  "Status": 0,
   "TC": false,
   "RD": true,
   "RA": true,
@@ -54,46 +54,75 @@
   "CD": false,
   "Question": [
    {
-    "name": "www.nhl-stats.ru.",
+    "name": "nhl-stats.online.",
+    "type": 2
+   }
+  ],
+  "Answer": [
+   {
+    "name": "nhl-stats.online.",
+    "type": 2,
+    "TTL": 20853,
+    "data": "ns2.reg.ru."
+   },
+   {
+    "name": "nhl-stats.online.",
+    "type": 2,
+    "TTL": 20853,
+    "data": "ns1.reg.ru."
+   }
+  ]
+ },
+ "google nhl-stats.online A": {
+  "Status": 0,
+  "TC": false,
+  "RD": true,
+  "RA": true,
+  "AD": false,
+  "CD": false,
+  "Question": [
+   {
+    "name": "nhl-stats.online.",
+    "type": 1
+   }
+  ],
+  "Answer": [
+   {
+    "name": "nhl-stats.online.",
+    "type": 1,
+    "TTL": 21600,
+    "data": "95.163.244.138"
+   }
+  ],
+  "Comment": "Response from 176.99.13.15."
+ },
+ "google www.nhl-stats.online CNAME": {
+  "Status": 0,
+  "TC": false,
+  "RD": true,
+  "RA": true,
+  "AD": false,
+  "CD": false,
+  "Question": [
+   {
+    "name": "www.nhl-stats.online.",
     "type": 5
    }
   ],
   "Authority": [
    {
-    "name": "ru.",
+    "name": "nhl-stats.online.",
     "type": 6,
     "TTL": 1800,
-    "data": "a.dns.ripn.net. hostmaster.ripn.net. 4070745 86400 14400 2592000 3600"
+    "data": "ns1.reg.ru. hostmaster.ns1.reg.ru. 1792164935 14400 3600 604800 10800"
    }
   ],
-  "Comment": "Response from 193.232.156.17."
- },
- "google nhl-stats.ru SOA": {
-  "Status": 3,
-  "TC": false,
-  "RD": true,
-  "RA": true,
-  "AD": false,
-  "CD": false,
-  "Question": [
-   {
-    "name": "nhl-stats.ru.",
-    "type": 6
-   }
-  ],
-  "Authority": [
-   {
-    "name": "ru.",
-    "type": 6,
-    "TTL": 1800,
-    "data": "a.dns.ripn.net. hostmaster.ripn.net. 4070745 86400 14400 2592000 3600"
-   }
-  ],
-  "Comment": "Response from 193.232.156.17."
+  "Comment": "Response from 176.99.13.12."
  },
  "dig +short NS nhl-stats.ru": "",
  "dig +short A nhl-stats.ru @ns1.reg.ru": "185.199.108.153\n185.199.109.153\n185.199.110.153\n185.199.111.153\n",
  "dig +short CNAME www.nhl-stats.ru @ns1.reg.ru": "levastak.github.io.\n",
  "dig +short NS nhl-stats.ru @a.dns.ripn.net": "",
- "whois nhl-stats.ru": "/bin/sh: 1: whois: not found\n"
+ "dig +short NS nhl-stats.online": "ns1.reg.ru.\nns2.reg.ru.\n",
+ "dig +short A nhl-stats.online": "95.163.244.138\n"
 }
