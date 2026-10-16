@@ -3,7 +3,21 @@ import json, os, re, subprocess, sys, urllib.request
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 lines = open(os.path.join(ROOT, "trigger", "tg")).read().split("\n")
 stage = (lines[2].strip() if len(lines) > 2 else "") or "stage1"
-if stage == "dns":
+if stage == "ovi":
+    rep = {}
+    for u in ["https://forge-dapi.d3.nhle.com/v2/content/en-us/videos?tags.slug=alex-ovechkin&$limit=60",
+              "https://forge-dapi.d3.nhle.com/v2/content/en-us/videos?tags.slug=ovechkin&$limit=40",
+              "https://forge-dapi.d3.nhle.com/v2/content/en-us/videos?$query=Ovechkin%20895&$limit=20",
+              "https://forge-dapi.d3.nhle.com/v2/content/en-us/videos?tags.slug=washington-capitals&$limit=40"]:
+        try:
+            j = json.loads(urllib.request.urlopen(urllib.request.Request(u, headers={"User-Agent": "Mozilla/5.0"}), timeout=60).read())
+            rep[u] = [dict(t=x.get("title") or x.get("headline"), slug=x.get("slug"), date=x.get("contentDate"),
+                           bc=(x.get("fields") or {}).get("brightcoveId") or x.get("brightcoveId"), dur=(x.get("fields") or {}).get("duration"),
+                           keys=list((x.get("fields") or {}).keys())[:12]) for x in j.get("items", [])]
+        except Exception as ex:
+            rep[u] = repr(ex)[:200]
+    json.dump(rep, open(os.path.join(ROOT, "tg", "demo", "ovi_probe.json"), "w"), ensure_ascii=False, indent=1)
+elif stage == "dns":
     rep = {}
     for q in ["nhl-stats.ru&type=CAA", "nhl-stats.ru&type=A", "nhl-stats.ru&type=AAAA", "www.nhl-stats.ru&type=CNAME", "_github-pages-challenge-levastak.nhl-stats.ru&type=TXT"]:
         try:
