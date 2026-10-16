@@ -586,9 +586,16 @@ def build(D, A, M, E, S, N):
         if not q.get("id") or not q.get("text"):
             continue
         ready = dt.datetime.fromisoformat(str(q.get("ready") or q.get("time") or now_iso()).replace("Z", "+00:00"))
+        # тихие часы ленты: с 23:00 до 08:00 по Москве новости ждут утра
+        rm = ready.astimezone(MSK)
+        if rm.hour >= 23:
+            ready = msk((rm.date() + dt.timedelta(days=1)).isoformat(), 8, 0)
+        elif rm.hour < 8:
+            ready = msk(rm.date().isoformat(), 8, 0)
         txt = (f"<b>{e(q.get('title'))}</b>\n\n{e(q['text'])}\n\n<i>Фото: {e(q.get('source') or '')}</i>\n"
                f"<a href=\"{e(q.get('url'))}\">Источник: {e(q.get('source') or 'статья')}</a>")
-        out.append(dict(key=f"feed:{q['id']}", due=ready, expires=ready + dt.timedelta(hours=10), text=txt + FOOT, photo=q.get("image")))
+        out.append(dict(key=f"feed:{q['id']}", due=ready, expires=ready + dt.timedelta(hours=10), text=txt + FOOT, photo=q.get("image"),
+                        hot=bool(q.get("hot"))))
     # 8. Вечером передумали
     fin = D.get("final") or {}
     pf = p_final(D) if fin.get("t") else None
@@ -600,6 +607,8 @@ def build(D, A, M, E, S, N):
 
 
 import re  # noqa: E402
+
+FEED_CAP = 5  # новостей из ленты в день, кроме горячих (решение Льва 16.10)
 
 
 CONF = {"Atlantic": "E", "Metropolitan": "E", "Central": "W", "Pacific": "W"}
@@ -825,7 +834,12 @@ def main(mode, arg=None):
                and (not x.get("needs_tg") or tg_ready or late)]
         # дневные посты, у которых прошло больше 8 часов от срока, не догоняем
         due = [x for x in due if x.get("expires") or (now - x["due"]).total_seconds() < 8 * 3600]
-        due.sort(key=lambda x: x["due"])
+        # лента новостей: не больше FEED_CAP в день (по Москве); «горячие» и про россиян (hot) — вне лимита и первыми в очереди
+        today = now.astimezone(MSK).date()
+        fed = sum(1 for k, v in P.items() if k.startswith("feed:") and dt.datetime.fromisoformat(v.replace("Z", "+00:00")).astimezone(MSK).date() == today)
+        if fed >= FEED_CAP:
+            due = [x for x in due if not x["key"].startswith("feed:") or x.get("hot")]
+        due.sort(key=lambda x: (not x.get("hot"), x["due"]))
         if due:
             x = due[0]
             if x["key"].startswith("final:") or gap >= 20:
