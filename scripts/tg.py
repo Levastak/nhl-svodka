@@ -506,7 +506,13 @@ def main(mode, arg=None):
             except Exception as ex:
                 LOG["fail"].append(f"{mid}: {ex}"[:120])
     elif mode == "test":
-        # удаляем прошлые версии тех же постов и публикуем весь набор сразу
+        # удаляем прошлые версии тех же постов (и сообщения из arg: «2,3,4») и публикуем весь набор сразу
+        for mid in [int(v) for v in str(arg or "").split(",") if v.strip().isdigit()]:
+            try:
+                _call("deleteMessage", dict(chat_id=chat, message_id=mid))
+                LOG["ok"].append(f"удалено {mid}")
+            except Exception as ex:
+                LOG["fail"].append(f"удалить {mid}: {ex}"[:120])
         for x in items:
             for mid in MSG.get(x["key"], []):
                 try:

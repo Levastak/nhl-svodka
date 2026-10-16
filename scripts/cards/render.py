@@ -166,9 +166,21 @@ def card_number(spec, logos):
                 f'<div><h2>{e(spec.get("head") or "")}</h2>{who}</div></div>', c1=dark(c, .55))
 
 
+def bright(abbr):
+    """Цвет клуба, заметный на тёмном фоне: основной, если он не слишком тёмный, иначе второй, иначе серый."""
+    def lum(c):
+        c = c.lstrip("#")
+        r, g, b = (int(c[i:i + 2], 16) / 255 for i in (0, 2, 4))
+        return 0.2126 * r + 0.7152 * g + 0.0722 * b
+    for c in COLORS.get(abbr) or []:
+        if lum(c) > 0.12 and c.upper() != "#FFFFFF":
+            return c
+    return "#8C929C"
+
+
 def card_match(spec, logos):
     a, h = spec["away"], spec["home"]
-    ca, ch = (COLORS.get(a) or ["#30353E"])[0], (COLORS.get(h) or ["#30353E"])[0]
+    ca, ch = bright(a), bright(h)
     pa, ph = spec.get("p_away"), spec.get("p_home")
     badges = "".join(["",
                       f'<span class="badge g">Уверенный фаворит</span>' if spec.get("sure") else ""])

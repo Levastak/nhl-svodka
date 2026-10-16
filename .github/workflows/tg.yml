@@ -37,13 +37,14 @@ jobs:
           elif [ "${{ github.event_name }}" = "workflow_dispatch" ]; then M="${{ github.event.inputs.mode }}";
           else M=auto; fi
           echo "mode=${M:-auto}" >> $GITHUB_OUTPUT
+          if [ "${{ github.event_name }}" = "push" ]; then echo "arg=$(sed -n 3p trigger/tg | tr -d '[:space:]')" >> $GITHUB_OUTPUT; fi
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
       - name: Посты
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-        run: python3 scripts/tg.py ${{ steps.mode.outputs.mode }}
+        run: python3 scripts/tg.py ${{ steps.mode.outputs.mode }} ${{ steps.mode.outputs.arg }}
       - name: Сохранить отметки
         run: |
           git config user.name "svodka-bot"
