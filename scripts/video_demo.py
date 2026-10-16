@@ -45,7 +45,8 @@ SCENES = [
          sub="9 голов в 8 матчах сезона", say="Кирилл Капризов — гол и две передачи. У него уже девять голов в восьми матчах."),
     dict(kind="card", player="Ivan Barbashev", name="Иван Барбашёв", team="VGK", big="3", unit="голевые передачи",
          sub="в разгроме «Калгари» 6:2", say="Иван Барбашёв раздал три голевые в разгроме «Калгари»."),
-    dict(kind="cta", say="Вся статистика наших и прогнозы на каждый матч — на сайте эн-эйч-эл стэтс точка ру и в нашем телеграм-канале."),
+    dict(kind="cta", say="Вся статистика наших и прогнозы на каждый матч — на сайте эн-эйч-эл стэтс точка ру и в нашем телеграм-канале.",
+         show="Вся статистика наших и прогнозы на каждый матч — на NHL-STATS.RU и в нашем Telegram"),
 ]
 FONTS = os.path.join(ROOT, "scripts", "cards", "fonts")
 CSS = f"""@font-face{{font-family:G;src:url(file://{FONTS}/GolosText.ttf)}}@font-face{{font-family:F;src:url(file://{FONTS}/FiraSansExtraCondensed-ExtraBold.ttf);font-weight:800}}
@@ -64,7 +65,7 @@ def mark():
 
 def html_for(sc):
     brand = f'<div class="brand"><img src="{mark()}">NHL-STATS<span>.RU</span></div>'
-    sub = f'<div class="sub">{sc["say"]}</div>'
+    sub = f'<div class="sub">{sc.get("show") or sc["say"]}</div>'
     if sc["kind"] == "title":
         return f"""<style>{CSS}</style>{brand}<div style="position:absolute;left:60px;right:60px;top:620px;text-align:center">
 <div class="chip">ночь на 16 октября</div><h1 style="font-family:F;font-weight:800;font-size:190px;line-height:.92;margin-top:40px;text-shadow:0 10px 40px rgba(0,0,0,.6)">НАШИ<br><span style="color:#FF4A55">РВУТ</span><br>НХЛ</h1></div>"""
