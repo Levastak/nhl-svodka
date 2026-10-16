@@ -114,6 +114,20 @@ body{font-family:G,sans-serif;color:#EDEFF2;background:#0D0F12;position:relative
 .row .sc{position:relative;font-family:F;font-weight:800;font-size:calc(var(--fs)*1.2);text-align:center;white-space:nowrap;width:calc(var(--fs)*2.6);font-variant-numeric:tabular-nums}
 .row .sc small{position:absolute;left:100%;bottom:.12em;font-size:calc(var(--fs)*.6);color:#FF4A55;margin-left:4px}
 .legend{position:absolute;left:0;right:0;bottom:-44px;text-align:center;font-size:22px;color:#6A707A}
+/* счёт модели за неделю */
+.mw{display:flex;flex-direction:column;height:100%;gap:22px}
+.mw .tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.mw .tl{background:rgba(255,255,255,.06);border-radius:20px;padding:20px 22px}
+.mw .tl b{display:block;font-family:F;font-weight:800;font-size:76px;line-height:1}
+.mw .tl b i{font-style:normal;color:#8C929C;font-size:44px}
+.mw .tl span{font-size:24px;color:#A9AFB8}
+.mw h3{font-family:F;font-weight:800;font-size:34px;letter-spacing:.06em;text-transform:uppercase;color:#FF4A55;margin-top:6px}
+.mw .ms{display:flex;flex-direction:column;gap:10px}
+.mw .m{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:16px;align-items:center;background:rgba(255,255,255,.04);border-radius:14px;padding:10px 16px}
+.mw .m .lgs{display:flex;gap:4px}
+.mw .m b{font-family:F;font-weight:700;font-size:34px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mw .m small{display:block;font-size:22px;color:#A9AFB8}
+.mw .m em{font-style:normal;font-family:F;font-weight:800;font-size:40px}
 /* три звезды */
 .stars{display:grid;grid-template-columns:repeat(var(--n,3),minmax(0,1fr));gap:20px;height:100%}
 .sc3{border-radius:26px;overflow:hidden;background:#16191E;display:flex;flex-direction:column;border:1px solid rgba(255,255,255,.08)}
@@ -347,8 +361,21 @@ def card_russians(spec, logos):
     return page(f'<div class="ru" style="--fs:{fs}px;--h:{hsz}px">{"".join(out)}{rest}</div>', "Наши в <b>НХЛ</b>", spec.get("date", ""))
 
 
+def card_modelweek(spec, logos):
+    """Счёт модели за неделю: исходы, тоталы, против рынка и самые обидные промахи."""
+    def tl(k, lbl):
+        x = spec.get(k) or {}
+        return f'<div class="tl"><b>{x.get("hit", 0)}<i> из {x.get("n", 0)}</i></b><span>{e(lbl)}</span></div>' if x.get("n") else ""
+    ms = "".join(f'<div class="m"><span class="lgs">{logo(m["home"], logos, 56)}{logo(m["away"], logos, 56)}</span>'
+                 f'<div><b>{e(RU.get(m["home"]))} — {e(RU.get(m["away"]))}</b><small>{e(m["pick"])}</small></div><em>{e(m["score"])}</em></div>'
+                 for m in (spec.get("misses") or [])[:4])
+    body = (f'<div class="mw"><div class="tiles">{tl("win", "исходы угаданы")}{tl("total", "тоталы угаданы")}{tl("vs", "против рынка — права модель")}</div>'
+            + (f'<h3>Где ошиблась</h3><div class="ms">{ms}</div>' if ms else "") + '</div>')
+    return page(body, "Счёт <b>модели</b>", spec.get("date", ""))
+
+
 KINDS = {"russians": card_russians, "scores": card_scores, "stars": card_stars, "number": card_number, "match": card_match,
-         "column": card_column, "changes": card_changes}
+         "column": card_column, "changes": card_changes, "modelweek": card_modelweek}
 
 
 def render(specs, outdir, logos=None):

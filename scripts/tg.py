@@ -451,6 +451,32 @@ def build(D, A, M, E, S, N):
             txt = f"<b>Наши в НХЛ · {ru_date(rd)}</b>\n\n{e(body)}" + (f"\n\n<i>{e(rest_txt)}.</i>" if rest_txt else "") + f"\n\n👉 <b><a href=\"{URL}#rus\">Все россияне в НХЛ</a></b>"
             out.append(dict(key=f"rus:{rd}", due=msk(rd, 11, 30) + dt.timedelta(days=1), text=txt + FOOT, needs_tg=True,
                             specs=[dict(kind="russians", date=ru_date(rd), rows=rows, rest=rest_txt)]))
+    # 2в. По понедельникам — честный счёт модели за неделю (решение Льва 16.10): итог и самые обидные промахи, текст — Opus (tg.model_week)
+    wk = load(f"{SITE}/weekly.json", {}) or {}
+    if rd and wk.get("to") == rd and dt.date.fromisoformat(rd).weekday() == 6:
+        mod = wk.get("model") or {}
+        J = [x for x in D.get("journal") or [] if wk["from"] <= (x.get("date") or "") <= rd and x.get("type") in ("win", "total")]
+        misses = sorted([x for x in J if x.get("result") == "miss"], key=lambda x: (x.get("type") != "win", x.get("odds") or 9))
+        mrows = []
+        for x in misses[:4]:
+            as_, hs = (str(x.get("score") or ":").split(":") + [""])[:2]  # в журнале счёт «гости:хозяева»
+            pick = (f"Модель: победа «{RU.get(x['pick'], x['pick'])}»" if x["type"] == "win" else
+                    f"Модель: тотал {'больше' if x.get('side') == 'over' else 'меньше'} {num(x.get('line'))}")
+            pick += ", рынок тоже" if x.get("mkt_side") == x.get("side") else ", рынок был против"
+            mrows.append(dict(home=x["home"], away=x["away"], pick=pick, score=f"{hs}:{as_}"))
+        vs = mod.get("vs_market") or {}
+        if (mod.get("win") or {}).get("n"):
+            body = tgv(D, "model_week")
+            if not body:
+                w_, t_ = mod.get("win") or {}, mod.get("total") or {}
+                body = (f"За неделю модель угадала {w_.get('hit', 0)} {plural(w_.get('hit', 0), 'исход', 'исхода', 'исходов')} из {w_.get('n', 0)} "
+                        f"и {t_.get('hit', 0)} {plural(t_.get('hit', 0), 'тотал', 'тотала', 'тоталов')} из {t_.get('n', 0)}."
+                        + (f" В матчах, где она спорила с рынком, права оказалась в {vs.get('model', 0)} из {vs.get('n', 0)}." if vs.get("n") else ""))
+            txt = (f"<b>Счёт модели за неделю · {ru_date(wk['from'])} — {ru_date(rd)}</b>\n\n{e(body)}"
+                   f"\n\n👉 <b><a href=\"{URL}#picks\">Журнал всех прогнозов</a></b>")
+            out.append(dict(key=f"modelweek:{rd}", due=msk(rd, 16, 30) + dt.timedelta(days=1), text=txt + FOOT, needs_tg=True,
+                            specs=[dict(kind="modelweek", date=f"{ru_date(wk['from'])} — {ru_date(rd)}", win=mod.get("win"), total=mod.get("total"),
+                                        vs=dict(n=vs.get("n"), hit=vs.get("model")) if vs.get("n") else None, misses=mrows)]))
     # 3. Цифра дня — отдельной карточкой
     num_d = n.get("number") or {}
     f = ((E or {}).get("findings") or [None])[0]

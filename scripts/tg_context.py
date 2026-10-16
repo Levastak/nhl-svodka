@@ -109,6 +109,23 @@ def main():
         news=[dict(title=n.get("title"), summary=n.get("summary"), url=n.get("url"), time=n.get("time"), body=(n.get("body") or [])[:2]) for n in D.get("news") or []],
         column=arts[0] if arts else None, motd=D.get("motd"), games=games,
         skater_xg={}, tg_prev=prev_tg(rd))
+    # по понедельникам (results_date — воскресенье): честный счёт модели за неделю для tg.model_week
+    import datetime as _dt
+    W = load(f"{SITE}/weekly.json", {}) or {}
+    if rd and W.get("to") == rd and _dt.date.fromisoformat(rd).weekday() == 6:
+        ag = {g["id"]: g for g in A.get("games", [])}
+        byteams = {(g["date"], g["home"], g["away"]): g for g in A.get("games", [])}
+        J = [x for x in D.get("journal") or [] if W["from"] <= (x.get("date") or "") <= rd and x.get("type") in ("win", "total") and x.get("result") in ("hit", "miss")]
+        miss = []
+        for x in J:
+            if x["result"] != "miss":
+                continue
+            g = byteams.get((x["date"], x["home"], x["away"])) or {}
+            miss.append(dict(date=x["date"], home=x["home"], away=x["away"], type=x["type"], pick=x.get("pick"), side=x.get("side"), line=x.get("line"),
+                             market_agreed=x.get("mkt_side") == x.get("side"), odds=x.get("odds"), score_home_away=f"{g.get('hs')}:{g.get('as')}" if g else None,
+                             end=g.get("end"), sog_away_home=g.get("sog"), changed_evening=x.get("changed") or None))
+        ctx["model_week"] = dict(window=[W["from"], rd], score=W.get("model"), misses=miss,
+                                 note="score.vs_market: n — матчей, где модель спорила с рынком, model — сколько из них права модель")
     # xG и сезонная статистика — только по упомянутым игрокам
     blob = json.dumps(ctx, ensure_ascii=False)
     sk = {s["name"]: s for s in D.get("skaters") or []}
