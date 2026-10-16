@@ -190,6 +190,31 @@ def host(path):
         return None
 
 
+def send_video(chat, text, c):
+    """Скачать клипы (склеить, если несколько) и отправить видео с подписью."""
+    sys.path.insert(0, os.path.join(ROOT, "scripts"))
+    import media
+    if not media.tools(LOG):
+        raise RuntimeError("нет yt-dlp/ffmpeg")
+    wd = os.path.join(TG, "_video")
+    os.makedirs(wd, exist_ok=True)
+    files = [f for f in (media.clip(k["id"], wd) for k in c["clips"]) if f]
+    if not files:
+        raise RuntimeError("клипы не скачались")
+    path = files[0] if len(files) == 1 else media.concat(files, os.path.join(wd, f"cut_{c['clips'][0]['id']}.mp4"))
+    if not path:
+        raise RuntimeError("склейка не удалась")
+    if os.path.getsize(path) > 49 * 1024 * 1024:
+        raise RuntimeError(f"видео {os.path.getsize(path) // 1048576} МБ — больше лимита 50 МБ")
+    w, h, d = media.probe(path)
+    th = media.thumb(path, path + ".jpg")
+    files_up = {"video": path}
+    if th:
+        files_up["thumbnail"] = th
+    r = _call("sendVideo", dict(chat_id=chat, caption=text, parse_mode="HTML", supports_streaming="true", width=w, height=h, duration=d), files_up)
+    return [r["message_id"]]
+
+
 def discover():
     cfg = load(f"{TG}/config.json", {}) or {}
     ups = _call("getUpdates", dict(allowed_updates=["my_chat_member", "channel_post"]))
@@ -299,6 +324,23 @@ def match_note(gs, t):
     end = {"OT": " ОТ", "SO": " Б"}.get(g.get("end"), "")
     return (f"победа над «{RU_GEN.get(opp, opp)}» {mine}:{other}{end}" if mine > other
             else f"матч с «{RU_GEN.get(opp, opp)}», {mine}:{other}{end}")
+
+
+def col_photo(col, news):
+    """Фото к колонке: из статьи NHL.com о матче одного из героев колонки (по players, затем по клубам)."""
+    pl = col.get("players") or []
+    for name in pl:
+        for x in news:
+            if name in (x.get("players") or []) and x.get("image"):
+                return dict(photo=x["image"], photo_big=x["image"].replace("-size50/", "-size100/"), credit=x.get("image_source") or x.get("source") or "NHL.com")
+    for x in news:
+        if set(col.get("teams") or []) & set(x.get("teams") or []) and x.get("image"):
+            return dict(photo=x["image"], photo_big=x["image"].replace("-size50/", "-size100/"), credit=x.get("image_source") or x.get("source") or "NHL.com")
+    return {}
+
+
+def now_iso():
+    return dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
 def tgv(D, k, day=None):
@@ -444,7 +486,7 @@ def build(D, A, M, E, S, N):
         txt = f"<b>{e(kick)}. {e(col.get('title'))}</b>\n\n{e(body)}\n\n<a href=\"{URL}#a=col\">Читать полностью</a>"
         cday = dt.datetime.fromisoformat(str(col["time"]).replace("Z", "+00:00")).astimezone(MSK).date().isoformat()
         out.append(dict(key=f"col:{col.get('title')}", due=msk(cday, 15, 0), text=txt + FOOT, needs_tg=True,
-                        specs=[dict(kind="column", kicker=kick, title=col.get("title"), teams=col.get("teams"), date=ru_date(cday))]))
+                        specs=[dict(kind="column", kicker=kick, title=col.get("title"), teams=col.get("teams"), date=ru_date(cday), **col_photo(col, news))]))
     # 6. История — с обложкой
     s = (S or [None])[0]
     if s and s.get("time"):
@@ -514,6 +556,33 @@ def build(D, A, M, E, S, N):
                 first = min(dt.datetime.fromisoformat(u["start"].replace("Z", "+00:00")) for u in part)
                 out.append(dict(key=f"games:{ud}:{k}", due=min(base + dt.timedelta(minutes=45 * k), first - dt.timedelta(minutes=60)),
                                 expires=first, text=text + FOOT, specs=[spec_for(part[0], game_info(part[0], M))]))
+    # 7б. Видео ночи — официальные клипы НХЛ (склейка хет-трика, голы в ОТ и в концовке): 11:00, 14:30, 17:30
+    hl = D.get("highlights") or {}
+    if hl.get("date") == rd and rd:
+        vt = tgv(D, "videos", rd) or {}
+        slots = [(11, 0), (14, 30), (17, 30)]
+        for i, c in enumerate((hl.get("items") or [])[:3]):
+            who = N.full(c["player"])
+            g = next((g for g in A.get("games", []) if g.get("id") == c.get("game")), {})
+            opp = (g.get("away") if g.get("home") == c.get("team") else g.get("home")) if g else None
+            head_t = {"hattrick": f"Хет-трик: {who}", "ot_winner": f"Гол в овертайме: {who}",
+                      "late_equalizer": f"Спасение в концовке: {who}", "russian_goal": f"Гол: {who}"}.get(c["kind"], who)
+            body = vt.get(c["key"]) or {"hattrick": f"Все шайбы {N.last(c['player'])} в одном ролике — матч с «{RU_GEN.get(opp, opp)}».",
+                                        "ot_winner": f"Победный гол в овертайме в матче с «{RU_GEN.get(opp, opp)}».",
+                                        "late_equalizer": f"Сравнял счёт на {c['clips'][0].get('time')} третьего периода в матче с «{RU_GEN.get(opp, opp)}».",
+                                        "russian_goal": f"Гол в матче с «{RU_GEN.get(opp, opp)}»."}.get(c["kind"], "")
+            txt = f"<b>{e(head_t)}</b>\n\n{e(body)}\n\n<i>Видео: NHL</i>"
+            hh, mm = slots[i]
+            out.append(dict(key=c["key"], due=msk(rd, hh, mm) + dt.timedelta(days=1), expires=msk(rd, 23, 59) + dt.timedelta(days=1),
+                            text=txt + FOOT, video=c, needs_tg=True))
+    # 7в. Новости дня из ленты — очередь, которую пишет задача Claude (tg/news_queue.json)
+    for q in (load(f"{TG}/news_queue.json", {}) or {}).get("items", []):
+        if not q.get("id") or not q.get("text"):
+            continue
+        ready = dt.datetime.fromisoformat(str(q.get("ready") or q.get("time") or now_iso()).replace("Z", "+00:00"))
+        txt = (f"<b>{e(q.get('title'))}</b>\n\n{e(q['text'])}\n\n<i>Фото: {e(q.get('source') or '')}</i>\n"
+               f"<a href=\"{e(q.get('url'))}\">Источник: {e(q.get('source') or 'статья')}</a>")
+        out.append(dict(key=f"feed:{q['id']}", due=ready, expires=ready + dt.timedelta(hours=10), text=txt + FOOT, photo=q.get("image")))
     # 8. Вечером передумали
     fin = D.get("final") or {}
     pf = p_final(D) if fin.get("t") else None
@@ -584,6 +653,15 @@ def main(mode, arg=None):
     S = load(f"{SITE}/stories.json", []) or []
     S = sorted(S if isinstance(S, list) else S.get("stories", []), key=lambda x: str(x.get("time")), reverse=True)
     N = Names()
+    if mode in ("auto", "feed"):
+        fd = load(f"{TG}/feed.json", {}) or {}
+        age = (now - dt.datetime.fromisoformat(fd["t"].replace("Z", "+00:00"))).total_seconds() / 60 if fd.get("t") else 999
+        if mode == "feed" or (age >= 110 and 8 <= now.astimezone(MSK).hour <= 23):
+            sys.path.insert(0, os.path.join(ROOT, "scripts"))
+            import media
+            media.feed(LOG)
+        if mode == "feed":
+            return
     items = build(D, A, M, E, S, N)
     LOG["plan"] = [dict(key=x["key"], due=x["due"].astimezone(MSK).strftime("%d.%m %H:%M"), done=x["key"] in P) for x in items]
 
@@ -608,8 +686,11 @@ def main(mode, arg=None):
 
     def post(x):
         try:
-            imgs = cards([s for s in x.get("specs") or [] if s], D) if x.get("specs") else []
-            ids = send(chat, x["text"], images=imgs[:1], photo_url=None if imgs and imgs[0] else x.get("photo"))
+            if x.get("video"):
+                ids = send_video(chat, x["text"], x["video"])
+            else:
+                imgs = cards([s for s in x.get("specs") or [] if s], D) if x.get("specs") else []
+                ids = send(chat, x["text"], images=imgs[:1], photo_url=None if imgs and imgs[0] else x.get("photo"))
             P[x["key"]] = LOG["t"]
             MSG[x["key"]] = ids
             state["last_post"] = dt.datetime.now(dt.timezone.utc).isoformat()

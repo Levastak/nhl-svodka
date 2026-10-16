@@ -668,6 +668,11 @@ def am():
     edge_run(yesterday)
     weekly_run()
     preview_data(data)
+    try:
+        import media
+        media.highlights(get, data, archive, yesterday, LOG)
+    except Exception as ex:
+        LOG["fail"].append(f"highlights: {ex!r}"[:200])
     save(f"{SITE}/data.json", data)
     data["fetch"] = dict(mode="am", t=iso(), ok=LOG["ok"], fail=LOG["fail"])
     save(f"{SITE}/data.json", data)
@@ -1113,6 +1118,13 @@ if __name__ == "__main__":
         sys.exit(0)
     if mode == "week":
         weekly_run()
+        print(json.dumps(LOG, ensure_ascii=False))
+        sys.exit(0)
+    if mode == "highlights":
+        import media
+        d = load(f"{SITE}/data.json", {})
+        media.highlights(get, d, load(f"{SITE}/archive.json", {"games": []}), d.get("results_date"), LOG)
+        save(f"{SITE}/data.json", d)
         print(json.dumps(LOG, ensure_ascii=False))
         sys.exit(0)
     if mode == "preview":

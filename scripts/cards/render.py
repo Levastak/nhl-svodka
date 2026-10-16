@@ -170,6 +170,12 @@ body{font-family:G,sans-serif;color:#EDEFF2;background:#0D0F12;position:relative
 .col{display:flex;flex-direction:column;height:100%;justify-content:center;gap:52px}
 .col h1{font-family:F;font-weight:800;line-height:1.02;text-wrap:balance}
 .col .lgs{display:flex;gap:28px}
+/* колонка с фото */
+.phbg{position:absolute;inset:0;background-size:cover;background-position:50% 30%}
+.phbg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(13,15,18,.55) 0%,rgba(13,15,18,.05) 28%,rgba(13,15,18,.35) 52%,rgba(13,15,18,.96) 82%,#0D0F12 100%)}
+.colp{display:flex;flex-direction:column;height:100%;justify-content:flex-end;gap:22px;padding-bottom:10px}
+.colp h1{font-family:F;font-weight:800;line-height:1.02;text-wrap:balance;text-shadow:0 3px 18px rgba(0,0,0,.5)}
+.colp .cr{font-size:20px;color:#8C929C}
 /* изменения */
 .chg{display:flex;flex-direction:column;gap:20px;height:100%;justify-content:center}
 .chg .it{display:flex;flex-direction:column;gap:12px;background:rgba(255,255,255,.06);border-radius:20px;padding:24px 28px}
@@ -263,9 +269,14 @@ def card_match(spec, logos):
 
 def card_column(spec, logos):
     ts = spec.get("teams") or []
+    title = spec["title"]
+    if spec.get("photo"):
+        fs = 84 if len(title) <= 50 else 72 if len(title) <= 80 else 62
+        doc = page(f'<div class="colp"><h1 style="font-size:{fs}px">{e(title)}</h1><div class="cr">Фото: {e(spec.get("credit") or "NHL.com")}</div></div>',
+                   e(spec.get("kicker", "Колонка")), spec.get("date", ""))
+        return doc.replace('<div class="bg"></div>', f'<div class="bg"></div><div class="phbg" style="background-image:url(\'{e(spec.get("photo_big") or spec["photo"])}\'),url(\'{e(spec["photo"])}\')"></div>', 1)
     c1 = dark(main_c(ts[0])) if ts else "#1a1f27"
     c2 = dark(main_c(ts[1])) if len(ts) > 1 else c1
-    title = spec["title"]
     fs = 96 if len(title) <= 50 else 82 if len(title) <= 80 else 68
     lgs = "".join(logo(t, logos, 170) for t in ts[:2])
     return page(f'<div class="col"><h1 style="font-size:{fs}px">{e(title)}</h1><div class="lgs">{lgs}</div></div>',
