@@ -131,7 +131,7 @@ def stage2(preset="nashi"):
     render_pngs()
     ids = {c for sc in SCENES for c, _, _ in sc.get("cuts", [])} | (set(CLIPS) if not P['scenes'] else set()) | ({P['title_bg'][0]} if P['scenes'] else set())
     clips = {cid: media.clip(cid, TMP) for cid in ids}
-    clips.update({i: clips[cid] for i, cid in enumerate(CLIPS)})
+    clips.update({i: clips[cid] for i, cid in enumerate(CLIPS) if cid in clips})
     segs, auds = [], []
     for i, sc in enumerate(SCENES):
         a = f"{TMP}/a{i}.mp3"
