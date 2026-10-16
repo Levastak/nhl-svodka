@@ -99,11 +99,24 @@ PRESETS = {
         dict(kind="video", len=2.4, chip="Гол 9/9 · «Сент-Луис»", hook="Гол <b>№ 9</b>", cuts=[(6406938424112, 34.9, 2.4, {'slow': 1.5, 'flash': 1, 'z0': 1.05, 'z': 1.3, 'shake': 0.25, 'cx': 0.45})]),
         dict(kind="cta", len=2.6, hook="<b>Лучший снайпер</b> НХЛ — наш.<br>Сколько забьёт за сезон?", say=""),
     ]),
+    "kap9c": dict(silent=True, fill=True, title_bg=(6406938424112, 45.5), out="kaprizov_9_v3.mp4", scenes=[
+        dict(kind="video", len=2.0, hook="<b>9 голов</b><br>за 8 матчей", cuts=[(6406938424112, 45.5, 2.0, dict(cx=.45, z0=1.0, z=1.12))]),
+        dict(kind="video", len=3.35, count=(1, 9, "vs Нэшвилл"), hook="Подставил<br><b>клюшку</b>", cuts=[(6406080640112, 34.4, 2.25, {'cx': 0.58, 'cx2': 0.58, 'slow': 1.25, 'flash': 1, 'z0': 1.08, 'z': 1.28, 'shake': 0.22}), (6406080640112, 13.5, 1.1, {'cx': 0.5, 'z0': 1.0, 'z': 1.1})]),
+        dict(kind="video", len=3.73, count=(2, 9, "vs Бостон"), hook="В <b>большинстве</b>", cuts=[(6406192865112, 35.8, 2.63, {'cx': 0.45, 'cx2': 0.6, 'slow': 1.25, 'flash': 1, 'z0': 1.08, 'z': 1.28, 'shake': 0.22}), (6406192865112, 15.0, 1.1, {'cx': 0.4, 'z0': 1.0, 'z': 1.1})]),
+        dict(kind="video", len=3.85, count=(3, 9, "vs Бостон"), hook="Дубль<br><b>с бэкхенда</b>", cuts=[(6406196705112, 30.6, 2.75, {'cx': 0.55, 'cx2': 0.45, 'slow': 1.25, 'flash': 1, 'z0': 1.08, 'z': 1.28, 'shake': 0.22}), (6406196705112, 12.6, 1.1, {'cx': 0.5, 'z0': 1.0, 'z': 1.1})]),
+        dict(kind="video", len=3.6, count=(4, 9, "vs Флорида"), hook="<b>Щелчок</b><br>в большинстве", cuts=[(6406619102112, 32.2, 2.5, {'cx': 0.6, 'cx2': 0.5, 'slow': 1.25, 'flash': 1, 'z0': 1.08, 'z': 1.28, 'shake': 0.22}), (6406619102112, 17.4, 1.1, {'cx': 0.5, 'z0': 1.0, 'z': 1.1})]),
+        dict(kind="video", len=3.73, count=(5, 9, "vs Флорида"), hook="Второй<br><b>за вечер</b>", cuts=[(6406620824112, 32.4, 2.63, {'cx': 0.5, 'cx2': 0.45, 'slow': 1.25, 'flash': 1, 'z0': 1.08, 'z': 1.28, 'shake': 0.22}), (6406620824112, 12.0, 1.1, {'cx': 0.5, 'z0': 1.0, 'z': 1.1})]),
+        dict(kind="video", len=3.1, count=(6, 9, "vs Флорида"), hook="<b>ХЕТ-ТРИК</b>", cuts=[(6406624192112, 10.6, 2.0, {'cx': 0.5, 'cx2': 0.5, 'slow': 1.25, 'flash': 1, 'z0': 1.08, 'z': 1.6, 'shake': 0.22}), (6406624192112, 18.9, 1.1, {'cx': 0.5, 'z0': 1.0, 'z': 1.1})]),
+        dict(kind="video", len=3.47, count=(7, 9, "vs Виннипег"), hook="Сбил шайбу<br><b>с воздуха</b>", cuts=[(6406805779112, 28.8, 2.37, {'cx': 0.6, 'cx2': 0.6, 'slow': 1.25, 'flash': 1, 'z0': 1.08, 'z': 1.28, 'shake': 0.22}), (6406805779112, 9.3, 1.1, {'cx': 0.6, 'z0': 1.0, 'z': 1.1})]),
+        dict(kind="video", len=3.6, count=(8, 9, "vs Виннипег"), hook="И снова<br><b>у ворот</b>", cuts=[(6406809088112, 39.9, 2.5, {'cx': 0.55, 'cx2': 0.55, 'slow': 1.25, 'flash': 1, 'z0': 1.08, 'z': 1.28, 'shake': 0.22}), (6406809088112, 18.1, 1.1, {'cx': 0.5, 'z0': 1.0, 'z': 1.1})]),
+        dict(kind="video", len=3.57, count=(9, 9, "vs Сент-Луис"), hook="Гол <b>№ 9</b>", cuts=[(6406938424112, 34.4, 2.37, {'cx': 0.45, 'cx2': 0.4, 'slow': 1.25, 'flash': 1, 'z0': 1.08, 'z': 1.28, 'shake': 0.22}), (6406938424112, 44.2, 1.2, {'cx': 0.45, 'z0': 1.0, 'z': 1.1})]),
+        dict(kind="cta", len=2.6, hook="<b>Лучший снайпер</b> НХЛ — наш.<br>Сколько забьёт за сезон?", say=""),
+    ]),
 }
 FONTS = os.path.join(ROOT, "scripts", "cards", "fonts")
 CSS = f"""@font-face{{font-family:G;src:url(file://{FONTS}/GolosText.ttf)}}@font-face{{font-family:F;src:url(file://{FONTS}/FiraSansExtraCondensed-ExtraBold.ttf);font-weight:800}}
 *{{margin:0;padding:0;box-sizing:border-box}}html,body{{width:{W}px;height:{H}px;overflow:hidden;background:transparent;font-family:G;color:#fff}}
-.brand{{position:absolute;left:60px;top:70px;display:flex;align-items:center;gap:16px;font-family:F;font-weight:800;font-size:44px;letter-spacing:.03em;text-shadow:0 4px 18px rgba(0,0,0,.6)}}
+.brand{{position:absolute;left:60px;top:70px;display:flex;align-items:center;gap:16px;font-family:F;font-weight:800;font-size:44px;letter-spacing:.03em;text-shadow:0 4px 18px rgba(0,0,0,.6);-webkit-text-stroke:2px #000;paint-order:stroke fill}}
 .brand img{{width:68px;height:68px}}.brand span{{color:#FF4A55}}
 .sub{{position:absolute;left:60px;right:60px;bottom:230px;font-family:F;font-weight:800;font-size:58px;line-height:1.12;text-align:center;
   background:rgba(11,13,17,.72);border-radius:24px;padding:22px 30px;text-wrap:balance}}
@@ -124,7 +137,15 @@ def html_for(sc):
         return f"""<style>{CSS}</style>{brand}<div style="position:absolute;left:60px;right:60px;top:620px;text-align:center">
 <div class="chip">{sc.get('chip_t', 'ночь на 16 октября')}</div><h1 style="font-family:F;font-weight:800;font-size:{sc.get('fs', 190)}px;line-height:.92;margin-top:40px;text-shadow:0 10px 40px rgba(0,0,0,.6)">{sc.get('lines', 'НАШИ<br><span style="color:#FF4A55">РВУТ</span><br>НХЛ')}</h1></div>"""
     if sc["kind"] == "video" and not sc.get("name"):
-        return f"""<style>{CSS}</style>{brand}{f'<div style="position:absolute;left:0;right:0;top:330px;text-align:center"><span class="chip">{sc["chip"]}</span></div>' if sc.get("chip") else ""}{sub}"""
+        cnt = ""
+        if sc.get("count"):
+            n, tot, opp = sc["count"]
+            cnt = (f'<div style="position:absolute;right:56px;top:46px;text-align:right;font-family:F;font-weight:800;line-height:.86;'
+                   f'text-shadow:0 0 2px #000,0 6px 0 #000,0 10px 40px rgba(0,0,0,.8);-webkit-text-stroke:3px #000;paint-order:stroke fill">'
+                   f'<span style="font-size:190px;color:#FFD23F">{n}</span><span style="font-size:84px">/{tot}</span>'
+                   f'<div style="font-size:40px;letter-spacing:.06em;text-transform:uppercase;margin-top:8px;-webkit-text-stroke:2px #000">{opp}</div></div>')
+        chip = f'<div style="position:absolute;left:0;right:0;top:330px;text-align:center"><span class="chip">{sc["chip"]}</span></div>' if sc.get("chip") else ""
+        return f"""<style>{CSS}</style>{brand}{chip}{cnt}{sub}"""
     if sc["kind"] == "video":
         return f"""<style>{CSS}</style>{brand}<div style="position:absolute;left:60px;right:60px;top:330px;text-align:center"><span class="chip">{sc['chip']}</span>
 <div style="font-family:F;font-weight:800;font-size:96px;margin-top:22px;text-shadow:0 6px 24px rgba(0,0,0,.7)">{sc['name']}</div>
