@@ -4,7 +4,7 @@
 отсекает уже написанное, уже вышедшее в канал, утренние новости сайта и пересказы матчей без рекордов и травм;
 находит в заголовке, описании и тегах игроков (россиян, звёзд) и клубы; ставит уровень приоритета (решение Льва 16.10):
 1 — россияне, 2 — звёзды и решения лиги/тренеры, 3 — клубы первой восьмёрки конференции, 4 — остальное.
-status: "empty" — новых нет; "cap" — дневной лимит канала выбран и нет кандидатов 1-го уровня; "ok" — можно писать.
+status: "empty" — новых нет; "site" — дневной лимит канала выбран и нет кандидатов 1-го уровня: новости пишутся только для сайта (tg = false); "ok" — можно писать.
 Запускается самой задачей первым шагом, сеть не нужна.
 """
 import datetime as dt
@@ -57,7 +57,7 @@ def main():
     hotq = {f"feed:{q.get('id')}" for q in queue if q.get("hot")}
     fed_today = sum(1 for k, v in P.items() if k.startswith("feed:") and k not in hotq
                     and dt.datetime.fromisoformat(v.replace("Z", "+00:00")).astimezone(MSK).date() == today)
-    queued = [q for q in queue if f"feed:{q.get('id')}" not in P]  # написаны, но ещё не вышли
+    queued = [q for q in queue if f"feed:{q.get('id')}" not in P and q.get('tg') is not False and not q.get('hot')]  # ждут выхода в канал и едят лимит
 
     # кто есть кто
     rus = {x["name"] for x in D.get("russians") or []}
@@ -123,7 +123,7 @@ def main():
     if not cands:
         status = "empty"
     elif left <= 0 and not any(c["tier"] == 1 or c.get("maybe_hot") and c["tier"] <= 2 for c in cands):
-        status = "cap"
+        status = "site"  # канал на сегодня полон — пишем только для сайта (tg = false)
     else:
         status = "ok"
     out = dict(t=now.strftime("%Y-%m-%dT%H:%M:%SZ"), status=status, cap=FEED_CAP, posted_today=fed_today, queued_not_posted=len(queued),

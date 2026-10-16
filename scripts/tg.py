@@ -617,7 +617,7 @@ def build(D, A, M, E, S, N):
                             text=txt + FOOT, video=c, needs_tg=True))
     # 7в. Новости дня из ленты — очередь, которую пишет задача Claude (tg/news_queue.json)
     for q in (load(f"{TG}/news_queue.json", {}) or {}).get("items", []):
-        if not q.get("id") or not q.get("text"):
+        if not q.get("id") or not q.get("text") or q.get("tg") is False:  # tg = false — только для сайта
             continue
         ready = dt.datetime.fromisoformat(str(q.get("ready") or q.get("time") or now_iso()).replace("Z", "+00:00"))
         # тихие часы ленты: с 23:00 до 08:00 по Москве новости ждут утра
