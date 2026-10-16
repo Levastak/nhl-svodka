@@ -1,7 +1,28 @@
 {
- "len": 26.232993,
+ "len": 30.6,
  "log": {
   "ok": [],
-  "fail": []
+  "fail": [
+   [
+    "edge-tts --voice ru-RU-DmitryNeural --rate=+12% --pitch=+6Hz --text \"Апрель двад",
+    "  async for message in self.__stream():\n  File \"/opt/hostedtoolcache/Python/3.12.15/x64/lib/python3.12/site-packages/edge_tts/communicate.py\", line 562, in __stream\n    raise NoAudioReceived(\nedge_tts.exceptions.NoAudioReceived: No audio was received. Please verify that your parameters are correct.\n"
+   ],
+   [
+    "edge-tts --voice ru-RU-DmitryNeural --rate=+12% --pitch=+6Hz --text \"И играет он",
+    "  async for message in self.__stream():\n  File \"/opt/hostedtoolcache/Python/3.12.15/x64/lib/python3.12/site-packages/edge_tts/communicate.py\", line 562, in __stream\n    raise NoAudioReceived(\nedge_tts.exceptions.NoAudioReceived: No audio was received. Please verify that your parameters are correct.\n"
+   ],
+   [
+    "edge-tts --voice ru-RU-DmitryNeural --rate=+12% --pitch=+6Hz --text \"И играет он",
+    "  async for message in self.__stream():\n  File \"/opt/hostedtoolcache/Python/3.12.15/x64/lib/python3.12/site-packages/edge_tts/communicate.py\", line 562, in __stream\n    raise NoAudioReceived(\nedge_tts.exceptions.NoAudioReceived: No audio was received. Please verify that your parameters are correct.\n"
+   ],
+   [
+    "edge-tts --voice ru-RU-DmitryNeural --rate=+12% --pitch=+6Hz --text \"И играет он",
+    "  async for message in self.__stream():\n  File \"/opt/hostedtoolcache/Python/3.12.15/x64/lib/python3.12/site-packages/edge_tts/communicate.py\", line 562, in __stream\n    raise NoAudioReceived(\nedge_tts.exceptions.NoAudioReceived: No audio was received. Please verify that your parameters are correct.\n"
+   ],
+   [
+    "edge-tts --voice ru-RU-DmitryNeural --rate=+12% --pitch=+6Hz --text \"Следим за к",
+    "  async for message in self.__stream():\n  File \"/opt/hostedtoolcache/Python/3.12.15/x64/lib/python3.12/site-packages/edge_tts/communicate.py\", line 562, in __stream\n    raise NoAudioReceived(\nedge_tts.exceptions.NoAudioReceived: No audio was received. Please verify that your parameters are correct.\n"
+   ]
+  ]
  }
 }
