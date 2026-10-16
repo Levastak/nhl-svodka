@@ -787,6 +787,11 @@ def main(mode, arg=None):
         LOG["ok"].append(f"превью: {sum(1 for p in out if p)} карточек, {len(items)} постов")
         return
 
+    if mode == "texts":
+        # для задачи правок: тексты всех постов текущего дня в HTML (ничего не постит, сеть не нужна)
+        save(f"{TG}/post_texts.json", [dict(key=x["key"], message_id=(MSG.get(x["key"]) or [None])[0], text=x["text"]) for x in items])
+        return
+
     cfg = load(f"{TG}/config.json", {}) or {}
     if mode == "discover" or not cfg.get("chat_id"):
         cfg = discover()
@@ -890,6 +895,10 @@ def main(mode, arg=None):
                 continue
             post(x)
     else:
+        inbox(cfg, state, MSG)
+        apply_edits(chat, MSG, cfg)
+        if state.get("paused"):
+            LOG["ok"].append("канал на паузе (/pause) — посты не выходят")
         last = state.get("last_post")
         gap = (now - dt.datetime.fromisoformat(last)).total_seconds() / 60 if last else 999
         tg_ready = (D.get("tg") or {}).get("date") == D.get("results_date")
@@ -904,7 +913,7 @@ def main(mode, arg=None):
         if fed >= FEED_CAP:
             due = [x for x in due if not x["key"].startswith("feed:") or x.get("hot")]
         due.sort(key=lambda x: (not x.get("hot"), x["due"]))
-        if due:
+        if due and not state.get("paused"):
             x = due[0]
             if x["key"].startswith("final:") or gap >= 20:
                 post(x)
@@ -912,6 +921,112 @@ def main(mode, arg=None):
     state["posted"] = {k: v for k, v in P.items() if v[:10] >= cut}
     state["messages"] = {k: v for k, v in MSG.items() if k in state["posted"]}
     save(f"{TG}/state.json", state)
+
+
+# ---------------------------------------------------------------- пульт Льва в личке бота (решение 16.10)
+def _admin_send(cfg, text):
+    if cfg.get("admin_chat_id"):
+        try:
+            _call("sendMessage", dict(chat_id=cfg["admin_chat_id"], text=text, parse_mode="HTML", link_preview_options={"is_disabled": True}))
+        except Exception as ex:
+            LOG["fail"].append(f"ответ Льву: {ex}"[:150])
+
+
+def inbox(cfg, state, MSG):
+    """Личка бота: Лев пересылает кривой пост из канала с комментарием «что поправить» — заявка уходит в tg/edit_requests.json,
+    её через час подхватывает задача Claude «Сводка НХЛ: правки канала». Команды: /pause, /resume, /status, /delete (ответом на пересланный пост)."""
+    admin = cfg.get("admin_chat_id")
+    if not admin:
+        return
+    try:
+        ups = _call("getUpdates", dict(offset=state.get("upd_offset", 0), allowed_updates=["message"], timeout=0))
+    except Exception as ex:
+        LOG["fail"].append(f"личка бота: {ex}"[:150])
+        return
+    if not ups:
+        return
+    state["upd_offset"] = ups[-1]["update_id"] + 1
+    msgs = [u["message"] for u in ups if (u.get("message") or {}).get("chat", {}).get("id") == admin]
+    key_of = {v[0]: k for k, v in MSG.items() if v}
+    req_p = f"{TG}/edit_requests.json"
+    reqs = load(req_p, {"items": []}) or {"items": []}
+    pending_fwd = None
+    for i, m in enumerate(msgs):
+        txt = (m.get("text") or m.get("caption") or "").strip()
+        fo = m.get("forward_origin") or {}
+        if fo.get("type") == "channel":
+            mid = fo.get("message_id")
+            # комментарий Telegram присылает отдельным сообщением рядом с пересланным
+            note = ""
+            for j in (i - 1, i + 1):
+                if 0 <= j < len(msgs) and not msgs[j].get("forward_origin") and abs(msgs[j]["date"] - m["date"]) <= 120:
+                    note = (msgs[j].get("text") or "").strip()
+            pending_fwd = mid
+            if note.lower().startswith(("/delete", "удали")):
+                try:
+                    _call("deleteMessage", dict(chat_id=cfg["chat_id"], message_id=mid))
+                    _admin_send(cfg, f"Удалил пост {mid}.")
+                except Exception as ex:
+                    _admin_send(cfg, f"Не смог удалить {mid}: {html.escape(str(ex))[:200]}")
+                continue
+            reqs["items"].append(dict(message_id=mid, key=key_of.get(mid), note=note, text=txt[:4000],
+                                      time=dt.datetime.fromtimestamp(m["date"], dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"), status="new"))
+            _admin_send(cfg, "Принял: " + (f"«{html.escape(note[:200])}»" if note else "без комментария — поправлю очевидное") +
+                        ". Задача правок подхватит в течение часа и отредактирует пост на месте.")
+        elif txt.startswith("/pause"):
+            state["paused"] = True
+            _admin_send(cfg, "Канал на паузе: новые посты не выходят. /resume — продолжить.")
+        elif txt.startswith("/resume"):
+            state["paused"] = False
+            _admin_send(cfg, "Продолжаю публикации.")
+        elif txt.startswith("/status"):
+            today = dt.datetime.now(MSK).date()
+            done = [k for k, v in (state.get("posted") or {}).items()
+                    if dt.datetime.fromisoformat(v.replace("Z", "+00:00")).astimezone(MSK).date() == today]
+            _admin_send(cfg, f"Сегодня вышло постов: {len(done)}" + (" · канал на паузе" if state.get("paused") else "") +
+                        f"\nЗаявок на правку в работе: {sum(1 for r in reqs['items'] if r.get('status') == 'new')}")
+        elif txt.startswith("/delete") and pending_fwd:
+            try:
+                _call("deleteMessage", dict(chat_id=cfg["chat_id"], message_id=pending_fwd))
+                _admin_send(cfg, f"Удалил пост {pending_fwd}.")
+            except Exception as ex:
+                _admin_send(cfg, f"Не смог удалить: {html.escape(str(ex))[:200]}")
+        elif txt and not any(x.get("forward_origin") and abs(m["date"] - x["date"]) <= 120 for x in msgs):
+            _admin_send(cfg, "Чтобы поправить пост — перешли его сюда из канала и одним сообщением напиши, что не так. "
+                             "Команды: /status, /pause, /resume; «удали» с пересланным постом — удалить.")
+    reqs["items"] = reqs["items"][-50:]
+    save(req_p, reqs)
+
+
+def apply_edits(chat, MSG, cfg=None):
+    """Готовые правки от задачи Claude (tg/edits.json: message_id, text — HTML поста целиком, status ready) — правим пост на месте."""
+    p = f"{TG}/edits.json"
+    ed = load(p, {"items": []}) or {"items": []}
+    changed = False
+    for x in ed.get("items", []):
+        if x.get("status") != "ready":
+            continue
+        mid, text = x.get("message_id"), x.get("text") or ""
+        try:
+            try:
+                _call("editMessageCaption", dict(chat_id=chat, message_id=mid, caption=text, parse_mode="HTML"))
+            except Exception as ex:
+                if "no caption" in str(ex).lower() or "there is no" in str(ex).lower():
+                    _call("editMessageText", dict(chat_id=chat, message_id=mid, text=text, parse_mode="HTML"))
+                elif "not modified" not in str(ex).lower():
+                    raise
+            x["status"] = "done"
+            LOG["ok"].append(f"пост {mid} поправлен")
+            if cfg:
+                _admin_send(cfg, f"Поправил пост {mid}" + (f": {html.escape(x.get('summary', ''))[:300]}" if x.get("summary") else "."))
+        except Exception as ex:
+            x["status"] = "error"
+            x["error"] = str(ex)[:200]
+            LOG["fail"].append(f"правка {mid}: {ex}"[:200])
+        changed = True
+    if changed:
+        ed["items"] = ed["items"][-50:]
+        save(p, ed)
 
 
 # ---------------------------------------------------------------- оповещения Льву о сбоях (решение 16.10)
