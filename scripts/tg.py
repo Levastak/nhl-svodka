@@ -698,7 +698,22 @@ def main(mode, arg=None):
         except Exception as ex:
             LOG["fail"].append(f"{x['key']}: {ex}"[:300])
 
-    if mode == "cleanup":
+    if mode == "pin":
+        # закреп: картинка tg/pin.png с подписью tg/pin.html, затем попытка закрепить
+        try:
+            txt = open(f"{TG}/pin.html", encoding="utf-8").read().strip()
+            r = _call("sendPhoto", dict(chat_id=chat, caption=txt, parse_mode="HTML"), {"photo": f"{TG}/pin.png"})
+            MSG["pin"] = [r["message_id"]]
+            P["pin"] = LOG["t"]
+            LOG["ok"].append(f"закреп отправлен: {r['message_id']}")
+            try:
+                _call("pinChatMessage", dict(chat_id=chat, message_id=r["message_id"], disable_notification="true"))
+                LOG["ok"].append("закреплено")
+            except Exception as ex:
+                LOG["fail"].append(f"закрепить не вышло: {ex}"[:200])
+        except Exception as ex:
+            LOG["fail"].append(f"закреп: {ex}"[:300])
+    elif mode == "cleanup":
         for mid in [int(v) for v in str(arg or "").split(",") if v.strip().isdigit()]:
             try:
                 _call("deleteMessage", dict(chat_id=chat, message_id=mid))
