@@ -152,5 +152,48 @@ def stage2():
         sh(f"cp {TMP}/s{i}.png {OUT}/overlay_{i}.png")
     json.dump(dict(len=dur(f"{OUT}/nashi_rvut_nhl.mp4"), log=LOG), open(f"{OUT}/stage2.json", "w"), ensure_ascii=False, indent=1)
 
+def stage3():
+    """Клипы Капризова и передач Барбашёва (gamecenter) + контактные листы; пробы голосов."""
+    media.tools(LOG)
+    import urllib.request
+    want = {2026020116: [("Kaprizov", "08:47")], 2026020118: [("Bowman", "11:03"), ("Stone", "01:06"), ("Stone", "12:10")]}
+    found = {}
+    for gid, goals in want.items():
+        land = json.loads(urllib.request.urlopen(urllib.request.Request(f"https://api-web.nhle.com/v1/gamecenter/{gid}/landing", headers={"User-Agent": "Mozilla/5.0"}), timeout=60).read())
+        for per in (land.get("summary") or {}).get("scoring") or []:
+            for x in per.get("goals") or []:
+                ln = (x.get("lastName") or {}).get("default")
+                for who, t in goals:
+                    if ln == who and x.get("timeInPeriod") == t and x.get("highlightClip"):
+                        found[f"{who}_{t.replace(':', '')}"] = x["highlightClip"]
+    info = {}
+    for k, cid in found.items():
+        fn = media.clip(cid, TMP)
+        if not fn:
+            continue
+        w, h, d = media.probe(fn)
+        info[k] = dict(id=cid, d=d)
+        sh(f"ffmpeg -y -loglevel error -i {fn} -vf \"fps=1,scale=320:-2,drawtext=text='%{{pts\\:hms}}':x=6:y=6:fontsize=22:fontcolor=yellow:box=1:boxcolor=black,tile=6x{(d // 6) + 1}\" -frames:v 1 {OUT}/sheet_{k}.jpg")
+    sh("pip install -q edge-tts")
+    txt = "Наши рвут НХЛ! Кирилл Марченко оформил первый хет-трик за «Торонто»."
+    for v, r, pch in [("ru-RU-DmitryNeural", "+18%", "+6Hz"), ("ru-RU-DmitryNeural", "+25%", "+12Hz"), ("ru-RU-SvetlanaNeural", "+15%", "+4Hz"), ("ru-RU-DariyaNeural", "+15%", "+4Hz")]:
+        sh(f"edge-tts --voice {v} --rate={r} --pitch={pch} --text \"{txt}\" --write-media {OUT}/voice_{v.split('-')[2]}_{r[1:-1]}.mp3")
+    # Silero (офлайн, русские голоса)
+    sh("pip install -q torch --index-url https://download.pytorch.org/whl/cpu && pip install -q omegaconf", 900)
+    try:
+        import torch
+        m, _ = torch.hub.load("snakers4/silero-models", "silero_tts", language="ru", speaker="v4_ru")
+        for spk in ("eugene", "aidar", "xenia"):
+            a = m.apply_tts(text=txt, speaker=spk, sample_rate=48000)
+            import wave, numpy as np
+            pcm = (a.numpy() * 32767).astype("int16")
+            with wave.open(f"{TMP}/sil_{spk}.wav", "wb") as w:
+                w.setnchannels(1); w.setsampwidth(2); w.setframerate(48000); w.writeframes(pcm.tobytes())
+            sh(f"ffmpeg -y -loglevel error -i {TMP}/sil_{spk}.wav -b:a 96k {OUT}/voice_silero_{spk}.mp3")
+    except Exception as ex:
+        LOG["fail"].append(f"silero: {ex!r}"[:200])
+    json.dump(dict(info=info, log=LOG), open(f"{OUT}/stage3.json", "w"), ensure_ascii=False, indent=1)
+
+
 if __name__ == "__main__":
-    {"stage1": stage1, "stage2": stage2}[sys.argv[1] if len(sys.argv) > 1 else "stage1"]()
+    {"stage1": stage1, "stage2": stage2, "stage3": stage3}[sys.argv[1] if len(sys.argv) > 1 else "stage1"]()
