@@ -301,13 +301,19 @@ def dfo_team(t):
     order = {"lw": 0, "c": 1, "rw": 2, "ld": 0, "rd": 1, "g1": 0, "g2": 1, "sk1": 0, "sk2": 1, "sk3": 2, "sk4": 3, "sk5": 4}
     def names(g):
         return [p["name"] for p in sorted(by.get(g, []), key=lambda p: order.get(p.get("positionIdentifier"), 9))]
-    inj = []
+    # Игрок стоит в составе DailyFaceoff в нескольких группах (звено, большинство 1/2, травмы) — по разу в каждой.
+    # Одна запись на игрока, с самым строгим статусом: LTIR > IR > Out > DTD.
+    sev = {"LTIR": 4, "IR": 3, "Out": 2, "DTD": 1}
+    best = {}
     for p in c.get("players", []):
         st = (p.get("injuryStatus") or "").lower()
-        if st:
-            inj.append(dict(name=p["name"], status=INJ.get(st, st.upper())))
-        elif p.get("gameTimeDecision"):
-            inj.append(dict(name=p["name"], status="DTD"))
+        status = INJ.get(st, st.upper()) if st else ("DTD" if p.get("gameTimeDecision") else None)
+        if not status:
+            continue
+        k = (p.get("name") or "").strip().lower()
+        if k not in best or sev.get(status, 0) > sev.get(best[k]["status"], 0):
+            best[k] = dict(name=p["name"], status=status)
+    inj = list(best.values())
     return dict(abbr=t, team=TEAMS[t][0], updated=c.get("updatedAt"),
                 forwards=[names(f"f{i}") for i in range(1, 5) if by.get(f"f{i}")],
                 defense=[names(f"d{i}") for i in range(1, 4) if by.get(f"d{i}")],
