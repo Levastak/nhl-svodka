@@ -10,7 +10,13 @@ if stage == "dns":
             rep[q] = urllib.request.urlopen("https://dns.google/resolve?name=" + q, timeout=30).read().decode()[:500]
         except Exception as ex:
             rep[q] = repr(ex)
-    for cmd in ["curl -sI https://nhl-stats.ru/ | head -3", "curl -sI http://nhl-stats.ru/ | head -3", "curl -sI http://www.nhl-stats.ru/ | head -4"]:
+    for name, url in [("cloudflare", "https://cloudflare-dns.com/dns-query?name=nhl-stats.ru&type=A"), ("quad9", "https://dns.quad9.net:5053/dns-query?name=nhl-stats.ru&type=A"),
+                      ("cloudflare-www", "https://cloudflare-dns.com/dns-query?name=www.nhl-stats.ru&type=CNAME")]:
+        try:
+            rep[name] = urllib.request.urlopen(urllib.request.Request(url, headers={"accept": "application/dns-json"}), timeout=30).read().decode()[:400]
+        except Exception as ex:
+            rep[name] = repr(ex)
+    for cmd in ["dig +short A nhl-stats.ru @1.1.1.1", "dig +short A nhl-stats.ru @8.8.8.8", "dig +short A nhl-stats.ru @9.9.9.9", "dig +short NS nhl-stats.ru @a.dns.ripn.net", "dig +trace nhl-stats.ru A | tail -12", "curl -sI https://nhl-stats.ru/ | head -3", "curl -sI http://nhl-stats.ru/ | head -3", "curl -sI http://www.nhl-stats.ru/ | head -4"]:
         rep[cmd] = subprocess.run(cmd, shell=True, capture_output=True, text=True, timeout=40).stdout + subprocess.run(cmd.replace("-sI", "-sIv").split("|")[0] + " 2>&1 | grep -i 'subject\\|issuer\\|SSL' | head -4", shell=True, capture_output=True, text=True, timeout=40).stdout
     json.dump(rep, open(os.path.join(ROOT, "tg", "dns_probe.json"), "w"), ensure_ascii=False, indent=1)
 elif stage == "music2":
