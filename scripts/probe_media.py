@@ -3,7 +3,34 @@ import json, os, re, subprocess, sys, urllib.request
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 lines = open(os.path.join(ROOT, "trigger", "tg")).read().split("\n")
 stage = (lines[2].strip() if len(lines) > 2 else "") or "stage1"
-if stage == "ovi":
+if stage == "ovi2":
+    rep = {}
+    G = lambda u: json.loads(urllib.request.urlopen(urllib.request.Request(u, headers={"User-Agent": "Mozilla/5.0"}), timeout=60).read())
+    try:
+        p = G("https://api-web.nhle.com/v1/player/8471214/landing")
+        rep["career"] = (p.get("careerTotals") or {}).get("regularSeason")
+        rep["featured"] = p.get("featuredStats")
+        rep["last5"] = p.get("last5Games")
+    except Exception as ex:
+        rep["player"] = repr(ex)
+    def ovi_goals(gid):
+        out = []
+        land = G(f"https://api-web.nhle.com/v1/gamecenter/{gid}/landing")
+        for per in (land.get("summary") or {}).get("scoring") or []:
+            for x in per.get("goals") or []:
+                if (x.get("lastName") or {}).get("default") == "Ovechkin":
+                    out.append(dict(gid=gid, period=(per.get("periodDescriptor") or {}).get("number"), time=x.get("timeInPeriod"), clip=x.get("highlightClip"),
+                                    goalsToDate=x.get("goalsToDate"), strength=x.get("strength"), away=x.get("awayScore"), home=x.get("homeScore")))
+        return out
+    try:
+        sc = G("https://api-web.nhle.com/v1/score/2025-04-06")
+        gid = next(g["id"] for g in sc.get("games", []) if "WSH" in (g["awayTeam"]["abbrev"], g["homeTeam"]["abbrev"]))
+        rep["record"] = ovi_goals(gid)
+    except Exception as ex:
+        rep["record"] = repr(ex)[:200]
+    rep["season"] = ovi_goals(2026020084)
+    json.dump(rep, open(os.path.join(ROOT, "tg", "demo", "ovi_probe.json"), "w"), ensure_ascii=False, indent=1)
+elif stage == "ovi":
     rep = {}
     for u in ["https://forge-dapi.d3.nhle.com/v2/content/en-us/videos?tags.slug=alex-ovechkin&$limit=60",
               "https://forge-dapi.d3.nhle.com/v2/content/en-us/videos?tags.slug=ovechkin&$limit=40",
