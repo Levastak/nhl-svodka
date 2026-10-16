@@ -92,7 +92,7 @@ body{font-family:G,sans-serif;color:#EDEFF2;background:#0D0F12;position:relative
 .num .big{font-family:F;font-weight:800;font-size:220px;line-height:.85;color:#FF4A55;white-space:nowrap}
 .num .big small{font-size:80px;color:#EDEFF2;margin-left:8px}
 .num .sub{font-size:28px;color:#A9AFB8;margin-top:18px;max-width:520px}
-.num h2{font-family:F;font-weight:800;font-size:58px;line-height:1.02}
+.num h2{font-family:F;font-weight:800;font-size:58px;line-height:1.02;text-wrap:balance}
 .num .who{display:flex;align-items:center;gap:18px;margin-top:22px;font-size:28px;color:#C3C7CE}
 /* match */
 .mt{position:absolute;left:56px;right:56px;top:96px;bottom:96px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center}
@@ -112,7 +112,7 @@ body{font-family:G,sans-serif;color:#EDEFF2;background:#0D0F12;position:relative
 .badge.g{background:#1E8E5A}
 /* column */
 .col{position:absolute;left:56px;right:330px;top:130px;bottom:110px;display:flex;flex-direction:column;justify-content:center;gap:24px}
-.col h1{font-family:F;font-weight:800;font-size:76px;line-height:1.02}
+.col h1{font-family:F;font-weight:800;font-size:76px;line-height:1.02;text-wrap:balance}
 .col p{font-size:28px;color:#C3C7CE;line-height:1.35}
 .wm{position:absolute;right:40px;top:150px;display:flex;flex-direction:column;gap:16px;opacity:.95}
 /* changes */
