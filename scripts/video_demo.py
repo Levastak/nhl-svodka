@@ -34,5 +34,122 @@ def stage1():
     sh(f"edge-tts --voice ru-RU-DmitryNeural --rate=+8% --text 'Наши рвут НХЛ! Проверка голоса.' --write-media {OUT}/voice_test.mp3")
     json.dump(dict(info=info, log=LOG), open(f"{OUT}/stage1.json", "w"), ensure_ascii=False, indent=1)
 
+
+# ---------------------------------------------------------------- стадия 2: сборка
+W, H = 1080, 1920
+SCENES = [
+    dict(kind="title", say="Наши рвут НХЛ!"),
+    dict(kind="video", say="Кирилл Марченко оформил первый хет-трик за «Торонто» — три шайбы за один вечер.",
+         cuts=[(0, 36.5, 6.0), (2, 40.0, 4.0)], chip="Хет-трик", name="Кирилл Марченко", team="TOR"),
+    dict(kind="card", player="Kirill Kaprizov", name="Кирилл Капризов", team="MIN", big="1 + 2", unit="гол и две передачи",
+         sub="9 голов в 8 матчах сезона", say="Кирилл Капризов — гол и две передачи. У него уже девять голов в восьми матчах."),
+    dict(kind="card", player="Ivan Barbashev", name="Иван Барбашёв", team="VGK", big="3", unit="голевые передачи",
+         sub="в разгроме «Калгари» 6:2", say="Иван Барбашёв раздал три голевые в разгроме «Калгари»."),
+    dict(kind="cta", say="Вся статистика наших и прогнозы на каждый матч — на сайте эн-эйч-эл стэтс точка ру и в нашем телеграм-канале."),
+]
+FONTS = os.path.join(ROOT, "scripts", "cards", "fonts")
+CSS = f"""@font-face{{font-family:G;src:url(file://{FONTS}/GolosText.ttf)}}@font-face{{font-family:F;src:url(file://{FONTS}/FiraSansExtraCondensed-ExtraBold.ttf);font-weight:800}}
+*{{margin:0;padding:0;box-sizing:border-box}}html,body{{width:{W}px;height:{H}px;overflow:hidden;background:transparent;font-family:G;color:#fff}}
+.brand{{position:absolute;left:60px;top:70px;display:flex;align-items:center;gap:16px;font-family:F;font-weight:800;font-size:44px;letter-spacing:.03em;text-shadow:0 4px 18px rgba(0,0,0,.6)}}
+.brand img{{width:68px;height:68px}}.brand span{{color:#FF4A55}}
+.sub{{position:absolute;left:60px;right:60px;bottom:230px;font-family:F;font-weight:800;font-size:58px;line-height:1.12;text-align:center;
+  background:rgba(11,13,17,.72);border-radius:24px;padding:22px 30px;text-wrap:balance}}
+.chip{{display:inline-block;font-family:F;font-weight:800;font-size:46px;letter-spacing:.08em;text-transform:uppercase;background:#FF4A55;color:#fff;border-radius:14px;padding:6px 22px}}
+"""
+TEAMC = {"TOR": "#00205B", "MIN": "#154734", "VGK": "#B4975A"}
+
+def mark():
+    import base64
+    return "data:image/svg+xml;base64," + base64.b64encode(open(os.path.join(ROOT, "site", "logo-mark.svg"), "rb").read()).decode()
+
+def html_for(sc):
+    brand = f'<div class="brand"><img src="{mark()}">NHL-STATS<span>.RU</span></div>'
+    sub = f'<div class="sub">{sc["say"]}</div>'
+    if sc["kind"] == "title":
+        return f"""<style>{CSS}</style>{brand}<div style="position:absolute;left:60px;right:60px;top:620px;text-align:center">
+<div class="chip">ночь на 16 октября</div><h1 style="font-family:F;font-weight:800;font-size:190px;line-height:.92;margin-top:40px;text-shadow:0 10px 40px rgba(0,0,0,.6)">НАШИ<br><span style="color:#FF4A55">РВУТ</span><br>НХЛ</h1></div>"""
+    if sc["kind"] == "video":
+        return f"""<style>{CSS}</style>{brand}<div style="position:absolute;left:60px;right:60px;top:330px;text-align:center"><span class="chip">{sc['chip']}</span>
+<div style="font-family:F;font-weight:800;font-size:96px;margin-top:22px;text-shadow:0 6px 24px rgba(0,0,0,.7)">{sc['name']}</div></div>{sub}"""
+    if sc["kind"] == "card":
+        hp = D["heads"].get(sc["player"])
+        c = TEAMC.get(sc["team"], "#1a1f27")
+        return f"""<style>{CSS} body{{background:radial-gradient(1200px 1100px at 50% 30%,{c},#0B0D11 70%)}}</style>{brand}
+<img src="https://assets.nhle.com/logos/nhl/svg/{sc['team']}_dark.svg" style="position:absolute;right:-160px;top:180px;width:760px;opacity:.12">
+<img src="https://assets.nhle.com/mugs/nhl/{hp}.png" style="position:absolute;left:50%;transform:translateX(-50%);top:230px;width:620px;height:620px;border-radius:50%;object-fit:cover;object-position:50% 0;border:10px solid rgba(255,255,255,.25);background:{c}">
+<div style="position:absolute;left:60px;right:60px;top:900px;text-align:center"><div style="font-family:F;font-weight:800;font-size:96px">{sc['name']}</div>
+<div style="font-family:F;font-weight:800;font-size:230px;line-height:1;color:#FF4A55;margin-top:10px">{sc['big']}</div>
+<div style="font-size:52px;color:#E2E5EA">{sc['unit']}</div><div style="font-size:40px;color:#A9AFB8;margin-top:14px">{sc['sub']}</div></div>{sub}"""
+    return f"""<style>{CSS} body{{background:radial-gradient(1100px 1100px at 50% 35%,#14335E,#0B0D11 70%)}}</style>
+<div style="position:absolute;left:60px;right:60px;top:380px;text-align:center"><img src="{mark()}" style="width:260px;height:260px">
+<div style="font-family:F;font-weight:800;font-size:150px;margin-top:30px">NHL-STATS<span style="color:#FF4A55">.RU</span></div>
+<div style="font-size:50px;color:#C3C8CF;margin-top:16px">статистика · прогнозы модели · наши в НХЛ</div>
+<div style="display:inline-flex;align-items:center;gap:18px;margin-top:70px;background:#229ED9;border-radius:999px;padding:22px 46px;font-family:F;font-weight:800;font-size:64px">Telegram @nhlstatsru</div></div>{sub}"""
+
+def render_pngs():
+    import tg
+    tg.ensure_browser()
+    from playwright.sync_api import sync_playwright
+    with sync_playwright() as p:
+        b = p.chromium.launch(); pg = b.new_page(viewport={"width": W, "height": H})
+        for i, sc in enumerate(SCENES):
+            fn = f"{TMP}/s{i}.html"; open(fn, "w").write("<!doctype html><meta charset=utf-8>" + html_for(sc))
+            pg.goto("file://" + fn, wait_until="networkidle"); pg.wait_for_timeout(500)
+            pg.screenshot(path=f"{TMP}/s{i}.png", omit_background=True)
+        b.close()
+
+def dur(f):
+    return float(sh(f"ffprobe -v error -show_entries format=duration -of csv=p=0 {f}").strip() or 0)
+
+def stage2():
+    media.tools(LOG)
+    sh("pip install -q edge-tts")
+    render_pngs()
+    clips = {i: media.clip(cid, TMP) for i, cid in enumerate(CLIPS)}
+    segs, auds = [], []
+    for i, sc in enumerate(SCENES):
+        a = f"{TMP}/a{i}.mp3"
+        sh(f"edge-tts --voice ru-RU-DmitryNeural --rate=+12% --text \"{sc['say']}\" --write-media {a}")
+        ad = dur(a)
+        if sc["kind"] == "video":
+            parts = []
+            for k, (ci, ss, ln) in enumerate(sc["cuts"]):
+                o = f"{TMP}/v{i}_{k}.mp4"
+                sh(f"ffmpeg -y -loglevel error -ss {ss} -t {ln} -i {clips[ci]} -an -filter_complex "
+                   f"\"[0:v]scale={W}:{H}:force_original_aspect_ratio=increase,crop={W}:{H},boxblur=30:2,eq=brightness=-0.15[bg];[0:v]scale={W}:-2[fg];[bg][fg]overlay=0:(H-h)/2,fps=30[v]\" "
+                   f"-map [v] -c:v libx264 -preset veryfast -crf 22 -pix_fmt yuv420p {o}")
+                parts.append(o)
+            open(f"{TMP}/p{i}.txt", "w").write("".join(f"file '{x}'\n" for x in parts))
+            raw = f"{TMP}/raw{i}.mp4"
+            sh(f"ffmpeg -y -loglevel error -f concat -safe 0 -i {TMP}/p{i}.txt -c copy {raw}")
+            ln = max(dur(raw), ad + 0.4)
+            seg = f"{TMP}/seg{i}.mp4"
+            sh(f"ffmpeg -y -loglevel error -i {raw} -loop 1 -i {TMP}/s{i}.png -filter_complex \"[0:v]tpad=stop_mode=clone:stop_duration=5[b];[b][1:v]overlay=0:0,trim=duration={ln:.2f},setpts=PTS-STARTPTS[v]\" -map [v] -c:v libx264 -preset veryfast -crf 22 -pix_fmt yuv420p -r 30 {seg}")
+        else:
+            ln = ad + (0.6 if sc["kind"] != "title" else 0.5)
+            if sc["kind"] == "title":
+                # фон — размытый кадр празднования
+                sh(f"ffmpeg -y -loglevel error -ss 42 -i {clips[0]} -frames:v 1 {TMP}/t.jpg")
+                src = f"-loop 1 -i {TMP}/t.jpg -loop 1 -i {TMP}/s{i}.png"
+                fc = (f"[0:v]scale={W}:{H}:force_original_aspect_ratio=increase,crop={W}:{H},boxblur=12:2,eq=brightness=-0.25,"
+                      f"zoompan=z='1+0.0015*on':d=1:s={W}x{H}:fps=30[bg];[bg][1:v]overlay=0:0,trim=duration={ln:.2f}[v]")
+            else:
+                src = f"-loop 1 -i {TMP}/s{i}.png"
+                fc = f"[0:v]scale={W*2}:{H*2},zoompan=z='1+0.0008*on':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d=1:s={W}x{H}:fps=30,trim=duration={ln:.2f}[v]"
+            seg = f"{TMP}/seg{i}.mp4"
+            sh(f"ffmpeg -y -loglevel error {src} -filter_complex \"{fc}\" -map [v] -c:v libx264 -preset veryfast -crf 22 -pix_fmt yuv420p -r 30 {seg}")
+        sl = dur(seg)
+        aa = f"{TMP}/aa{i}.wav"
+        sh(f"ffmpeg -y -loglevel error -i {a} -af apad=whole_dur={sl:.3f} -ar 44100 -ac 2 {aa}")
+        segs.append(seg); auds.append(aa)
+    open(f"{TMP}/vs.txt", "w").write("".join(f"file '{x}'\n" for x in segs))
+    open(f"{TMP}/as.txt", "w").write("".join(f"file '{x}'\n" for x in auds))
+    sh(f"ffmpeg -y -loglevel error -f concat -safe 0 -i {TMP}/vs.txt -c copy {TMP}/v.mp4")
+    sh(f"ffmpeg -y -loglevel error -f concat -safe 0 -i {TMP}/as.txt -c:a pcm_s16le {TMP}/a.wav")
+    sh(f"ffmpeg -y -loglevel error -i {TMP}/v.mp4 -i {TMP}/a.wav -c:v copy -c:a aac -b:a 160k -shortest -movflags +faststart {OUT}/nashi_rvut_nhl.mp4")
+    for i in range(len(SCENES)):
+        sh(f"cp {TMP}/s{i}.png {OUT}/overlay_{i}.png")
+    json.dump(dict(len=dur(f"{OUT}/nashi_rvut_nhl.mp4"), log=LOG), open(f"{OUT}/stage2.json", "w"), ensure_ascii=False, indent=1)
+
 if __name__ == "__main__":
-    {"stage1": stage1}[sys.argv[1] if len(sys.argv) > 1 else "stage1"]()
+    {"stage1": stage1, "stage2": stage2}[sys.argv[1] if len(sys.argv) > 1 else "stage1"]()
