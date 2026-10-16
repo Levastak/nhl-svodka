@@ -135,24 +135,24 @@ def send(chat, text, images=None, photo_url=None):
     vis = len(_re.sub("<[^>]+>", "", html.unescape(text)))
     if vis > 1024 and photo_url and not images:
         # длинный текст: фото крупным превью над текстом (лимит 4096 вместо 1024)
-        r = _call("sendMessage", dict(chat_id=chat, text=text[:4096], parse_mode="HTML",
+        r = _call("sendMessage", dict(chat_id=chat, text=text, parse_mode="HTML",
                                       link_preview_options={"url": photo_url, "prefer_large_media": True, "show_above_text": True}))
         return [r["message_id"]]
     try:
         if len(images) > 1:
-            media = [dict(type="photo", media=f"attach://f{i}", **({"caption": text[:1024], "parse_mode": "HTML"} if i == 0 else {}))
+            media = [dict(type="photo", media=f"attach://f{i}", **({"caption": text, "parse_mode": "HTML"} if i == 0 else {}))
                      for i, _ in enumerate(images[:10])]
             r = _call("sendMediaGroup", dict(chat_id=chat, media=media), {f"f{i}": p for i, p in enumerate(images[:10])})
             return [m["message_id"] for m in r]
         if images:
-            r = _call("sendPhoto", dict(chat_id=chat, caption=text[:1024], parse_mode="HTML"), {"photo": images[0]})
+            r = _call("sendPhoto", dict(chat_id=chat, caption=text, parse_mode="HTML"), {"photo": images[0]})
             return [r["message_id"]]
         if photo_url:
-            r = _call("sendPhoto", dict(chat_id=chat, photo=photo_url, caption=text[:1024], parse_mode="HTML"))
+            r = _call("sendPhoto", dict(chat_id=chat, photo=photo_url, caption=text, parse_mode="HTML"))
             return [r["message_id"]]
     except Exception as ex:
         LOG["fail"].append(f"картинка не ушла, шлю текстом: {ex}"[:200])
-    r = _call("sendMessage", dict(chat_id=chat, text=text[:4096], parse_mode="HTML", link_preview_options={"is_disabled": True}))
+    r = _call("sendMessage", dict(chat_id=chat, text=text, parse_mode="HTML", link_preview_options={"is_disabled": True}))
     return [r["message_id"]]
 
 
@@ -523,6 +523,17 @@ def main(mode, arg=None):
                 LOG["ok"].append(f"удалено {mid}")
             except Exception as ex:
                 LOG["fail"].append(f"{mid}: {ex}"[:120])
+    elif mode == "test" and str(arg or "").startswith("only:"):
+        # перевыложить только посты, чей ключ начинается с указанного префикса
+        pref = str(arg)[5:]
+        for x in [x for x in items if x["key"].startswith(pref)]:
+            for mid in MSG.get(x["key"], []):
+                try:
+                    _call("deleteMessage", dict(chat_id=chat, message_id=mid))
+                except Exception:
+                    pass
+            P.pop(x["key"], None)
+            post(x)
     elif mode == "test":
         # удаляем прошлые версии тех же постов (и сообщения из arg: «2,3,4») и публикуем весь набор сразу
         for mid in [int(v) for v in str(arg or "").split(",") if v.strip().isdigit()]:
