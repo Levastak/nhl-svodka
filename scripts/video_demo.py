@@ -249,9 +249,37 @@ def sheets(ids):
     json.dump(dict(log=LOG), open(f"{OUT}/sheets.json", "w"), ensure_ascii=False, indent=1)
 
 
+def goals(pid):
+    """Все голы игрока в сезоне: клипы + контактные листы (для выбора момента) → tg/demo/goals_<pid>.json."""
+    media.tools(LOG)
+    import urllib.request
+    G = lambda u: json.loads(urllib.request.urlopen(urllib.request.Request(u, headers={"User-Agent": "Mozilla/5.0"}), timeout=60).read())
+    log = G(f"https://api-web.nhle.com/v1/player/{pid}/game-log/20262027/2").get("gameLog") or []
+    res = []
+    for g in sorted(log, key=lambda x: x["gameDate"]):
+        if not g.get("goals"):
+            continue
+        land = G(f"https://api-web.nhle.com/v1/gamecenter/{g['gameId']}/landing")
+        for per in (land.get("summary") or {}).get("scoring") or []:
+            for x in per.get("goals") or []:
+                if x.get("playerId") == pid:
+                    res.append(dict(game=g["gameId"], date=g["gameDate"], opp=g.get("opponentAbbrev"), home=g.get("homeRoadFlag"),
+                                    period=per.get("periodDescriptor", {}).get("number"), time=x.get("timeInPeriod"), strength=x.get("strength"),
+                                    shot=x.get("shotType"), n=x.get("goalsToDate"), clip=x.get("highlightClip"), score=f"{x.get('awayScore')}:{x.get('homeScore')}"))
+    for r in res:
+        if r["clip"]:
+            fn = media.clip(r["clip"], TMP)
+            if fn:
+                w, h, d = media.probe(fn); r["dur"] = d
+                sh(f"ffmpeg -y -loglevel error -i {fn} -t 24 -vf \"fps=2,scale=240:-2,drawtext=text='%{{pts\\:hms}}':x=4:y=4:fontsize=18:fontcolor=yellow:box=1:boxcolor=black,tile=8x6\" -frames:v 1 {OUT}/sheet_{r['clip']}.jpg")
+    json.dump(dict(goals=res, log=LOG), open(f"{OUT}/goals_{pid}.json", "w"), ensure_ascii=False, indent=1)
+
+
 if __name__ == "__main__":
     a = sys.argv[1] if len(sys.argv) > 1 else "stage1"
-    if a.startswith("sheets:"):
+    if a.startswith("goals:"):
+        goals(int(a[6:]))
+    elif a.startswith("sheets:"):
         sheets([int(x) for x in a[7:].split(",") if x])
     else:
         if a.startswith("stage2:"):
