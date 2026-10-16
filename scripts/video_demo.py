@@ -86,6 +86,19 @@ PRESETS = {
         dict(kind="video", len=2.4, chip="Гол 9/9 · «Сент-Луис»", hook="Гол <b>№ 9</b>", cuts=[(6406938424112, 14.6, 2.4)]),
         dict(kind="cta", len=2.6, hook="<b>Лучший снайпер</b> НХЛ — наш.<br>Сколько забьёт за сезон?", say=""),
     ]),
+    "kap9z": dict(silent=True, fill=True, title_bg=(6406938424112, 44.6), out="kaprizov_9_zoom.mp4", scenes=[
+        dict(kind="video", len=2.2, chip="Капризов · 2026/27", hook="<b>9 голов</b><br>за 8 матчей", cuts=[(6406938424112, 44.6, 2.2, dict(cx=.5, z0=1.0, z=1.15))]),
+        dict(kind="video", len=2.4, chip="Гол 1/9 · «Нэшвилл»", hook="Подставил клюшку", cuts=[(6406080640112, 34.3, 2.4, {'slow': 1.5, 'flash': 1, 'z0': 1.05, 'z': 1.3, 'shake': 0.25, 'cx': 0.55})]),
+        dict(kind="video", len=2.4, chip="Гол 2/9 · «Бостон»", hook="В большинстве", cuts=[(6406192865112, 35.5, 2.4, {'slow': 1.5, 'flash': 1, 'z0': 1.05, 'z': 1.3, 'shake': 0.25, 'cx': 0.5})]),
+        dict(kind="video", len=2.4, chip="Гол 3/9 · «Бостон»", hook="Дубль <b>с бэкхенда</b>", cuts=[(6406196705112, 30.3, 2.4, {'slow': 1.5, 'flash': 1, 'z0': 1.05, 'z': 1.3, 'shake': 0.25, 'cx': 0.5})]),
+        dict(kind="video", len=2.4, chip="Гол 4/9 · «Флорида»", hook="Броском<br>в большинстве", cuts=[(6406619102112, 31.0, 2.4, {'slow': 1.5, 'flash': 1, 'z0': 1.05, 'z': 1.3, 'shake': 0.25, 'cx': 0.5})]),
+        dict(kind="video", len=2.4, chip="Гол 5/9 · «Флорида»", hook="Второй<br>за вечер", cuts=[(6406620824112, 32.3, 2.4, {'slow': 1.5, 'flash': 1, 'z0': 1.05, 'z': 1.3, 'shake': 0.25, 'cx': 0.5})]),
+        dict(kind="video", len=2.4, chip="Гол 6/9 · «Флорида»", hook="<b>ХЕТ-ТРИК</b>", cuts=[(6406624192112, 9.6, 2.4, {'slow': 1.5, 'flash': 1, 'z0': 1.05, 'z': 1.3, 'shake': 0.25, 'cx': 0.45})]),
+        dict(kind="video", len=2.4, chip="Гол 7/9 · «Виннипег»", hook="Сбил шайбу<br><b>с воздуха</b>", cuts=[(6406805779112, 28.5, 2.4, {'slow': 1.5, 'flash': 1, 'z0': 1.05, 'z': 1.3, 'shake': 0.25, 'cx': 0.55})]),
+        dict(kind="video", len=2.4, chip="Гол 8/9 · «Виннипег»", hook="И снова<br>у ворот", cuts=[(6406809088112, 39.5, 2.4, {'slow': 1.5, 'flash': 1, 'z0': 1.05, 'z': 1.3, 'shake': 0.25, 'cx': 0.5})]),
+        dict(kind="video", len=2.4, chip="Гол 9/9 · «Сент-Луис»", hook="Гол <b>№ 9</b>", cuts=[(6406938424112, 34.9, 2.4, {'slow': 1.5, 'flash': 1, 'z0': 1.05, 'z': 1.3, 'shake': 0.25, 'cx': 0.45})]),
+        dict(kind="cta", len=2.6, hook="<b>Лучший снайпер</b> НХЛ — наш.<br>Сколько забьёт за сезон?", say=""),
+    ]),
 }
 FONTS = os.path.join(ROOT, "scripts", "cards", "fonts")
 CSS = f"""@font-face{{font-family:G;src:url(file://{FONTS}/GolosText.ttf)}}@font-face{{font-family:F;src:url(file://{FONTS}/FiraSansExtraCondensed-ExtraBold.ttf);font-weight:800}}
@@ -143,6 +156,34 @@ def render_pngs():
             pg.screenshot(path=f"{TMP}/s{i}.png", omit_background=True)
         b.close()
 
+
+def clip_hq(cid):
+    """Клип в 1080p (для вертикальной обрезки на весь экран)."""
+    fn = f"{TMP}/{cid}_hq.mp4"
+    if not os.path.exists(fn):
+        subprocess.run([sys.executable, "-m", "yt_dlp", "-q", "-f", "best[height<=1080]/best", "-o", fn, media.BC.format(cid)], capture_output=True, text=True, timeout=300)
+    return fn if os.path.exists(fn) else media.clip(cid, TMP)
+
+
+def fx_cut(src, ss, ln, o, out):
+    """Вертикальный кадр на весь экран + эффекты. o: cx/cx2 — центр кадра по горизонтали (0..1, с панорамой),
+    z — наезд к концу (1.0 — нет), z0 — стартовый зум, slow — замедление (2 = вдвое), flash — белая вспышка, shake — тряска (сек)."""
+    slow = o.get("slow", 1)
+    cx, cx2 = o.get("cx", .5), o.get("cx2", o.get("cx", .5))
+    z0, z1 = o.get("z0", 1.0), o.get("z", 1.0)
+    sk = o.get("shake", 0)
+    xs = f"({cx}+({cx2}-{cx})*t/{ln})*iw-{W}/2" + (f"+if(lt(t,{sk}),26*sin(t*70),0)" if sk else "")
+    ys = f"if(lt(t,{sk}),14*cos(t*55),0)+12" if sk else "12"
+    nf = max(1, int(ln * 30))
+    vf = (f"setpts={slow}*PTS,fps=30,scale=-2:{H + 24},crop={W}:{H}:'clip({xs},0,iw-{W})':'{ys}',"
+          f"zoompan=z='{z0}+({z1}-{z0})*on/{nf}':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d=1:s={W}x{H}:fps=30,"
+          f"eq=contrast=1.08:saturation=1.15")
+    if o.get("flash"):
+        vf += ",fade=t=in:st=0:d=0.18:color=white"
+    if slow > 1:
+        vf += ",tmix=frames=2"  # сглаживание замедления
+    sh(f"ffmpeg -y -loglevel error -ss {ss} -t {ln / slow:.3f} -i {src} -an -vf \"{vf}\" -t {ln} -c:v libx264 -preset veryfast -crf 20 -pix_fmt yuv420p {out}")
+
 def dur(f):
     return float(sh(f"ffprobe -v error -show_entries format=duration -of csv=p=0 {f}").strip() or 0)
 
@@ -154,8 +195,8 @@ def stage2(preset="nashi"):
     media.tools(LOG)
     sh("pip install -q edge-tts")
     render_pngs()
-    ids = {c for sc in SCENES for c, _, _ in sc.get("cuts", [])} | (set(CLIPS) if not P['scenes'] else set()) | ({P['title_bg'][0]} if P['scenes'] else set())
-    clips = {cid: media.clip(cid, TMP) for cid in ids}
+    ids = {c[0] for sc in SCENES for c in sc.get("cuts", [])} | (set(CLIPS) if not P['scenes'] else set()) | ({P['title_bg'][0]} if P['scenes'] else set())
+    clips = {cid: (clip_hq(cid) if P.get("fill") else media.clip(cid, TMP)) for cid in ids}
     clips.update({i: clips[cid] for i, cid in enumerate(CLIPS) if cid in clips})
     segs, auds = [], []
     for i, sc in enumerate(SCENES):
@@ -171,9 +212,13 @@ def stage2(preset="nashi"):
             target = sc["len"] if P.get("silent") else max(ad + 0.4, min(sum(c[2] for c in sc['cuts']), ad + 1.6))  # после фразы — до 1,6 с картинки под музыку, без пустоты
             total = sum(c[2] for c in sc["cuts"])
             k_fit = min(1.0, target / total)  # длинные нарезки ужимаем под голос, короткие тянем последним кадром
-            for k, (ci, ss, ln) in enumerate(sc["cuts"]):
+            for k, cut in enumerate(sc["cuts"]):
+                ci, ss, ln = cut[:3]
                 ln = round(ln * k_fit, 2)
                 o = f"{TMP}/v{i}_{k}.mp4"
+                if P.get("fill"):
+                    fx_cut(clips[ci], ss, ln, cut[3] if len(cut) > 3 else {}, o)
+                    parts.append(o); continue
                 sh(f"ffmpeg -y -loglevel error -ss {ss} -t {ln} -i {clips[ci]} -an -filter_complex "
                    f"\"[0:v]scale={W}:{H}:force_original_aspect_ratio=increase,crop={W}:{H},boxblur=30:2,eq=brightness=-0.15[bg];[0:v]scale={W}:-2[fg];[bg][fg]overlay=0:(H-h)/2,fps=30[v]\" "
                    f"-map [v] -c:v libx264 -preset veryfast -crf 22 -pix_fmt yuv420p {o}")
