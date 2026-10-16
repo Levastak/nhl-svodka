@@ -766,7 +766,7 @@ def main(mode, arg=None):
     if mode in ("auto", "feed"):
         fd = load(f"{TG}/feed.json", {}) or {}
         age = (now - dt.datetime.fromisoformat(fd["t"].replace("Z", "+00:00"))).total_seconds() / 60 if fd.get("t") else 999
-        if mode == "feed" or (age >= 110 and 8 <= now.astimezone(MSK).hour <= 23):
+        if mode == "feed" or age >= 110:  # лента круглосуточно: ночью её освежает пульс (режим feed) для новостей сайта
             sys.path.insert(0, os.path.join(ROOT, "scripts"))
             import media
             media.feed(LOG)

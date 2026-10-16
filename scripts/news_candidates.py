@@ -113,7 +113,7 @@ def main():
             tier, why = 3, ["клуб из первой восьмёрки конференции"]
         cands.append(dict(id=x["id"], tier=tier, why="; ".join(why), maybe_hot=hot or None, insider=x.get("kind") == "insider" or None,
                           source=x.get("source"), kind=x.get("kind"),
-                          time=x.get("time"), title=x.get("title"), summary=x.get("summary"), url=x.get("url"), image=x.get("image"),
+                          time=x.get("time"), title=x.get("title"), summary=x.get("summary"), article=x.get("body"), url=x.get("url"), image=x.get("image"),
                           players=[{k: v for k, v in dict(name=n, ru=NR.get(n), team=team_of.get(n), russian=n in rus or None, star=n in stars or None).items() if v}
                                    for n in sorted(found)],
                           teams=[dict(abbr=t, place=f"{place[t][0]}-е, {place[t][1]}", pts=place[t][2], gp=place[t][3]) for t in teams if t in place]))

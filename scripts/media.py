@@ -96,12 +96,26 @@ def _rss(source, url, LOG, limit=40):
     return out
 
 
-def _og(url):
+def _article(t):
+    """Текст статьи из HTML: абзацы <p> без тегов, до 1800 знаков (для проверки фактов задачей новостей)."""
+    import html as _h
+    t = re.sub(r"(?is)<(script|style|noscript|figure|aside|nav|footer|header)[^>]*>.*?</\1>", " ", t)
+    ps = []
+    for m in re.finditer(r"(?is)<p[^>]*>(.*?)</p>", t):
+        p = re.sub(r"\s+", " ", _h.unescape(re.sub(r"<[^>]+>", " ", m.group(1)))).strip()
+        if len(p) > 60 and not re.search(r"cookie|subscribe|newsletter|sign up|all rights reserved|©", p, re.I):
+            ps.append(p)
+    return " ".join(ps)[:1800] or None
+
+
+def _og(url, x=None):
     import html as _h
     try:
-        t = _txt(url, 300000, 20)
+        t = _txt(url, 600000, 20)
     except Exception:
         return None
+    if x is not None:
+        x["body"] = _article(t)
     m = (re.search(r'<meta[^>]+property=["\']og:image["\'][^>]+content=["\']([^"\']+)', t)
          or re.search(r'content=["\']([^"\']+)["\'][^>]+property=["\']og:image', t))
     u = _h.unescape(m.group(1)) if m else None
@@ -164,13 +178,20 @@ def feed(LOG):
     cut = (dt.datetime.now(dt.timezone.utc) - dt.timedelta(days=2)).strftime("%Y-%m-%dT%H:%M")
     keep = sorted([x for x in items.values() if str(x.get("time") or "") >= cut], key=lambda x: str(x.get("time")), reverse=True)[:250]
     # фото: у кого нет картинки в ленте — берём обложку статьи (og:image), не больше 25 запросов за запуск
+    # и текст статьи (body) — задача новостей проверяет факты по нему, без WebFetch; не больше 40 запросов за запуск
     tries = 0
+    fresh = (dt.datetime.now(dt.timezone.utc) - dt.timedelta(hours=30)).strftime("%Y-%m-%dT%H:%M")
     for x in keep:
-        if x.get("image") or x.get("og_tried") or tries >= 25:
+        need_img = not x.get("image") and not x.get("og_tried")
+        need_body = "body" not in x and str(x.get("time") or "") >= fresh and x.get("kind") != "recap"
+        if not (need_img or need_body) or tries >= 40:
             continue
         tries += 1
-        x["image"] = _og(x["url"])
-        x["og_tried"] = True
+        img = _og(x["url"], x)
+        if need_img:
+            x["image"] = img
+            x["og_tried"] = True
+        x.setdefault("body", None)
     os.makedirs(TG, exist_ok=True)
     json.dump(dict(t=dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"), items=keep),
               open(f"{TG}/feed.json", "w", encoding="utf-8"), ensure_ascii=False, indent=0)

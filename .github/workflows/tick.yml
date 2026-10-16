@@ -30,12 +30,16 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           REPO: ${{ github.repository }}
         run: |
-          start=$(date +%s)
+          start=$(date +%s); n=0
           while [ $(( $(date +%s) - start )) -lt 20700 ]; do
             h=$(TZ=Europe/Moscow date +%H)
             if [ "$h" -ge 9 ] || [ "$h" -lt 1 ]; then
               gh workflow run tg.yml -R "$REPO" -f mode=auto && echo "$(date -u +%H:%M) канал разбужен" || echo "$(date -u +%H:%M) не вышло разбудить"
+            elif [ $(( n % 9 )) -eq 0 ]; then
+              # ночью канал молчит, но лента обновляется раз в ~1,5 часа — для ночных новостей сайта
+              gh workflow run tg.yml -R "$REPO" -f mode=feed && echo "$(date -u +%H:%M) лента обновлена" || true
             fi
+            n=$(( n + 1 ))
             sleep 600
           done
           gh workflow run tick.yml -R "$REPO" && echo "цепочка продолжена"
