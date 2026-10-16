@@ -37,7 +37,8 @@ def stage1():
 
 # ---------------------------------------------------------------- стадия 2: сборка
 W, H = 1080, 1920
-VOICE = ("ru-RU-DmitryNeural", "+22%", "+10Hz")
+VOICE = ("ru-RU-DmitryNeural", "+12%", "+6Hz")
+MUSIC = ("Big Rock", 6.0)  # Kevin MacLeod (incompetech.com), CC BY 4.0 — указать в описании
 SCENES = [
     dict(kind="title", say="Наши рвут НХЛ!"),
     dict(kind="video", say="Марченко — хет-трик, первый за «Торонто»!", stat="3 гола за вечер",
@@ -87,7 +88,7 @@ def html_for(sc):
 <div style="position:absolute;left:60px;right:60px;top:380px;text-align:center"><img src="{mark()}" style="width:260px;height:260px">
 <div style="font-family:F;font-weight:800;font-size:150px;margin-top:30px">NHL-STATS<span style="color:#FF4A55">.RU</span></div>
 <div style="font-size:50px;color:#C3C8CF;margin-top:16px">все наши в НХЛ · статистика · разборы</div>
-<div style="display:inline-flex;align-items:center;gap:18px;margin-top:70px;background:#229ED9;border-radius:999px;padding:22px 46px;font-family:F;font-weight:800;font-size:64px">Telegram @nhlstatsru</div></div>{sub}"""
+<div style="display:inline-flex;align-items:center;gap:18px;margin-top:70px;background:#229ED9;border-radius:999px;padding:22px 46px;font-family:F;font-weight:800;font-size:64px">Telegram @nhlstatsru</div></div>{sub}<div style="position:absolute;left:0;right:0;bottom:120px;text-align:center;font-size:26px;color:#7A808A">Видео: NHL · Музыка: Kevin MacLeod (incompetech.com), CC BY 4.0</div>"""
 
 def render_pngs():
     import tg
@@ -122,7 +123,11 @@ def stage2():
         ad = dur(a)
         if sc["kind"] == "video":
             parts = []
+            target = ad + 0.35
+            total = sum(c[2] for c in sc["cuts"])
+            k_fit = min(1.0, target / total)  # длинные нарезки ужимаем под голос, короткие тянем последним кадром
             for k, (ci, ss, ln) in enumerate(sc["cuts"]):
+                ln = round(ln * k_fit, 2)
                 o = f"{TMP}/v{i}_{k}.mp4"
                 sh(f"ffmpeg -y -loglevel error -ss {ss} -t {ln} -i {clips[ci]} -an -filter_complex "
                    f"\"[0:v]scale={W}:{H}:force_original_aspect_ratio=increase,crop={W}:{H},boxblur=30:2,eq=brightness=-0.15[bg];[0:v]scale={W}:-2[fg];[bg][fg]overlay=0:(H-h)/2,fps=30[v]\" "
@@ -131,11 +136,11 @@ def stage2():
             open(f"{TMP}/p{i}.txt", "w").write("".join(f"file '{x}'\n" for x in parts))
             raw = f"{TMP}/raw{i}.mp4"
             sh(f"ffmpeg -y -loglevel error -f concat -safe 0 -i {TMP}/p{i}.txt -c copy {raw}")
-            ln = max(dur(raw), ad + 0.3)
+            ln = ad + 0.35
             seg = f"{TMP}/seg{i}.mp4"
             sh(f"ffmpeg -y -loglevel error -i {raw} -loop 1 -i {TMP}/s{i}.png -filter_complex \"[0:v]tpad=stop_mode=clone:stop_duration=5[b];[b][1:v]overlay=0:0,trim=duration={ln:.2f},setpts=PTS-STARTPTS[v]\" -map [v] -c:v libx264 -preset veryfast -crf 22 -pix_fmt yuv420p -r 30 {seg}")
         else:
-            ln = ad + (0.5 if sc["kind"] != "title" else 0.25)
+            ln = ad + (0.45 if sc["kind"] != "title" else 0.2)
             if sc["kind"] == "title":
                 # фон — размытый кадр празднования
                 sh(f"ffmpeg -y -loglevel error -ss 42 -i {clips[0]} -frames:v 1 {TMP}/t.jpg")
@@ -155,10 +160,20 @@ def stage2():
     open(f"{TMP}/as.txt", "w").write("".join(f"file '{x}'\n" for x in auds))
     sh(f"ffmpeg -y -loglevel error -f concat -safe 0 -i {TMP}/vs.txt -c copy {TMP}/v.mp4")
     sh(f"ffmpeg -y -loglevel error -f concat -safe 0 -i {TMP}/as.txt -c:a pcm_s16le {TMP}/a.wav")
-    sh(f"ffmpeg -y -loglevel error -i {TMP}/v.mp4 -i {TMP}/a.wav -c:v copy -c:a aac -b:a 160k -shortest -movflags +faststart {OUT}/nashi_rvut_nhl_v2.mp4")
+    # музыка: свободный рок (CC BY), тише под голосом (sidechain), затухание в конце
+    import urllib.parse, urllib.request
+    mus = f"{TMP}/music.mp3"
+    open(mus, "wb").write(urllib.request.urlopen(urllib.request.Request("https://incompetech.com/music/royalty-free/mp3-royaltyfree/" + urllib.parse.quote(MUSIC[0]) + ".mp3",
+                                                                        headers={"User-Agent": "Mozilla/5.0"}), timeout=60).read())
+    total = dur(f"{TMP}/v.mp4")
+    sh(f"ffmpeg -y -loglevel error -i {TMP}/a.wav -ss {MUSIC[1]} -i {mus} -filter_complex "
+       f"\"[1:a]atrim=duration={total:.2f},volume=0.55,afade=t=in:d=0.4,afade=t=out:st={total - 1.6:.2f}:d=1.6,aformat=sample_rates=44100:channel_layouts=stereo[m];"
+       f"[0:a]asplit=2[v1][v2];[m][v2]sidechaincompress=threshold=0.03:ratio=6:attack=20:release=350[md];[v1][md]amix=inputs=2:duration=first:normalize=0,alimiter=limit=0.95[a]\" "
+       f"-map [a] -c:a pcm_s16le {TMP}/mix.wav")
+    sh(f"ffmpeg -y -loglevel error -i {TMP}/v.mp4 -i {TMP}/mix.wav -c:v copy -c:a aac -b:a 192k -shortest -movflags +faststart {OUT}/nashi_rvut_nhl_v3.mp4")
     for i in range(len(SCENES)):
         sh(f"cp {TMP}/s{i}.png {OUT}/overlay_{i}.png")
-    json.dump(dict(len=dur(f"{OUT}/nashi_rvut_nhl_v2.mp4"), log=LOG), open(f"{OUT}/stage2.json", "w"), ensure_ascii=False, indent=1)
+    json.dump(dict(len=dur(f"{OUT}/nashi_rvut_nhl_v3.mp4"), log=LOG), open(f"{OUT}/stage2.json", "w"), ensure_ascii=False, indent=1)
 
 def stage3():
     """Клипы Капризова и передач Барбашёва (gamecenter) + контактные листы; пробы голосов."""
