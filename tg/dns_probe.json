@@ -1,5 +1,5 @@
 {
- "curl -sI https://levastak.github.io/nhl-svodka/ | head -8": "HTTP/2 200 \nserver: GitHub.com\ncontent-type: text/html; charset=utf-8\nlast-modified: Fri, 16 Oct 2026 16:49:47 GMT\naccess-control-allow-origin: *\netag: \"6ad255ab-14de\"\nexpires: Fri, 16 Oct 2026 17:02:33 GMT\ncache-control: max-age=600\n",
- "curl -sI https://levastak.github.io/nhl-svodka/data.json | head -5": "HTTP/2 200 \nserver: GitHub.com\ncontent-type: application/json; charset=utf-8\nlast-modified: Fri, 16 Oct 2026 16:49:47 GMT\naccess-control-allow-origin: *\n",
+ "curl -sI https://levastak.github.io/nhl-svodka/ | head -8": "HTTP/2 200 \nserver: GitHub.com\ncontent-type: text/html; charset=utf-8\nlast-modified: Fri, 16 Oct 2026 16:52:43 GMT\naccess-control-allow-origin: *\netag: \"6ad2565b-14de\"\nexpires: Fri, 16 Oct 2026 17:07:12 GMT\ncache-control: max-age=600\n",
+ "curl -sI https://levastak.github.io/nhl-svodka/data.json | head -5": "HTTP/2 200 \nserver: GitHub.com\ncontent-type: application/json; charset=utf-8\nx-origin-cache: HIT\nlast-modified: Fri, 16 Oct 2026 16:52:43 GMT\n",
  "curl -s https://dns.google/resolve?name=nhl-stats.ru\\&type=A": "{\"Status\":3,\"TC\":false,\"RD\":true,\"RA\":true,\"AD\":false,\"CD\":false,\"Question\":[{\"name\":\"nhl-stats.ru.\",\"type\":1}],\"Authority\":[{\"name\":\"ru.\",\"type\":6,\"TTL\":1800,\"data\":\"a.dns.ripn.net. hostmaster.ripn.net. 4070745 86400 14400 2592000 3600\"}],\"Comment\":\"Response from 193.232.156.17.\"}"
 }
