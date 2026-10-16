@@ -67,7 +67,8 @@ def _rss(source, url, LOG, limit=40):
     try:
         root = ET.fromstring(_txt(url).encode("utf-8"))
     except Exception as ex:
-        LOG["fail"].append(f"лента {source}: {ex!r}"[:150])
+        # отдельный источник ленты недоступен — не сбой канала: пишем в журнал, Льва не тревожим
+        LOG.setdefault("warn", []).append(f"лента {source}: {ex!r}"[:150])
         return out
     for it in root.findall(".//item")[:limit]:
         link = (it.findtext("link") or "").strip()

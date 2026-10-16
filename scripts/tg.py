@@ -1074,8 +1074,8 @@ def health(mode):
     if mins >= 10 * 60 + 30 and rd and any(g.get("date") == rd for g in (load(f"{SITE}/archive.json", {}) or {}).get("games", [])[-40:]) and f"am:{rd}" not in P:
         probs.append(("am_post", "Утренний пост «Итоги ночи» не вышел в канал", None))
     # 6. Ошибки самого канала в этом запуске
-    for x in LOG.get("fail") or []:
-        if "картинка не ушла" in x:
+    for x in dict.fromkeys(LOG.get("fail") or []):  # без повторов
+        if "картинка не ушла" in x or x.startswith(("лента ", "feed ")):
             continue
         probs.append((f"tg_fail:{hash(x[:120]) & 0xffffffff}", f"Канал ({mode}): {x}"[:600], None))
     seen = state.setdefault("alerts", {})
