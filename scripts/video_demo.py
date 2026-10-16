@@ -310,7 +310,14 @@ def goals(pid):
 
 if __name__ == "__main__":
     a = sys.argv[1] if len(sys.argv) > 1 else "stage1"
-    if a.startswith("goals:"):
+    if a.startswith("tail:"):  # контактные листы хвоста клипов (повторы крупным планом)
+        media.tools(LOG)
+        for cid in [int(x) for x in a[5:].split(",") if x]:
+            fn = media.clip(cid, TMP)
+            if fn:
+                sh(f"ffmpeg -y -loglevel error -ss 22 -i {fn} -vf \"fps=2,scale=240:-2,drawtext=text='%{{pts\\:hms}}':x=4:y=4:fontsize=18:fontcolor=yellow:box=1:boxcolor=black,tile=8x8\" -frames:v 1 {OUT}/tail_{cid}.jpg")
+        json.dump(dict(log=LOG), open(f"{OUT}/sheets.json", "w"), ensure_ascii=False, indent=1)
+    elif a.startswith("goals:"):
         goals(int(a[6:]))
     elif a.startswith("sheets:"):
         sheets([int(x) for x in a[7:].split(",") if x])
