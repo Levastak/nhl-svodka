@@ -35,7 +35,7 @@ const NAV=[["home","Главная"],["games","Матчи"],["news","Новос�
 const MORE=[["teams","Команды","составы, звенья, календарь"],["lead","Лидеры","очки, голы, вратари, форма"],["inj","Травмы","кто пропускает матчи"],["rus","Россияне","все наши в НХЛ"]];
 
 /* ---------- состояние ---------- */
-let D=null,A={games:[]},M={games:[],horizon:[],teams:{}},ST=[],RUN={},BOX=null,EDGE=null;
+let D=null,A={games:[]},M={games:[],horizon:[],teams:{}},ST=[],RUN={},BOX=null,EDGE=null,NL=[];
 let VIEW="home",RES_DATE=null,TBL_MODE="div",JF="all",HERO_TAB="stars",RAIL_CONF="Восток",RAIL_LEAD="points",HOT_MODE="hot";
 const OPEN=new Set();
 const $=s=>document.querySelector(s);
@@ -200,7 +200,11 @@ function articles(){const out=[];const now=D.generated?Date.parse(D.generated):D
   (D.articles||[]).forEach((x,i)=>out.push({k:"a"+i,...x,kind:x.kind||"column",body:x.body||[]}));
   (ST||[]).forEach((x,i)=>out.push({k:"s"+(x.id||i),...x,kind:"story",body:x.body||[],image:x.cover&&x.cover.url,image_src:x.cover&&x.cover.credit,image_link:x.cover&&x.cover.link}));
   (D.news||[]).forEach((x,i)=>out.push({k:"n"+i,kind:"news",title:x.title,dek:x.summary||x.dek,body:x.body||[x.summary],teams:x.teams||[],players:x.players||[],source:x.source,url:x.url,time:x.time,image:x.image,image_src:x.image_source}));
-  return out.filter(x=>x.kind!=="news"||!x.time||now-newsTime(x)<=3*864e5).sort((a,b)=>newsTime(b)-newsTime(a))}
+  /* свежие новости в течение дня — те же тексты, что уходят в Telegram (news_live.json); утренние с тем же адресом не дублируем */
+  const urls=new Set((D.news||[]).map(x=>x.url).filter(Boolean));
+  (NL||[]).forEach(x=>{if(x.url&&urls.has(x.url))return;const ss=String(x.text||"").split(/(?<=[.!?…])\s+/);
+    out.push({k:"l"+String(x.id||"").replace(/[^a-z0-9]/gi,"").slice(-24),kind:"news",fresh:true,title:x.title,dek:ss[0],body:ss.length>1?[ss.slice(1).join(" ")]:[x.text],teams:x.teams||[],players:[],source:x.source,url:x.url,time:x.time,image:x.image,image_src:x.source})});
+  return out.filter(x=>x.kind!=="news"||!x.time||Math.max(now,Date.now())-newsTime(x)<=3*864e5).sort((a,b)=>newsTime(b)-newsTime(a))}
 function coverHtml(x,cls="cover",withCap=true){const ts=(x.teams||[]).filter(t=>COLORS[t]).slice(0,2);
   if(x.image)return `<div class="${cls}"><img src="${esc(x.image)}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.parentNode.classList.add('art');this.remove()">${withCap?`<span class="cap">Фото: ${esc(x.image_src||x.source||"источник")}</span>`:""}</div>`;
   const [c1,c2]=ts.length===2?pair(ts[0],ts[1]):ts.length?[tdeep(ts[0]),shade(tdeep(ts[0]),.6)]:["#20242B","#30353E"];

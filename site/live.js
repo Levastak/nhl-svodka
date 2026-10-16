@@ -90,6 +90,10 @@ document.addEventListener("visibilitychange",()=>{if(!document.hidden&&Date.now(
     try{BOX=await fetch(DATA+"box.json"+v).then(r=>r.ok?r.json():null);patchFromBox(BOX)}catch(e){}
     rerenderKeep()}catch(e){}
   try{ST=await fetch(DATA+"stories.json"+v).then(r=>r.ok?r.json():[]);ST=(Array.isArray(ST)?ST:ST.stories||[]).slice().sort((a,b)=>String(b.time).localeCompare(String(a.time)));if(ST.length)rerenderKeep()}catch(e){ST=[]}
+  try{const nl=await fetch(DATA+"news_live.json"+v).then(r=>r.ok?r.json():null);NL=(nl&&nl.items)||[];if(NL.length)rerenderKeep()}catch(e){NL=[]}
+  /* свежие новости подтягиваем раз в 10 минут, пока страница открыта */
+  setInterval(async()=>{try{const nl=await fetch(DATA+"news_live.json?v="+Math.floor(Date.now()/6e4)).then(r=>r.ok?r.json():null);const n=(nl&&nl.items)||[];
+    if(JSON.stringify(n.map(x=>x.id+x.title))!==JSON.stringify(NL.map(x=>x.id+x.title))){NL=n;if(["home","news"].includes(VIEW)&&$("#sheet").hidden)rerenderKeep()}}catch(e){}},6e5);
   try{EDGE=await fetch(DATA+"edge.json"+v).then(r=>r.ok?r.json():null);if(EDGE&&VIEW==="home")rerenderKeep()}catch(e){EDGE=null}
   try{openFromHash()}catch(e){}
   liveLoop();

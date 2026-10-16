@@ -186,7 +186,7 @@ function newsBlock(limit){const arts=articles();const col=arts.find(x=>x.kind===
   return `${lead?`<div class="box">${leadCard(lead)}${rest.map(nrow).join("")}</div>`:""}${sty?`<div class="box stm">${leadCard(sty)}</div>`:""}${col?`<div class="box colm">${leadCard(col,true)}</div>`:""}`}
 function newsSec(){const b=newsBlock(5);return b?`<section class="sec"><div class="hd"><h2>Главное</h2><button class="lnk" data-go="news">Все новости</button></div>${b}</section>`:""}
 function storiesList(){const s=articles().filter(x=>x.kind==="story");if(s.length<2)return"";return `<section class="sec"><div class="hd"><h2>История<small>все материалы рубрики</small></h2></div><div class="box">${s.slice(1).map(nrow).join("")}</div></section>`}
-function vNews(){const b=newsBlock(0);return `<div class="col"><section class="sec"><div class="hd"><h1>Новости<small>пересказ по-русски за последние сутки</small></h1></div>${b||'<div class="box empty">Новостей пока нет — они появляются после утреннего обновления.</div>'}</section>${storiesList()}</div>`}
+function vNews(){const b=newsBlock(0);return `<div class="col"><section class="sec"><div class="hd"><h1>Новости<small>пересказ по-русски, обновляется в течение дня</small></h1></div>${b||'<div class="box empty">Новостей пока нет — они появляются после утреннего обновления.</div>'}</section>${storiesList()}</div>`}
 
 /* правая колонка */
 function jAll(){return (D.journal||[]).map(x=>{const lv=typeof liveRes==="function"?liveRes(x):null;return lv&&lv.fin&&!x.result?{...x,result:lv.r}:x})}
