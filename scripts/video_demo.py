@@ -218,5 +218,20 @@ def stage3():
     json.dump(dict(info=info, log=LOG), open(f"{OUT}/stage3.json", "w"), ensure_ascii=False, indent=1)
 
 
+def sheets(ids):
+    media.tools(LOG)
+    for cid in ids:
+        fn = media.clip(cid, TMP)
+        if not fn:
+            LOG["fail"].append(f"clip {cid}"); continue
+        w, h, d = media.probe(fn)
+        sh(f"ffmpeg -y -loglevel error -i {fn} -vf \"fps=1,scale=320:-2,drawtext=text='%{{pts\\:hms}}':x=6:y=6:fontsize=22:fontcolor=yellow:box=1:boxcolor=black,tile=6x{(d // 6) + 1}\" -frames:v 1 {OUT}/sheet_{cid}.jpg")
+    json.dump(dict(log=LOG), open(f"{OUT}/sheets.json", "w"), ensure_ascii=False, indent=1)
+
+
 if __name__ == "__main__":
-    {"stage1": stage1, "stage2": stage2, "stage3": stage3}[sys.argv[1] if len(sys.argv) > 1 else "stage1"]()
+    a = sys.argv[1] if len(sys.argv) > 1 else "stage1"
+    if a.startswith("sheets:"):
+        sheets([int(x) for x in a[7:].split(",") if x])
+    else:
+        {"stage1": stage1, "stage2": stage2, "stage3": stage3}[a]()
