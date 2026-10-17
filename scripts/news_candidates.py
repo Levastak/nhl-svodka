@@ -90,8 +90,16 @@ def main():
         text = f"{x.get('title') or ''}. {x.get('summary') or ''}. {' '.join(x.get('tags') or [])}"
         nt = norm(text)
         hot = bool(re.search(HOT, nt))
-        if x.get("kind") == "recap" and not re.search(r"record|milestone|injur|first", nt):
+        # актуальность (решение Льва 17.10): только свежее (до 18 ч), без пересказов и видео уже обсуждённых матчей
+        try:
+            age_h = (now - dt.datetime.fromisoformat(str(x.get("time")).replace("Z", "+00:00"))).total_seconds() / 3600
+        except Exception:
+            age_h = 0
+        if age_h > 18:
             continue
+        if x.get("kind") == "recap" or re.search(r"goal of|video|highlight|hat trick|hat-trick|game recap|takeaways|observations|rapid reaction|wanted credit|warmup", nt):
+            if not re.search(r"injur|record|milestone|suspen|trade|sign", nt):
+                continue
         if re.search(JUNK, norm(x.get("title") or "")):
             continue
         found = set()
