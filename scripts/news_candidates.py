@@ -55,9 +55,9 @@ def main():
     site_urls = {n.get("url") for n in D.get("news") or []}
     today = now.astimezone(MSK).date()
     hotq = {f"feed:{q.get('id')}" for q in queue if q.get("hot")}
-    fed_today = sum(1 for k, v in P.items() if k.startswith("feed:") and k not in hotq
+    fed_today = sum(1 for k, v in P.items() if k.startswith("feed:")
                     and dt.datetime.fromisoformat(v.replace("Z", "+00:00")).astimezone(MSK).date() == today)
-    queued = [q for q in queue if f"feed:{q.get('id')}" not in P and q.get('tg') is not False and not q.get('hot')]  # ждут выхода в канал и едят лимит
+    queued = [q for q in queue if f"feed:{q.get('id')}" not in P and q.get('tg') is not False]  # ждут выхода в канал и едят лимит (горячие тоже, решение 17.10)
 
     # кто есть кто
     rus = {x["name"] for x in D.get("russians") or []}
@@ -122,13 +122,13 @@ def main():
     left = FEED_CAP - fed_today - len(queued)
     if not cands:
         status = "empty"
-    elif left <= 0 and not any(c["tier"] == 1 or c.get("maybe_hot") and c["tier"] <= 2 for c in cands):
+    elif left <= 0:
         status = "site"  # канал на сегодня полон — пишем только для сайта (tg = false)
     else:
         status = "ok"
     out = dict(t=now.strftime("%Y-%m-%dT%H:%M:%SZ"), status=status, cap=FEED_CAP, posted_today=fed_today, queued_not_posted=len(queued),
                slots_left=max(0, left), msk_now=now.astimezone(MSK).strftime("%H:%M"),
-               recent_titles=[q.get("title") for q in queue[-12:]], morning_site_news=[n.get("title") for n in D.get("news") or []],
+               recent_titles=[q.get("title") for q in queue[-16:]] + [x.get("title") for x in (load(f"{SITE}/stories.json", []) or [])[:4] if isinstance(x, dict)], morning_site_news=[n.get("title") for n in D.get("news") or []],
                candidates=cands)
     json.dump(out, open(f"{TG}/news_candidates.json", "w", encoding="utf-8"), ensure_ascii=False, indent=1)
     print(f"news_candidates: {status}, кандидатов {len(cands)} (уровни {[c['tier'] for c in cands]}), сегодня вышло {fed_today}, в очереди {len(queued)}")

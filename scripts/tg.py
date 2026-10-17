@@ -642,7 +642,8 @@ def build(D, A, M, E, S, N):
 
 import re  # noqa: E402
 
-FEED_CAP = 5  # новостей из ленты в день, кроме горячих (решение Льва 16.10)
+FEED_CAP = 5  # новостей из ленты в день всего, включая горячие (решение Льва 17.10)
+FEED_GAP = 75  # минут между новостями ленты
 
 
 CONF = {"Atlantic": "E", "Metropolitan": "E", "Central": "W", "Pacific": "W"}
@@ -907,13 +908,14 @@ def main(mode, arg=None):
                and (not x.get("needs_tg") or tg_ready or late)]
         # дневные посты, у которых прошло больше 8 часов от срока, не догоняем
         due = [x for x in due if x.get("expires") or (now - x["due"]).total_seconds() < 8 * 3600]
-        # лента новостей: не больше FEED_CAP в день (по Москве); «горячие» и про россиян (hot) — вне лимита и первыми в очереди
+        # лента новостей (решение Льва 17.10): не больше FEED_CAP в день ВСЕГО, включая горячие; hot — только первыми в очереди;
+        # между новостями ленты — не меньше FEED_GAP минут, чтобы утром после тихих часов не было залпа
         today = now.astimezone(MSK).date()
-        hotq = {f"feed:{x.get('id')}" for x in (load(f"{TG}/news_queue.json", {}) or {}).get("items", []) if x.get("hot")}
-        fed = sum(1 for k, v in P.items() if k.startswith("feed:") and k not in hotq  # горячие не съедают лимит
-                  and dt.datetime.fromisoformat(v.replace("Z", "+00:00")).astimezone(MSK).date() == today)
-        if fed >= FEED_CAP:
-            due = [x for x in due if not x["key"].startswith("feed:") or x.get("hot")]
+        feed_t = [dt.datetime.fromisoformat(v.replace("Z", "+00:00")) for k, v in P.items() if k.startswith("feed:")]
+        fed = sum(1 for t in feed_t if t.astimezone(MSK).date() == today)
+        feed_gap = min(((now - t).total_seconds() / 60 for t in feed_t), default=999)
+        if fed >= FEED_CAP or feed_gap < FEED_GAP:
+            due = [x for x in due if not x["key"].startswith("feed:")]
         due.sort(key=lambda x: (not x.get("hot"), x["due"]))
         if due and not state.get("paused"):
             x = due[0]
