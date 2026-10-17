@@ -480,18 +480,26 @@ def build(D, A, M, E, S, N):
                                         vs=dict(n=vs.get("n"), hit=vs.get("model")) if vs.get("n") else None, misses=mrows)]))
     # 3. Цифра дня — отдельной карточкой
     num_d = n.get("number") or {}
-    f = ((E or {}).get("findings") or [None])[0]
-    src = num_d if num_d.get("big") else f
+    # не повторять цифру, уже выходившую в канале (тот же вид находки и тот же клуб/игрок) — решение Льва 17.10
+    hist = [tuple(h) for h in (load(f"{TG}/state.json", {}) or {}).get("num_hist", [])]
+    sig = lambda x: (x.get("kind"), ",".join(x.get("teams") or []) or ",".join(x.get("players") or []))
+    if num_d.get("big") and sig(num_d) in hist:
+        num_d = {}
+    last_kind = hist[-1][0] if hist else None
+    fs = [x for x in (E or {}).get("findings") or [] if sig(x) not in hist]
+    f = next((x for x in fs if x.get("kind") != last_kind), fs[0] if fs else None)
+    src = num_d if num_d.get("big") and sig(num_d) not in hist else f
     if src and src.get("big") and rd:
         pl = (src.get("players") or [None])[0]
-        body = tgv(D, "number", rd) or num_d.get("text") or (f or {}).get("line")
+        body = ((tgv(D, "number", rd) or num_d.get("text")) if src is num_d else None) or (f or {}).get("line")
         head_t = num_d.get("head") or src.get("head")
         when = f"По матчам до {ru_date(src['date'])}." if src.get("date") and src.get("date") != rd else ""
         txt = f"<b>Цифра дня — {e(src['big'])}{e(src.get('unit') or '')}. {e(head_t)}</b>\n\n{e(body)}" + (f"\n\n<i>{when} Данные — трекинг НХЛ EDGE.</i>" if when else "\n\n<i>Данные — трекинг НХЛ EDGE.</i>")
         spec = dict(kind="number", big=src["big"], unit=src.get("unit"), sub=src.get("sub"), head=head_t, teams=src.get("teams"),
                     player=N.full(pl) if pl else None, head_path=head_path(D, pl) if pl else None,
                     date=f"по матчам до {ru_date(src['date'])}" if src.get("date") else "")
-        out.append(dict(key=f"number:{rd}", due=msk(rd, 12, 0) + dt.timedelta(days=1), text=txt + FOOT, specs=[spec], needs_tg=True))
+        out.append(dict(key=f"number:{rd}", due=msk(rd, 12, 0) + dt.timedelta(days=1), text=txt + FOOT, specs=[spec], needs_tg=True,
+                        num_sig=list(sig(src))))
     # 4. Главная новость — фото из статьи (не пересказ матча, если есть; иначе — выбор Claude)
     pick = tgv(D, "news", rd)
     item = None
@@ -809,6 +817,8 @@ def main(mode, arg=None):
                 ids = send(chat, x["text"], images=imgs[:1], photo_url=None if imgs and imgs[0] else x.get("photo"))
             P[x["key"]] = LOG["t"]
             MSG[x["key"]] = ids
+            if x.get("num_sig"):
+                state["num_hist"] = (state.get("num_hist") or [])[-6:] + [x["num_sig"]]
             state["last_post"] = dt.datetime.now(dt.timezone.utc).isoformat()
             LOG["ok"].append(x["key"])
         except Exception as ex:
