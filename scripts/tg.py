@@ -544,7 +544,7 @@ def build(D, A, M, E, S, N):
         # превью — в 19:00, но не позже чем за 3 часа до первого матча (в выходные дневные игры), не раньше 12:00 (решение Льва 17.10)
         first_all = min(dt.datetime.fromisoformat(u["start"].replace("Z", "+00:00")) for u in ups)
         base = max(msk(ud, 12, 0), min(msk(ud, 19, 0), first_all - dt.timedelta(hours=3)))
-        prev_end = base + (dt.timedelta(minutes=30 * (len(ups) - 1)) if len(ups) <= 4 else dt.timedelta(minutes=45))
+        prev_end = base + dt.timedelta(minutes=30 * ((len(ups) - 1) if len(ups) <= 4 else (len(ups) + 3) // 5))
         night = f"в ночь на {ru_date((dt.date.fromisoformat(ud) + dt.timedelta(days=1)).isoformat())}"
 
         def spec_for(u, gi):
@@ -577,25 +577,40 @@ def build(D, A, M, E, S, N):
                 out.append(dict(key=f"game:{ud}:{u['id']}", due=min(base + dt.timedelta(minutes=30 * i), start - dt.timedelta(minutes=60)),
                                 expires=start, text=txt + FOOT, specs=[spec_for(u, gi)]))
         else:
-            half = (len(ups) + 1) // 2
-            for k, part in enumerate((ups[:half], ups[half:])):
-                L = [f"<b>Матчи {night}</b>", ""]
+            # много матчей (решение Льва 17.10): матч дня — отдельной карточкой, остальные — по времени, по 5 в пост, у каждого короткая строка
+            short = tgv(D, "games_short") or {}
+            m_ups = [u for u in ups if is_m(u)][:1]
+            rest = sorted([u for u in ups if u not in m_ups], key=lambda u: u["start"])
+            for u in m_ups:
+                gi = game_info(u, M)
+                body = tgg.get(str(u["id"])) or (motd.get("text") or "")
+                pred = f"Прогноз модели: {T(gi['pick'])}" + (f", {pct(gi['p'])}" if gi["p"] else "")
+                if gi["tot"]:
+                    pred += f"; тотал — {gi['tot']}"
+                pred += ". " + ("Рынок с ней не согласен." if gi["v"].get("vs_market") else "Рынок согласен.") if gi["m"].get("mkt_home") else "."
+                head_t = f"Матч дня: {RU.get(u['home'])} — {RU.get(u['away'])}, {tmsk(u)} мск"
+                txt = f"<b>{e(head_t)}</b>\n\n{e(body)}\n\n{e(pred)}\n\n👉 <b><a href=\"{URL}#games\">Как считала модель</a></b>"
+                start = dt.datetime.fromisoformat(u["start"].replace("Z", "+00:00"))
+                out.append(dict(key=f"game:{ud}:{u['id']}", due=min(base, start - dt.timedelta(minutes=60)), expires=start, text=txt + FOOT,
+                                specs=[spec_for(u, gi)]))
+            chunks = [rest[i:i + 5] for i in range(0, len(rest), 5)]
+            for k, part in enumerate(chunks):
+                t0, t1 = tmsk(part[0]), tmsk(part[-1])
+                L = [f"<b>Матчи {night}" + (f" · {t0}–{t1}" if t0 != t1 else f" · {t0}") + " мск</b>", ""]
                 lead = tgv(D, "games_lead") if k == 0 else None
                 if lead:
                     L += [e(lead), ""]
                 for u in part:
                     gi = game_info(u, M)
-                    L.append(f"<b>{e(RU.get(u['home']))} — {e(RU.get(u['away']))}</b>, {tmsk(u)} мск" + (" — матч дня" if is_m(u) else ""))
-                    note = tgg.get(str(u["id"]))
-                    L.append(e(note) if note else f"Модель за {e(T(gi['pick']))}" + (f" ({pct(gi['p'])})" if gi["p"] else "") + ".")
+                    L.append(f"<b>{e(RU.get(u['home']))} — {e(RU.get(u['away']))}</b>, {tmsk(u)}")
+                    note = short.get(str(u["id"]))
+                    mline = f"Модель за {T(gi['pick'])}" + (f", {pct(gi['p'])}" if gi["p"] else "") + "."
+                    L.append(e(note) if note else e(mline))
                     L.append("")
                 L.append(f"👉 <b><a href=\"{URL}#games\">Прогнозы модели и разборы</a></b>")
-                text = "\n".join(L)
-                if len(re.sub("<[^>]+>", "", text + FOOT)) > 1024:
-                    text = "\n".join(x for x in L if not x or x.startswith("<b>") or x.startswith("<a"))
                 first = min(dt.datetime.fromisoformat(u["start"].replace("Z", "+00:00")) for u in part)
-                out.append(dict(key=f"games:{ud}:{k}", due=min(base + dt.timedelta(minutes=45 * k), first - dt.timedelta(minutes=60)),
-                                expires=first, text=text + FOOT, specs=[spec_for(part[0], game_info(part[0], M))]))
+                out.append(dict(key=f"gl:{ud}:{k}", due=min(base + dt.timedelta(minutes=30 * (k + (1 if m_ups else 0))), first - dt.timedelta(minutes=60)),
+                                expires=first, text="\n".join(L) + FOOT, specs=[spec_for(part[0], game_info(part[0], M))]))
     # 7а. Модель против рынка — через 30 минут после превью (решение Льва 17.10; раньше было 18:30 до превью), только если в матчах вечера модель спорит с рынком (решение Льва 16.10)
     if ups:
         vsm = vs_market_rows(ups, M)
