@@ -541,7 +541,10 @@ def build(D, A, M, E, S, N):
         is_m = lambda u: motd.get("away") == u["away"] and motd.get("home") == u["home"]
         ups = sorted(ups, key=lambda u: (not is_m(u), u["start"]))
         tgg = tgv(D, "games") or {}
-        base = msk(ud, 19, 0)
+        # превью — в 19:00, но не позже чем за 3 часа до первого матча (в выходные дневные игры), не раньше 12:00 (решение Льва 17.10)
+        first_all = min(dt.datetime.fromisoformat(u["start"].replace("Z", "+00:00")) for u in ups)
+        base = max(msk(ud, 12, 0), min(msk(ud, 19, 0), first_all - dt.timedelta(hours=3)))
+        prev_end = base + (dt.timedelta(minutes=30 * (len(ups) - 1)) if len(ups) <= 4 else dt.timedelta(minutes=45))
         night = f"в ночь на {ru_date((dt.date.fromisoformat(ud) + dt.timedelta(days=1)).isoformat())}"
 
         def spec_for(u, gi):
@@ -593,7 +596,7 @@ def build(D, A, M, E, S, N):
                 first = min(dt.datetime.fromisoformat(u["start"].replace("Z", "+00:00")) for u in part)
                 out.append(dict(key=f"games:{ud}:{k}", due=min(base + dt.timedelta(minutes=45 * k), first - dt.timedelta(minutes=60)),
                                 expires=first, text=text + FOOT, specs=[spec_for(part[0], game_info(part[0], M))]))
-    # 7а. Модель против рынка — перед превью (18:30 мск), только если в матчах вечера модель спорит с рынком (решение Льва 16.10)
+    # 7а. Модель против рынка — через 30 минут после превью (решение Льва 17.10; раньше было 18:30 до превью), только если в матчах вечера модель спорит с рынком (решение Льва 16.10)
     if ups:
         vsm = vs_market_rows(ups, M)
         if vsm and tgv(D, "vs_market"):  # без разбора Opus пост не выходит — голые проценты без «почему» не нужны
@@ -602,7 +605,7 @@ def build(D, A, M, E, S, N):
             body = tgv(D, "vs_market")
             head_t = "Модель против рынка" + (f" · в спорах сезона права в {rec[0]} из {rec[1]}" if rec and rec[1] else "")
             txt = f"<b>{e(head_t)}</b>\n\n{e(body)}\n\n👉 <b><a href=\"{URL}#games\">Как считала модель</a></b>"
-            out.append(dict(key=f"vsm:{ud}", due=min(msk(ud, 18, 30), first - dt.timedelta(minutes=90)), expires=first, text=txt + FOOT,
+            out.append(dict(key=f"vsm:{ud}", due=min(prev_end + dt.timedelta(minutes=30), first - dt.timedelta(minutes=20)), expires=first, text=txt + FOOT,
                             specs=[dict(kind="vsmarket", date=night, rows=vsm, rec=rec)]))
     # 7б. Видео ночи — официальные клипы НХЛ (склейка хет-трика, голы в ОТ и в концовке): 11:00, 14:30, 17:30
     hl = D.get("highlights") or {}
