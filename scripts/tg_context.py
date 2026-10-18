@@ -126,7 +126,7 @@ def main():
     # по понедельникам (results_date — воскресенье): честный счёт модели за неделю для tg.model_week
     import datetime as _dt
     W = load(f"{SITE}/weekly.json", {}) or {}
-    if rd and W.get("to") == rd and _dt.date.fromisoformat(rd).weekday() == 6:
+    if rd and W.get("to") == rd and W.get("complete") is True and _dt.date.fromisoformat(rd).weekday() == 6:
         ag = {g["id"]: g for g in A.get("games", [])}
         byteams = {(g["date"], g["home"], g["away"]): g for g in A.get("games", [])}
         J = [x for x in D.get("journal") or [] if W["from"] <= (x.get("date") or "") <= rd and x.get("type") in ("win", "total") and x.get("result") in ("hit", "miss")]

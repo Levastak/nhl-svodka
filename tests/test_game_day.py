@@ -13,6 +13,7 @@ from game_day import day_complete, daily_ready, score_status
 import texts
 import tg
 import fetch
+import weekly
 
 DAY = "2026-10-17"
 
@@ -183,6 +184,26 @@ class GameDayRules(unittest.TestCase):
                 self.assertFalse(any(x["key"].startswith("number:") for x in tg.build(d, a, {}, edge, [], tg.Names())))
                 edge["findings"][0]["date"] = "2026-10-16"
                 self.assertTrue(any(x["key"].startswith("number:") for x in tg.build(d, a, {}, edge, [], tg.Names())))
+
+    def test_weekly_summary_waits_for_the_entire_last_day(self):
+        d, a, b = fixture()
+        with tempfile.TemporaryDirectory() as tmp:
+            site = Path(tmp, "site");site.mkdir()
+            for file, value in [("data",d),("archive",a),("box",b),("model",{})]:
+                Path(site, file+".json").write_text(json.dumps(value))
+            old = '{"to":"2026-10-16"}'
+            Path(site, "weekly.json").write_text(old)
+            partial = copy.deepcopy(a);partial["games"].pop()
+            Path(site, "archive.json").write_text(json.dumps(partial))
+            weekly.run(dict(ok=[],fail=[]), str(site), tmp)
+            self.assertEqual(Path(site, "weekly.json").read_text(), old)
+            Path(site, "archive.json").write_text(json.dumps(a))
+            with patch.object(weekly, "goalie_lines", return_value={}):
+                weekly.run(dict(ok=[],fail=[]), str(site), tmp)
+            result = json.loads(Path(site, "weekly.json").read_text())
+            self.assertTrue(result["complete"])
+            self.assertEqual(result["games"], 2)
+            self.assertEqual(result["to"], DAY)
 
 
 if __name__ == "__main__":

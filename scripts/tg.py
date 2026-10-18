@@ -465,7 +465,7 @@ def build(D, A, M, E, S, N):
                             specs=[dict(kind="russians", date=ru_date(rd), rows=rows, rest=rest_txt)]))
     # 2в. По понедельникам — честный счёт модели за неделю (решение Льва 16.10): итог и самые обидные промахи, текст — Opus (tg.model_week)
     wk = load(f"{SITE}/weekly.json", {}) or {}
-    if rd and wk.get("to") == rd and dt.date.fromisoformat(rd).weekday() == 6:
+    if rd and wk.get("to") == rd and wk.get("complete") is True and dt.date.fromisoformat(rd).weekday() == 6:
         mod = wk.get("model") or {}
         J = [x for x in D.get("journal") or [] if wk["from"] <= (x.get("date") or "") <= rd and x.get("type") in ("win", "total")]
         misses = sorted([x for x in J if x.get("result") == "miss"], key=lambda x: (x.get("type") != "win", x.get("odds") or 9))
@@ -528,6 +528,8 @@ def build(D, A, M, E, S, N):
         out.append(dict(key=f"news:{item.get('url')}", due=msk(rd, 13, 30) + dt.timedelta(days=1), text=txt + FOOT, photo=item["image"], needs_tg=True))
     # 5. Колонка / «Под микроскопом» / «Итоги недели»
     col = next((a for a in D.get("articles") or [] if (a.get("kind") or "column") == "column"), None)
+    if col and col.get("kicker") == "Итоги недели" and (not day_complete(D, A, rd, box) or wk.get("to") != rd or wk.get("complete") is not True):
+        col = None
     if col and col.get("time"):
         kick = col.get("kicker") if col.get("kicker") and col.get("kicker") != "Колонка Claude" else "Колонка"
         body = tgv(D, "column", rd) or col.get("dek")

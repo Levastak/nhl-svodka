@@ -15,6 +15,7 @@ import os
 import subprocess
 import sys
 import tempfile
+from game_day import day_complete
 
 
 def _load(p, d=None):
@@ -105,6 +106,9 @@ def goalie_lines(ROOT, SITE):
 def run(LOG, SITE, ROOT):
     data = _load(f"{SITE}/data.json", {})
     archive = _load(f"{SITE}/archive.json", {"games": []})
+    if not day_complete(data, archive, box=_load(f"{SITE}/box.json", {}) or {}):
+        LOG["ok"].append("weekly: последний игровой день не завершён или протоколы неполные; итоги отложены")
+        return
     model = _load(f"{SITE}/model.json", {})
     games_all = [g for g in archive.get("games", []) if g.get("as") is not None]
     if not games_all:
@@ -113,7 +117,7 @@ def run(LOG, SITE, ROOT):
     d_to = dt.date.fromisoformat(last)
     d_from = (d_to - dt.timedelta(days=6)).isoformat()
     wk = [g for g in games_all if d_from <= g["date"] <= last]
-    out = dict(t=dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"), **{"from": d_from, "to": last}, games=len(wk))
+    out = dict(t=dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"), **{"from": d_from, "to": last}, games=len(wk), complete=True)
 
     # клубы: результаты недели
     teams = {}
