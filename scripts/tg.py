@@ -328,6 +328,9 @@ def match_note(gs, t):
 
 def col_photo(col, news):
     """Фото к колонке: из статьи NHL.com о матче одного из героев колонки (по players, затем по клубам)."""
+    if col.get("image"):
+        return dict(photo=col["image"], photo_big=col["image"],
+                    credit=col.get("image_source") or col.get("source") or "NHL.com")
     pl = col.get("players") or []
     for name in pl:
         for x in news:
