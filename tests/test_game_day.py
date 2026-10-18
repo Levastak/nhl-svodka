@@ -141,6 +141,49 @@ class GameDayRules(unittest.TestCase):
             self.assertEqual(saved["upcoming"], d["upcoming"])
             self.assertEqual(saved["final"], d["final"])
 
+    def test_missing_protocol_is_retried_even_when_all_scores_are_already_archived(self):
+        d, a, b = fixture()
+        missing = b["games"].pop()
+        with patch.object(fetch, "game_extras", return_value=missing["players"]) as retry:
+            fixed, repaired = fetch.repair_protocols(d, a, b)
+            self.assertTrue(repaired)
+            retry.assert_called_once()
+            self.assertEqual(retry.call_args.args[0], missing["id"])
+            self.assertTrue(day_complete(d, a, box=fixed))
+            self.assertFalse(fetch.repair_protocols(d, a, fixed)[1])
+            self.assertEqual(retry.call_count, 1)
+
+    def test_failed_protocol_retry_keeps_the_day_closed(self):
+        d, a, b = fixture()
+        b["games"][1]["players"] = []
+        with patch.object(fetch, "game_extras", return_value=[]), patch.object(fetch, "LOG", dict(ok=[], fail=[])):
+            fixed, repaired = fetch.repair_protocols(d, a, b)
+            self.assertFalse(repaired)
+            self.assertFalse(day_complete(d, a, box=fixed))
+            self.assertTrue(fetch.LOG["fail"])
+
+    def test_edge_age_is_checked_before_a_fallback_number_is_built(self):
+        now = dt.datetime(2026, 10, 18, 9, tzinfo=dt.timezone.utc)
+        class Clock(dt.datetime):
+            @classmethod
+            def now(cls, tz=None):
+                return now.astimezone(tz) if tz else now.replace(tzinfo=None)
+        with patch.object(tg.dt, "datetime", Clock):
+            self.assertTrue(tg.edge_fresh(dict(date="2026-10-13"), DAY))
+            self.assertFalse(tg.edge_fresh(dict(date="2026-10-12"), DAY))
+            self.assertFalse(tg.edge_fresh(dict(date="2026-10-18"), DAY))
+            self.assertFalse(tg.edge_fresh({}, DAY))
+            # An old results_date cannot make an old finding fresh again.
+            self.assertFalse(tg.edge_fresh(dict(date="2026-10-10"), "2026-10-10"))
+            d, a, b = fixture()
+            texts.refresh_daily(d, a, b)
+            with tempfile.TemporaryDirectory() as tmp, patch.object(tg, "SITE", tmp), patch.object(tg, "TG", tmp):
+                Path(tmp, "box.json").write_text(json.dumps(b))
+                edge = dict(findings=[dict(kind="zone", date="2026-10-12", big="999", head="Старое число", line="Старые данные")])
+                self.assertFalse(any(x["key"].startswith("number:") for x in tg.build(d, a, {}, edge, [], tg.Names())))
+                edge["findings"][0]["date"] = "2026-10-16"
+                self.assertTrue(any(x["key"].startswith("number:") for x in tg.build(d, a, {}, edge, [], tg.Names())))
+
 
 if __name__ == "__main__":
     unittest.main()

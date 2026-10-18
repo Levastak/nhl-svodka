@@ -350,6 +350,15 @@ def tgv(D, k, day=None):
     return t.get(k)
 
 
+def edge_fresh(finding, day):
+    try:
+        ref = max(dt.date.fromisoformat(day), dt.datetime.now(MSK).date() - dt.timedelta(days=1))
+        age = (ref - dt.date.fromisoformat(finding.get("date") or "")).days
+        return 0 <= age <= 4
+    except (TypeError, ValueError):
+        return False
+
+
 def head_path(D, name):
     return (D.get("heads") or {}).get(name)
 
@@ -482,13 +491,15 @@ def build(D, A, M, E, S, N):
                                         vs=dict(n=vs.get("n"), hit=vs.get("model")) if vs.get("n") else None, misses=mrows)]))
     # 3. Цифра дня — отдельной карточкой
     num_d = n.get("number") or {}
+    if not edge_fresh(num_d, rd):
+        num_d = {}
     # не повторять цифру, уже выходившую в канале (тот же вид находки и тот же клуб/игрок) — решение Льва 17.10
     hist = [tuple(h) for h in (load(f"{TG}/state.json", {}) or {}).get("num_hist", [])]
     sig = lambda x: (x.get("kind"), ",".join(x.get("teams") or []) or ",".join(x.get("players") or []))
     if num_d.get("big") and sig(num_d) in hist:
         num_d = {}
     last_kind = hist[-1][0] if hist else None
-    fs = [x for x in (E or {}).get("findings") or [] if sig(x) not in hist]
+    fs = [x for x in (E or {}).get("findings") or [] if sig(x) not in hist and edge_fresh(x, rd)]
     f = next((x for x in fs if x.get("kind") != last_kind), fs[0] if fs else None)
     src = num_d if num_d.get("big") and sig(num_d) not in hist else f
     if src and src.get("big") and rd:

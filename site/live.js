@@ -76,7 +76,27 @@ function liveBlock(m,L){const S=LSUM[L.id];const title=L.state==="in"?`<span cla
      ${S.goalies.length?`<h4>Вратари</h4><ul class="ul">${S.goalies.map(g=>`<li><b>${pref(g.name,g.team)}</b> (${EN[g.team]||g.team}) — ${g.sv} из ${g.sa}${g.pct?`, ${esc(g.pct)}`:""}</li>`).join("")}</ul>`:""}
      ${top.length?`<h4>Лучшие в матче</h4>${top.map(p=>`<div class="lr" style="padding:6px 0;border:0;grid-template-columns:minmax(0,1fr) auto"><span class="who">${photo(findP(p.name,p.team)||p.name,p.team,46)}<span class="nm2"><span>${pref(p.name,p.team)}${posTag(findP(p.name,p.team)||p.name)}</span><small>${EN[p.team]||p.team} · бросков ${p.sog}${p.toi?` · ${esc(p.toi)} на льду`:""}</small></span></span><span class="v">${gaHtml(p.g,p.a)}</span></div>`).join("")}`:""}</div>`}
 function liveLoop(){clearInterval(LTIMER);LTIMER=setInterval(()=>poll(false),25000);poll(false)}
-document.addEventListener("visibilitychange",()=>{if(!document.hidden&&Date.now()-LAST_POLL>20000)poll(false)});
+document.addEventListener("visibilitychange",()=>{if(!document.hidden){if(Date.now()-LAST_POLL>20000)poll(false);refreshSnapshot()}});
+
+/* Refresh the published snapshot together; live scores cannot update day summaries. */
+let SNAP_VERSION=null,SNAP_LOADING=false;
+async function refreshSnapshot(){
+  if(!D||SNAP_LOADING||document.hidden||!$("#sheet").hidden)return false;
+  SNAP_LOADING=true;
+  const version=async()=>{const r=await fetch(DATA+"version.txt?t="+Date.now(),{cache:"no-store"});if(!r.ok)throw Error("version");return (await r.text()).trim()};
+  try{
+    const v=await version();if(!v||v===SNAP_VERSION)return false;
+    const files=["data","archive","box","model","names_ru","edge","stories","news_live"];
+    const [d,a,b,m,n,e,s,nl]=await Promise.all(files.map(async f=>{const r=await fetch(DATA+f+".json?v="+encodeURIComponent(v),{cache:"no-store"});if(!r.ok)throw Error(f);return r.json()}));
+    if(await version()!==v||!d||!Array.isArray(a.games)||!Array.isArray(b.games)||!Array.isArray(m.games))return false;
+    if(D.upcoming_date!==d.upcoming_date){for(const x of [LIVE,LSUM,LSUMT])for(const k in x)delete x[k]}
+    D=d;A=a;BOX=b;M=m;RUN=n||{};EDGE=e;NL=(nl&&nl.items)||[];
+    ST=(Array.isArray(s)?s:s.stories||[]).slice().sort((a,b)=>String(b.time).localeCompare(String(a.time)));
+    RUNN=null;NUMN=null;HEADN=null;_PID=null;SIDX=null;
+    LOGO={};for(const row of D.standings||[])if(row.logo)LOGO[row.abbr]=row.logo;
+    patchFromBox(BOX);buildTeams();SNAP_VERSION=v;rerenderKeep();return true;
+  }catch(e){return false}finally{SNAP_LOADING=false}
+}
 
 /* ---------- запуск ---------- */
 (async function(){
@@ -91,12 +111,10 @@ document.addEventListener("visibilitychange",()=>{if(!document.hidden&&Date.now(
     rerenderKeep()}catch(e){}
   try{ST=await fetch(DATA+"stories.json"+v).then(r=>r.ok?r.json():[]);ST=(Array.isArray(ST)?ST:ST.stories||[]).slice().sort((a,b)=>String(b.time).localeCompare(String(a.time)));if(ST.length)rerenderKeep()}catch(e){ST=[]}
   try{const nl=await fetch(DATA+"news_live.json"+v).then(r=>r.ok?r.json():null);NL=(nl&&nl.items)||[];if(NL.length)rerenderKeep()}catch(e){NL=[]}
-  /* свежие новости подтягиваем раз в 10 минут, пока страница открыта */
-  setInterval(async()=>{try{const nl=await fetch(DATA+"news_live.json?v="+Math.floor(Date.now()/6e4)).then(r=>r.ok?r.json():null);const n=(nl&&nl.items)||[];
-    if(JSON.stringify(n.map(x=>x.id+x.title))!==JSON.stringify(NL.map(x=>x.id+x.title))){NL=n;if(["home","news"].includes(VIEW)&&$("#sheet").hidden)rerenderKeep()}}catch(e){}},6e5);
   try{EDGE=await fetch(DATA+"edge.json"+v).then(r=>r.ok?r.json():null);if(EDGE&&VIEW==="home")rerenderKeep()}catch(e){EDGE=null}
   try{openFromHash()}catch(e){}
   liveLoop();
+  refreshSnapshot();setInterval(refreshSnapshot,60000);
   setInterval(()=>{if(["home","games"].includes(VIEW)&&$("#sheet").hidden&&!needLive())rerenderKeep()},60000);
 })();
 /* прямые ссылки на статьи (из Telegram-канала): #a=col — свежая колонка, #a=s<id> — статья «Истории» */

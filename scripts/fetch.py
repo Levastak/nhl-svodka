@@ -178,6 +178,31 @@ def game_extras(gid, rec, idname):
     return players
 
 
+def repair_protocols(data, archive, box, idname=None):
+    """An archived final can still be missing its player boxscore after an API failure."""
+    day = data.get("results_date")
+    if box.get("date") != day:
+        box = dict(date=day, games=[])
+    by_id = {g["id"]: g for g in box.get("games", [])}
+    names = {int(str(path).rsplit("/", 1)[-1]): name for name, path in (data.get("heads") or {}).items()
+             if str(path).rsplit("/", 1)[-1].isdigit()}
+    names.update(idname or {})
+    repaired = False
+    for rec in archive.get("games", []):
+        if rec.get("date") != day or (by_id.get(rec["id"]) or {}).get("players"):
+            continue
+        players = game_extras(rec["id"], rec, names)
+        if not players:
+            LOG["fail"].append(f"протокол {rec['id']}: статистика игроков пока недоступна")
+            continue
+        by_id[rec["id"]] = dict(id=rec["id"], away=rec["away"], home=rec["home"],
+                                score=f'{rec["as"]}:{rec["hs"]}', end=rec["end"],
+                                stars=rec.get("stars", []), players=players)
+        repaired = True
+    box["games"] = list(by_id.values())
+    return box, repaired
+
+
 def update_archive(archive, yesterday, idname, data=None):
     have = {g["id"] for g in archive["games"]}
     last = max((g["date"] for g in archive["games"]), default=yesterday)
@@ -593,7 +618,10 @@ def am():
         save(f"{SITE}/box.json", dict(date=yesterday, games=box))
     LOG["ok"].append(f"archive +{len(box)}")
     data["results_date"] = yesterday
-    refresh_daily(data, archive, load(f"{SITE}/box.json", {}))
+    protocols, repaired = repair_protocols(data, archive, load(f"{SITE}/box.json", {}), idname)
+    if repaired:
+        save(f"{SITE}/box.json", protocols)
+    refresh_daily(data, archive, protocols)
 
     st = standings()
     if st:
@@ -979,8 +1007,12 @@ def night():
         rd = data.get("results_date")
         if rd in statuses:
             data["results_status"] = statuses[rd]
-        changed = refresh_daily(data, archive, load(f"{SITE}/box.json", {}))
-        changed = changed or data.get("results_status") != old_status
+        protocols, repaired = repair_protocols(data, archive, load(f"{SITE}/box.json", {}))
+        if repaired:
+            save(f"{SITE}/box.json", protocols)
+            save(f"{SITE}/archive.json", archive)
+        changed = refresh_daily(data, archive, protocols)
+        changed = changed or repaired or data.get("results_status") != old_status
         if changed:
             data["generated"] = iso()
             save(f"{SITE}/data.json", data)
@@ -1000,11 +1032,12 @@ def night():
             box = [b for b in box if b["id"] != rec["id"]] + [dict(id=rec["id"], away=rec["away"], home=rec["home"],
                    score=f'{rec["as"]}:{rec["hs"]}', end=rec["end"], stars=rec.get("stars", []), players=players)]
     archive["games"].sort(key=lambda g: (g["date"], g["id"]))
-    save(f"{SITE}/box.json", dict(date=slate, games=box))
     data["results_date"] = slate
     if slate in statuses:
         data["results_status"] = statuses[slate]
-    refresh_daily(data, archive, dict(date=slate, games=box))
+    protocols, _ = repair_protocols(data, archive, dict(date=slate, games=box), idname)
+    save(f"{SITE}/box.json", protocols)
+    refresh_daily(data, archive, protocols)
     st = standings()
     if st:
         data["standings"] = st
