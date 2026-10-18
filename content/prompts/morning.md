@@ -46,7 +46,7 @@ data.news = [{"title" (живой заголовок до ~90 знаков, фа
 
 ШАГ 5. Тексты.
 a) Для каждой игры archive.json с date = results_date и пустым "recap" (или с recap от скрипта, если есть auto_texts): recap — 2–3 предложения по-русски: кто решил матч, ключевые цифры, вратари, контекст. Бери из archive (goals, stats, stars) и box.json. Фамилии только кириллицей и по словарю — без латиницы.
-b) data.daily (по box.json и archive за results_date):
+b) data.daily (по box.json и archive за results_date): перед выбором героев обязательна проверка game_day.day_complete(data, archive, results_date, box) из scripts/game_day.py; false — итоговые номинации пока не писать. При true выбрать героев заново по всем играм и протоколам этой даты. Техническое поле data.results_status заполняет сборщик, его не редактировать.
 {"date",
  "heroes":[ТРИ ЗВЕЗДЫ ДНЯ — ровно 3 лучших игрока ночи по вкладу во всех матчах, 1-я, 2-я, 3-я по порядку; учитывай голы, передачи, победные голы, вратарей с 30+ сейвами и % отражённых, +/−, вес матча: {"name" (полное имя как в box.json),"team","pos","line":"2+3" (вратарю — "34 из 35"),"text":"1–2 предложения"}],
  "best_team":{"abbr","text"}, "goalie":{"name","team","pos":"G","line":"34 из 35","text"},

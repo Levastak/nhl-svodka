@@ -13,6 +13,8 @@
 import csv, io, json, os, re, sys, time, unicodedata, urllib.error, urllib.request
 import datetime as dt
 from zoneinfo import ZoneInfo
+from game_day import score_status
+from texts import refresh_daily
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE = os.path.join(ROOT, "site")
@@ -176,7 +178,7 @@ def game_extras(gid, rec, idname):
     return players
 
 
-def update_archive(archive, yesterday, idname):
+def update_archive(archive, yesterday, idname, data=None):
     have = {g["id"] for g in archive["games"]}
     last = max((g["date"] for g in archive["games"]), default=yesterday)
     d = dt.date.fromisoformat(last)
@@ -185,6 +187,9 @@ def update_archive(archive, yesterday, idname):
     while d <= end:
         day = d.isoformat()
         s, _ = get(f"https://api-web.nhle.com/v1/score/{day}", label=f"score {day}")
+        status = score_status(day, s)
+        if day == yesterday and status is not None and data is not None:
+            data["results_status"] = status
         for g in (s or {}).get("games", []):
             if g.get("gameType") not in (2, 3) or g.get("gameState") not in ("OFF", "FINAL"):
                 continue
@@ -574,7 +579,7 @@ def am():
     if skaters:
         data["skaters"], data["goalies"], data["leaders"] = skaters, goalies, leaders(skaters)
         LOG["ok"].append("club-stats")
-    box = update_archive(archive, yesterday, idname)
+    box = update_archive(archive, yesterday, idname, data)
     cur = load(f"{SITE}/box.json", {})
     if box and cur.get("date") == yesterday:   # часть матчей уже добавил ночной сбор
         ids = {b["id"] for b in box}
@@ -588,6 +593,7 @@ def am():
         save(f"{SITE}/box.json", dict(date=yesterday, games=box))
     LOG["ok"].append(f"archive +{len(box)}")
     data["results_date"] = yesterday
+    refresh_daily(data, archive, load(f"{SITE}/box.json", {}))
 
     st = standings()
     if st:
@@ -957,16 +963,29 @@ def night():
     archive = load(f"{SITE}/archive.json", {"season": "2026-27", "games": []})
     have = {g["id"] for g in archive["games"]}
     now_et = now_utc().astimezone(ET)
+    old_status = data.get("results_status")
+    statuses = {}
     new = []
     for d in (now_et.date() - dt.timedelta(days=1), now_et.date()):
         day = d.isoformat()
         sc, _ = get(f"https://api-web.nhle.com/v1/score/{day}", label=f"score {day}")
+        status = score_status(day, sc)
+        if status is not None:
+            statuses[day] = status
         for g in (sc or {}).get("games", []):
             if g.get("gameType") in (2, 3) and g.get("gameState") in ("OFF", "FINAL") and g["id"] not in have:
                 new.append((day, g))
     if not new:
+        rd = data.get("results_date")
+        if rd in statuses:
+            data["results_status"] = statuses[rd]
+        changed = refresh_daily(data, archive, load(f"{SITE}/box.json", {}))
+        changed = changed or data.get("results_status") != old_status
+        if changed:
+            data["generated"] = iso()
+            save(f"{SITE}/data.json", data)
         LOG["ok"].append("night: новых матчей нет")
-        return False
+        return changed
     skaters, goalies, idname = club_stats()
     if skaters:
         data["skaters"], data["goalies"], data["leaders"] = skaters, goalies, leaders(skaters)
@@ -983,6 +1002,9 @@ def night():
     archive["games"].sort(key=lambda g: (g["date"], g["id"]))
     save(f"{SITE}/box.json", dict(date=slate, games=box))
     data["results_date"] = slate
+    if slate in statuses:
+        data["results_status"] = statuses[slate]
+    refresh_daily(data, archive, dict(date=slate, games=box))
     st = standings()
     if st:
         data["standings"] = st

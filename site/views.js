@@ -135,6 +135,23 @@ function nightSec(){const d=lastDate();if(!d)return"";/* пока идёт иг�
   return `<section class="sec"><div class="hd"><h2>Ночь<small>${esc(dLong(d))}</small></h2><button class="lnk" data-go="results">Итоги и протоколы</button></div>
     <div class="box"><div class="scores">${gs.map(g=>{const aw=g.as>g.hs;return `<button class="sc1" data-res="${g.date}" data-gid="${g.id}"><span class="r ${aw?"":"lo"}">${logo(g.away,34)}<i class="nm">${EN[g.away]}</i><b>${g.as}</b></span><span class="r ${aw?"lo":""}">${logo(g.home,34)}<i class="nm">${EN[g.home]}</i><b>${g.hs}</b></span>${endTag(g.end)?`<small>${endLong(g.end)}</small>`:""}</button>`}).join("")}</div></div></section>`}
 
+/* Only an archived full slate is a day result; wall-clock estimates never close it. */
+function dayComplete(day,withBox=false){
+  if(!day)return false;
+  const status=D.results_status||{},official=status.date===day;
+  const ids=new Set(official?(status.scheduled_ids||[]):[...(D.week||[]),...(D.upcoming||[])].filter(g=>g.date===day).map(g=>g.id));
+  if(!ids.size)return false;
+  if(official){const done=new Set(status.finished_ids||[]);if([...ids].some(id=>!done.has(id)))return false}
+  const finished=new Set(A.games.filter(g=>g.date===day&&g.as!=null&&g.hs!=null).map(g=>g.id));
+  if(finished.size!==ids.size||[...ids].some(id=>!finished.has(id)))return false;
+  if(withBox){const protocols=new Set(BOX&&BOX.date===day?(BOX.games||[]).filter(g=>(g.players||[]).length).map(g=>g.id):[]);if([...ids].some(id=>!protocols.has(id)))return false}
+  return true
+}
+function dailyReady(){const n=D.daily;if(!n||n.date!==D.results_date||!dayComplete(n.date,true))return false;
+  if(n.auto){const used=new Set(n.game_ids||[]),done=A.games.filter(g=>g.date===n.date);if(used.size!==done.length||done.some(g=>!used.has(g.id)))return false}
+  return true
+}
+
 /* герои игрового дня */
 /* Сенсация дня: самый неожиданный результат ночи.
    Неожиданность = разница в основное время у победителя минус разница, которой от него ждали по линии (60% → +0,4 гола, 40% → −0,4).
@@ -154,7 +171,7 @@ function svp(l){const m=/(\d+)\s*из\s*(\d+)/.exec(l||"");return m&&+m[2]?nz(m[
 function card3(x,i){const n=pnum(x.name,x.pos);return `<article class="card3" style="--c:${tdeep(x.team)}"><div class="top3"><span class="wm">${logo(x.team,120)}</span><span class="rk">${i+1}<i>★</i></span>${n&&headOf(x.name)?`<span class="num3">#${n}</span>`:""}${photo(x.name,x.team,118)}</div>
   <div class="bd"><div class="nm"><span>${plink(x.name,x.team)}${posTag(x.name,x.pos)}<small>${esc(FULL[x.team]||x.team)}</small></span><b class="v">${lineHtml(x.line)}</b></div>${x.text?`<p>${esc(x.text)}</p>`:""}</div></article>`}
 function feat(x,role,big,sub){return `<div class="feat">${photo(x.name,x.team,92,"ring")}<span class="nm2"><span>${plink(x.name,x.team)}${posTag(x.name,x.pos)}</span><small>${role} · ${esc(FULL[x.team]||x.team)}</small></span><span class="big">${lineHtml(big)}${sub?`<small>${sub}</small>`:""}</span>${x.text?`<p>${esc(x.text)}</p>`:""}</div>`}
-function heroPanel(n){const t=HERO_TAB;
+function heroPanel(n){if(!dailyReady())return "";const t=HERO_TAB;
   if(t==="stars")return `<div class="cards">${n.heroes.slice(0,3).map(card3).join("")}</div>`;
   if(t==="goalie")return `<div class="box">${feat(n.goalie,"Вратарь дня",n.goalie.line,svp(n.goalie.line))}</div>`;
   if(t==="russian"){const r=ruNight(n);const top=n.russian;const rest=top?r.filter(x=>x.name!==top.name):r;
@@ -173,9 +190,9 @@ function ruNight(n){if(!BOX||!(BOX.games||[]).length||(n&&n.date&&BOX.date&&BOX.
     const pts=(p.g||0)+(p.a||0);out.push({name:p.name,team:p.team,pos:p.pos,line:`${p.g||0}+${p.a||0}`,k:pts*10+(p.g||0)+(p.pm||0)*.1,sub:`${EN[p.team]} — ${EN[opp]} · ${p.pm>0?"+"+p.pm:p.pm<0?"−"+(-p.pm):"0"} · ${p.toi||""}`})}
   return out.sort((a,b)=>b.k-a.k)}
 function heroTabs(n){return [["stars","Три звезды",n.heroes&&n.heroes.length],["goalie","Вратарь дня",n.goalie],["russian","Россияне",n.russian||ruNight(n).length],["sense","Сенсация",sensation(n)],["flop","Неудачники",(n.antiheroes||[]).length||n.worst_team]].filter(t=>t[2])}
-function heroesBody(){const n=D.daily;const t=heroTabs(n);if(!t.some(x=>x[0]===HERO_TAB))HERO_TAB=t[0][0];
+function heroesBody(){if(!dailyReady())return "";const n=D.daily;const t=heroTabs(n);if(!t.some(x=>x[0]===HERO_TAB))HERO_TAB=t[0][0];
   return `<div class="pills" role="tablist">${t.map(x=>`<button role="tab" data-ht="${x[0]}" aria-selected="${x[0]===HERO_TAB}">${x[1]}</button>`).join("")}</div><div class="appear">${heroPanel(n)}</div>`}
-function heroesSec(){const n=D.daily;if(!n||!n.heroes||!n.heroes.length)return"";
+function heroesSec(){const n=D.daily;if(!dailyReady()||!n.heroes||!n.heroes.length)return"";
   return `<section class="sec"><div class="hd"><h2>Герои игрового дня<small>${esc(dLong(n.date||lastDate()))}</small></h2><button class="lnk" data-go="results">Все итоги</button></div><div id="hb" class="sec">${heroesBody()}</div></section>`}
 
 /* новости */
@@ -241,12 +258,12 @@ function resRow(g){const key="r"+g.id,open=OPEN.has(key);const aw=g.as>g.hs;
    ${open?`<div class="x">${g.recap?`<p class="txt full">${esc(g.recap)}</p>`:""}<div class="blk">${goalsBlock(g)}</div><div class="blk">${sbars(g)}${g.stars&&g.stars.length?`<h4>Три звезды матча</h4><div class="acts">${g.stars.map((s,i)=>{if(!s||s==="—")return"";const m=/^(.*)\s\((\w+)\)$/.exec(s);return `<span class="chip gold">${"★".repeat(i+1)} ${m?pref(m[1],m[2])+" · "+(AB[m[2]]||m[2]):esc(s)}</span>`}).join("")}</div>`:""}</div>
    <div class="acts full">${g.video?`<a class="btn" href="${esc(g.video)}" target="_blank" rel="noopener">${IC.play}Обзор матча</a>`:""}${g.gc?`<a class="btn" href="${esc(g.gc)}" target="_blank" rel="noopener">${IC.ext}Матч на NHL.com</a>`:""}<button class="btn" data-team="${g.away}">${logo(g.away,24)}${EN[g.away]}</button><button class="btn" data-team="${g.home}">${logo(g.home,24)}${EN[g.home]}</button></div></div>`:""}</div>`}
 function vResults(){const ds=dates();if(!ds.length)return `<div class="box empty">Архив пока пуст.</div>`;if(!RES_DATE||!ds.includes(RES_DATE))RES_DATE=ds[ds.length-1];const i=ds.indexOf(RES_DATE);
-  const gs=A.games.filter(g=>g.date===RES_DATE);
-  return `<div class="col"><section class="sec"><div class="hd"><h1>Итоги<small>${esc(dLong(RES_DATE))} · ${plural(gs.length,"матч","матча","матчей")}</small></h1></div>
+  const gs=A.games.filter(g=>g.date===RES_DATE);const ongoing=RES_DATE===D.results_date&&!dayComplete(RES_DATE);
+  return `<div class="col"><section class="sec"><div class="hd"><h1>${ongoing?"Завершённые матчи":"Итоги"}<small>${esc(dLong(RES_DATE))} · ${plural(gs.length,"матч","матча","матчей")}</small></h1></div>
    <div class="dates"><button class="arr" data-rd="${ds[i-1]||""}" ${i?"":"disabled"} aria-label="Предыдущий день"><svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg></button>
    <div class="dch">${ds.map(d=>`<button data-rd="${d}" aria-pressed="${d===RES_DATE}"><span>${esc(dWd(d))}</span><b>${+d.slice(8)}</b></button>`).join("")}</div>
    <button class="arr" data-rd="${ds[i+1]||""}" ${i<ds.length-1?"":"disabled"} aria-label="Следующий день"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></button></div>
-   <div class="box">${gs.map(resRow).join("")}</div>
+   ${ongoing?`<p class="note">Игровой день ещё не завершён. Здесь — результаты законченных матчей; итоги дня появятся после последней игры.</p>`:""}<div class="box">${gs.map(resRow).join("")}</div>
    <p class="note">Дата — по Северной Америке. бол. — гол в большинстве, мен. — в меньшинстве, п.в. — в пустые ворота. Нажми на матч, чтобы открыть голы и статистику.</p></section></div>`}
 
 /* ===================== таблица ===================== */

@@ -6,6 +6,7 @@ Opus — самая дорогая модель, поэтому вместо ш�
 игроков и вчерашние подписи (чтобы не повторяться). Запускается самой задачей первым шагом, сеть не нужна.
 """
 import json
+from game_day import day_complete, daily_ready
 import os
 import re
 import subprocess
@@ -103,7 +104,8 @@ def main():
     ctx = dict(
         note="Выжимка из site/data.json, model.json, archive.json, box.json, edge.json и names_ru.json для подписей канала. Счёт матчей ночи — хозяева первыми.",
         results_date=rd, upcoming_date=ud,
-        fresh=dict(daily_date=daily.get("date"), auto_texts=bool(D.get("auto_texts")), tg_date=(D.get("tg") or {}).get("date")),
+        fresh=dict(daily_date=daily.get("date"), auto_texts=bool(D.get("auto_texts")), tg_date=(D.get("tg") or {}).get("date"),
+                   day_complete=day_complete(D, A, rd, B), daily_ready=daily_ready(D, A, B)),
         daily=daily, night=night, russians_box=rus_box, highlights=D.get("highlights"),
         edge=dict(data_date=E.get("data_date"), findings=(E.get("findings") or [])[:6]),
         news=[dict(title=n.get("title"), summary=n.get("summary"), url=n.get("url"), time=n.get("time"), body=(n.get("body") or [])[:2]) for n in D.get("news") or []],

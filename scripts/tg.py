@@ -24,6 +24,8 @@ import urllib.request
 import uuid
 from zoneinfo import ZoneInfo
 
+from game_day import day_complete, daily_ready
+
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE = os.path.join(ROOT, "site")
 TG = os.path.join(ROOT, "tg")
@@ -356,7 +358,7 @@ def build(D, A, M, E, S, N):
     out = []
     rd, ud = D.get("results_date"), D.get("upcoming_date")
     n = D.get("daily") or {}
-    n = n if n.get("date") == rd else {}
+    n = n if daily_ready(D, A, load(f"{SITE}/box.json", {}) or {}) else {}
     news = D.get("news") or []
     # 1. Итоги ночи — картинка со счетами
     gs = [g for g in A.get("games", []) if g.get("date") == rd and g.get("as") is not None]
@@ -389,7 +391,7 @@ def build(D, A, M, E, S, N):
     hs = (n.get("heroes") or [])[:3]
     if hs:
         st = {x.get("name"): x.get("text") for x in tgv(D, "stars", rd) or [] if isinstance(x, dict)}
-        bodies = [st.get(h["name"]) or f"{words(h.get('line')).capitalize()}. {h.get('text') or ''}".strip() for h in hs]
+        bodies = [st.get(h["name"]) or h.get("text") or f"{words(h.get('line')).capitalize()}." for h in hs]
         # подпись под картинкой — до 1024 знаков: если длинно, оставляем у каждой звезды меньше предложений
         for keep in (9, 3, 2, 1):
             cut = [" ".join(re.split(r"(?<=[.!?…])\s+", b)[:keep]) for b in bodies]
@@ -663,6 +665,8 @@ def build(D, A, M, E, S, N):
         ft = dt.datetime.fromisoformat(fin["t"].replace("Z", "+00:00"))
         first = min((dt.datetime.fromisoformat(u["start"].replace("Z", "+00:00")) for u in ups), default=ft + dt.timedelta(hours=3))
         out.append(dict(key=f"final:{ud}", due=ft, expires=first, text=pf[0], specs=pf[1]))
+    if not day_complete(D, A, rd, box):
+        out = [x for x in out if not x["key"].startswith(("am:", "stars:", "rus:", "modelweek:"))]
     return out
 
 
@@ -1080,6 +1084,7 @@ def health(mode):
     P = state.get("posted") or {}
     probs = []
     rd = D.get("results_date")
+    complete = day_complete(D, load(f"{SITE}/archive.json", {}) or {}, rd, load(f"{SITE}/box.json", {}) or {})
     gen = str(D.get("generated") or "")
     # 1. Сбой workflow «Сводка НХЛ» (сбор данных, публикация сайта)
     try:
@@ -1097,13 +1102,13 @@ def health(mode):
         probs.append((f"fetch_fail:{f.get('t')}", "Сбор данных с ошибками: " + "; ".join(map(str, f["fail"]))[:500], None))
     # 3. Утренние тексты Sonnet: к 10:15 мск
     daily = D.get("daily") or {}
-    if mins >= 10 * 60 + 15 and rd and (daily.get("date") != rd or D.get("auto_texts")):
+    if mins >= 10 * 60 + 15 and rd and complete and (daily.get("date") != rd or D.get("auto_texts")):
         probs.append(("am_texts", "Утренние тексты Claude (Sonnet) не вышли — на сайте запасные шаблоны", None))
     # 4. Подписи Opus для канала: к 10:45 мск
-    if mins >= 10 * 60 + 45 and rd and (D.get("tg") or {}).get("date") != rd:
+    if mins >= 10 * 60 + 45 and rd and complete and (D.get("tg") or {}).get("date") != rd:
         probs.append(("tg_texts", "Подписи Opus для канала не вышли — посты идут с запасными текстами", None))
     # 5. Утренний пост: к 10:30 мск должен выйти
-    if mins >= 10 * 60 + 30 and rd and any(g.get("date") == rd for g in (load(f"{SITE}/archive.json", {}) or {}).get("games", [])[-40:]) and f"am:{rd}" not in P:
+    if mins >= 10 * 60 + 30 and rd and complete and any(g.get("date") == rd for g in (load(f"{SITE}/archive.json", {}) or {}).get("games", [])[-40:]) and f"am:{rd}" not in P:
         probs.append(("am_post", "Утренний пост «Итоги ночи» не вышел в канал", None))
     # 6. Ошибки самого канала в этом запуске
     for x in dict.fromkeys(LOG.get("fail") or []):  # без повторов

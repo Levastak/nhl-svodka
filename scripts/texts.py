@@ -13,6 +13,8 @@ import math
 import os
 import re
 
+from game_day import day_complete, expected_ids
+
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE = os.path.join(ROOT, "site")
 
@@ -411,16 +413,25 @@ def recap(g, box, idm):
     return s
 
 
-def fallback(data, model, archive, box):
-    if not needs_fallback(data):
+def player_summary(p):
+    goals, assists = p.get("g", 0), p.get("a", 0)
+    goal = {0: "", 1: "Гол", 2: "Дубль", 3: "Хет-трик", 4: "Покер"}.get(goals, f"Голы: {goals}")
+    assist = ("передача" if assists == 1 else f"{assists} передачи" if 2 <= assists <= 4 else f"{assists} передач") if assists else ""
+    return (" и ".join(x for x in (goal, assist) if x).capitalize() or "Без очков") + f". Броски в створ: {p.get('sog', 0)}."
+
+
+def refresh_daily(data, archive, box):
+    """Rebuild only automatic nominations, never forecasts or the journal."""
+    rd = data.get("results_date")
+    old = data.get("daily") or {}
+    if not day_complete(data, archive, rd, box):
+        if old.get("date") == rd and old.get("auto") and old.get("heroes"):
+            data["daily"] = dict(date=rd, auto=True)
+            return True
         return False
-    M = {g["id"]: g for g in model.get("games", [])}
-    rd, date = data.get("results_date"), data.get("upcoming_date")
-    games = [g for g in archive.get("games", []) if g["date"] == rd]
-    idm = {str(v).rsplit("/", 1)[-1]: k for k, v in (data.get("heads") or {}).items()}
-    for g in games:
-        if not g.get("recap"):
-            g["recap"] = recap(g, box, idm)
+    if old.get("date") == rd and not old.get("auto") and old.get("heroes"):
+        return False  # Preserve the editor's completed-day selection.
+    games = [g for g in archive.get("games", []) if g.get("date") == rd]
     pl = [dict(p, gid=b["id"]) for b in box.get("games", []) for p in b.get("players", [])] if box.get("date") == rd else []
     sk = [p for p in pl if p.get("pos") != "G"]
     gk = [p for p in pl if p.get("pos") == "G" and (p.get("shots") or 0) >= 15]
@@ -428,7 +439,7 @@ def fallback(data, model, archive, box):
     if sk:
         top = sorted(sk, key=lambda p: (-(p["g"] + p["a"]), -p["g"], -p.get("pm", 0)))[:3]
         heroes = [dict(name=p["name"], team=p["team"], pos=p["pos"], line=f"{p['g']}+{p['a']}",
-                       text=f"Очки: {p['g']}+{p['a']}, полезность {sg(p.get('pm', 0))}, бросков в створ: {p.get('sog', 0)}.")
+                       text=player_summary(p))
                   for p in top]
         bad, per = [], {}
         for p in sorted(sk, key=lambda p: (p.get("pm", 0), -p.get("pim", 0), -p.get("give", 0))):
@@ -436,9 +447,9 @@ def fallback(data, model, archive, box):
                 bad.append(p); per[p["team"]] = per.get(p["team"], 0) + 1
         bad = bad[:3]
         anti = [dict(name=p["name"], team=p["team"], pos=p["pos"], line=sg(p.get('pm', 0)),
-                     text=f"Полезность {sg(p.get('pm', 0))}, без очков, потерь: {p.get('give', 0)}, штраф: {p.get('pim', 0)} мин.")
+                     text=f"Без очков. +/−: {sg(p.get('pm', 0))}; потери: {p.get('give', 0)}, штраф: {p.get('pim', 0)} мин.")
                 for p in bad]
-        daily = dict(date=rd, heroes=heroes, antiheroes=anti, auto=True)
+        daily = dict(date=rd, heroes=heroes, antiheroes=anti, auto=True, game_ids=sorted(expected_ids(data, rd)))
         if gk:
             b = max(gk, key=lambda p: (p["saves"] / max(1, p["shots"]), p["saves"]))
             daily["goalie"] = dict(name=b["name"], team=b["team"], pos="G", line=f"{b['saves']} из {b['shots']}",
@@ -447,7 +458,7 @@ def fallback(data, model, archive, box):
         if rp:
             p = max(rp, key=lambda p: (p["g"] + p["a"], p["g"]))
             daily["russian"] = dict(name=p["name"], team=p["team"], pos=p["pos"], line=f"{p['g']}+{p['a']}",
-                                    text=f"Очки: {p['g']}+{p['a']}, полезность {sg(p.get('pm', 0))}.")
+                                    text=player_summary(p))
         if games:
             m = max(games, key=lambda g: abs(g["hs"] - g["as"]))
             w = m["home"] if m["hs"] > m["as"] else m["away"]
@@ -458,6 +469,23 @@ def fallback(data, model, archive, box):
             b = max(games, key=lambda g: g["hs"] + g["as"])
             daily["best"] = dict(id=b["id"], text=f"Самый результативный матч ночи: {b['as'] + b['hs']} голов.")
         data["daily"] = daily
+    changed = data.get("daily") != old
+    if changed:
+        data.setdefault("auto_texts", dict(t=iso(), date=data.get("upcoming_date")))
+    return changed
+
+
+def fallback(data, model, archive, box):
+    if not needs_fallback(data):
+        return False
+    M = {g["id"]: g for g in model.get("games", [])}
+    rd, date = data.get("results_date"), data.get("upcoming_date")
+    games = [g for g in archive.get("games", []) if g["date"] == rd]
+    idm = {str(v).rsplit("/", 1)[-1]: k for k, v in (data.get("heads") or {}).items()}
+    for g in games:
+        if not g.get("recap"):
+            g["recap"] = recap(g, box, idm)
+    refresh_daily(data, archive, box)
     up = data.get("upcoming") or []
     tab = {}
     for u in up:
