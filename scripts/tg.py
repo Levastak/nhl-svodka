@@ -942,12 +942,14 @@ def main(mode, arg=None):
         feed_t = [dt.datetime.fromisoformat(v.replace("Z", "+00:00")) for k, v in P.items() if k.startswith("feed:")]
         fed = sum(1 for t in feed_t if t.astimezone(MSK).date() == today)
         feed_gap = min(((now - t).total_seconds() / 60 for t in feed_t), default=999)
-        if fed >= FEED_CAP or feed_gap < FEED_GAP:
+        # Проверяем время отправки, а не только ready: дневная очередь могла задержаться до ночи.
+        quiet = not 8 <= now.astimezone(MSK).hour < 23
+        if quiet or fed >= FEED_CAP or feed_gap < FEED_GAP:
             due = [x for x in due if not x["key"].startswith("feed:")]
         due.sort(key=lambda x: (not x.get("hot"), x["due"]))
         if due and not state.get("paused"):
             x = due[0]
-            if x["key"].startswith("final:") or gap >= 20:
+            if gap >= 20:
                 post(x)
     cut = (now - dt.timedelta(days=30)).strftime("%Y-%m-%d")
     state["posted"] = {k: v for k, v in P.items() if v[:10] >= cut}
