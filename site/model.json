@@ -1,7 +1,7 @@
 {
  "version": 4.4,
  "xg_used": true,
- "generated": "2026-10-19T06:07Z",
+ "generated": "2026-10-19T11:19Z",
  "league": {
   "goals_pg": 3.109,
   "home_adv": 0.016,
@@ -136,18 +136,18 @@
     "att": 0.974,
     "dfn": 0.946
    },
-   "mkt_home": 0.558,
-   "mkt_away": 0.442,
-   "edge_home": 0.007,
-   "edge_away": -0.007,
-   "p_home_blend": 0.561,
-   "p_away_blend": 0.439,
+   "mkt_home": 0.566,
+   "mkt_away": 0.434,
+   "edge_home": -0.001,
+   "edge_away": 0.001,
+   "p_home_blend": 0.566,
+   "p_away_blend": 0.434,
    "fatigue_edge": false,
    "value": null,
-   "mkt_over": 0.522,
-   "edge_over": 0.016,
-   "p_over_blend": 0.528,
-   "p_under_blend": 0.472,
+   "mkt_over": 0.528,
+   "edge_over": 0.01,
+   "p_over_blend": 0.532,
+   "p_under_blend": 0.468,
    "value_total": null,
    "soft": [],
    "h2h": [],
@@ -168,8 +168,8 @@
     "mkt_fav": "home",
     "vs_market": false,
     "level": "pass",
-    "edge_side": "home",
-    "edge": 0.007,
+    "edge_side": "away",
+    "edge": 0.001,
     "fatigue": false,
     "total": {
      "side": "over",
@@ -192,9 +192,9 @@
    "p_home_reg": 0.159,
    "p_away_reg": 0.644,
    "exp_total": 6.2,
-   "line": 6.0,
-   "p_over": 0.505,
-   "p_under": 0.495,
+   "line": 6.5,
+   "p_over": 0.446,
+   "p_under": 0.554,
    "fair_home": 4.4,
    "fair_away": 1.29,
    "b2b_away": false,
@@ -275,18 +275,18 @@
     "att": 0.86,
     "dfn": 1.002
    },
-   "mkt_home": 0.326,
-   "mkt_away": 0.674,
-   "edge_home": -0.099,
-   "edge_away": 0.099,
-   "p_home_blend": 0.287,
-   "p_away_blend": 0.713,
+   "mkt_home": 0.33,
+   "mkt_away": 0.67,
+   "edge_home": -0.103,
+   "edge_away": 0.103,
+   "p_home_blend": 0.289,
+   "p_away_blend": 0.711,
    "fatigue_edge": false,
    "value": "away",
-   "mkt_over": 0.514,
-   "edge_over": -0.009,
-   "p_over_blend": 0.51,
-   "p_under_blend": 0.49,
+   "mkt_over": 0.456,
+   "edge_over": -0.01,
+   "p_over_blend": 0.452,
+   "p_under_blend": 0.548,
    "value_total": null,
    "soft": [],
    "h2h": [],
@@ -307,28 +307,28 @@
     "vs_market": false,
     "level": "bet",
     "edge_side": "away",
-    "edge": 0.099,
+    "edge": 0.103,
     "fatigue": false,
     "sure": {
      "side": "away",
      "p": 0.773,
-     "mkt": 0.674,
-     "edge": 0.099,
-     "odds": 1.44
+     "mkt": 0.67,
+     "edge": 0.103,
+     "odds": 1.45
     },
     "bet": {
      "kind": "win",
      "side": "away",
-     "odds": 1.44,
+     "odds": 1.45,
      "p_model": 0.773,
-     "p_mkt": 0.674,
-     "src": "Pinnacle"
+     "p_mkt": 0.67,
+     "src": "betonlineag"
     },
     "total": {
-     "side": "over",
-     "line": 6.0,
-     "p": 0.505,
-     "mkt_side": "over",
+     "side": "under",
+     "line": 6.5,
+     "p": 0.554,
+     "mkt_side": "under",
      "vs_market": false,
      "value": null
     }
@@ -428,18 +428,18 @@
     "att": 0.988,
     "dfn": 1.067
    },
-   "mkt_home": 0.562,
-   "mkt_away": 0.438,
-   "edge_home": -0.049,
-   "edge_away": 0.049,
-   "p_home_blend": 0.542,
-   "p_away_blend": 0.458,
+   "mkt_home": 0.557,
+   "mkt_away": 0.443,
+   "edge_home": -0.044,
+   "edge_away": 0.044,
+   "p_home_blend": 0.539,
+   "p_away_blend": 0.461,
    "fatigue_edge": false,
    "value": null,
-   "mkt_over": 0.532,
-   "edge_over": -0.018,
-   "p_over_blend": 0.525,
-   "p_under_blend": 0.475,
+   "mkt_over": 0.546,
+   "edge_over": -0.032,
+   "p_over_blend": 0.533,
+   "p_under_blend": 0.467,
    "value_total": null,
    "soft": [],
    "h2h": [],
@@ -460,15 +460,15 @@
     "vs_market": false,
     "level": "lean",
     "edge_side": "away",
-    "edge": 0.049,
+    "edge": 0.044,
     "fatigue": false,
     "bet": {
      "kind": "win",
      "side": "away",
-     "odds": 2.22,
+     "odds": 2.19,
      "p_model": 0.487,
-     "p_mkt": 0.438,
-     "src": "Pinnacle"
+     "p_mkt": 0.443,
+     "src": "betonlineag"
     },
     "total": {
      "side": "over",
@@ -485,12 +485,12 @@
    "home": "UTA",
    "lam_away": 3.03,
    "lam_home": 3.61,
-   "p_home": 0.616,
-   "p_away": 0.384,
+   "p_home": 0.615,
+   "p_away": 0.385,
    "p_ot": 0.209,
    "p_home_reg": 0.492,
    "p_away_reg": 0.299,
-   "exp_total": 6.79,
+   "exp_total": 6.8,
    "line": 6.5,
    "p_over": 0.543,
    "p_under": 0.457,
@@ -566,18 +566,18 @@
     "att": 1.055,
     "dfn": 0.958
    },
-   "mkt_home": 0.619,
-   "mkt_away": 0.381,
-   "edge_home": -0.003,
-   "edge_away": 0.003,
-   "p_home_blend": 0.618,
-   "p_away_blend": 0.382,
+   "mkt_home": 0.621,
+   "mkt_away": 0.379,
+   "edge_home": -0.006,
+   "edge_away": 0.006,
+   "p_home_blend": 0.619,
+   "p_away_blend": 0.381,
    "fatigue_edge": false,
    "value": null,
-   "mkt_over": 0.528,
-   "edge_over": 0.015,
-   "p_over_blend": 0.534,
-   "p_under_blend": 0.466,
+   "mkt_over": 0.537,
+   "edge_over": 0.006,
+   "p_over_blend": 0.539,
+   "p_under_blend": 0.461,
    "value_total": null,
    "soft": [],
    "h2h": [],
@@ -593,12 +593,12 @@
    "incomplete": false,
    "verdict": {
     "fav": "home",
-    "p_fav": 0.616,
+    "p_fav": 0.615,
     "mkt_fav": "home",
     "vs_market": false,
     "level": "pass",
     "edge_side": "away",
-    "edge": 0.003,
+    "edge": 0.006,
     "fatigue": false,
     "total": {
      "side": "over",
@@ -1014,17 +1014,17 @@
    "home": "CBJ",
    "lam_away": 2.78,
    "lam_home": 3.69,
-   "p_home": 0.676,
-   "p_away": 0.324,
+   "p_home": 0.675,
+   "p_away": 0.325,
    "p_ot": 0.204,
-   "p_home_reg": 0.547,
-   "p_away_reg": 0.249,
+   "p_home_reg": 0.546,
+   "p_away_reg": 0.25,
    "exp_total": 6.62,
    "line": 5.5,
    "p_over": 0.626,
    "p_under": 0.374,
    "fair_home": 1.48,
-   "fair_away": 3.09,
+   "fair_away": 3.08,
    "b2b_away": true,
    "b2b_home": false,
    "pacific_home": false,
@@ -1043,7 +1043,7 @@
     0.453,
     0.453
    ],
-   "shares_adj": -0.117,
+   "shares_adj": -0.119,
    "goalie_away": {
     "name": null,
     "gsax_rate": 0.0,
@@ -1093,7 +1093,7 @@
    },
    "rating_home": {
     "att": 0.959,
-    "dfn": 1.035
+    "dfn": 1.036
    },
    "soft": [],
    "h2h": [],
@@ -1110,7 +1110,7 @@
    "incomplete": true,
    "verdict": {
     "fav": "home",
-    "p_fav": 0.676,
+    "p_fav": 0.675,
     "level": "noodds"
    }
   },
@@ -1313,10 +1313,10 @@
    "home": "EDM",
    "lam_away": 3.14,
    "lam_home": 3.16,
-   "p_home": 0.491,
-   "p_away": 0.509,
+   "p_home": 0.49,
+   "p_away": 0.51,
    "p_ot": 0.219,
-   "p_home_reg": 0.377,
+   "p_home_reg": 0.376,
    "p_away_reg": 0.404,
    "exp_total": 6.46,
    "line": 5.5,
@@ -1342,7 +1342,7 @@
     0.505,
     0.496
    ],
-   "shares_adj": -0.073,
+   "shares_adj": -0.075,
    "goalie_away": {
     "name": null,
     "gsax_rate": 0.0,
@@ -1388,7 +1388,7 @@
    "inj_def_away": 0.025,
    "inj_def_home": 0.035,
    "rating_away": {
-    "att": 1.053,
+    "att": 1.054,
     "dfn": 0.927
    },
    "rating_home": {
@@ -1411,7 +1411,7 @@
    "incomplete": true,
    "verdict": {
     "fav": "away",
-    "p_fav": 0.509,
+    "p_fav": 0.51,
     "level": "noodds"
    }
   },
@@ -2732,16 +2732,16 @@
    "home": "CGY",
    "lam_away": 3.51,
    "lam_home": 2.67,
-   "p_home": 0.311,
-   "p_away": 0.689,
-   "p_ot": 0.211,
+   "p_home": 0.31,
+   "p_away": 0.69,
+   "p_ot": 0.21,
    "p_home_reg": 0.225,
-   "p_away_reg": 0.564,
+   "p_away_reg": 0.565,
    "exp_total": 6.33,
    "line": 5.5,
    "p_over": 0.582,
    "p_under": 0.418,
-   "fair_home": 3.21,
+   "fair_home": 3.22,
    "fair_away": 1.45,
    "b2b_away": false,
    "b2b_home": false,
@@ -2761,7 +2761,7 @@
     0.505,
     0.496
    ],
-   "shares_adj": -0.029,
+   "shares_adj": -0.031,
    "goalie_away": {
     "name": null,
     "gsax_rate": 0.0,
@@ -2807,7 +2807,7 @@
    "inj_def_away": 0.029,
    "inj_def_home": 0.031,
    "rating_away": {
-    "att": 1.053,
+    "att": 1.054,
     "dfn": 0.927
    },
    "rating_home": {
@@ -2829,7 +2829,7 @@
    "incomplete": true,
    "verdict": {
     "fav": "away",
-    "p_fav": 0.689,
+    "p_fav": 0.69,
     "level": "noodds"
    }
   },
@@ -3424,7 +3424,7 @@
    "p_away": 0.334,
    "p_ot": 0.215,
    "p_home_reg": 0.532,
-   "p_away_reg": 0.252,
+   "p_away_reg": 0.253,
    "exp_total": 6.15,
    "line": 5.5,
    "p_over": 0.553,
@@ -3917,13 +3917,13 @@
    "p_home": 0.39,
    "p_away": 0.61,
    "p_ot": 0.217,
-   "p_home_reg": 0.294,
-   "p_away_reg": 0.489,
+   "p_home_reg": 0.293,
+   "p_away_reg": 0.49,
    "exp_total": 6.31,
    "line": 5.5,
-   "p_over": 0.578,
-   "p_under": 0.422,
-   "fair_home": 2.56,
+   "p_over": 0.579,
+   "p_under": 0.421,
+   "fair_home": 2.57,
    "fair_away": 1.64,
    "b2b_away": false,
    "b2b_home": false,
@@ -3943,7 +3943,7 @@
     0.506,
     0.524
    ],
-   "shares_adj": 0.049,
+   "shares_adj": 0.047,
    "goalie_away": {
     "name": null,
     "gsax_rate": 0.0,
@@ -3976,7 +3976,7 @@
    },
    "rating_home": {
     "att": 0.959,
-    "dfn": 1.035
+    "dfn": 1.036
    },
    "soft": [],
    "h2h": [],
@@ -4009,8 +4009,8 @@
    "p_away_reg": 0.506,
    "exp_total": 6.46,
    "line": 5.5,
-   "p_over": 0.6,
-   "p_under": 0.4,
+   "p_over": 0.601,
+   "p_under": 0.399,
    "fair_home": 2.64,
    "fair_away": 1.61,
    "b2b_away": false,
@@ -4331,7 +4331,7 @@
     0.484,
     0.497
    ],
-   "shares_adj": 0.079,
+   "shares_adj": 0.08,
    "goalie_away": {
     "name": null,
     "gsax_rate": 0.0,
@@ -4399,15 +4399,15 @@
    "home": "SEA",
    "lam_away": 3.38,
    "lam_home": 2.88,
-   "p_home": 0.401,
-   "p_away": 0.599,
+   "p_home": 0.4,
+   "p_away": 0.6,
    "p_ot": 0.216,
-   "p_home_reg": 0.303,
-   "p_away_reg": 0.481,
+   "p_home_reg": 0.302,
+   "p_away_reg": 0.482,
    "exp_total": 6.42,
    "line": 5.5,
-   "p_over": 0.595,
-   "p_under": 0.405,
+   "p_over": 0.596,
+   "p_under": 0.404,
    "fair_home": 2.5,
    "fair_away": 1.67,
    "b2b_away": false,
@@ -4428,7 +4428,7 @@
     0.505,
     0.496
    ],
-   "shares_adj": 0.041,
+   "shares_adj": 0.039,
    "goalie_away": {
     "name": null,
     "gsax_rate": 0.0,
@@ -4465,7 +4465,7 @@
    "inj_def_away": 0.027,
    "inj_def_home": 0.0,
    "rating_away": {
-    "att": 1.053,
+    "att": 1.054,
     "dfn": 0.927
    },
    "rating_home": {
@@ -4487,7 +4487,7 @@
    "incomplete": true,
    "verdict": {
     "fav": "away",
-    "p_fav": 0.599,
+    "p_fav": 0.6,
     "level": "noodds"
    }
   },
@@ -4719,7 +4719,7 @@
    "out_away": false,
    "new_coach_home": false,
    "new_coach_away": false,
-   "p_ot_home": 0.504,
+   "p_ot_home": 0.503,
    "shares_home": [
     0.489,
     0.484
@@ -4787,7 +4787,7 @@
    "date": "2026-10-25",
    "start": "2026-10-25T23:00:00Z",
    "p_home_reg_raw": 0.395,
-   "p_ot_home_raw": 0.504,
+   "p_ot_home_raw": 0.503,
    "missing": [
     "goalie_away",
     "goalie_home",
@@ -4893,17 +4893,17 @@
    "home": "VAN",
    "lam_away": 3.54,
    "lam_home": 2.83,
-   "p_home": 0.358,
-   "p_away": 0.642,
-   "p_ot": 0.211,
-   "p_home_reg": 0.268,
-   "p_away_reg": 0.521,
+   "p_home": 0.357,
+   "p_away": 0.643,
+   "p_ot": 0.21,
+   "p_home_reg": 0.267,
+   "p_away_reg": 0.522,
    "exp_total": 6.52,
    "line": 5.5,
    "p_over": 0.611,
    "p_under": 0.389,
    "fair_home": 2.8,
-   "fair_away": 1.56,
+   "fair_away": 1.55,
    "b2b_away": true,
    "b2b_home": false,
    "pacific_home": true,
@@ -4922,7 +4922,7 @@
     0.505,
     0.496
    ],
-   "shares_adj": 0.049,
+   "shares_adj": 0.047,
    "goalie_away": {
     "name": null,
     "gsax_rate": 0.0,
@@ -4959,7 +4959,7 @@
    "inj_def_away": 0.029,
    "inj_def_home": 0.0,
    "rating_away": {
-    "att": 1.053,
+    "att": 1.054,
     "dfn": 0.927
    },
    "rating_home": {
@@ -4981,7 +4981,7 @@
    "incomplete": true,
    "verdict": {
     "fav": "away",
-    "p_fav": 0.642,
+    "p_fav": 0.643,
     "level": "noodds"
    }
   }
@@ -5044,8 +5044,8 @@
    "ppg": 2,
    "ppga": 8,
    "att": 0.959,
-   "dfn": 1.035,
-   "power": 0.927
+   "dfn": 1.036,
+   "power": 0.926
   },
   "CGY": {
    "gp": 8,
@@ -5151,7 +5151,7 @@
    "sa_pg": 25.1,
    "ppg": 9,
    "ppga": 3,
-   "att": 1.053,
+   "att": 1.054,
    "dfn": 0.927,
    "power": 1.136
   },
@@ -5213,7 +5213,7 @@
    "ppga": 2,
    "att": 0.974,
    "dfn": 0.946,
-   "power": 1.029
+   "power": 1.03
   },
   "OTT": {
    "gp": 9,
