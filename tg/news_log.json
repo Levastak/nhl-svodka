@@ -1,35 +1,6 @@
 {
   "runs": [
     {
-      "t": "2026-10-17T17:21:14Z",
-      "status": "site",
-      "picked": [
-        "nhl:gavin-mckenna-had-good-talk-with-toronto-coach-jim-hiller-after-benching"
-      ],
-      "skipped": [
-        {
-          "id": "prohockeyrumors:2026-10-john-tavares-out-week-to-week-with-lower-body-injury-html",
-          "why": "Таварес уже в очереди и recent_titles"
-        },
-        {
-          "id": "rmnb:2026-10-17-pierre-luc-dubois-injured-reserve-illness-capitals",
-          "why": "Дюбуа уже в утренних новостях сайта"
-        },
-        {
-          "id": "sportsnet:nhl-article-mackinnon-has-four-points-lehkonen-scores-twice-as-avalanche-win",
-          "why": "пересказ сыгранного матча"
-        },
-        {
-          "id": "espn:41679163",
-          "why": "справочный материал"
-        },
-        {
-          "id": "sportsnet:hockey-nhl-games-29d2679a-0651-4fef-a52b-43907d08c477",
-          "why": "анонс сыгранного матча"
-        }
-      ]
-    },
-    {
       "t": "2026-10-17T19:21:11Z",
       "status": "site",
       "picked": [
@@ -1621,6 +1592,101 @@
         }
       ],
       "note": "Прочитаны метаданные, recent_titles, morning_site_news и summary, затем статьи о звёздах недели и вызове Ахтямова. Проверены дополнительные свежие заголовки feed за четыре часа: найдены пропущенные коротким списком обновления травм. Полный официальный NHL.com о звёздах недели прочитан через HTTP200; Капризов — третья звезда недели, не прежняя звезда игрового дня. Вызов Ахтямова и его роль запасного подтверждены прочитанными материалами The Hockey News/Yahoo и прямой цитатой Хиллера: https://sports.yahoo.com/articles/jim-hiller-explains-why-artur-161106679.html . Расхождение .822/.882 в статистике Ахтямова между статьями не переносилось; статистика не используется. Леттьери уже освещён, отдельного повтора нет. Капризов — сайт и канал hot:true в пределах пяти новостей включая утреннюю главную, интервалы 75/20 минут соблюдены. Ахтямов — только сайт tg:false: до ночной паузы не помещается второй канальный пост с интервалом 75 минут, на утро не накапливается. Обе ready=written, без будущей даты на сайте. Имена проверены по словарю; отсутствующее имя Ахтямова транскрибировано по правилу промпта. Очередь/сайт/журнал/posted сверены, два самостоятельных события, данные/модель/старые посты не менялись. Утренняя страховка вне окна не выполнялась."
+    },
+    {
+      "t": "2026-10-19T21:24:14Z",
+      "status": "ok",
+      "picked": [
+        "espn:50221218",
+        "sportsnet:nhl-article-senators-thomas-chabot-out-one-to-two-weeks-with-upper-body-injury"
+      ],
+      "skipped": [
+        {
+          "id": "sportsnet:nhl-video-what-does-healthy-scratch-vs-kings-mean-for-zadorovs-future-in-boston",
+          "why": "Article прочитан: только описание видео, без нового решения клуба/конкретного нового инсайда. Поиск сверил: пропуск игры 17 октября и комментарий Мильштейна 18 октября; новая дата ролика не обновляет прежнее событие. Просьба об обмене или переговоры не подтверждены."
+        },
+        {
+          "id": "rmnb:2026-10-19-ilya-protas-alex-ovechkin-line-learning-washington-capitals",
+          "why": "Ранее прочитанные комментарии после старой игры и сувенир, без нового решения о роли."
+        },
+        {
+          "id": "sportsnet:nhl-article-travis-green-rewarded-as-senators-contention-window-opens",
+          "why": "Уже опубликованное продление Грина, новые комментарии не отдельное событие."
+        },
+        {
+          "id": "sportsnet:nhl-video-panthers-tkachuk-talks-return-to-ottawa-for-matchup-vs-former-team",
+          "why": "Возвращение Ткачука в Оттаву уже освещено на сайте; ожидания и эмоции перед той же встречей не новый повод."
+        },
+        {
+          "id": "nhl:brady-tkachuk-ready-for-special-return-to-ottawa-with-florida",
+          "why": "Возвращение Ткачука в Оттаву уже освещено на сайте; ожидания и эмоции перед той же встречей не новый повод."
+        },
+        {
+          "id": "sportsnet:nhl-article-im-going-to-be-nervous-panthers-brady-tkachuk-on-ottawa-return",
+          "why": "Возвращение Ткачука в Оттаву уже освещено на сайте; ожидания и эмоции перед той же встречей не новый повод."
+        },
+        {
+          "id": "sportsnet:l-video-good-measuring-stick-matthews-on-first-tilt-between-mckenna-and-stenberg",
+          "why": "Комментарии и похвала перед уже освещённым матчем, не новое спортивное решение."
+        },
+        {
+          "id": "sportsnet:video-stability-commitment-collaboration-why-senators-checks-all-boxes-for-green",
+          "why": "Уже опубликованное продление Грина, новые комментарии не отдельное событие."
+        },
+        {
+          "id": "sportsnet:nhl-article-brady-tkachuk-mcdavid-kaprizov-named-nhls-three-stars-of-the-week",
+          "why": "Объявление звёзд недели уже опубликовано по официальному NHL.com."
+        },
+        {
+          "id": "dailyfaceoff:news-boston-bruins-jeremy-swayman-deserves-serious-vezina-trophy-love-nhl-awards",
+          "why": "Авторская оценка перспектив награды, не вручение награды или другое новое событие."
+        },
+        {
+          "id": "sportsnet:nhl-video-hes-unflappable-what-has-impressed-leafs-hiller-most-about-mckenna",
+          "why": "Комментарии и похвала перед уже освещённым матчем, не новое спортивное решение."
+        },
+        {
+          "id": "sportsnet:nhl-article-connor-mcdavid-enters-rarified-air-with-early-season-points-pace",
+          "why": "Ранее прочитанная оценка темпа Макдэвида после уже освещённой игры, без нового события."
+        },
+        {
+          "id": "sportsnet:nhl-article-rumour-roundup-who-holds-keys-to-hellebuyck-trade",
+          "why": "Body прочитан: варианты Фридмана частично повторяют опубликованные материалы о сроках дисквалификации и косвенной роли Рейнджерс. Для нового сообщения о числе заинтересованных клубов выбран прочитанный первичный материал Каплан."
+        },
+        {
+          "id": "prohockeyrumors:2026-10-jets-recall-brayden-yager-place-josh-morrissey-on-ir-html",
+          "why": "Body ранее прочитан: самостоятельное оформление Моррисси в IR и вызов Ягера. При максимуме двух материалов отложено в пользу свежего инсайда и нового срока Шабо; проверить свежесть следующего прохода."
+        },
+        {
+          "id": "sportsnet:nhl-article-sabres-captain-rasmus-dahlin-ready-to-return-vs-flyers-on-wednesday",
+          "why": "Новое сообщение о готовности Далина к возвращению найдено вне короткого списка. При максимуме двух материалов отложено; перед следующим отбором прочитать body и проверить актуальность."
+        },
+        {
+          "id": "prohockeyrumors:2026-10-philadelphia-flyers-recall-three-players-2-html",
+          "why": "Новые вызовы Филадельфии найдены вне короткого списка, отложены при максимуме двух; не путать с прежним вызовом Макдональда."
+        },
+        {
+          "id": "sportsnet:nhl-article-nhl-unveils-rendering-for-heritage-classic-in-winnipeg",
+          "why": "Оформление и руководство для зрителей открытого матча, меньший спортивный приоритет, чем новый срок травмы и инсайд."
+        },
+        {
+          "id": "nhl:nhl-unveils-renderings-for-2026-heritage-classic",
+          "why": "Оформление и руководство для зрителей открытого матча, меньший спортивный приоритет, чем новый срок травмы и инсайд."
+        },
+        {
+          "id": "nhl:2026-tim-hortons-nhl-heritage-classic-fan-guide",
+          "why": "Оформление и руководство для зрителей открытого матча, меньший спортивный приоритет, чем новый срок травмы и инсайд."
+        },
+        {
+          "id": "dailyfaceoff:news-new-york-rangers-sign-luke-glendening-pto-nhl-tryout",
+          "why": "Самостоятельный клубный повод для сайта, отложен при максимуме двух; перед отбором проверить источник и свежесть."
+        },
+        {
+          "id": "prohockeyrumors:2026-10-rangers-sign-luke-glendening-to-professional-tryout-html",
+          "why": "Самостоятельный клубный повод для сайта, отложен при максимуме двух; перед отбором проверить источник и свежесть."
+        }
+      ],
+      "note": "Короткий список в основном повторы; дополнительно проверены свежие заголовки feed за четыре часа и body выбранных новых событий. ESPN body отсутствовал: первичная статья https://www.espn.com/nhl/story/_/id/50221218/sources-least-3-teams-mix-jets-goalie-hellebuyck получена HTTP200, прочитана полностью, автор Emily Kaplan подтверждён JSON-LD. Новость — как минимум три заинтересованных клуба по её источникам, не объявленная сделка. Ни состав обмена, ни клубы-покупатели не выдуманы; прекращение дисквалификации не объявляется выходом на лёд. По Шабо прочитаны Sportsnet, Daily Faceoff и официальный NHL Status Report: новый ориентир 1–2 недели дополняет прежнюю новость без сроков. Ошибочные forward и расходящийся возраст из источников не перенесены; Шабо — защитник. Имена по словарю, имя журналистки транскрибировано. Два материала только сайт tg:false, hot:false, ночь 00:20 МСК; ready=written фактическое время без будущей отметки и утреннего накопления. Сверены очередь/сайт/журнал/posted, прогнозы, данные, код и старые посты не менялись. Утренняя страховка вне окна не выполнялась."
     }
   ]
 }
