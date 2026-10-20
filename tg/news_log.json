@@ -1,61 +1,6 @@
 {
   "runs": [
     {
-      "t": "2026-10-18T01:01:56Z",
-      "status": "ok",
-      "picked": [],
-      "skipped": [
-        {
-          "id": "prohockeyrumors:2026-10-what-is-wrong-with-the-flyers-roster-construction-html",
-          "why": "аналитическая колонка о составе, без нового события"
-        },
-        {
-          "id": "rmnb:2026-10-17-ryan-leonard-dangle-goal-of-the-year-candidate",
-          "why": "уже прошедший матч, красивый гол не новый инфоповод"
-        },
-        {
-          "id": "sportsnet:nhl-video-canucks-petterson-scores-power-play-goal-from-sharp-angle",
-          "why": "видео гола уже прошедшего матча"
-        },
-        {
-          "id": "rmnb:2026-10-17-connor-hellebuyck-suspension-winnipeg-jets-ending-next-week-nhl",
-          "why": "дубль Хеллибака; исправлена условность в существующем материале"
-        },
-        {
-          "id": "thehockeynews:st-news-should-ryan-warsofsky-place-more-trust-in-the-san-jose-sharks-youngsters",
-          "why": "авторская колонка, без нового события"
-        },
-        {
-          "id": "dailyfaceoff:peg-jets-connor-hellebuyck-team-imposed-suspension-trade-request-october-23-2026",
-          "why": "дубль Хеллибака; существующий материал уточнён по источникам"
-        },
-        {
-          "id": "espn:41679163",
-          "why": "вечнозелёный список исторических лидеров, не новость"
-        },
-        {
-          "id": "sportsnet:nhl-video-capitals-leonard-goes-coast-to-coast-for-slick-power-play-goal",
-          "why": "видео того же гола Леонарда, повтор матча"
-        },
-        {
-          "id": "sportsnet:nhl-video-leafs-head-coach-hiller-addresses-benching-of-mckenna-vs-sabres",
-          "why": "Маккенна и решение Хиллера уже в recent_titles"
-        },
-        {
-          "id": "prohockeyrumors:2026-10-john-tavares-out-week-to-week-with-lower-body-injury-html",
-          "why": "травма Тавареса уже в очереди, нового повода нет"
-        },
-        {
-          "id": "rmnb:2026-10-17-pierre-luc-dubois-injured-reserve-illness-capitals",
-          "why": "Дюбуа уже в утренних новостях, повтор темы"
-        },
-        {
-          "id": "dailyfaceoff:news-john-tavares-toronto-maple-leafs-lower-body-injury-one-six-week",
-          "why": "дубль новости о травме Тавареса"
-        }
-      ]
-    },
-    {
       "t": "2026-10-18T01:23:44Z",
       "status": "ok",
       "picked": [],
@@ -1788,6 +1733,60 @@
         }
       ],
       "note": "Полностью прочитаны общие правила/заметка/промпт/стиль; сначала компактные метаданные, recent_titles, morning_site_news и заголовки/summary. Короткий список не дал нового события; проверены свежие заголовки feed за четыре часа и непросмотренные ID в полном окне 18 часов. Точечно прочитаны body Sportsnet о Демко, Daily Faceoff о Типпетте, PHR о Густавссоне и Snapshots. Для Густавссона извлечена ссылка на первичный материал от 18 октября: старое событие не выбрано. Демко — обновление тренера в понедельник, дата возвращения не названа; слова об отсутствии опасений за весь сезон приписаны Малхотре и не превращаются в гарантию выздоровления. Типпетт: новая регистрация в IR, прежняя травма верхней части тела; вызван Гоше, восемь очков — это четыре гола плюс передачи, не восемь голов. Имена Демко и Типпетта по словарю, отсутствующие Малхотра и Гоше транскрибированы по правилу промпта. Очередь, сайт, журнал и posted сверены. Два материала только сайт tg:false, hot:false, до 08:00 МСК; ready=written фактическое время, без будущих отметок и накопления на утро. Пересказы матчей не публикуются, неполный игровой день итогами не объявляется; страховка утра вне окна не выполнялась. Данные, прогнозы, код и старые посты не менялись."
+    },
+    {
+      "t": "2026-10-20T05:26:09Z",
+      "status": "ok",
+      "picked": [
+        "nhl:nikita-kucherov-on-cusp-of-lightning-scoring-record"
+      ],
+      "skipped": [
+        {
+          "id": "rmnb:2026-10-19-washington-capitals-halloween-party-costumes-2026",
+          "why": "Костюмы с прежней вечеринки, курьёз без нового спортивного события."
+        },
+        {
+          "id": "sportsnet:nhl-video-what-does-healthy-scratch-vs-kings-mean-for-zadorovs-future-in-boston",
+          "why": "Ранее проверенные пропуск матча и комментарий агента; нового подтверждённого решения или переговоров нет."
+        },
+        {
+          "id": "nhl:winnipeg-jets-cole-perfetti-excels-since-top-line-promotion",
+          "why": "Article прочитан: повышение в первое звено произошло перед тренировочным лагерем, комментарии даны в четверг. Свежая дата портрета не новое назначение."
+        },
+        {
+          "id": "prohockeyrumors:2026-10-stars-to-begin-extension-talks-with-jason-robertson-in-december-html",
+          "why": "Article и полный первоисточник прочитаны. NHL.com опубликован 18 октября 03:55 UTC, обновлён 19 октября 00:43 UTC; слова Нилла сказаны в субботу. Даже обновление старше 18 часов; перепечатка PHR 20 октября не новое решение."
+        },
+        {
+          "id": "sportsnet:nhl-video-howie-mandel-gives-nhlers-custom-cards-on-the-price-is-right-tonight",
+          "why": "Телешоу/викторина без нового спортивного события."
+        },
+        {
+          "id": "sportsnet:nhl-article-rangers-top-ducks-to-remain-undefeated-at-home",
+          "why": "Обычный пересказ матча, относится к игровому выпуску."
+        },
+        {
+          "id": "sportsnet:hl-video-maple-leafs-matthews-fires-home-late-in-second-to-pull-even-with-sharks",
+          "why": "Видео гола без самостоятельного рекорда/травмы, не отдельная новость."
+        },
+        {
+          "id": "sportsnet:nhl-video-would-you-rather-start-a-franchise-with-mcdavid-or-celebrini",
+          "why": "Условный выбор экспертов и предположения, не действительное решение."
+        },
+        {
+          "id": "sportsnet:nhl-video-can-macklin-celebrini-ace-trivia-about-his-penalty-history",
+          "why": "Телешоу/викторина без нового спортивного события."
+        },
+        {
+          "id": "nhl:connor-mcdavid-off-to-torrid-start-with-edmonton-oilers",
+          "why": "Ранее освещённый старт Макдэвида, без нового решения или рекорда в заголовке/summary."
+        },
+        {
+          "id": "sportsnet:nhl-article-travis-green-rewarded-as-senators-contention-window-opens",
+          "why": "Продление Грина уже опубликовано, новый разбор не отдельное событие."
+        }
+      ],
+      "note": "Прочитаны обязательные инструкции/стиль, компактные метаданные/recent_titles/morning_site_news и summary без article, затем article Кучерова, Перфетти и Робертсона. Полный первичный NHL.com о Кучерове получен HTTP200 и прочитан: 1134 очка в 887 играх против 1137 в 1082 у Стэмкоса, четыре очка нужны именно для обгона, не для равенства; речь о регулярных чемпионатах. Следующая возможность — выезд в Вегас, рекорд не объявляется уже побитым, матч не предсказывается. По Робертсону прочитаны PHR и полный первичный NHL.com: https://www.nhl.com/news/dallas-stars-hope-to-begin-contract-talks-with-jason-robertson-in-december ; метаданные подтверждают старый материал, перепечатка пропущена. Дополнительно проверены свежие заголовки feed: обычные отчёты ночи, реакции и портреты не заполняют второе место ради количества. Очередь, сайт, журнал и posted сверены; Кучеров/Стэмкос строго по словарю. Один новый материал сайт+канал hot:true, свободные места и интервалы 75/20 минут проверены; ночные tg:false не перевключались и на утро не перепубликуются. До окна утренней страховки проверка не выполнялась; данные, прогнозы, исходники и готовые посты не менялись."
     }
   ]
 }
