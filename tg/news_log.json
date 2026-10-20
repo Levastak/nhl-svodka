@@ -1,62 +1,6 @@
 {
   "runs": [
     {
-      "t": "2026-10-18T11:21:59Z",
-      "status": "ok",
-      "picked": [],
-      "skipped": [
-        {
-          "id": "rmnb:or-capitals-to-stave-off-really-rough-third-period-numbers-for-the-morning-after",
-          "why": "разбор уже освещённой игры, нового самостоятельного события нет"
-        },
-        {
-          "id": "espn:41679163",
-          "why": "справочная статья без нового события"
-        },
-        {
-          "id": "espn:41589293",
-          "why": "справочная статья без нового события"
-        },
-        {
-          "id": "nhl:flyers-rick-tocchet-gives-game-puck-to-radio-voice-jason-myrtetus",
-          "why": "история вокруг матча, вне приоритетной спортивной повестки"
-        },
-        {
-          "id": "sportsnet:inant-showing-in-win-over-sabres-a-welcome-development-for-canadiens-suzuki-line",
-          "why": "разбор уже освещённой игры, нового самостоятельного события нет"
-        },
-        {
-          "id": "dailyfaceoff:panthers-first-nhl-team-natural-hat-trick-three-straight-games-tkachuk-verhaeghe",
-          "why": "повтор опубликованного рекорда «Флориды»"
-        },
-        {
-          "id": "sportsnet:nhl-video-caufield-on-playing-in-front-of-habs-fans-very-blessed-to-be-here",
-          "why": "видео или реакция на уже разобранную игру"
-        },
-        {
-          "id": "nhl:matthew-schaefer-joined-by-young-islanders-fan-cancer-patient",
-          "why": "история вокруг матча, вне приоритетной спортивной повестки"
-        },
-        {
-          "id": "rmnb:2026-10-17-tom-wilson-jack-hughes-dives-ice-avoid-hit",
-          "why": "курьёз из уже освещённого матча"
-        },
-        {
-          "id": "sportsnet:nhl-video-mcdavid-shows-off-wheels-getting-oilers-on-the-board-early",
-          "why": "видео или реакция на уже разобранную игру"
-        },
-        {
-          "id": "sportsnet:nhl-article-cole-caufield-scores-overtime-winner-as-canadiens-down-sabres",
-          "why": "разбор уже освещённой игры, нового самостоятельного события нет"
-        },
-        {
-          "id": "sportsnet:nhl-video-canadiens-caufield-snipes-top-shelf-for-overtime-winner",
-          "why": "видео или реакция на уже разобранную игру"
-        }
-      ],
-      "note": "Проверены также заголовки feed за 4 часа (обновление 2026-10-18T10:48:57Z): только уже освещённый матч «Вашингтона». Новых достойных событий нет. В 14:21 утренняя страховка вне окна не выполнялась."
-    },
-    {
       "t": "2026-10-18T13:16:06Z",
       "status": "ok",
       "picked": [],
@@ -1785,6 +1729,65 @@
         }
       ],
       "note": "Прочитаны общие правила, news, полный текущий промпт и стиль. Метаданные/recent/morning/summary до article; затем article Линделля, Сандерсона, Ниса и Задорова. Дополнительно свежие заголовки feed за4часа: найдена активация Цуккарелло вне12, прочитан полный body PHR и статья с первичной ссылкой клуба https://x.com/LAKings/status/2112593634482942384 . Линделль: блокированный бросок, нижняя часть тела, точный минимум недели сверены с NHL.com/fi https://www.nhl.com/fi/news/loukkaantuminen-pakottaa-esa-lindellin-lepoon и сегодняшним репортажем Dallas Morning News/Yahoo; Капобьянко только возможный выход, хозяева Даллас. Цуккарелло: активация из IR, два матча/одна передача, свободные места и отсутствие побед из body, старт в конкретной игре не обещан. Новые фамилии не добавлялись: все игроки по словарю. Фото из источников HTTP200 и просмотрены, для PHR тот же оригинал www вместо CDN. Дубли по очереди/recent/morning/posted проверены; пять новостей канала уже вышли, обе новые строго tg:false/hot:false, второй ready+40минут по промпту. Журнал30, live штатным скриптом, язык/длины/JSON проверены. Утреннюю страховку вне окна не выполнять; данные/модель/скрипты/готовые посты не менять."
+    },
+    {
+      "t": "2026-10-20T21:18:00Z",
+      "status": "ok",
+      "picked": [
+        "dailyfaceoff:gary-flames-mikael-backlund-upper-body-injury-nhl-news-hurricanes-wild-ben-jones",
+        "prohockeyrumors:2026-10-jets-place-walker-duehr-on-waivers-html"
+      ],
+      "skipped": [
+        {
+          "id": "sportsnet:l-video-tough-not-to-take-it-personal-fantilli-on-marchenko-leaving-blue-jackets",
+          "why": "Реакция на состоявшийся ранее обмен, а не новый обмен/запрос. Для сайта выбраны подтверждённые изменения составов."
+        },
+        {
+          "id": "thehockeynews:arov-saves-his-best-game-of-the-season-against-maple-leafs-idol-sergei-bobrovsky",
+          "why": "Оценка Аскарова и цитаты о Бобровском после уже освещённого матча; нового самостоятельного события нет."
+        },
+        {
+          "id": "dailyfaceoff:rangers-for-real-even-without-igor-shesterkin-nhl-alexis-lafreniere-dylan-garand",
+          "why": "Анализ старта Рейнджерс и уже известных травм, не свежее медицинское решение."
+        },
+        {
+          "id": "prohockeyrumors:2026-10-bruins-notes-zadorov-zacha-eyssimont-jokiharju-html",
+          "why": "Ранее прочитанный article о реакции Задорова на прежний пропуск игры; не новый пропуск или свежий обмен."
+        },
+        {
+          "id": "thehockeynews:ning-skate-michkov-leads-flyers-mckenna-comes-up-clutch-for-maple-leafs-and-more",
+          "why": "Обзор уже освещённых игр Мичкова/Маккенны, самостоятельного нового события нет."
+        },
+        {
+          "id": "thehockeynews:-hockey-news-wraparound-will-brady-tkachuk-feel-the-heat-in-his-return-to-ottawa",
+          "why": "Подкаст с очередным обсуждением уже анонсированного возвращения Ткачука; нового события нет."
+        },
+        {
+          "id": "sportsnet:e-knies-marchenko-brace-for-emotional-reunions-as-maple-leafs-visit-blue-jackets",
+          "why": "Реакции Ниса/Марченко на состоявшийся ранее обмен, не новые переговоры. В пределах двух выбраны новые медицинское обновление и результат драфта отказов."
+        },
+        {
+          "id": "sportsnet:video-can-garand-rangers-build-on-strong-start-to-be-serious-contenders-in-metro",
+          "why": "Экспертная оценка старта Рейнджерс и Гаранда, не новое решение клуба или сделка."
+        },
+        {
+          "id": "sportsnet:video-how-cowans-calder-cup-run-with-marlies-clearly-helped-with-his-development",
+          "why": "Оценка развития Коуэна, без новой роли или решения."
+        },
+        {
+          "id": "nhl:brady-tkachuk-return-to-ottawa-will-be-fun-game-for-senators",
+          "why": "Очередной анонс уже освещённого возвращения Ткачука, без нового спортивного события."
+        },
+        {
+          "id": "sportsnet:nhl-video-batherson-more-worried-about-getting-the-win-than-reception-for-brady",
+          "why": "Очередной комментарий к уже анонсированному возвращению Ткачука; нового спортивного события нет."
+        },
+        {
+          "id": "sportsnet:nhl-video-senators-green-hoping-sanderson-returns-for-big-test-vs-panthers",
+          "why": "Article краткий. NHL Status Report подтверждает ожидание возвращения Сандерсона после восьми игр, но это ожидание, не готовый состав. В предел двух выбраны точный срок Линделля и активация Цуккарелло."
+        }
+      ],
+      "note": "Полностью прочитаны operations/news/текущий промпт/стиль; сначала метаданные/recent/morning/summary без article. Короткий список без нового события: проверены заголовки feed за4часа. Вне12 найдены травма Бэклунда/вызов Джонса и прохождение Дьюром драфта отказов. Прочитаны body DFO/PHR/Sportsnet о Бэклунде, PHR о Джонсе, PHR об обновлении Дьюра20октября; полная PHR со ссылкой Фридмана https://x.com/FriedgeHNIC/status/2112605448952025356 . Это новый результат процедуры, а не повтор прежней новости о выставлении19октября. Состоявшийся перевод/выход за Манитобу не придумывались. У Бэклунда нет объявленного срока, четверг под вопросом, выход Джонса не гарантирован. Бэклунд по словарю, отсутствующий Бен Джонс транскрибирован, Уолкер Дьюр сохранён в ранее проверенном написании. Фото обоих источников HTTP200, скачаны/просмотрены; PHR тот же оригинал www вместо CDN. Выбрано ровно2, только сайт tg:false/hot:false из-за00:00–08:00МСК независимо от сброса дневного счётчика. Второй ready+40минут. Дубли по очереди/recent/morning/posted, даты18часов, длины/язык/JSON проверены. Журнал30, live штатным скриптом; утреннюю страховку вне окна не выполнял. Данные/модель/прошлые прогнозы/скрипты/опубликованные посты не изменены."
     }
   ]
 }
