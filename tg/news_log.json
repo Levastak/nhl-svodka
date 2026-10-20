@@ -1,68 +1,6 @@
 {
   "runs": [
     {
-      "t": "2026-10-18T05:19:33Z",
-      "status": "ok",
-      "picked": [
-        "sportsnet:nhl-article-maple-leafs-would-deal-prime-asset-for-difference-maker-on-blue-line"
-      ],
-      "skipped": [
-        {
-          "id": "espn:41679163",
-          "why": "справочная статья без нового события или рекорда"
-        },
-        {
-          "id": "espn:41589293",
-          "why": "справочная статья без нового события или рекорда"
-        },
-        {
-          "id": "nhl:flyers-rick-tocchet-gives-game-puck-to-radio-voice-jason-myrtetus",
-          "why": "предматчевая/послематчевая история вне приоритетной спортивной повестки"
-        },
-        {
-          "id": "sportsnet:inant-showing-in-win-over-sabres-a-welcome-development-for-canadiens-suzuki-line",
-          "why": "разбор или пересказ матча без нового самостоятельного события"
-        },
-        {
-          "id": "dailyfaceoff:panthers-first-nhl-team-natural-hat-trick-three-straight-games-tkachuk-verhaeghe",
-          "why": "повтор уже опубликованного рекорда «Флориды»"
-        },
-        {
-          "id": "sportsnet:nhl-video-caufield-on-playing-in-front-of-habs-fans-very-blessed-to-be-here",
-          "why": "видео и реакция на отдельный эпизод матча"
-        },
-        {
-          "id": "nhl:matthew-schaefer-joined-by-young-islanders-fan-cancer-patient",
-          "why": "предматчевая/послематчевая история вне приоритетной спортивной повестки"
-        },
-        {
-          "id": "rmnb:2026-10-17-tom-wilson-jack-hughes-dives-ice-avoid-hit",
-          "why": "курьёз и видео эпизода матча"
-        },
-        {
-          "id": "sportsnet:nhl-video-mcdavid-shows-off-wheels-getting-oilers-on-the-board-early",
-          "why": "видео и реакция на отдельный эпизод матча"
-        },
-        {
-          "id": "sportsnet:nhl-article-cole-caufield-scores-overtime-winner-as-canadiens-down-sabres",
-          "why": "разбор или пересказ матча без нового самостоятельного события"
-        },
-        {
-          "id": "sportsnet:nhl-video-canadiens-caufield-snipes-top-shelf-for-overtime-winner",
-          "why": "видео и реакция на отдельный эпизод матча"
-        },
-        {
-          "id": "sportsnet:nhl-article-maple-leafs-drop-third-straight-in-loss-to-islanders",
-          "why": "разбор или пересказ матча без нового самостоятельного события"
-        },
-        {
-          "id": "dailyfaceoff:ws-new-york-islanders-calum-ritchie-matias-maccelli-leave-game-injuries-nhl-news",
-          "why": "источники прочитаны: травмы без сроков; выбран более значимый инсайд об усилении «Торонто»"
-        }
-      ],
-      "note": "Проверены также свежие заголовки feed за 4 часа и обновление 05:18 UTC. Источник инсайда прочитан, имена и смысловые повторы проверены. Дневное окно: одна новая новость для сайта и очереди канала; ночные tg:false не менялись. Вне окна 10:00–11:30 восстановление утра не запускалось."
-    },
-    {
       "t": "2026-10-18T07:23:03Z",
       "status": "ok",
       "picked": [],
@@ -1799,6 +1737,60 @@
         }
       ],
       "note": "Прочитаны общие правила, news, полный промпт и стиль. Начал с метаданных/recent_titles/morning_site_news/summary без article; проверены заголовки последних четырёх часов и непросмотренные события за 18 часов. Выбрано впервые освещаемое повреждение Джона Марино: прочитана полная заметка ProHockeyRumors, сообщение клуба и RotoWire. Не пересказ результата матча; сроки не выдуманы, пять очков в девяти матчах перенесены точно, имя по словарю. Общая иллюстрация PHR оказалась с другим игроком: вместо неё взято фото с точной подписью John Marino на странице RotoWire https://www.rotowire.com/hockey/headlines/john-marino-injury-dealing-with-ubi-596557 ; изображение загружено, проверено, HTTP200. Только сайт tg:false: клубная новость не расходует места главных новостей канала. Остальные кандидаты — повторы, старые события или курьёзы. Дополнительно свежие материалы: историческая подборка обменов и общий анонс вечера без самостоятельного нового события. Дубли по очереди, recent/morning и posted, язык, даты и длины проверены. Страховка утреннего выпуска вне окна не выполнялась. Изменены только очередь, журнал и live штатным скриптом."
+    },
+    {
+      "t": "2026-10-20T15:24:52Z",
+      "status": "ok",
+      "picked": [
+        "prohockeyrumors:2026-10-sabres-committed-to-ukko-pekka-luukkonen-html"
+      ],
+      "skipped": [
+        {
+          "id": "thehockeynews:ning-skate-michkov-leads-flyers-mckenna-comes-up-clutch-for-maple-leafs-and-more",
+          "why": "Обзор уже освещённых игр Мичкова/Маккенны, самостоятельного нового события нет."
+        },
+        {
+          "id": "rmnb:2026-10-19-washington-capitals-halloween-party-costumes-2026",
+          "why": "Курьёз с вечеринки, нового спортивного события нет."
+        },
+        {
+          "id": "sportsnet:nhl-video-has-sundin-made-an-early-impact-on-matthews-leadership",
+          "why": "Мнение экспертов о лидерстве Мэттьюса, а не новое назначение или решение клуба."
+        },
+        {
+          "id": "dailyfaceoff:news-buffalo-sabres-jack-quinn-breakout-nhl-season-goals-assists-points-nhl",
+          "why": "Article прочитан: портрет Куинна с пятью голами и девятью очками, главная игра 15 октября; нового рекорда или изменения роли нет."
+        },
+        {
+          "id": "sportsnet:nhl-video-nhl-stars-help-contestants-win-prizes-on-the-price-is-right",
+          "why": "Телешоу, не новое спортивное событие."
+        },
+        {
+          "id": "prohockeyrumors:2026-10-penguins-shopping-bryan-rust-rickard-rakell-html",
+          "why": "Полная статья прочитана. Перепечатка подкаста The Buyck Stops Here от 19 октября 09:00 UTC, старше 18 часов; обсуждение несостоявшейся схемы с Марченко до его перехода в Торонто не новое предложение."
+        },
+        {
+          "id": "sportsnet:nhl-video-wilson-schaefer-montour-and-walman-join-the-price-is-right-tonight",
+          "why": "Телешоу без нового спортивного события."
+        },
+        {
+          "id": "sportsnet:nhl-video-how-will-senators-fans-welcome-tkachuk-back-to-ottawa",
+          "why": "Возвращение Ткачука в Оттаву уже освещено; анонс реакции болельщиков не новое событие."
+        },
+        {
+          "id": "nhl:winnipeg-jets-cole-perfetti-excels-since-top-line-promotion",
+          "why": "Ранее прочитанный первоисточник: повышение произошло ещё перед лагерем, это портрет, а не новая роль."
+        },
+        {
+          "id": "prohockeyrumors:2026-10-stars-to-begin-extension-talks-with-jason-robertson-in-december-html",
+          "why": "Ранее проверен первичный NHL.com от 18 октября; свежая перепечатка не обновляет дату события."
+        },
+        {
+          "id": "sportsnet:nhl-video-howie-mandel-gives-nhlers-custom-cards-on-the-price-is-right-tonight",
+          "why": "Телешоу без нового спортивного события."
+        }
+      ],
+      "note": "Прочитаны общие правила, news, полный промпт и стиль. Сначала компактный контекст без article; затем article Луукконена, Раста/Ракелля и Куинна, полные PHR обоих рассматриваемых сюжетов. Свежие заголовки feed за четыре часа проверены: общий анонс Капризов/Макдэвид уже покрыт превью, анализ Найза не новое событие, контракт PWHL вне НХЛ, историческая подборка обменов не свежая сделка. Заявление Кекяляйнена подтверждено сегодняшним материалом первоисточника WGR https://www.audacy.com/wgr550/video/jarmo-on-goaltending-xbpupwu и ссылкой эфира из PHR. Сведения о вратарях переданы как слова менеджера, без обещания не обменивать Луукконена и без утверждения о конкретном обмене Хеллибака. Фамилии вратарей по словарю; отсутствующий Ярмо Кекяляйнен проверен по СЭ/Чемпионату. У слуха о Питтсбурге проверена исходная дата по Sportsnet и карточке выпуска Apple Podcasts от 19 октября 09:00 UTC; перепечатка не новая. Фото из той же PHR-статьи: CDN не ответил, исходный www URL HTTP200, изображение вратарей Баффало загружено и просмотрено. Дубли по recent/morning/очереди/posted проверены. Два поста ленты за день, три места свободны, с предыдущего прошло более 75 минут; hot:false. Ready сейчас, бот соблюдает интервалы с другими постами. Журнал последние30; news_live штатным скриптом. Вне окна утра восстановление не выполнялось; исходные данные/модель/скрипты/прошлые посты не менялись."
     }
   ]
 }
