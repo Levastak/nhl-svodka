@@ -1,7 +1,7 @@
 {
  "version": 4.4,
  "xg_used": true,
- "generated": "2026-10-20T06:03Z",
+ "generated": "2026-10-20T10:27Z",
  "league": {
   "goals_pg": 3.115,
   "home_adv": 0.021,
@@ -272,12 +272,12 @@
     "att": 1.023,
     "dfn": 0.99
    },
-   "mkt_home": 0.494,
-   "mkt_away": 0.506,
-   "edge_home": -0.019,
-   "edge_away": 0.019,
-   "p_home_blend": 0.486,
-   "p_away_blend": 0.514,
+   "mkt_home": 0.506,
+   "mkt_away": 0.494,
+   "edge_home": -0.031,
+   "edge_away": 0.031,
+   "p_home_blend": 0.494,
+   "p_away_blend": 0.506,
    "fatigue_edge": true,
    "value": null,
    "mkt_over": 0.469,
@@ -301,12 +301,20 @@
    "verdict": {
     "fav": "away",
     "p_fav": 0.525,
-    "mkt_fav": "away",
-    "vs_market": false,
-    "level": "pass",
+    "mkt_fav": "home",
+    "vs_market": true,
+    "level": "lean",
     "edge_side": "away",
-    "edge": 0.019,
+    "edge": 0.031,
     "fatigue": false,
+    "bet": {
+     "kind": "win",
+     "side": "away",
+     "odds": 1.96,
+     "p_model": 0.525,
+     "p_mkt": 0.494,
+     "src": "betonlineag"
+    },
     "total": {
      "side": "over",
      "line": 6.5,
@@ -557,19 +565,19 @@
     "att": 1.049,
     "dfn": 1.036
    },
-   "mkt_home": 0.585,
-   "mkt_away": 0.415,
-   "edge_home": 0.041,
-   "edge_away": -0.041,
-   "p_home_blend": 0.602,
-   "p_away_blend": 0.398,
+   "mkt_home": 0.581,
+   "mkt_away": 0.419,
+   "edge_home": 0.045,
+   "edge_away": -0.045,
+   "p_home_blend": 0.599,
+   "p_away_blend": 0.401,
    "fatigue_edge": false,
    "value": null,
-   "mkt_over": 0.472,
-   "edge_over": 0.05,
-   "p_over_blend": 0.492,
-   "p_under_blend": 0.508,
-   "value_total": "over",
+   "mkt_over": 0.474,
+   "edge_over": 0.048,
+   "p_over_blend": 0.493,
+   "p_under_blend": 0.507,
+   "value_total": null,
    "soft": [],
    "h2h": [],
    "id": 2026020144,
@@ -589,14 +597,14 @@
     "vs_market": false,
     "level": "lean",
     "edge_side": "home",
-    "edge": 0.041,
+    "edge": 0.045,
     "fatigue": false,
     "bet": {
      "kind": "win",
      "side": "home",
-     "odds": 1.66,
+     "odds": 1.67,
      "p_model": 0.626,
-     "p_mkt": 0.585,
+     "p_mkt": 0.581,
      "src": "Pinnacle"
     },
     "total": {
@@ -605,7 +613,7 @@
      "p": 0.522,
      "mkt_side": "under",
      "vs_market": true,
-     "value": "over"
+     "value": null
     }
    }
   },
@@ -703,10 +711,10 @@
    "p_away_blend": 0.392,
    "fatigue_edge": true,
    "value": "home",
-   "mkt_over": 0.494,
-   "edge_over": 0.002,
-   "p_over_blend": 0.495,
-   "p_under_blend": 0.505,
+   "mkt_over": 0.512,
+   "edge_over": -0.016,
+   "p_over_blend": 0.505,
+   "p_under_blend": 0.495,
    "value_total": null,
    "soft": [],
    "h2h": [],
@@ -740,8 +748,8 @@
      "side": "under",
      "line": 6.5,
      "p": 0.504,
-     "mkt_side": "under",
-     "vs_market": false,
+     "mkt_side": "over",
+     "vs_market": true,
      "value": null
     }
    }
@@ -980,8 +988,8 @@
      "book": "1xBet",
      "bet": "П2 BOS (осн. время)",
      "odds": 3.25,
-     "fair": 3.13,
-     "ev": 0.04
+     "fair": 3.14,
+     "ev": 0.036
     }
    ],
    "h2h": [],
@@ -1113,12 +1121,12 @@
     "att": 1.073,
     "dfn": 0.971
    },
-   "mkt_home": 0.565,
-   "mkt_away": 0.435,
-   "edge_home": -0.076,
-   "edge_away": 0.076,
-   "p_home_blend": 0.535,
-   "p_away_blend": 0.465,
+   "mkt_home": 0.559,
+   "mkt_away": 0.441,
+   "edge_home": -0.07,
+   "edge_away": 0.07,
+   "p_home_blend": 0.531,
+   "p_away_blend": 0.469,
    "fatigue_edge": false,
    "value": "away",
    "mkt_over": 0.478,
@@ -1130,16 +1138,16 @@
     {
      "book": "1xBet",
      "bet": "П2 MIN (осн. время)",
-     "odds": 2.93,
-     "fair": 2.79,
-     "ev": 0.049
+     "odds": 2.92,
+     "fair": 2.77,
+     "ev": 0.053
     },
     {
      "book": "Марафон",
      "bet": "П2 MIN (осн. время)",
-     "odds": 2.89,
-     "fair": 2.79,
-     "ev": 0.035
+     "odds": 2.85,
+     "fair": 2.76,
+     "ev": 0.032
     }
    ],
    "h2h": [],
@@ -1161,14 +1169,14 @@
     "vs_market": true,
     "level": "bet",
     "edge_side": "away",
-    "edge": 0.076,
+    "edge": 0.07,
     "fatigue": false,
     "bet": {
      "kind": "win",
      "side": "away",
-     "odds": 2.23,
+     "odds": 2.21,
      "p_model": 0.511,
-     "p_mkt": 0.435,
+     "p_mkt": 0.441,
      "src": "Pinnacle"
     },
     "total": {
@@ -1391,12 +1399,12 @@
     "att": 0.918,
     "dfn": 1.144
    },
-   "mkt_home": 0.279,
-   "mkt_away": 0.721,
-   "edge_home": -0.04,
-   "edge_away": 0.04,
-   "p_home_blend": 0.263,
-   "p_away_blend": 0.737,
+   "mkt_home": 0.272,
+   "mkt_away": 0.728,
+   "edge_home": -0.033,
+   "edge_away": 0.033,
+   "p_home_blend": 0.259,
+   "p_away_blend": 0.741,
    "fatigue_edge": false,
    "value": null,
    "mkt_over": 0.496,
@@ -1431,21 +1439,21 @@
     "vs_market": false,
     "level": "lean",
     "edge_side": "away",
-    "edge": 0.04,
+    "edge": 0.033,
     "fatigue": false,
     "sure": {
      "side": "away",
      "p": 0.761,
-     "mkt": 0.721,
-     "edge": 0.04,
-     "odds": 1.34
+     "mkt": 0.728,
+     "edge": 0.033,
+     "odds": 1.33
     },
     "bet": {
      "kind": "win",
      "side": "away",
-     "odds": 1.34,
+     "odds": 1.33,
      "p_model": 0.761,
-     "p_mkt": 0.721,
+     "p_mkt": 0.728,
      "src": "Pinnacle"
     },
     "total": {
@@ -1535,12 +1543,12 @@
     "att": 1.064,
     "dfn": 0.919
    },
-   "mkt_home": 0.504,
-   "mkt_away": 0.496,
-   "edge_home": -0.039,
-   "edge_away": 0.039,
-   "p_home_blend": 0.488,
-   "p_away_blend": 0.512,
+   "mkt_home": 0.51,
+   "mkt_away": 0.49,
+   "edge_home": -0.045,
+   "edge_away": 0.045,
+   "p_home_blend": 0.492,
+   "p_away_blend": 0.508,
    "fatigue_edge": false,
    "value": null,
    "mkt_over": 0.527,
@@ -1567,14 +1575,14 @@
     "vs_market": true,
     "level": "lean",
     "edge_side": "away",
-    "edge": 0.039,
+    "edge": 0.045,
     "fatigue": false,
     "bet": {
      "kind": "win",
      "side": "away",
-     "odds": 1.96,
+     "odds": 1.98,
      "p_model": 0.535,
-     "p_mkt": 0.496,
+     "p_mkt": 0.49,
      "src": "Pinnacle"
     },
     "total": {
