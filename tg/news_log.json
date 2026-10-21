@@ -1,62 +1,6 @@
 {
   "runs": [
     {
-      "t": "2026-10-18T17:22:58Z",
-      "status": "ok",
-      "picked": [],
-      "skipped": [
-        {
-          "id": "dailyfaceoff:news-cole-perfetti-contract-extension-steal-winnipeg-jets-nhl",
-          "why": "Статья прочитана: оценка контракта, подписанного в июле; нового соглашения или решения нет."
-        },
-        {
-          "id": "thehockeynews:-toronto-maple-leafs-need-more-from-depth-players-in-wake-of-john-tavares-injury",
-          "why": "Статья прочитана: разбор последствий уже опубликованной травмы Тавареса, новых сроков или решений нет."
-        },
-        {
-          "id": "rmnb:or-capitals-to-stave-off-really-rough-third-period-numbers-for-the-morning-after",
-          "why": "Разбор уже освещённой игры «Вашингтона», самостоятельного нового события нет."
-        },
-        {
-          "id": "espn:41679163",
-          "why": "Справочный материал без нового события."
-        },
-        {
-          "id": "espn:41589293",
-          "why": "Справочный материал без нового события."
-        },
-        {
-          "id": "nhl:flyers-rick-tocchet-gives-game-puck-to-radio-voice-jason-myrtetus",
-          "why": "История вокруг уже освещённого матча, не новая спортивная новость."
-        },
-        {
-          "id": "sportsnet:inant-showing-in-win-over-sabres-a-welcome-development-for-canadiens-suzuki-line",
-          "why": "Разбор уже освещённой игры «Монреаля»."
-        },
-        {
-          "id": "dailyfaceoff:panthers-first-nhl-team-natural-hat-trick-three-straight-games-tkachuk-verhaeghe",
-          "why": "Повтор опубликованного рекорда «Флориды»."
-        },
-        {
-          "id": "sportsnet:nhl-video-caufield-on-playing-in-front-of-habs-fans-very-blessed-to-be-here",
-          "why": "Реакция на уже освещённый матч и опубликованный гол."
-        },
-        {
-          "id": "nhl:matthew-schaefer-joined-by-young-islanders-fan-cancer-patient",
-          "why": "История вокруг матча вне приоритетной спортивной повестки."
-        },
-        {
-          "id": "rmnb:2026-10-17-tom-wilson-jack-hughes-dives-ice-avoid-hit",
-          "why": "Курьёз из уже освещённого матча."
-        },
-        {
-          "id": "sportsnet:nhl-video-mcdavid-shows-off-wheels-getting-oilers-on-the-board-early",
-          "why": "Видео уже разобранного матча."
-        }
-      ],
-      "note": "Проверены свежие заголовки feed за 4 часа и непросмотренные инсайды/травмы по всему допустимому окну 18 часов (feed 16:20 UTC). Точечно прочитаны body пяти статей: Перфетти, последствия травмы Тавареса, Маккенна—Селебрини, West Notes и East Notes. Перрон/Ричи/Макчелли уже в утреннем выпуске, Хайман и дисквалификация Хеллибака также опубликованы. Анонс Маккенна—Селебрини относится к завтрашнему матчу; материал о будущих повышениях зарплат — аналитика, а не новые контракты. Курашев в Швейцарию и перемещения Саломонссона/Каскимяки ниже приоритета при двух уже вышедших новостях ленты и одной в очереди. Дополнительный поиск не дал подтверждённого нового события; поиск старых сюжетов не выдаётся за свежую новость. Публикации двух инсайдов предыдущего прохода не дублируются. Утреннюю страховку вне окна не выполняли."
-    },
-    {
       "t": "2026-10-18T19:26:53Z",
       "status": "ok",
       "picked": [
@@ -1774,6 +1718,61 @@
         }
       ],
       "note": "Operations/news/полный промпт/стиль прочитаны. Сначала metadata/recent/morning/summary, затем свежие заголовки4часа: травмы Маккейба/Байфилда вне12. Body Sportsnet и DFO прочитаны; отсутствие до конца игры подтверждено свежими RotoWire596650/596649, даты18часов. Сроков/диагнозов не придумывал. Reddit пересказывает успокаивающий комментарий Хиллера о Маккейбе, оригинал не получен: не использован как факт, длительная потеря не заявлена. Body Брауна/Штурма и PHR Evening Notes прочитаны, приоритет свежим травмам. Фото обоих источников HTTP200, просмотрены; имена по словарю. Очередь/recent/morning/posted без дублей, тексты3–5предложений≤700, заголовки≤90/без латиницы. Ночь06МСК: оба tg:false/hot:false, второй ready+40минут; журнал30, live штатным скриптом. Утреннюю страховку вне окна не выполнял; модель/данные/скрипты/готовые посты не менял."
+    },
+    {
+      "t": "2026-10-21T05:26:06Z",
+      "status": "ok",
+      "picked": [
+        "sportsnet:ticle-oilers-connor-mcdavid-sets-nhl-record-for-assists-through-first-nine-games",
+        "sportsnet:nhl-article-oilers-nugent-hopkins-to-return-thursday-vs-hurricanes"
+      ],
+      "skipped": [
+        {
+          "id": "sportsnet:nhl-article-marchenko-cowan-help-maple-leafs-earn-rout-in-columbus",
+          "why": "Гол Марченко в возвращении в Коламбус и пересказ матча; самостоятельного рекорда или нового кадрового события нет. Оставить для утренних итогов."
+        },
+        {
+          "id": "sportsnet:nhl-video-marchenko-redirects-puck-past-greaves-to-score-against-former-team",
+          "why": "Гол Марченко в возвращении в Коламбус и пересказ матча; самостоятельного рекорда или нового кадрового события нет. Оставить для утренних итогов."
+        },
+        {
+          "id": "sportsnet:ideo-happy-to-be-here-marchenko-talks-trade-to-toronto-and-first-leafs-hat-trick",
+          "why": "Прежние матчи, интервью или анализ без нового самостоятельного события."
+        },
+        {
+          "id": "sportsnet:l-video-tough-not-to-take-it-personal-fantilli-on-marchenko-leaving-blue-jackets",
+          "why": "Прежние матчи, интервью или анализ без нового самостоятельного события."
+        },
+        {
+          "id": "thehockeynews:arov-saves-his-best-game-of-the-season-against-maple-leafs-idol-sergei-bobrovsky",
+          "why": "Прежние матчи, интервью или анализ без нового самостоятельного события."
+        },
+        {
+          "id": "dailyfaceoff:rangers-for-real-even-without-igor-shesterkin-nhl-alexis-lafreniere-dylan-garand",
+          "why": "Прежние матчи, интервью или анализ без нового самостоятельного события."
+        },
+        {
+          "id": "prohockeyrumors:2026-10-bruins-notes-zadorov-zacha-eyssimont-jokiharju-html",
+          "why": "Реакция на прежнее решение о составе; нового перехода или травмы нет."
+        },
+        {
+          "id": "thehockeynews:ning-skate-michkov-leads-flyers-mckenna-comes-up-clutch-for-maple-leafs-and-more",
+          "why": "Прежние матчи, интервью или анализ без нового самостоятельного события."
+        },
+        {
+          "id": "sportsnet:nhl-video-oilers-bouchard-holds-before-rifling-home-pinpoint-ot-winner",
+          "why": "Видео обычного гола; самостоятельного нового события нет."
+        },
+        {
+          "id": "rmnb:2026-10-20-logan-thompson-capitals-potential-injury-spencer-carbery",
+          "why": "Томпсон доиграл встречу; Карбери пока не видит оснований опасаться травмы. Подтверждённой потери или срока нет; приоритет рекорду и подтверждённому возвращению."
+        },
+        {
+          "id": "sportsnet:-video-oilers-draisaitl-fires-one-timer-past-wallstedt-in-dying-seconds-of-first",
+          "why": "Видео обычного гола; самостоятельного нового события нет."
+        }
+      ],
+      "note": "Прочитаны operations/news/полный промпт/стиль. Сначала metadata/recent/morning и заголовки/summary12 без article; затем article Макдэвида и Томпсона. Дополнительно свежие заголовки4часа: найдено возвращение Нюджент-Хопкинса вне12, body прочитан. Макдэвид: новая веха этой ночи, не пересказ старого матча; точный рекорд20передач через9игр, без экстраполяции на сезон. Нюджент-Хопкинс: тренер подтвердил четверг против Каролины, пропустил старт из-за нижней части тела,56очков72игры в прошлом сезоне. Дубли по очереди/recent/morning/posted отсутствуют. Имена по словарю,3–5предложений≤700, заголовки≤90/без латиницы; фото обоих HTTP200 и просмотрены. Днём08МСК: Макдэвид в канал, Нюджент-Хопкинс только сайт tg:false, второй ready+40минут. Журнал30, live штатным скриптом; утреннюю страховку вне окна не выполнял, готовые посты/модель/данные/скрипты не менял."
     }
   ]
 }
