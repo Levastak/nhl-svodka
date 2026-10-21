@@ -1,73 +1,6 @@
 {
   "runs": [
     {
-      "t": "2026-10-18T19:26:53Z",
-      "status": "ok",
-      "picked": [
-        "prohockeyrumors:2026-10-jets-assign-elias-salomonsson-to-ahl-html",
-        "prohockeyrumors:2026-10-blues-recall-aleksanteri-kaskimaki-html"
-      ],
-      "skipped": [
-        {
-          "id": "dailyfaceoff:news-cole-perfetti-contract-extension-steal-winnipeg-jets-nhl",
-          "why": "Оценка ранее подписанного контракта; нового соглашения или решения нет."
-        },
-        {
-          "id": "thehockeynews:-toronto-maple-leafs-need-more-from-depth-players-in-wake-of-john-tavares-injury",
-          "why": "Последствия уже опубликованной травмы Тавареса без нового решения или сроков."
-        },
-        {
-          "id": "rmnb:or-capitals-to-stave-off-really-rough-third-period-numbers-for-the-morning-after",
-          "why": "Разбор уже освещённого матча без самостоятельного нового события."
-        },
-        {
-          "id": "web:hl-story-id-50201307-nhl-2026-27-tonight-games-schedule-matchups-stats-top-players-betting",
-          "why": "Превью матчей уже подготовлены; отдельного нового события нет."
-        },
-        {
-          "id": "espn:41679163",
-          "why": "Справочная статья без нового события."
-        },
-        {
-          "id": "espn:41589293",
-          "why": "Справочная статья без нового события."
-        },
-        {
-          "id": "nhl:flyers-rick-tocchet-gives-game-puck-to-radio-voice-jason-myrtetus",
-          "why": "История вокруг прошедшего матча вне спортивной новостной повестки."
-        },
-        {
-          "id": "sportsnet:inant-showing-in-win-over-sabres-a-welcome-development-for-canadiens-suzuki-line",
-          "why": "Разбор уже освещённого матча «Монреаля»."
-        },
-        {
-          "id": "dailyfaceoff:panthers-first-nhl-team-natural-hat-trick-three-straight-games-tkachuk-verhaeghe",
-          "why": "Повтор опубликованного рекорда «Флориды»."
-        },
-        {
-          "id": "sportsnet:nhl-video-caufield-on-playing-in-front-of-habs-fans-very-blessed-to-be-here",
-          "why": "Реакция на уже освещённую игру и гол."
-        },
-        {
-          "id": "nhl:matthew-schaefer-joined-by-young-islanders-fan-cancer-patient",
-          "why": "История вокруг матча без самостоятельного нового спортивного события."
-        },
-        {
-          "id": "rmnb:2026-10-17-tom-wilson-jack-hughes-dives-ice-avoid-hit",
-          "why": "Курьёз из уже освещённого матча."
-        },
-        {
-          "id": "sportsnet:nhl-article-jets-loan-defenceman-elias-salomonsson-to-ahl",
-          "why": "Тот же перевод Саломонссона; использован более подробный материал ProHockeyRumors."
-        },
-        {
-          "id": "prohockeyrumors:2026-10-assessing-the-penguins-filip-hallander-spencer-stastney-swap-html",
-          "why": "Статья прочитана: разбор обмена после 5 октября, не новое событие в пределах 18 часов."
-        }
-      ],
-      "note": "Проверены заголовки feed за 18 часов (обновление 18:10 UTC) и body четырёх реально рассматриваемых публикаций вне списка. По новому правилу Льва сайт освещает содержательные клубные перемещения независимо от приоритета Telegram: возвращение Саломонссона после операции и вызов Каскимяки. Оба материала tg:false. Для публикации только на сайте ready=written у обоих: штатный news_live использует ready как время сайта, поэтому задержка второго материала создала бы ложное время из будущего. Интервалы Telegram не затрагиваются. Русское имя Каскимяки и имя Торопченко сверены со словарём, отсутствующее имя Саломонссона транскрибировано по правилу промпта. Вызов Каскимяки и семь очков в шести играх дополнительно подтверждены официальным релизом «Сент-Луиса»: https://www.nhl.com/blues/news/kaskimaki-recalled-from-springfield . Травма Торопченко дана только как контекст, не как новая травма. Несовпадающие между источниками показатели Саломонссона в АХЛ не использованы. Утреннюю страховку вне окна не выполняли."
-    },
-    {
       "t": "2026-10-18T21:25:06Z",
       "status": "ok",
       "picked": [
@@ -1773,6 +1706,61 @@
         }
       ],
       "note": "Прочитаны operations/news/полный промпт/стиль. Сначала metadata/recent/morning и заголовки/summary12 без article; затем article Макдэвида и Томпсона. Дополнительно свежие заголовки4часа: найдено возвращение Нюджент-Хопкинса вне12, body прочитан. Макдэвид: новая веха этой ночи, не пересказ старого матча; точный рекорд20передач через9игр, без экстраполяции на сезон. Нюджент-Хопкинс: тренер подтвердил четверг против Каролины, пропустил старт из-за нижней части тела,56очков72игры в прошлом сезоне. Дубли по очереди/recent/morning/posted отсутствуют. Имена по словарю,3–5предложений≤700, заголовки≤90/без латиницы; фото обоих HTTP200 и просмотрены. Днём08МСК: Макдэвид в канал, Нюджент-Хопкинс только сайт tg:false, второй ready+40минут. Журнал30, live штатным скриптом; утреннюю страховку вне окна не выполнял, готовые посты/модель/данные/скрипты не менял."
+    },
+    {
+      "t": "2026-10-21T07:21:55Z",
+      "status": "ok",
+      "picked": [
+        "dailyfaceoff:ng-nikita-kucherov-ties-franchise-all-time-points-record-steven-stamkos-nhl-news",
+        "prohockeyrumors:2026-10-devils-activate-connor-brown-reassign-stefan-noesen-html"
+      ],
+      "skipped": [
+        {
+          "id": "nhl:tampa-bay-lightning-vegas-golden-knights-game-recap-october-20-2026",
+          "why": "Тот же новый рекорд Кучерова; один материал по Daily Faceoff, без второго поста."
+        },
+        {
+          "id": "espn:50235118",
+          "why": "Тот же новый рекорд Кучерова; один материал по Daily Faceoff, без второго поста."
+        },
+        {
+          "id": "sportsnet:nhl-article-marchenko-cowan-help-maple-leafs-earn-rout-in-columbus",
+          "why": "Марченко: обычный гол, возвращение к бывшему клубу и пересказ уже освещённого матча; нового самостоятельного события нет."
+        },
+        {
+          "id": "sportsnet:nhl-video-marchenko-redirects-puck-past-greaves-to-score-against-former-team",
+          "why": "Марченко: обычный гол, возвращение к бывшему клубу и пересказ уже освещённого матча; нового самостоятельного события нет."
+        },
+        {
+          "id": "sportsnet:ideo-happy-to-be-here-marchenko-talks-trade-to-toronto-and-first-leafs-hat-trick",
+          "why": "Прежний матч, интервью или анализ без нового самостоятельного события."
+        },
+        {
+          "id": "sportsnet:l-video-tough-not-to-take-it-personal-fantilli-on-marchenko-leaving-blue-jackets",
+          "why": "Прежний матч, интервью или анализ без нового самостоятельного события."
+        },
+        {
+          "id": "thehockeynews:arov-saves-his-best-game-of-the-season-against-maple-leafs-idol-sergei-bobrovsky",
+          "why": "Прежний матч, интервью или анализ без нового самостоятельного события."
+        },
+        {
+          "id": "dailyfaceoff:rangers-for-real-even-without-igor-shesterkin-nhl-alexis-lafreniere-dylan-garand",
+          "why": "Прежний матч, интервью или анализ без нового самостоятельного события."
+        },
+        {
+          "id": "prohockeyrumors:2026-10-bruins-notes-zadorov-zacha-eyssimont-jokiharju-html",
+          "why": "Прежнее решение о составе и реакция, без нового перехода или травмы."
+        },
+        {
+          "id": "thehockeynews:ning-skate-michkov-leads-flyers-mckenna-comes-up-clutch-for-maple-leafs-and-more",
+          "why": "Прежний матч, интервью или анализ без нового самостоятельного события."
+        },
+        {
+          "id": "sportsnet:nhl-article-oilers-ride-elite-power-play-to-win-over-tight-checking-wild",
+          "why": "Разбор уже показанного матча; рекорд Макдэвида опубликован отдельно."
+        }
+      ],
+      "note": "Прочитаны operations/news/полный промпт/стиль. Окно10:00–11:30: daily.date=tg.date=results_date=2026-10-20, auto_texts=false, AM06:08Z без fail, day_complete/daily_ready=true, восстановление не требуется. Сначала metadata/recent/morning/summary12 без article; затем article DFO о новом равенстве Кучерова и точечное чтение пустых article NHL/ESPN. NHL WebFetch недоступен, оригинал получен напрямую HTTP200, body прочитан:1137очков,405голов732передачи,888матчей; Стэмкос1137. Это впервые освещаемая веха, прежняя новость только о четырёх очках до рекорда, утро описывает результат без равенства; не единоличный рекорд. Дополнительно заголовки4ч и непросмотренные травмы/транзакции18ч. Body PHR Браун/Носен прочитан, обе операции подтверждены клубом; спорную цифру игр Носена из PHR не использовал. Передача Брауна подтверждена полным протоколом C.Brown13:54. Имена по словарю. Фото DFO200 просмотрено; CDN PHR завис, заменён оригиналом той же статьи из JSONLD,200 просмотрен. Кучеров hot:true в канал, Браун/Носен tg:false только сайт, второй ready+40мин. Дубли queue/recent/morning/posted проверены,3предложения≤700, заголовки≤90, без латиницы; журнал30, live штатным скриптом. Готовое утро/подписи/модель/данные/скрипты не менял."
     }
   ]
 }
