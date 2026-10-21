@@ -1,64 +1,6 @@
 {
   "runs": [
     {
-      "t": "2026-10-19T09:24:45Z",
-      "status": "ok",
-      "picked": [
-        "nhl:gavin-mckenna-to-face-macklin-celebrini-for-first-time-in-nhl"
-      ],
-      "skipped": [
-        {
-          "id": "sportsnet:rticle-flames-youngsters-offer-glimpse-of-brighter-future-in-upset-of-hurricanes",
-          "why": "Разбор уже показанного матча и гола Гридина без нового решения клуба."
-        },
-        {
-          "id": "sportsnet:nhl-video-flames-sharangovich-wires-go-ahead-goal-home-from-one-knee",
-          "why": "Видео победного гола уже освещённого матча, не самостоятельная новая новость."
-        },
-        {
-          "id": "sportsnet:nhl-video-flames-frost-caps-off-beauty-tic-tac-toe-play-for-goal-in-400th-game",
-          "why": "Видео гола и юбилейный матч; повтор игрового выпуска."
-        },
-        {
-          "id": "thehockeynews:news-latest-news-do-the-colorado-avalanche-have-a-goaltending-problem",
-          "why": "Ранее прочитанный article: оценка вратарей «Колорадо» без нового назначения или решения."
-        },
-        {
-          "id": "thehockeynews:news-latest-news-is-devon-levi-the-true-no-1-goalie-of-the-future-in-edmonton",
-          "why": "Ранее прочитанный article: оценка игры Леви и июльского обмена, нового события нет."
-        },
-        {
-          "id": "dailyfaceoff:news-cole-perfetti-contract-extension-steal-winnipeg-jets-nhl",
-          "why": "Ранее прочитанный article: оценка июльского контракта Перфетти, нового соглашения нет."
-        },
-        {
-          "id": "nhl:carolina-hurricanes-taylor-hall-injury-status-report-october-16-2026",
-          "why": "Ранее прочитанный article: прежняя травма и пятничная цитата, обновление результата игры; тот же URL уже опубликован."
-        },
-        {
-          "id": "sportsnet:article-sharangovich-nets-winner-as-flames-snap-hurricanes-seven-game-win-streak",
-          "why": "Повтор результата матча из утреннего выпуска."
-        },
-        {
-          "id": "sportsnet:nhl-video-i-felt-nothing-cooley-details-his-mindset-as-flames-goalie",
-          "why": "Послематчевая реакция на уже освещённую игру."
-        },
-        {
-          "id": "prohockeyrumors:2026-10-salary-cap-deep-dive-seattle-kraken-5-html",
-          "why": "Обзор финансов клуба без нового кадрового решения."
-        },
-        {
-          "id": "sportsnet:nhl-article-kaprizov-wallstedt-carry-wild-past-blue-jackets",
-          "why": "Повтор уже освещённого матча и достижений Капризова."
-        },
-        {
-          "id": "nhl:tom-wilson-wife-taylor-cast-away-baby-halloween",
-          "why": "Личная жизнь и костюм, спортивного события нет."
-        }
-      ],
-      "note": "В 12:22 местного утренняя страховка вне окна не выполнялась. Короткий список, recent_titles, morning_site_news, очередь, журнал и опубликованные ID проверены. Feed обновлён в 08:21 UTC: за последние четыре часа новых публикаций нет; дополнительно просмотрены непросмотренные заголовки/summary всего допустимого окна 18 часов. Вне списка найден и прочитан body официального анонса первой встречи Маккенны и Селебрини в НХЛ: первые номера драфтов 2026 и 2024 годов, летние совместные тренировки в Ванкувере. Это предстоящая встреча, не пересказ прошедшей игры; общий недельный обзор и вечернее превью этот конкретный сюжет не раскрывают. Матч «Торонто» — «Сан-Хосе» и его дата сверены с upcoming, фамилии по словарю. Источник на момент записи моложе 18 часов. Небольшой самостоятельный анонс опубликован только на сайте: tg:false, hot:false; для канала оставлен строгий отбор главных событий, дневная новость и вечернее превью. Исходные данные, прогнозы, подписи и опубликованные посты не менялись."
-    },
-    {
       "t": "2026-10-19T11:21:23Z",
       "status": "ok",
       "picked": [],
@@ -1853,6 +1795,65 @@
         }
       ],
       "note": "Прочитаны operations/news/полный промпт/стиль. Сначала metadata/recent/morning/12summary без article. Затем article PHRвратариНьюДжерси и DFOличныепричиныТкачука, оба не выбраны. Проверены заголовки4ч и непросмотренные травмы/инсайды18ч. Вне12 найдены официальный NHLStatusReport21окт и previewFLAOTT; оба body прочитаны. Сегодня новые подтверждения: Далин/Цукер будутвсоставе, Сандерсон willreturn/утромвпаресЗубом. ПрежнийпостДалин только тренировка/надежда/решениевпереди, новыйподтверждённыйвыход+дебютЦукера не дубль. ПрежниеСандерсон ожидания с понедельника отдельно не публиковали; сегодняшняя заявка подтверждаетreturnпосле8. Цифры3игры/24голав62/3окт/8игр/Шабо1–2недели толькоизNHL, не выдаюочереднойпрогноззафакт. Готовыеtg.games/upcoming проверены точечно, этихподтвержденийнет. Имена поnames_ru, официальныепортретыДалин/Сандерсон поheads HTTP200/просмотрены, исходноефотопревью не использовано. Лимитканала5 уже выбран, обатолькосайтtg:false/hot:false; второйready+40мин. Queue/recent/morning/state/log/live сверены, старыеэлементы не переписаны;4предложения≤700, заголовки≤90, безлатиницы; журнал30/liveштатно. Утреннююстраховку внеокна22МСК не выполнял, готовое/модель/скрипты не менял."
+    },
+    {
+      "t": "2026-10-21T21:27:33Z",
+      "status": "ok",
+      "picked": [
+        "dailyfaceoff:ws-vegas-golden-knights-place-lukas-cormier-nhl-waivers-ahl-henderson-alex-holtz",
+        "prohockeyrumors:2026-10-canadiens-reassign-owen-beck-david-reinbacher-html"
+      ],
+      "skipped": [
+        {
+          "id": "dailyfaceoff:ews-marat-khusnutdinov-boston-bruins-three-year-contract-extension-nhl-news-wild",
+          "why": "Article прочитан: reportedly agreed, источники те же Уикс/Каплан,3года/3.95млн уже опубликованы; громкий заголовок не доказывает нового официального объявления."
+        },
+        {
+          "id": "dailyfaceoff:-maple-leafs-last-laugh-return-columbus-blue-jackets-matthew-knies-adam-fantilli",
+          "why": "Гол и возвращение к бывшему клубу уже освещены."
+        },
+        {
+          "id": "sportsnet:ticle-oilers-podkolzin-off-to-flying-start-riding-shotgun-with-mcdavid-draisaitl",
+          "why": "История прежнего обмена и роста в уже известном звене, без нового кадрового решения."
+        },
+        {
+          "id": "espn:50235118",
+          "why": "Рекорд Кучерова уже опубликован."
+        },
+        {
+          "id": "sportsnet:nhl-article-marchenko-cowan-help-maple-leafs-earn-rout-in-columbus",
+          "why": "Гол и возвращение к бывшему клубу уже освещены."
+        },
+        {
+          "id": "sportsnet:nhl-video-how-should-panthers-tkachuk-be-received-in-ottawa-upon-return",
+          "why": "Возвращение Ткачука и реакции вокруг него уже освещены, нового перехода или кадрового решения нет."
+        },
+        {
+          "id": "espn:50239618",
+          "why": "Возвращение Ткачука и реакции вокруг него уже освещены, нового перехода или кадрового решения нет."
+        },
+        {
+          "id": "nhl:panthers-brady-tkachuk-ready-for-emotional-return-to-ottawa",
+          "why": "Возвращение Ткачука и реакции вокруг него уже освещены, нового перехода или кадрового решения нет."
+        },
+        {
+          "id": "sportsnet:-video-bring-whatever-you-feel-maurice-on-how-senators-fans-should-welcome-brady",
+          "why": "Возвращение Ткачука и реакции вокруг него уже освещены, нового перехода или кадрового решения нет."
+        },
+        {
+          "id": "prohockeyrumors:2026-10-the-devils-may-need-to-make-a-goaltending-upgrade-html",
+          "why": "Авторский анализ потребности во вратаре, не объявленные переговоры или трансфер."
+        },
+        {
+          "id": "sportsnet:nhl-video-how-cozens-feels-tkachuk-should-be-remembered-by-senators-fanbase",
+          "why": "Возвращение Ткачука и реакции вокруг него уже освещены, нового перехода или кадрового решения нет."
+        },
+        {
+          "id": "sportsnet:nhl-video-why-senators-green-isnt-concerned-with-what-reception-brady-will-get",
+          "why": "Возвращение Ткачука и реакции вокруг него уже освещены, нового перехода или кадрового решения нет."
+        }
+      ],
+      "note": "Прочитаны operations/news/полный промпт/стиль. Сначала metadata/recent/morning/12summary без article; затем articleХуснутдинов. DFOподписали в заголовке, но body reportedly/thesameKaplan — не новое официальное объявление, точныеусловия уже опубликованы20:20. Дополнительно заголовки4ч и непросмотренные травмы/транзакции18ч. Вне12 найдены Кормье/Хольц и Бек/Райнбахер; оба feed.body прочитаны. DFObody достаточно: выставлен, ещё НЕпрошёлотказы; назначение вХендерсон толькоеслинепотребуют, вызовХольца отдельнаяподтверждённаяоперация. ПрямаяDFOстраница403, факты естьвbody, не отказалсяиззасети. PHRМонреаль подтверждён официальным https://www.nhl.com/canadiens/news/canadiens-loan-beck-reinbacher-to-laval-rocket-oct-21-2026: Бек2НХЛ/Райнбахер1НХЛ, оба4АХЛ/1и2передачи. Возможныйобратныйвызоввпятницу не выдаюзаплан. НевсловареКормье/Хольц: написанияЛукасКормье/АлександерХольц проверены поSportsruсоставуиChampionatкарточкам; names_ruнеизменёнврамках3файлов. Бек/Райнбахер строгоnames_ru. ФотоDFOКормье51 и PHRРайнбахер64 оригиналJSONLD HTTP200/просмотрены. Дублиqueue/recent/morning/state/log/live проверены; обаночьюtg:false/hot:false безутреннейочереди; второйready+40мин. 4и3предложения≤700/заголовки≤90/безлатиницы; журнал30/liveштатно. Утреннююстраховкувнеокна00МСКне выполнял, готовое/финал/модель/скриптынетрогал."
     }
   ]
 }
