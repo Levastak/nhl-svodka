@@ -1,57 +1,6 @@
 {
   "runs": [
     {
-      "t": "2026-10-18T21:25:06Z",
-      "status": "ok",
-      "picked": [
-        "nhl:nhl-status-report-news-and-notes-october-18-2026",
-        "prohockeyrumors:2026-10-capitals-reassign-justin-holl-html"
-      ],
-      "skipped": [
-        {
-          "id": "thehockeynews:news-latest-news-do-the-colorado-avalanche-have-a-goaltending-problem",
-          "why": "Статья прочитана: авторское сравнение вратарей; нового назначения, травмы или решения клуба нет."
-        },
-        {
-          "id": "thehockeynews:news-latest-news-is-devon-levi-the-true-no-1-goalie-of-the-future-in-edmonton",
-          "why": "Статья прочитана: оценка выступлений Леви и старого летнего обмена, нового события нет."
-        },
-        {
-          "id": "dailyfaceoff:news-cole-perfetti-contract-extension-steal-winnipeg-jets-nhl",
-          "why": "Оценка ранее подписанного контракта; нового соглашения или решения нет."
-        },
-        {
-          "id": "thehockeynews:-toronto-maple-leafs-need-more-from-depth-players-in-wake-of-john-tavares-injury",
-          "why": "Последствия уже опубликованной травмы Тавареса без нового решения или сроков."
-        },
-        {
-          "id": "rmnb:or-capitals-to-stave-off-really-rough-third-period-numbers-for-the-morning-after",
-          "why": "Разбор уже освещённого матча без самостоятельного нового события."
-        },
-        {
-          "id": "web:hl-story-id-50201307-nhl-2026-27-tonight-games-schedule-matchups-stats-top-players-betting",
-          "why": "Превью матчей уже подготовлены; отдельного нового события нет."
-        },
-        {
-          "id": "espn:41679163",
-          "why": "Справочная статья без нового события."
-        },
-        {
-          "id": "espn:41589293",
-          "why": "Справочная статья без нового события."
-        },
-        {
-          "id": "nhl:flyers-rick-tocchet-gives-game-puck-to-radio-voice-jason-myrtetus",
-          "why": "История вокруг прошедшего матча вне спортивной новостной повестки."
-        },
-        {
-          "id": "sportsnet:inant-showing-in-win-over-sabres-a-welcome-development-for-canadiens-suzuki-line",
-          "why": "Разбор уже освещённого матча «Монреаля»."
-        }
-      ],
-      "note": "Прочитаны article четырёх новых рассматриваемых материалов. Выбраны обновление состояния Кутюрье/Фёрстера после воскресной тренировки и перевод Холла. Другие разделы сводки NHL о Таваресе/Хаймане повторно не публикуются. Сообщение о Холле приписано Сэмми Силбер; возвращение Роя — условная оценка издания, не подтверждённый выход. Имена сверены со словарём, включая написание Конечны. Проверены очередь, recent_titles, morning_site_news и опубликованные ID. Ночью оба материала строго tg:false, ready=written для достоверного времени сайта; задержка второго элемента канала не применяется к публикациям только на сайте. Утреннюю страховку вне окна не выполняли."
-    },
-    {
       "t": "2026-10-18T23:21:53Z",
       "status": "ok",
       "picked": [
@@ -1761,6 +1710,61 @@
         }
       ],
       "note": "Прочитаны operations/news/полный промпт/стиль. Окно10:00–11:30: daily.date=tg.date=results_date=2026-10-20, auto_texts=false, AM06:08Z без fail, day_complete/daily_ready=true, восстановление не требуется. Сначала metadata/recent/morning/summary12 без article; затем article DFO о новом равенстве Кучерова и точечное чтение пустых article NHL/ESPN. NHL WebFetch недоступен, оригинал получен напрямую HTTP200, body прочитан:1137очков,405голов732передачи,888матчей; Стэмкос1137. Это впервые освещаемая веха, прежняя новость только о четырёх очках до рекорда, утро описывает результат без равенства; не единоличный рекорд. Дополнительно заголовки4ч и непросмотренные травмы/транзакции18ч. Body PHR Браун/Носен прочитан, обе операции подтверждены клубом; спорную цифру игр Носена из PHR не использовал. Передача Брауна подтверждена полным протоколом C.Brown13:54. Имена по словарю. Фото DFO200 просмотрено; CDN PHR завис, заменён оригиналом той же статьи из JSONLD,200 просмотрен. Кучеров hot:true в канал, Браун/Носен tg:false только сайт, второй ready+40мин. Дубли queue/recent/morning/posted проверены,3предложения≤700, заголовки≤90, без латиницы; журнал30, live штатным скриптом. Готовое утро/подписи/модель/данные/скрипты не менял."
+    },
+    {
+      "t": "2026-10-21T09:27:01Z",
+      "status": "ok",
+      "picked": [
+        "nhl:tampa-bay-lightning-vegas-golden-knights-game-recap-october-20-2026",
+        "prohockeyrumors:2026-10-wild-activate-nico-sturm-reassign-hunter-haight-html"
+      ],
+      "skipped": [
+        {
+          "id": "espn:50235118",
+          "why": "Рекорд Кучерова уже опубликован; для Чирелли использован отдельный фрагмент оригинала NHL.com."
+        },
+        {
+          "id": "sportsnet:nhl-article-marchenko-cowan-help-maple-leafs-earn-rout-in-columbus",
+          "why": "Гол/возвращение Марченко к бывшему клубу уже освещены в итогах, отдельной новой вехи или кадрового события нет."
+        },
+        {
+          "id": "sportsnet:nhl-video-marchenko-redirects-puck-past-greaves-to-score-against-former-team",
+          "why": "Гол/возвращение Марченко к бывшему клубу уже освещены в итогах, отдельной новой вехи или кадрового события нет."
+        },
+        {
+          "id": "sportsnet:ideo-happy-to-be-here-marchenko-talks-trade-to-toronto-and-first-leafs-hat-trick",
+          "why": "Прежний матч, интервью или анализ, без нового самостоятельного события."
+        },
+        {
+          "id": "sportsnet:l-video-tough-not-to-take-it-personal-fantilli-on-marchenko-leaving-blue-jackets",
+          "why": "Прежний матч, интервью или анализ, без нового самостоятельного события."
+        },
+        {
+          "id": "thehockeynews:arov-saves-his-best-game-of-the-season-against-maple-leafs-idol-sergei-bobrovsky",
+          "why": "Прежний матч, интервью или анализ, без нового самостоятельного события."
+        },
+        {
+          "id": "dailyfaceoff:rangers-for-real-even-without-igor-shesterkin-nhl-alexis-lafreniere-dylan-garand",
+          "why": "Прежний матч, интервью или анализ, без нового самостоятельного события."
+        },
+        {
+          "id": "sportsnet:nhl-article-oilers-ride-elite-power-play-to-win-over-tight-checking-wild",
+          "why": "Обзор или видео уже освещённого матча; самостоятельного нового события нет."
+        },
+        {
+          "id": "dailyfaceoff:news-connor-mcdavid-edmonton-oilers-nhl-record-fastest-assists-single-season",
+          "why": "Тот же рекорд Макдэвида уже опубликован, нового события нет."
+        },
+        {
+          "id": "sportsnet:nhl-video-nhl-highlights-oilers-4-wild-3-ot",
+          "why": "Обзор или видео уже освещённого матча; самостоятельного нового события нет."
+        },
+        {
+          "id": "sportsnet:nhl-video-oilers-bouchard-holds-before-rifling-home-pinpoint-ot-winner",
+          "why": "Обзор или видео уже освещённого матча; самостоятельного нового события нет."
+        }
+      ],
+      "note": "Прочитаны operations/news/полный промпт/стиль. Сначала metadata/recent/morning/summary12 без article. Достойного среди заголовков12 нет: рекорды Кучерова/Макдэвида уже вышли; свежие заголовки4ч также повторы. Проверены непросмотренные инсайды/травмы18ч и поиск Чирелли/Мэйфилд/Штурм. Чирелли найден в прочитанном оригинале NHL.com: не играл3период, последняя смена за1:09, Купер без update, следующийматчпятница; RotoWire596700 подтверждает уход, диагноз/длительное выбытие не объявляю. ID NHLrecap выбран для этого нового кадрового события, а не повторного рекорда Кучерова. Штурм: body PHR, транзакция подтверждена клубом, официальная заявкаНХЛ и наш полный протокол подтверждают возвращение10:10; Хэйт не играл при вызове. Брэди Ткачук: встреча с бывшим клубом уже есть в очереди под другимID. Мэйфилд: первоисточникTFP20окт12:35ET прочитан, возможный будущий запрос обмена пока не сделан; ниже приоритет подтверждённых кадровых событий. ФотоЧирелли: исходное фотоКучерова заменено официальным портретомНХЛ по heads,200/просмотр; Штурм — оригиналPHRизJSONLD,200/просмотр. Имена по словарю,4предложения≤700, заголовки≤90/без латиницы. Чирелли в канал hot:false, Штурм/Хэйт только сайт tg:false, второйready+40мин. Дублиqueue/recent/morning/posted проверены, журнал30, liveштатным скриптом. Утреннюю страховку внеокна12МСК не выполнял, готовое/данные/модель/скрипты не менял."
     }
   ]
 }
