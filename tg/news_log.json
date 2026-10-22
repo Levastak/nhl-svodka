@@ -1,81 +1,6 @@
 {
   "runs": [
     {
-      "t": "2026-10-19T19:24:56Z",
-      "status": "ok",
-      "picked": [
-        "nhl:brady-tkachuk-mcdavid-kaprizov-named-nhl-3-stars-of-week-october-19-2026",
-        "sportsnet:ideo-what-to-expect-from-lettieri-akhtyamov-after-being-called-up-by-maple-leafs"
-      ],
-      "skipped": [
-        {
-          "id": "rmnb:2026-10-19-ilya-protas-alex-ovechkin-line-learning-washington-capitals",
-          "why": "Ранее прочитанные комментарии о старом матче и сувенире, нового изменения роли нет."
-        },
-        {
-          "id": "sportsnet:nhl-article-brady-tkachuk-mcdavid-kaprizov-named-nhls-three-stars-of-the-week",
-          "why": "Article прочитан; то же новое объявление звёзд недели. Выбран официальный NHL.com, полного текста которого также прочитан."
-        },
-        {
-          "id": "dailyfaceoff:news-boston-bruins-jeremy-swayman-deserves-serious-vezina-trophy-love-nhl-awards",
-          "why": "Оценка перспектив Суэймана на награду, не новая награда или решение."
-        },
-        {
-          "id": "sportsnet:nhl-video-hes-unflappable-what-has-impressed-leafs-hiller-most-about-mckenna",
-          "why": "Похвала тренера и портрет Маккенны, без нового спортивного решения; предстоящая встреча уже освещена."
-        },
-        {
-          "id": "sportsnet:nhl-article-connor-mcdavid-enters-rarified-air-with-early-season-points-pace",
-          "why": "Ранее прочитанная оценка темпа Макдэвида после уже освещённой игры, не новое событие."
-        },
-        {
-          "id": "thehockeynews:latest-news-ottawa-senators-sign-head-coach-travis-green-to-multi-year-extension",
-          "why": "Смысловой дубль уже опубликованного продления Грина."
-        },
-        {
-          "id": "prohockeyrumors:2026-10-senators-extend-head-coach-travis-green-html",
-          "why": "Смысловой дубль уже опубликованного продления Грина."
-        },
-        {
-          "id": "sportsnet:l-article-senators-sign-head-coach-travis-green-to-multi-year-contract-extension",
-          "why": "Смысловой дубль уже опубликованного продления Грина."
-        },
-        {
-          "id": "nhl:the-price-is-right-sees-nhl-stars-come-on-down-to-help-contestants-in-canada",
-          "why": "Развлекательное телешоу, не самостоятельная спортивная новость."
-        },
-        {
-          "id": "espn:50214448",
-          "why": "Ранее проверенный профиль Гаранда; новых сроков или решений не подтверждено."
-        },
-        {
-          "id": "prohockeyrumors:2026-10-mark-jankowski-to-evaluate-lower-body-injury-html",
-          "why": "Обследование Янковски уже опубликовано по первичному источнику."
-        },
-        {
-          "id": "sportsnet:nhl-article-senators-thomas-chabot-out-one-to-two-weeks-with-upper-body-injury",
-          "why": "Новый срок 1–2 недели подтверждён прочитанными Sportsnet и NHL.com; отложено при максимуме двух материалов в пользу двух новых поводов о россиянах. В следующем проходе проверить свежесть."
-        },
-        {
-          "id": "prohockeyrumors:2026-10-jets-recall-brayden-yager-place-josh-morrissey-on-ir-html",
-          "why": "Body прочитан: вызов Ягера и оформление Моррисси в IR. Отложено при максимуме двух материалов; не выдавать старую травму за новую."
-        },
-        {
-          "id": "dailyfaceoff:carolina-hurricanes-place-taylor-hall-injured-reserve-upper-body-injury-nhl-news",
-          "why": "Body прочитан: оформление Холла в IR. Отложено при максимуме двух материалов, проверить свежесть следующего прохода."
-        },
-        {
-          "id": "dailyfaceoff:news-new-york-rangers-sign-luke-glendening-pto-nhl-tryout",
-          "why": "Клубный повод для сайта найден вне короткого списка; отложено при максимуме двух материалов, не объявлять пробное соглашение полноценным контрактом."
-        },
-        {
-          "id": "prohockeyrumors:2026-10-rangers-sign-luke-glendening-to-professional-tryout-html",
-          "why": "Клубный повод для сайта найден вне короткого списка; отложено при максимуме двух материалов, не объявлять пробное соглашение полноценным контрактом."
-        }
-      ],
-      "note": "Прочитаны метаданные, recent_titles, morning_site_news и summary, затем статьи о звёздах недели и вызове Ахтямова. Проверены дополнительные свежие заголовки feed за четыре часа: найдены пропущенные коротким списком обновления травм. Полный официальный NHL.com о звёздах недели прочитан через HTTP200; Капризов — третья звезда недели, не прежняя звезда игрового дня. Вызов Ахтямова и его роль запасного подтверждены прочитанными материалами The Hockey News/Yahoo и прямой цитатой Хиллера: https://sports.yahoo.com/articles/jim-hiller-explains-why-artur-161106679.html . Расхождение .822/.882 в статистике Ахтямова между статьями не переносилось; статистика не используется. Леттьери уже освещён, отдельного повтора нет. Капризов — сайт и канал hot:true в пределах пяти новостей включая утреннюю главную, интервалы 75/20 минут соблюдены. Ахтямов — только сайт tg:false: до ночной паузы не помещается второй канальный пост с интервалом 75 минут, на утро не накапливается. Обе ready=written, без будущей даты на сайте. Имена проверены по словарю; отсутствующее имя Ахтямова транскрибировано по правилу промпта. Очередь/сайт/журнал/posted сверены, два самостоятельных события, данные/модель/старые посты не менялись. Утренняя страховка вне окна не выполнялась."
-    },
-    {
       "t": "2026-10-19T21:24:14Z",
       "status": "ok",
       "picked": [
@@ -1903,6 +1828,73 @@
         }
       ],
       "note": "Полные operations/news/актуальный tg-news/style прочитаны; срезанный общий вывод дополнен хвостом operations и повтором news. Сначала metadata/recent/morning/12 summary без article, затем заголовки/summary4ч и непросмотренные инсайды/травмы18ч. Body Райта/Нельсона/Бродзински/Матейко прочитаны точечно. Райт и Нельсон — подтверждённые новые клубные операции, ранее отложенные из-за лимита2; не пересказ матчей. Статья Нельсона обновлена21Oct18:30: берётся только новая отправка, не старый вызов16Oct; возвращение Монтура20Oct дано контекстом, не сегодняшним событием. Райт5АХЛ/3очка/1НХЛ строго body; конец полного PHR прочитан: вызов после травмы Байфилда добавляет вариант атаки, выход/звено не гарантированы. Queue/live/state/recent/morning/log на дубли проверены, имена строго names_ru. Фото оригиналов PHR из JSON-LD HTTP200/просмотр: Райт53, Нельсон24. Оба tg:false/hot:false: подходят расширенной ленте сайта, не занимают места главных новостей канала; второйready+40мин. Лимиты/латиница/JSON проверены, журнал30, штатный news_live. Утреннюю страховку вне окна не выполнял."
+    },
+    {
+      "t": "2026-10-22T07:20:46Z",
+      "status": "ok",
+      "picked": [
+        "dailyfaceoff:shville-predators-looking-reshape-blueline-defensemen-nhl-trade-roman-josi-skjei",
+        "rmnb:0-21-jonny-brodzinski-ahl-hershey-bears-pierre-luc-dubois-return-capitals-lineup"
+      ],
+      "skipped": [
+        {
+          "id": "sportsnet:-video-panthers-tkachuk-hears-boos-from-senators-fans-before-being-dumped-by-zub",
+          "why": "Свист, реакции и стычки вокруг прошедшего возвращения Ткачука; отдельного кадрового события нет."
+        },
+        {
+          "id": "dailyfaceoff:-maple-leafs-last-laugh-return-columbus-blue-jackets-matthew-knies-adam-fantilli",
+          "why": "Реакция на уже освещённый матч Марченко с бывшим клубом, не новое событие."
+        },
+        {
+          "id": "sportsnet:ticle-oilers-podkolzin-off-to-flying-start-riding-shotgun-with-mcdavid-draisaitl",
+          "why": "Ранее прочитанный очерк о росте в известном звене; свежего кадрового решения нет."
+        },
+        {
+          "id": "espn:50243435",
+          "why": "Свист, реакции и стычки вокруг прошедшего возвращения Ткачука; отдельного кадрового события нет."
+        },
+        {
+          "id": "sportsnet:rticle-senators-fans-steal-the-show-in-brady-tkachuks-emotionally-charged-return",
+          "why": "Свист, реакции и стычки вокруг прошедшего возвращения Ткачука; отдельного кадрового события нет."
+        },
+        {
+          "id": "sportsnet:deo-it-shows-the-passion-brady-tkachuk-on-not-so-warm-welcome-from-senators-fans",
+          "why": "Свист, реакции и стычки вокруг прошедшего возвращения Ткачука; отдельного кадрового события нет."
+        },
+        {
+          "id": "dailyfaceoff:ottawa-senators-fans-throw-dozens-brady-tkachuk-jerseys-ice-nhl-florida-panthers",
+          "why": "Свист, реакции и стычки вокруг прошедшего возвращения Ткачука; отдельного кадрового события нет."
+        },
+        {
+          "id": "sportsnet:nhl-article-brady-tkachuk-hears-boos-in-ottawa-return-as-senators-rout-panthers",
+          "why": "Свист, реакции и стычки вокруг прошедшего возвращения Ткачука; отдельного кадрового события нет."
+        },
+        {
+          "id": "dailyfaceoff:rs-linus-ullmark-leaves-game-against-florida-panthers-lower-body-injury-nhl-news",
+          "why": "Article прочитан: та же травма, уже освещённая в ленте и утре; нового диагноза или срока нет."
+        },
+        {
+          "id": "sportsnet:nhl-video-senators-fans-boo-brady-tkachuk-during-tribute-video",
+          "why": "Свист, реакции и стычки вокруг прошедшего возвращения Ткачука; отдельного кадрового события нет."
+        },
+        {
+          "id": "sportsnet:nhl-video-brady-tkachuk-lands-in-penalty-box-as-senators-and-panthers-scrap",
+          "why": "Свист, реакции и стычки вокруг прошедшего возвращения Ткачука; отдельного кадрового события нет."
+        },
+        {
+          "id": "sportsnet:hl-video-brady-tkachuks-goal-sparks-tilt-between-senators-hodgson-panthers-imama",
+          "why": "Свист, реакции и стычки вокруг прошедшего возвращения Ткачука; отдельного кадрового события нет."
+        },
+        {
+          "id": "dailyfaceoff:exander-nikishin-carolina-hurricanes-ready-part-ways-trade-contract-rfa-nhl-news",
+          "why": "Полная статья перечитана: Пагнотта прямо говорит о неизменной ситуации; старый запрос на обмен не выдаю за новое событие."
+        },
+        {
+          "id": "sportsnet:nhl-article-marc-edouard-vlasic-says-hes-done-playing-hockey",
+          "why": "Полная статья перечитана: слова Власика со вторника, официальное завершение карьеры он не объявлял; свежая дата статьи не новое решение."
+        }
+      ],
+      "note": "Утро проверено в окне10:00–11:30: daily.date=results_date=2026-10-21, auto_texts=false, tg.date=2026-10-21, day_complete/daily_ready=true; готовое не переписывал. Полные operations/news/tg-news/style прочитаны. Сначала metadata/recent/morning/12 summary, затем article Ульмарка и свежие заголовки4ч, отдельно непросмотренные инсайды/травмы18ч. Полные DFO Никишин/Нэшвилл, Sportsnet Власик и RMNB Бродзински прочитаны. Последний ранее отложен из-за лимита2, теперь отдельная подтверждённая операция, а не повтор новости о тренировке Сурдифа. Данные из статьи: два матча/передача/четыре броска; возвращение Дюбуа не объявлено состоявшимся. Пагнотта явно атрибутирован, неназванный защитник не угадан, Йоси исключён только со слов инсайдера, близкая сделка не заявлена. Имена Йоси/Бродзински/Дюбуа/Сурдиф сверены со словарём, Дэвид Пагнотта транскрибирован. Queue/live/state/morning/log проверены на смысловые дубли. Оба фото источников HTTP200 и просмотрены: оборона Нэшвилла/Бродзински76, без догадки об участнике обмена по снимку. Обе новости tg:false/hot:false для расширенной ленты сайта, без расхода главных мест канала; второйready+40мин. Лимиты/латиница/JSON и журнал30 проверены; штатный news_live.py. Прогнозы, результаты и подписи не менял."
     }
   ]
 }
