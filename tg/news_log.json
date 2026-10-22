@@ -1,69 +1,6 @@
 {
   "runs": [
     {
-      "t": "2026-10-20T07:36:31Z",
-      "status": "ok",
-      "picked": [
-        "dailyfaceoff:news-pittsburgh-penguins-bryan-rust-leaves-game-lower-body-injury-nhl-news",
-        "dailyfaceoff:carolina-hurricanes-place-taylor-hall-injured-reserve-upper-body-injury-nhl-news"
-      ],
-      "skipped": [
-        {
-          "id": "rmnb:2026-10-19-washington-capitals-halloween-party-costumes-2026",
-          "why": "Курьёз с вечеринки, нового спортивного события нет."
-        },
-        {
-          "id": "sportsnet:nhl-video-what-does-healthy-scratch-vs-kings-mean-for-zadorovs-future-in-boston",
-          "why": "Пропуск матча и комментарий агента уже проверены; свежего решения или подтверждённых переговоров нет."
-        },
-        {
-          "id": "sportsnet:nhl-video-wilson-schaefer-montour-and-walman-join-the-price-is-right-tonight",
-          "why": "Телешоу без нового спортивного события."
-        },
-        {
-          "id": "sportsnet:nhl-video-how-will-senators-fans-welcome-tkachuk-back-to-ottawa",
-          "why": "Возвращение Ткачука в Оттаву уже освещено; анонс реакции болельщиков не новое событие."
-        },
-        {
-          "id": "nhl:winnipeg-jets-cole-perfetti-excels-since-top-line-promotion",
-          "why": "Ранее прочитанный первоисточник: повышение произошло ещё перед лагерем, это портрет, а не новая роль."
-        },
-        {
-          "id": "prohockeyrumors:2026-10-stars-to-begin-extension-talks-with-jason-robertson-in-december-html",
-          "why": "Ранее проверен первичный NHL.com от 18 октября; свежая перепечатка не обновляет дату события."
-        },
-        {
-          "id": "sportsnet:nhl-video-howie-mandel-gives-nhlers-custom-cards-on-the-price-is-right-tonight",
-          "why": "Телешоу без нового спортивного события."
-        },
-        {
-          "id": "sportsnet:nhl-article-rangers-top-ducks-to-remain-undefeated-at-home",
-          "why": "Обсуждённый матч, без самостоятельного нового события."
-        },
-        {
-          "id": "sportsnet:hl-video-maple-leafs-matthews-fires-home-late-in-second-to-pull-even-with-sharks",
-          "why": "Видео гола из уже подготовленных итогов, не отдельная новость."
-        },
-        {
-          "id": "sportsnet:nhl-video-would-you-rather-start-a-franchise-with-mcdavid-or-celebrini",
-          "why": "Условный выбор экспертов, не действительное решение."
-        },
-        {
-          "id": "sportsnet:nhl-video-can-macklin-celebrini-ace-trivia-about-his-penalty-history",
-          "why": "Викторина, не спортивная новость."
-        },
-        {
-          "id": "nhl:connor-mcdavid-off-to-torrid-start-with-edmonton-oilers",
-          "why": "Ранее освещённый старт Макдэвида, без нового события."
-        },
-        {
-          "id": "prohockeyrumors:2026-10-snapshots-sabres-dillon-honzek-marino-html",
-          "why": "Article и полный текст прочитаны: Далин повтор, сведения о Марино/Гонзеке/Диллоне не выбраны в лимит двух новых материалов; у общей заметки фото другого игрока. Сохранить как кандидатов, не считать опубликованными."
-        }
-      ],
-      "note": "Проверены инструкции, стиль, компактный shortlist без article, свежие заголовки за 4 часа и новости состава/травм во всём окне 18 часов. Раст и Холл найдены вне 12 кандидатов; прочитан body обоих первичных Daily Faceoff, сроки не выдуманы. Новая травма Раста не пересказ матча, материал сайт+канал; Холл — впервые освещённое внесение в IR, источник от 19 октября 16:11 UTC ещё в 18-часовом окне, только сайт tg:false. Словарь, очередь, сайт, posted, 5/75/20 и отсутствие дублей проверены. Второй ready +40 минут по промпту. Также прочитан полный PHR Snapshots. Утренняя страховка в 10:33: daily.date=tg.date=results_date=2026-10-19, полное авторское утро и подписи готовы, повторов/восстановления не делалось. Новых заявок на правки нет. Данные, прогнозы, scripts и старые посты не менялись."
-    },
-    {
       "t": "2026-10-20T09:20:28Z",
       "status": "ok",
       "picked": [
@@ -1781,6 +1718,65 @@
         }
       ],
       "note": "Сверка Codex параллельного запуска20:20: оба выбранных события уже приняты main в f120b6a, новых постов/записей журнала не создавал. Полные instructions прочитаны; article NHL Сузуки/PHR Бек/DFO IR и полные оригиналы NHL/DFO проверены. В ещё не опубликованном посте Ульмарка исправлены только Сэмюэль→Самуэль (names_ru), Йонас→Юнас (транскрипция подтверждена Sports.ru/Чемпионатом), две соседние фразы соединены точкой с запятой до лимита5предложений. Статистика/прогнозы/готовые тексты остальных постов не переписывались. Фото обоих источников HTTP200/просмотрены. Состояние канала:1новостьсегодня, очередь2, лимит5 соблюдён; бот сохраняет75минмеждуновостями/20междулюбымипостами. Источник/сайт обновлены через news_live; same log entry дополнена без дубля."
+    },
+    {
+      "t": "2026-10-22T19:20:03Z",
+      "status": "ok",
+      "picked": [
+        "nhl:pittsburgh-penguins-bryan-rust-injury-status-update-october-22-2026",
+        "nhl:pittsburgh-penguins-ben-kindel-status-update-october-22-2026"
+      ],
+      "skipped": [
+        {
+          "id": "sportsnet:nhl-video-oilers-head-coach-babcock-on-teams-young-centres-wings-real-important",
+          "why": "Прочитан комментарий о молодых игроках; нового события нет."
+        },
+        {
+          "id": "espn:50229493",
+          "why": "Подготовка и реакции к уже прошедшему и обсуждённому матчу."
+        },
+        {
+          "id": "dailyfaceoff:ruins-youth-playing-significant-role-team-success-nhl-james-hagens-fraser-minten",
+          "why": "Оценка старта молодёжи «Бостона», без нового кадрового решения."
+        },
+        {
+          "id": "espn:50250183",
+          "why": "Срок травмы Сузуки и вызов Бека уже опубликованы."
+        },
+        {
+          "id": "prohockeyrumors:2026-10-canadiens-nick-suzuki-out-2-4-weeks-owen-beck-recalled-html",
+          "why": "Срок травмы Сузуки и вызов Бека уже опубликованы."
+        },
+        {
+          "id": "dailyfaceoff:s-matthew-tkachuk-ottawa-senators-nick-cousins-fined-following-heated-game-brady",
+          "why": "Новые дисциплинарные решения; в этом проходе приоритет двум обновлениям по здоровью игроков «Питтсбурга»."
+        },
+        {
+          "id": "dailyfaceoff:montreal-canadiens-nick-suzuki-out-2-4-weeks-upper-body-injury-nhl-news-san-jose",
+          "why": "Срок травмы Сузуки и вызов Бека уже опубликованы."
+        },
+        {
+          "id": "nhl:panthers-matthew-tkachuk-fined-for-roughing-senators-cozens",
+          "why": "Новые дисциплинарные решения; в этом проходе приоритет двум обновлениям по здоровью игроков «Питтсбурга»."
+        },
+        {
+          "id": "sportsnet:-article-canadiens-captain-nick-suzuki-out-multiple-weeks-with-upper-body-injury",
+          "why": "Срок травмы Сузуки и вызов Бека уже опубликованы."
+        },
+        {
+          "id": "dailyfaceoff:news-brady-tkachuk-return-ottawa-senators-lived-up-hype-boos-you-suck-crayons",
+          "why": "Подготовка и реакции к уже прошедшему и обсуждённому матчу."
+        },
+        {
+          "id": "thehockeynews:latest-news-nhl-rumor-roundup-update-on-simon-edvinsson-the-latest-on-the-flames",
+          "why": "Прочитанный материал повторяет известный статус переговоров Эдвинссона, нового решения нет."
+        },
+        {
+          "id": "prohockeyrumors:2026-10-senators-linus-ullmark-leaves-due-to-lower-body-injury-html",
+          "why": "Травма и перевод Ульмарка в список травмированных уже освещены."
+        }
+      ],
+      "note": "Официальные article NHL по Расту и Кинделу прочитаны точечно вне списка 12 кандидатов; сведения сверены с PHR/DFO. Шесть недель у Раста — до повторного обследования, не обещанный срок возвращения. План тренировок Киндела условный. Имена по names_ru; фото источников HTTP200 и просмотрены. Обе новости только на сайт: в канале уже две новости, Ульмарк ожидает очереди; до ночной паузы новые материалы не помещаются с интервалом75мин. Дублей по очереди/live/posted нет."
     }
   ]
 }
