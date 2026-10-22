@@ -1,56 +1,6 @@
 {
   "runs": [
     {
-      "t": "2026-10-19T15:25:55Z",
-      "status": "ok",
-      "picked": [
-        "dailyfaceoff:s-brady-tkachuk-ottawa-senators-quinn-hughes-vancouver-canucks-return-homecoming"
-      ],
-      "skipped": [
-        {
-          "id": "rmnb:2026-10-19-ilya-protas-alex-ovechkin-line-learning-washington-capitals",
-          "why": "Ранее прочитанный article: комментарии после старой игры и сувенир, нового изменения звена нет."
-        },
-        {
-          "id": "nhl:the-price-is-right-sees-nhl-stars-come-on-down-to-help-contestants-in-canada",
-          "why": "Телешоу с игроками, развлекательный повод без нового спортивного события."
-        },
-        {
-          "id": "espn:50214448",
-          "why": "Тот же профиль Гаранда, ранее проверенный поиском и доступной авторской перепечаткой; обновлённое время статьи не подтверждает нового решения или срока."
-        },
-        {
-          "id": "prohockeyrumors:2026-10-mark-jankowski-to-evaluate-lower-body-injury-html",
-          "why": "Article прочитан: те же пропуск матча, отправка на осмотр и отсутствие сроков, уже опубликованные по первичному NHL.com. Новый URL не делает событие новым."
-        },
-        {
-          "id": "sportsnet:rticle-flames-youngsters-offer-glimpse-of-brighter-future-in-upset-of-hurricanes",
-          "why": "Разбор уже освещённой игры и гола Гридина."
-        },
-        {
-          "id": "sportsnet:nhl-video-flames-sharangovich-wires-go-ahead-goal-home-from-one-knee",
-          "why": "Повтор уже освещённого гола в видео."
-        },
-        {
-          "id": "sportsnet:nhl-video-flames-frost-caps-off-beauty-tic-tac-toe-play-for-goal-in-400th-game",
-          "why": "Повтор гола и юбилейного матча, не самостоятельная новость."
-        },
-        {
-          "id": "sportsnet:nhl-article-report-maple-leafs-call-up-forward-vinni-lettieri-from-ahl",
-          "why": "Тот же вызов Леттьери, уже опубликованный ночью и в утренних новостях."
-        },
-        {
-          "id": "nhl:nhl-on-tap-news-and-notes-october-19-2026",
-          "why": "Article прочитан: обзор четырёх матчей вечера. Не добавляется второе превью; встреча Маккенны и другого молодого игрока сама по себе не повод повторять тот же матч вслед за утренним анонсом."
-        },
-        {
-          "id": "dailyfaceoff:wer-rankings-boston-bruins-vegas-golden-knights-philadelphia-flyers-october-2026",
-          "why": "Авторский рейтинг силы, не новое решение или событие клуба."
-        }
-      ],
-      "note": "Сначала прочитаны метаданные, recent_titles, morning_site_news и кандидаты без article. Затем точечно прочитаны article Янковски и NHL On Tap. Проверены свежие заголовки за четыре часа и непросмотренные материалы окна 18 часов (feed 13:52 UTC). Вне списка найден самостоятельный недельный сюжет возвращений бывших капитанов: прочитана полная статья Daily Faceoff напрямую, HTTP 200, HTML сохранён вне репозитория. Даты и хозяева сверены с data.week; американские игровые даты 21 и 25 октября переведены в ночи на 22 и 26 октября по UTC+3. Только у Хьюза заявлен первый гостевой матч на прежней арене — источник это прямо уточняет. Число девять относится к сезонам Ткачука в «Оттаве», не к матчам. Фамилии по словарю; очередь, сайт, журнал и опубликованные ID проверены. Недельный анонс только для сайта, tg:false, hot:false; канал сохраняет строгий отбор событий и штатные вечерние превью. Сведения об отправке Янковски на обследование не повторены под новым URL. Данные, модель, прогнозы, подписи и старые посты не менялись; утренняя страховка вне окна не выполнялась."
-    },
-    {
       "t": "2026-10-19T17:26:57Z",
       "status": "ok",
       "picked": [
@@ -1894,6 +1844,57 @@
         }
       ],
       "note": "Полные operations/news/tg-news/style прочитаны. Сначала metadata/recent/morning/12 кандидатов без article; затем свежие заголовки четырёх часов и body Каррик/Сурдиф/Райт/Нэшвилл вне короткого списка. Каррик — новое IR, не дубль возвращения Цукера. Полный PHR прочитан через urllib после сбоя WebFetch: retroactive18Oct, пропуск субботы, точная дата возвращения неизвестна; клубный первоисточник подтверждает IR/middlebody. Сурдиф — первое самостоятельное катание после болезни, Дюбуа полноценная тренировка, суббота обоим не гарантирована; RMNB прочитан полностью. Имена строго names_ru, дублей queue/live/state/recent/morning/log нет. Фото PHR изображает Цукера, заменено официальным портретом Каррика по data.heads8475842: HTTP200 и просмотр; RMNB Сурдиф34 HTTP200/просмотр. Ночью оба tg:false/hot:false, второй ready+40мин. Длины/латиница/JSON проверены, журнал30, live штатно. Утреннюю страховку вне окна не выполнял, готовые прогнозы не трогал."
+    },
+    {
+      "t": "2026-10-22T03:18:09Z",
+      "status": "ok",
+      "picked": [
+        "sportsnet:nhl-article-senators-linus-ullmark-exits-vs-panthers-with-apparent-injury",
+        "prohockeyrumors:2026-10-latest-on-quinn-hughes-future-with-wild-html"
+      ],
+      "skipped": [
+        {
+          "id": "sportsnet:-video-panthers-tkachuk-hears-boos-from-senators-fans-before-being-dumped-by-zub",
+          "why": "Видео стычек, свиста и реакций вокруг возвращения Ткачука; обычный эпизод матча, не отдельная новость."
+        },
+        {
+          "id": "thehockeynews:latest-news-bruins-agree-to-three-year-extension-with-forward-marat-khusnutdinov",
+          "why": "Официальный контракт уже опубликован; другая статья не новое событие."
+        },
+        {
+          "id": "dailyfaceoff:ews-marat-khusnutdinov-boston-bruins-three-year-contract-extension-nhl-news-wild",
+          "why": "Официальный контракт уже опубликован; другая статья не новое событие."
+        },
+        {
+          "id": "dailyfaceoff:-maple-leafs-last-laugh-return-columbus-blue-jackets-matthew-knies-adam-fantilli",
+          "why": "Видео стычек, свиста и реакций вокруг возвращения Ткачука; обычный эпизод матча, не отдельная новость."
+        },
+        {
+          "id": "sportsnet:ticle-oilers-podkolzin-off-to-flying-start-riding-shotgun-with-mcdavid-draisaitl",
+          "why": "Ранее прочитанная история роста в известном звене и старого обмена; новой роли или решения нет."
+        },
+        {
+          "id": "espn:50243435",
+          "why": "Видео стычек, свиста и реакций вокруг возвращения Ткачука; обычный эпизод матча, не отдельная новость."
+        },
+        {
+          "id": "dailyfaceoff:rs-linus-ullmark-leaves-game-against-florida-panthers-lower-body-injury-nhl-news",
+          "why": "Одна новость о травме по Sportsnet, body DFO прочитан для подтверждения; второй пост не нужен."
+        },
+        {
+          "id": "sportsnet:nhl-video-senators-fans-boo-brady-tkachuk-during-tribute-video",
+          "why": "Видео стычек, свиста и реакций вокруг возвращения Ткачука; обычный эпизод матча, не отдельная новость."
+        },
+        {
+          "id": "sportsnet:nhl-video-brady-tkachuk-lands-in-penalty-box-as-senators-and-panthers-scrap",
+          "why": "Видео стычек, свиста и реакций вокруг возвращения Ткачука; обычный эпизод матча, не отдельная новость."
+        },
+        {
+          "id": "sportsnet:hl-video-brady-tkachuks-goal-sparks-tilt-between-senators-hodgson-panthers-imama",
+          "why": "Видео стычек, свиста и реакций вокруг возвращения Ткачука; обычный эпизод матча, не отдельная новость."
+        }
+      ],
+      "note": "Прочитаны полные operations/news/tg-news/style. Сначала metadata/recent/morning/12 кандидатов без article, затем article обоих источников Ульмарка и Хьюза. Дополнительно свежие заголовки/summary четырёх часов. Sportsnet+DFO: Ульмарк ушёл с помощью после отражённого броска в третьем периоде,16/17, заменил Эрссон; подтверждённый диагноз/сроки не заявлены, прогнозы не тронуты. У Хьюза body1800 содержит только старые заявления: полный PHR скачан и прочитан, дальше есть новая оценка Криса Джонстона в сегодняшнем trade board. В тексте и заголовке явная атрибуция/условие, нет утверждения, что клуб уже ищет обмен или игрок отказался от продления. Прямой Athletic недоступен, сведения взяты из полного прочитанного PHR, как разрешает промпт; пустой поиск не основание выдумывать детали. Старое возвращение Хьюза в Ванкувер иной сюжет. Queue/live/state/recent/morning/log проверены на дубли. Имена по names_ru, Крис Джонстон транскрибирован. Фото Sportsnet Ульмарк35 и оригинал PHR Хьюз43: HTTP200, просмотрены. Оба tg:false/hot:false ночью06МСК, второйready+40мин, канал без накопления. Длины/латиница/JSON проверены, журнал30 и штатный news_live.py. Утреннюю страховку вне окна не выполнял."
     }
   ]
 }
