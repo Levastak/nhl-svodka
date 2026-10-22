@@ -1,60 +1,6 @@
 {
   "runs": [
     {
-      "t": "2026-10-20T05:26:09Z",
-      "status": "ok",
-      "picked": [
-        "nhl:nikita-kucherov-on-cusp-of-lightning-scoring-record"
-      ],
-      "skipped": [
-        {
-          "id": "rmnb:2026-10-19-washington-capitals-halloween-party-costumes-2026",
-          "why": "Костюмы с прежней вечеринки, курьёз без нового спортивного события."
-        },
-        {
-          "id": "sportsnet:nhl-video-what-does-healthy-scratch-vs-kings-mean-for-zadorovs-future-in-boston",
-          "why": "Ранее проверенные пропуск матча и комментарий агента; нового подтверждённого решения или переговоров нет."
-        },
-        {
-          "id": "nhl:winnipeg-jets-cole-perfetti-excels-since-top-line-promotion",
-          "why": "Article прочитан: повышение в первое звено произошло перед тренировочным лагерем, комментарии даны в четверг. Свежая дата портрета не новое назначение."
-        },
-        {
-          "id": "prohockeyrumors:2026-10-stars-to-begin-extension-talks-with-jason-robertson-in-december-html",
-          "why": "Article и полный первоисточник прочитаны. NHL.com опубликован 18 октября 03:55 UTC, обновлён 19 октября 00:43 UTC; слова Нилла сказаны в субботу. Даже обновление старше 18 часов; перепечатка PHR 20 октября не новое решение."
-        },
-        {
-          "id": "sportsnet:nhl-video-howie-mandel-gives-nhlers-custom-cards-on-the-price-is-right-tonight",
-          "why": "Телешоу/викторина без нового спортивного события."
-        },
-        {
-          "id": "sportsnet:nhl-article-rangers-top-ducks-to-remain-undefeated-at-home",
-          "why": "Обычный пересказ матча, относится к игровому выпуску."
-        },
-        {
-          "id": "sportsnet:hl-video-maple-leafs-matthews-fires-home-late-in-second-to-pull-even-with-sharks",
-          "why": "Видео гола без самостоятельного рекорда/травмы, не отдельная новость."
-        },
-        {
-          "id": "sportsnet:nhl-video-would-you-rather-start-a-franchise-with-mcdavid-or-celebrini",
-          "why": "Условный выбор экспертов и предположения, не действительное решение."
-        },
-        {
-          "id": "sportsnet:nhl-video-can-macklin-celebrini-ace-trivia-about-his-penalty-history",
-          "why": "Телешоу/викторина без нового спортивного события."
-        },
-        {
-          "id": "nhl:connor-mcdavid-off-to-torrid-start-with-edmonton-oilers",
-          "why": "Ранее освещённый старт Макдэвида, без нового решения или рекорда в заголовке/summary."
-        },
-        {
-          "id": "sportsnet:nhl-article-travis-green-rewarded-as-senators-contention-window-opens",
-          "why": "Продление Грина уже опубликовано, новый разбор не отдельное событие."
-        }
-      ],
-      "note": "Прочитаны обязательные инструкции/стиль, компактные метаданные/recent_titles/morning_site_news и summary без article, затем article Кучерова, Перфетти и Робертсона. Полный первичный NHL.com о Кучерове получен HTTP200 и прочитан: 1134 очка в 887 играх против 1137 в 1082 у Стэмкоса, четыре очка нужны именно для обгона, не для равенства; речь о регулярных чемпионатах. Следующая возможность — выезд в Вегас, рекорд не объявляется уже побитым, матч не предсказывается. По Робертсону прочитаны PHR и полный первичный NHL.com: https://www.nhl.com/news/dallas-stars-hope-to-begin-contract-talks-with-jason-robertson-in-december ; метаданные подтверждают старый материал, перепечатка пропущена. Дополнительно проверены свежие заголовки feed: обычные отчёты ночи, реакции и портреты не заполняют второе место ради количества. Очередь, сайт, журнал и posted сверены; Кучеров/Стэмкос строго по словарю. Один новый материал сайт+канал hot:true, свободные места и интервалы 75/20 минут проверены; ночные tg:false не перевключались и на утро не перепубликуются. До окна утренней страховки проверка не выполнялась; данные, прогнозы, исходники и готовые посты не менялись."
-    },
-    {
       "t": "2026-10-20T07:36:31Z",
       "status": "ok",
       "picked": [
@@ -1808,6 +1754,32 @@
         }
       ],
       "note": "Проход18:20: полные operations/news/tg-news/style прочитаны без среза. Сначала metadata/recent/morning/12 summary без article, затем article Эдвинссон/Ульмарк. Дополнительно заголовки/summary4ч: найденные вне12 Ахтямов и Дюгей. Web URLs свежих статей недоступны, выполнен поиск по точным заголовкам и прочитаны полные оригиналы Sportsnet/NHL через urllib; это не повод пропускать подтверждённое. Sportsnet22Oct09:41EDT: отправка Ахтямова в АХЛ после двух матчей в запасе — обратная операция, а не дубль вызова19Oct. Бобровский/Столарз/Ахтямов строго names_ru. NHL22Oct: смерть Дюгея подтверждена заявлением Рейнджерс,69лет,финал1979,после карьеры MSG; текст только о хоккее. Написание Рон Дюгей сверено с русскими публикациями Sports.ru/Чемпионата, в текущем словаре отсутствует, транскрипция по разрешению промпта без правки схемы. Queue/live/state/morning/log на смысловые дубли проверены. Фото обоих оригиналов HTTP200/просмотрены: Ахтямов70; Дюгей10 и Потвин5, соответствуют подписям источников. Ахтямов только сайт tg:false/hot:false, Дюгей сайт+канал tg:true/hot:false, второйready+40мин; сегодня0/5, очередь0, не более5 и интервалы75мин/20мин обеспечивает штатный бот. Киндел новый сюжет, отложен из-за лимита2, не выдан за дубль. Лимиты/латиница/предложения/имена/JSON проверены, журнал30, штатный news_live. Прогнозы, результат/score и подписи не менялись; утренняя страховка вне окна не выполнялась."
+    },
+    {
+      "t": "2026-10-22T17:22:29Z",
+      "status": "ok",
+      "picked": [
+        "nhl:montreal-canadiens-nick-suzuki-injury-status-update-october-22-2026",
+        "dailyfaceoff:news-ottawa-senators-place-linus-ullmark-injured-reserve"
+      ],
+      "skipped": [
+        {
+          "id": "dailyfaceoff:s-matthew-tkachuk-ottawa-senators-nick-cousins-fined-following-heated-game-brady",
+          "why": "штраф $5000 за драку в уже обсуждённом матче, мелко"
+        },
+        {
+          "id": "thehockeynews:latest-news-nhl-rumor-roundup-update-on-simon-edvinsson-the-latest-on-the-flames",
+          "why": "сборник слухов, нет конкретики"
+        },
+        {
+          "id": "sportsnet:-video-panthers-tkachuk-hears-boos-from-senators-fans-before-being-dumped-by-zub",
+          "why": "видео вчерашнего матча"
+        },
+        {
+          "id": "dailyfaceoff:news-brady-tkachuk-return-ottawa-senators-lived-up-hype-boos-you-suck-crayons",
+          "why": "пересказ прошедшего матча"
+        }
+      ]
     }
   ]
 }
