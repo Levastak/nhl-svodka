@@ -1,69 +1,6 @@
 {
   "runs": [
     {
-      "t": "2026-10-20T09:20:28Z",
-      "status": "ok",
-      "picked": [
-        "dailyfaceoff:evils-luke-evangelista-return-colorado-avalanche-missing-three-games-nhl-illness",
-        "prohockeyrumors:2026-10-panthers-recall-cole-schwindt-reassign-sam-lafferty-html"
-      ],
-      "skipped": [
-        {
-          "id": "rmnb:2026-10-19-washington-capitals-halloween-party-costumes-2026",
-          "why": "Курьёз с вечеринки, нового спортивного события нет."
-        },
-        {
-          "id": "sportsnet:nhl-video-what-does-healthy-scratch-vs-kings-mean-for-zadorovs-future-in-boston",
-          "why": "Пропуск матча и комментарий агента уже проверены; свежего решения или подтверждённых переговоров нет."
-        },
-        {
-          "id": "sportsnet:nhl-video-wilson-schaefer-montour-and-walman-join-the-price-is-right-tonight",
-          "why": "Телешоу без нового спортивного события."
-        },
-        {
-          "id": "sportsnet:nhl-video-how-will-senators-fans-welcome-tkachuk-back-to-ottawa",
-          "why": "Возвращение Ткачука в Оттаву уже освещено; анонс реакции болельщиков не новое событие."
-        },
-        {
-          "id": "nhl:winnipeg-jets-cole-perfetti-excels-since-top-line-promotion",
-          "why": "Ранее прочитанный первоисточник: повышение произошло ещё перед лагерем, это портрет, а не новая роль."
-        },
-        {
-          "id": "prohockeyrumors:2026-10-stars-to-begin-extension-talks-with-jason-robertson-in-december-html",
-          "why": "Ранее проверен первичный NHL.com от 18 октября; свежая перепечатка не обновляет дату события."
-        },
-        {
-          "id": "sportsnet:nhl-video-howie-mandel-gives-nhlers-custom-cards-on-the-price-is-right-tonight",
-          "why": "Телешоу без нового спортивного события."
-        },
-        {
-          "id": "sportsnet:nhl-article-rangers-top-ducks-to-remain-undefeated-at-home",
-          "why": "Обсуждённый матч, без самостоятельного нового события."
-        },
-        {
-          "id": "sportsnet:hl-video-maple-leafs-matthews-fires-home-late-in-second-to-pull-even-with-sharks",
-          "why": "Видео гола из уже подготовленных итогов, не отдельная новость."
-        },
-        {
-          "id": "sportsnet:nhl-video-would-you-rather-start-a-franchise-with-mcdavid-or-celebrini",
-          "why": "Условный выбор экспертов, не действительное решение."
-        },
-        {
-          "id": "sportsnet:nhl-video-can-macklin-celebrini-ace-trivia-about-his-penalty-history",
-          "why": "Викторина, не спортивная новость."
-        },
-        {
-          "id": "nhl:connor-mcdavid-off-to-torrid-start-with-edmonton-oilers",
-          "why": "Ранее освещённый старт Макдэвида, без нового события."
-        },
-        {
-          "id": "dailyfaceoff:news-winnipeg-jets-place-walker-duehr-waivers-nhl-news",
-          "why": "Body прочитан: реальный драфт отказов, не обмен и не уже состоявшаяся отправка в АХЛ. В предел двух материалов выбраны возвращение Эванджелисты и более свежая перестановка «Флориды». Не считать опубликованным."
-        }
-      ],
-      "note": "Прочитаны общие правила, заметка news, полный актуальный промпт и стиль. Сначала метаданные, recent_titles, morning_site_news, summary без article. Короткий список не дал нового события: просмотрены свежие заголовки feed за 4 часа и непросмотренные новости состава во всём 18-часовом окне. Прочитаны body Эванджелисты, Швиндта/Лафферти и Дьюра. Выбраны первые два как содержательные клубные новости только для сайта tg:false; не расходуют три оставшихся места Telegram. Возвращение Эванджелисты подано как ожидание Кифа, не объявленный окончательный состав; обмены/новые контракты не придумывались, перестановка Флориды названа полностью. Даты первичных материалов в допустимом окне. Эванджелиста/Лафферти по словарю, отсутствующий Коул Швиндт проверен по https://www.sports.ru/hockey/person/cole-schwindt/ и https://www.sport-express.net/hockey/L/player/14925/ . Фото/ссылки сохранены из feed, лимиты/язык/очередь/утренние новости/posted проверены. Второй ready +40 минут по промпту. Вне окна 10:00–11:30 страховка не выполнялась. Готовые тексты, статистика, модель, scripts и опубликованные посты не менялись."
-    },
-    {
       "t": "2026-10-20T11:17:13Z",
       "status": "ok",
       "picked": [
@@ -1777,6 +1714,57 @@
         }
       ],
       "note": "Официальные article NHL по Расту и Кинделу прочитаны точечно вне списка 12 кандидатов; сведения сверены с PHR/DFO. Шесть недель у Раста — до повторного обследования, не обещанный срок возвращения. План тренировок Киндела условный. Имена по names_ru; фото источников HTTP200 и просмотрены. Обе новости только на сайт: в канале уже две новости, Ульмарк ожидает очереди; до ночной паузы новые материалы не помещаются с интервалом75мин. Дублей по очереди/live/posted нет."
+    },
+    {
+      "t": "2026-10-23T08:11:09Z",
+      "status": "ok",
+      "picked": [
+        "prohockeyrumors:2026-10-sharks-igor-chernyshov-out-a-while-with-upper-body-injury-html",
+        "sportsnet:article-its-just-not-real-mcdavid-makes-even-more-history-in-oilers-shootout-win"
+      ],
+      "skipped": [
+        {
+          "id": "sportsnet:eo-gotta-see-it-sharks-askarov-reaches-across-open-net-to-make-insane-glove-save",
+          "why": "Эпизод уже разобран в итогах, героях и колонке; нового решения или рекорда нет."
+        },
+        {
+          "id": "dailyfaceoff:news-igor-chernyshov-san-jose-sharks-leaves-game-injury-left-arm-blocked-shot",
+          "why": "То же повреждение; выбран более поздний материал с комментарием тренера."
+        },
+        {
+          "id": "dailyfaceoff:news-what-is-going-on-boston-bruins-nikita-zadorov-benched-nhl",
+          "why": "Разбор старого решения о составе в субботу, нового кадрового решения в прочитанном article нет."
+        },
+        {
+          "id": "rmnb:2026-10-22-alex-semin-alex-ovechkin-nhl-retirement-capitals-gretzky-record",
+          "why": "Реакция на ранее объявленный последний сезон Овечкина; не новое объявление о завершении карьеры."
+        },
+        {
+          "id": "thehockeynews:jor-investment-in-kaprizov-already-paying-off-in-first-year-of-historic-contract",
+          "why": "Оценка старта и ранее подписанного контракта, без нового решения или рекорда."
+        },
+        {
+          "id": "dailyfaceoff:detroit-red-wings-leaves-game-upper-body-injury-vancouver-canucks-michal-postava",
+          "why": "Новая травма основного вратаря, не дубль; отложено из-за предела двух событий, выбраны россиянин и новый клубный рекорд."
+        },
+        {
+          "id": "sportsnet:nhl-video-its-embarrassing-boeser-sounds-off-on-canucks-no-shot-second-period",
+          "why": "Реакция на уже разобранный матч, не самостоятельное новое событие."
+        },
+        {
+          "id": "sportsnet:hl-video-oilers-draisaitl-praises-mcdavid-maybe-the-greatest-player-to-ever-play",
+          "why": "Рекорд Макдэвида отражён одним выбранным материалом; пересказ матча и реакции отдельно не дублируем."
+        },
+        {
+          "id": "sportsnet:l-video-oilers-tally-equalizer-seconds-after-waved-off-goal-in-late-game-madness",
+          "why": "Рекорд Макдэвида отражён одним выбранным материалом; пересказ матча и реакции отдельно не дублируем."
+        },
+        {
+          "id": "sportsnet:ticle-connor-mcdavid-becomes-fourth-player-to-record-30-points-in-first-10-games",
+          "why": "Рекорд Макдэвида отражён одним выбранным материалом; пересказ матча и реакции отдельно не дублируем."
+        }
+      ],
+      "note": "Страховка утра: daily/tg за results_date, auto_texts отсутствует, полные итоги и подписи уже опубликованы; повторно не менялись. Article всех реально рассматриваемых событий прочитаны. Чернышов — новое повреждение, точный срок не выдуман. Макдэвид — новый рекорд клуба31, не лиги37; Sportsnet сверен с данными НХЛ31=8+23 и вторым сообщением о рубеже30. Утренний выпуск содержал пять очков за матч, но не новый клубный рекорд, смыслового дубля нет. Имена по словарю; лимит5/75мин/20мин соблюдён, second ready+40мин. Фото обоих материалов HTTP200/просмотрены. Фото PHR дважды не скачалось по таймауту; для Чернышова взято фото из Daily Faceoff к тому же повреждению, присутствующее в feed. У Гретцки/Лемье нет записей словаря, использована общепринятая транскрипция; существующие имена не менялись."
     }
   ]
 }
