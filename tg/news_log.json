@@ -1,64 +1,6 @@
 {
   "runs": [
     {
-      "t": "2026-10-20T13:29:05Z",
-      "status": "ok",
-      "picked": [
-        "prohockeyrumors:2026-10-snapshots-sabres-dillon-honzek-marino-html"
-      ],
-      "skipped": [
-        {
-          "id": "rmnb:2026-10-19-washington-capitals-halloween-party-costumes-2026",
-          "why": "Курьёз с вечеринки, нового спортивного события нет."
-        },
-        {
-          "id": "sportsnet:nhl-video-what-does-healthy-scratch-vs-kings-mean-for-zadorovs-future-in-boston",
-          "why": "Пропуск матча и комментарий агента уже проверены; свежего решения или подтверждённых переговоров нет."
-        },
-        {
-          "id": "sportsnet:nhl-video-wilson-schaefer-montour-and-walman-join-the-price-is-right-tonight",
-          "why": "Телешоу без нового спортивного события."
-        },
-        {
-          "id": "sportsnet:nhl-video-how-will-senators-fans-welcome-tkachuk-back-to-ottawa",
-          "why": "Возвращение Ткачука в Оттаву уже освещено; анонс реакции болельщиков не новое событие."
-        },
-        {
-          "id": "nhl:winnipeg-jets-cole-perfetti-excels-since-top-line-promotion",
-          "why": "Ранее прочитанный первоисточник: повышение произошло ещё перед лагерем, это портрет, а не новая роль."
-        },
-        {
-          "id": "prohockeyrumors:2026-10-stars-to-begin-extension-talks-with-jason-robertson-in-december-html",
-          "why": "Ранее проверен первичный NHL.com от 18 октября; свежая перепечатка не обновляет дату события."
-        },
-        {
-          "id": "sportsnet:nhl-video-howie-mandel-gives-nhlers-custom-cards-on-the-price-is-right-tonight",
-          "why": "Телешоу без нового спортивного события."
-        },
-        {
-          "id": "sportsnet:nhl-article-rangers-top-ducks-to-remain-undefeated-at-home",
-          "why": "Обсуждённый матч, без самостоятельного нового события."
-        },
-        {
-          "id": "sportsnet:hl-video-maple-leafs-matthews-fires-home-late-in-second-to-pull-even-with-sharks",
-          "why": "Видео гола из уже подготовленных итогов, не отдельная новость."
-        },
-        {
-          "id": "sportsnet:nhl-video-would-you-rather-start-a-franchise-with-mcdavid-or-celebrini",
-          "why": "Условный выбор экспертов, не действительное решение."
-        },
-        {
-          "id": "sportsnet:nhl-video-can-macklin-celebrini-ace-trivia-about-his-penalty-history",
-          "why": "Викторина, не спортивная новость."
-        },
-        {
-          "id": "nhl:connor-mcdavid-off-to-torrid-start-with-edmonton-oilers",
-          "why": "Ранее освещённый старт Макдэвида, без нового события."
-        }
-      ],
-      "note": "Прочитаны общие правила, news, полный промпт и стиль. Начал с метаданных/recent_titles/morning_site_news/summary без article; проверены заголовки последних четырёх часов и непросмотренные события за 18 часов. Выбрано впервые освещаемое повреждение Джона Марино: прочитана полная заметка ProHockeyRumors, сообщение клуба и RotoWire. Не пересказ результата матча; сроки не выдуманы, пять очков в девяти матчах перенесены точно, имя по словарю. Общая иллюстрация PHR оказалась с другим игроком: вместо неё взято фото с точной подписью John Marino на странице RotoWire https://www.rotowire.com/hockey/headlines/john-marino-injury-dealing-with-ubi-596557 ; изображение загружено, проверено, HTTP200. Только сайт tg:false: клубная новость не расходует места главных новостей канала. Остальные кандидаты — повторы, старые события или курьёзы. Дополнительно свежие материалы: историческая подборка обменов и общий анонс вечера без самостоятельного нового события. Дубли по очереди, recent/morning и posted, язык, даты и длины проверены. Страховка утреннего выпуска вне окна не выполнялась. Изменены только очередь, журнал и live штатным скриптом."
-    },
-    {
       "t": "2026-10-20T15:24:52Z",
       "status": "ok",
       "picked": [
@@ -1762,6 +1704,65 @@
         }
       ],
       "note": "Вне утреннего окна страховка не повторялась. Проверены заголовки всех непринятых событий за18ч: найден Экхольм вне12кандидатов. Article Экхольма/Gibson и рассматриваемого инсайда о бюджете прочитаны. У Экхольма подтверждён минимум1неделя, у Гибсона срок неизвестен; диагноз не уточнялся сверх «верх тела». Постава7/8 и дебют сверены с полным ночным протоколом. Имена по names_ru. Гибсон ранее отложен по пределу2, а не дубль. Лимит канала после добавления4/5 с учётом очереди, интервалы75/20мин сохраняет бот. Фото HTTP200/просмотрены."
+    },
+    {
+      "t": "2026-10-23T19:01:17Z",
+      "status": "ok",
+      "picked": [
+        "nhl:connor-hellebuyck-traded-to-new-jersey-devils-from-winnipeg-jets",
+        "nhl:vincent-desharnais-out-4-6-weeks-for-washington"
+      ],
+      "skipped": [
+        {
+          "id": "sportsnet:eo-gotta-see-it-sharks-askarov-reaches-across-open-net-to-make-insane-glove-save",
+          "why": "Старый эпизод уже обсуждённого матча, не новая новость."
+        },
+        {
+          "id": "rmnb:0-23-capitals-friday-practice-injury-updates-power-play-changes-alex-tuch-sabres",
+          "why": "Новая потеря Деарне выделена по официальному сообщению NHL; остальные наблюдения тренировки отдельно не дублируем."
+        },
+        {
+          "id": "sportsnet:hl-video-roslovic-compares-matthews-and-mcdavid-world-class-work-ethic-from-both",
+          "why": "Реакции, тактический разбор и ожидания следующего матча; рекорд и итоги уже освещены, нового кадрового решения нет."
+        },
+        {
+          "id": "sportsnet:hl-video-hopefully-we-can-shut-him-down-mckenna-on-facing-mcdavid-for-first-time",
+          "why": "Реакции, тактический разбор и ожидания следующего матча; рекорд и итоги уже освещены, нового кадрового решения нет."
+        },
+        {
+          "id": "sportsnet:-video-what-matthews-will-focus-on-when-trying-to-defend-mcdavid-oilers-top-line",
+          "why": "Реакции, тактический разбор и ожидания следующего матча; рекорд и итоги уже освещены, нового кадрового решения нет."
+        },
+        {
+          "id": "sportsnet:nhl-article-how-panthers-style-system-is-igniting-oilers-blazing-start",
+          "why": "Аналитический разбор старта сезона без нового подтверждённого события."
+        },
+        {
+          "id": "rmnb:2026-10-23-connor-hellebuyck-trade-winnipeg-jets-new-jersey-devils-nhl",
+          "why": "Обмен подтверждён; опубликован один материал по NHL и официальным релизам клубов с полным составом сделки."
+        },
+        {
+          "id": "thehockeynews:the-hockey-news-big-show-what-has-led-to-easton-cowan-s-success-with-maple-leafs",
+          "why": "Аналитический разбор старта сезона без нового подтверждённого события."
+        },
+        {
+          "id": "thehockeynews:-morning-skate-connor-mcdavid-cannot-be-stopped-stecher-steps-up-for-maple-leafs",
+          "why": "Реакции, тактический разбор и ожидания следующего матча; рекорд и итоги уже освещены, нового кадрового решения нет."
+        },
+        {
+          "id": "nhl:montreal-canadiens-all-time-ironman-doug-jarvis-fan-of-captain-nick-suzuki",
+          "why": "Реакция на уже опубликованную травму и конец серии, без нового решения."
+        },
+        {
+          "id": "nhl:connor-mcdavid-hot-start-for-edmonton-just-not-real",
+          "why": "Реакции, тактический разбор и ожидания следующего матча; рекорд и итоги уже освещены, нового кадрового решения нет."
+        },
+        {
+          "id": "dailyfaceoff:news-alexis-lafreniere-new-york-rangers-breakout-season-nhl",
+          "why": "Аналитический разбор старта сезона без нового подтверждённого события."
+        }
+      ],
+      "note": "Новые новости только для сайта tg:false: последняя новость канала18:57:56UTC, следующая по75миннераньше20:12:56UTC/23:12Киров, уже ночная пауза. Готовую очередь/посты не меняли. Полный обмен Хеллибака сверён по article NHL, Sportsnet и официальным релизам обоих клубов: четыре игрока включая права на Комманда, свои пики NJD2раунд2029/7раунд2027. Дата дебюта не выдумана. Имена по словарю; отсутствующие Nick Bjugstad/Alexander Command проверены по российской прессе: Ник Бьюгстад, Александер Комманд. Деарне4–6недель по NHL, операция/роль по статье, без чужих календарных обобщений. Фото HTTP200/просмотрены. Вне окна страховка утра не выполнялась."
     }
   ]
 }
