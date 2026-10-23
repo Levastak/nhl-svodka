@@ -1,8 +1,16 @@
 {
- "t": "2026-10-23T17:58:02Z",
+ "t": "2026-10-23T18:08:04Z",
  "mode": "auto",
- "ok": [],
+ "ok": [
+  "лента: 250 историй, новых 0; Sportsnet 90, NHL.com 66, Daily Faceoff 31, ESPN 22, ProHockeyRumors 21, The Hockey News 13, RMNB 4, nhl.com 2"
+ ],
  "fail": [],
+ "warn": [
+  "лента Daily Faceoff: <HTTPError 500: 'Internal Server Error'>",
+  "лента Bing: ParseError('not well-formed (invalid token): line 1, column 41')",
+  "лента Bing: ParseError('not well-formed (invalid token): line 1, column 41')",
+  "лента Bing: ParseError('not well-formed (invalid token): line 1, column 41')"
+ ],
  "plan": [
   {
    "key": "am:2026-10-22",
