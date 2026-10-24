@@ -1,65 +1,6 @@
 {
  "runs": [
   {
-   "t": "2026-10-21T01:23:26Z",
-   "status": "ok",
-   "picked": [
-    "sportsnet:nhl-article-report-red-wings-dylan-larkin-expands-trade-list-to-10-teams",
-    "prohockeyrumors:0-simon-edvinsson-and-red-wings-held-weekend-meeting-amid-contract-standoff-html"
-   ],
-   "skipped": [
-    {
-     "id": "sportsnet:nhl-video-marchenko-redirects-puck-past-greaves-to-score-against-former-team",
-     "why": "Отдельное видео гола в текущем матче, без самостоятельного нового рекорда/травмы; материал для итогов, не новостной пост."
-    },
-    {
-     "id": "sportsnet:ideo-happy-to-be-here-marchenko-talks-trade-to-toronto-and-first-leafs-hat-trick",
-     "why": "Интервью о прежнем обмене и ранее сыгранном хет-трике, без нового перехода/рекорда; кот и личные темы не спортивное событие."
-    },
-    {
-     "id": "sportsnet:l-video-tough-not-to-take-it-personal-fantilli-on-marchenko-leaving-blue-jackets",
-     "why": "Реакция на состоявшийся ранее обмен, а не новый обмен/запрос. Для сайта выбраны подтверждённые изменения составов."
-    },
-    {
-     "id": "thehockeynews:arov-saves-his-best-game-of-the-season-against-maple-leafs-idol-sergei-bobrovsky",
-     "why": "Оценка Аскарова и цитаты о Бобровском после уже освещённого матча; нового самостоятельного события нет."
-    },
-    {
-     "id": "dailyfaceoff:rangers-for-real-even-without-igor-shesterkin-nhl-alexis-lafreniere-dylan-garand",
-     "why": "Анализ старта Рейнджерс и уже известных травм, не свежее медицинское решение."
-    },
-    {
-     "id": "prohockeyrumors:2026-10-bruins-notes-zadorov-zacha-eyssimont-jokiharju-html",
-     "why": "Ранее прочитанный article о реакции Задорова на прежний пропуск игры; не новый пропуск или свежий обмен."
-    },
-    {
-     "id": "thehockeynews:ning-skate-michkov-leads-flyers-mckenna-comes-up-clutch-for-maple-leafs-and-more",
-     "why": "Обзор уже освещённых игр Мичкова/Маккенны, самостоятельного нового события нет."
-    },
-    {
-     "id": "sportsnet:-nylander-matthews-pick-their-spots-46-seconds-apart-to-put-maple-leafs-in-front",
-     "why": "Видео голов текущего матча, не отдельное спортивное событие для ленты."
-    },
-    {
-     "id": "nhl:devils-jake-allen-receives-silver-stick-for-500-career-games",
-     "why": "Body прочитан:500-й матч сыгран10октября, сейчас только церемония; старую веху не выдавать за свежую."
-    },
-    {
-     "id": "sportsnet:nhl-video-bad-turnover-gives-sharks-celebrini-wide-open-lane-for-opening-goal",
-     "why": "Видео обычного гола текущего матча, без новой вехи."
-    },
-    {
-     "id": "sportsnet:nhl-video-avalanches-makar-sets-up-landeskog-with-beauty-assist-vs-devils",
-     "why": "Видео красивой передачи, без независимого нового события."
-    },
-    {
-     "id": "prohockeyrumors:2026-10-panthers-jacob-markstrom-out-with-injury-html",
-     "why": "Травма Маркстрёма и срок10–14дней уже опубликованы, перепечатка не новое событие."
-    }
-   ],
-   "note": "Прочитаны operations/news/полный актуальный промпт/стиль, сначала метаданные/recent/morning/summary без article. После короткого списка проверены заголовки4часа; вне12 обнаружены свежие сообщения о Детройте. Прочитаны полные body Sportsnet о Ларкине и PHR об Эдвинссоне, полная PHR, первичные ссылки Free Press20октября и TSN Early Insider Trading20октября. Проверка поиска показала: число10 известно раньше, поэтому НЕ написано, что список расширился именно сейчас с3до10; новый повод — раскрытый перечень всех десяти клубов у Сент-Джеймс, перечислены все. По Лебрюну впервые раскрыта встреча на выходных, не сегодняшняя встреча; новый контракт не объявлен. Слухи явно приписаны журналистам, обменов/подписаний не выдумано. Свежие URL: https://www.freep.com/story/sports/nhl/red-wings/2026/10/20/dylan-larkin-detroit-red-wings-trade-teams/92352702007/ и https://www.tsn.ca/nhl/video/2026/10/20/early-trading-edvinssons-future-in-detroit-jets-consistent-stance-on-hellebuyck/ ; их веб-доступ ограничен, но полный article/прочитанная PHR достаточны, даты подтверждены поиском и ссылками. Body Брауна/Ноусена и Штурма/Хэйта прочитаны, отложены по пределу2 и значимости свежих инсайдов. Ларкин по словарю, остальные отсутствующие имена транскрибированы; игроков не опускал. Фото источников HTTP200 и просмотрены, PHR оригинал www. Дубли по очереди/recent/morning/posted отсутствуют;18часов, язык/длины/JSON проверены. Только сайт tg:false/hot:false из-за04:00МСК, второй ready+40минут. Журнал30, live штатным скриптом. Страховка утра вне окна не запускалась, исходные данные/модель/скрипты/готовые посты не менялись."
-  },
-  {
    "t": "2026-10-21T03:18:01Z",
    "status": "ok",
    "picked": [
@@ -1767,6 +1708,57 @@
     }
    ],
    "note": "Heartbeat15:31UTC запущен фактически после21:21UTC, 00:2x25октября Киров. Только сайт tg:false у обоих, без утреннего накопления. PHR Metropolitan прочитан полностью: Малкин НЕ играет, а возвращаются Дюбуа/Сурдиф — не перепутано. Для события Малкина прочитан первичный репортаж Дэна Кингерски Pittsburgh Hockey Now, найденный через Yahoo; время16:01UTC из article:published_time. Обложка PHR была Дюбуа, поэтому взято фото Хэйеса из прочитанного первичного репортажа; он назван в заголовке и тексте. История Меркулова обнаружена вне12 по полной PHR, attribution Рено Лавуа сохранена; предположение автора о выздоровлении и комментарий читателя не выдаём за факт. Меркулов — Георгий; Эйвери Хэйес по спортивной русской прессе. Фото Хэйеса и Меркулова HTTP200, просмотрены. Маккэнн и Нюман проверены, но отложены по пределу двух/приоритету россиян. Статистику, матчи и прогнозы не меняли."
+  },
+  {
+   "t": "2026-10-24T21:34:50Z",
+   "status": "ok",
+   "picked": [
+    "prohockeyrumors:2026-10-metropolitan-notes-dubois-sourdif-ovechkin-malkin-barzal-html",
+    "dailyfaceoff:news-jared-mccann-seattle-kraken-miss-game-minnesota-wild-lower-body-injury"
+   ],
+   "skipped": [
+    {
+     "id": "prohockeyrumors:2026-10-michkov-quieting-doubts-with-strong-start-html",
+     "why": "Оценка старта Мичкова перед уже завершённым матчем; нового кадрового события нет."
+    },
+    {
+     "id": "nhl:quinn-hughes-not-sure-what-to-expect-in-first-trip-back-to-vancouver",
+     "why": "Публичные слова Хьюза о возвращении в Ванкувер отложены: два более конкретных изменения состава."
+    },
+    {
+     "id": "espn:50269091",
+     "why": "Разбор завершённого матча без нового рекорда или травмы."
+    },
+    {
+     "id": "sportsnet:nhl-video-flyers-joseph-woll-stretches-to-stonewall-ducks-cutter-gauthier",
+     "why": "Видео отдельного сейва, не новое событие."
+    },
+    {
+     "id": "sportsnet:nhl-video-ducks-leo-carlsson-capitalizes-on-giveaway-against-flyers",
+     "why": "Видео отдельного гола завершённого матча."
+    },
+    {
+     "id": "thehockeynews:in-facing-maple-leafs-and-former-assistant-jim-hiller-despite-intriguing-history",
+     "why": "Реакции перед игрой с бывшим тренером, нового решения нет."
+    },
+    {
+     "id": "sportsnet:nhl-video-skated-together-all-summer-long-hellebuyck-on-friendship-with-hughes",
+     "why": "Реакция на уже освещённый обмен Хеллибака."
+    },
+    {
+     "id": "sportsnet:nhl-article-senators-johansson-to-start-vs-rangers-burakovsky-draws-back-in",
+     "why": "Состав Оттавы отложен по пределу двух и приоритету выбранных кадровых событий."
+    },
+    {
+     "id": "thehockeynews:ow-devils-gm-sunny-mehtas-patience-increased-the-chances-of-landing-quinn-hughes",
+     "why": "Аналитическое предположение о возможном переходе Хьюза без готового решения."
+    },
+    {
+     "id": "prohockeyrumors:2026-10-penguins-place-sam-girard-on-ir-recall-avery-hayes-html",
+     "why": "Вызов Хэйеса уже в новости об отсутствии Малкина; перевод Жирара как отдельный сюжет отложен."
+    }
+   ],
+   "note": "00:3x25октября Киров: оба материала только сайт tg:false, без утреннего накопления. Из PHR Metropolitan выбран ещё не освещённый раздел о возвращениях Дюбуа/Сурдифа, а не повтор Малкина. Article0 и5 прочитаны точечно, полная Metropolitan была прочитана в предыдущем проходе. Источник возвратов Сэмми Силбер назван. У Маккэнна нижняя часть тела, без выдуманного срока и без утверждения перевода в IR. Яни Нюман проверен по Спорт-Экспресс/Чемпионату, остальные фамилии по names_ru. Фото Дюбуа и Маккэнна HTTP200 и просмотрены в предыдущем проходе, URL не менялись. Прогнозы и статистика не затронуты."
   }
  ]
 }
