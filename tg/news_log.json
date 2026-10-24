@@ -1,61 +1,6 @@
 {
  "runs": [
   {
-   "t": "2026-10-20T19:21:12Z",
-   "status": "site",
-   "picked": [
-    "dailyfaceoff:news-dallas-stars-esa-lindell-out-boston-bruins-lower-body-injury-nhl-news",
-    "prohockeyrumors:2026-10-kings-activate-mats-zuccarello-html"
-   ],
-   "skipped": [
-    {
-     "id": "sportsnet:l-video-tough-not-to-take-it-personal-fantilli-on-marchenko-leaving-blue-jackets",
-     "why": "Реакция на состоявшийся ранее обмен, а не новый обмен/запрос. Для сайта выбраны подтверждённые изменения составов."
-    },
-    {
-     "id": "thehockeynews:arov-saves-his-best-game-of-the-season-against-maple-leafs-idol-sergei-bobrovsky",
-     "why": "Оценка Аскарова и цитаты о Бобровском после уже освещённого матча; нового самостоятельного события нет."
-    },
-    {
-     "id": "dailyfaceoff:rangers-for-real-even-without-igor-shesterkin-nhl-alexis-lafreniere-dylan-garand",
-     "why": "Анализ старта Рейнджерс и уже известных травм, не свежее медицинское решение."
-    },
-    {
-     "id": "prohockeyrumors:2026-10-bruins-notes-zadorov-zacha-eyssimont-jokiharju-html",
-     "why": "Ранее прочитанный article о реакции Задорова на прежний пропуск игры; не новый пропуск или свежий обмен."
-    },
-    {
-     "id": "thehockeynews:ning-skate-michkov-leads-flyers-mckenna-comes-up-clutch-for-maple-leafs-and-more",
-     "why": "Обзор уже освещённых игр Мичкова/Маккенны, самостоятельного нового события нет."
-    },
-    {
-     "id": "sportsnet:nhl-video-batherson-more-worried-about-getting-the-win-than-reception-for-brady",
-     "why": "Очередной комментарий к уже анонсированному возвращению Ткачука; нового спортивного события нет."
-    },
-    {
-     "id": "sportsnet:nhl-video-senators-green-hoping-sanderson-returns-for-big-test-vs-panthers",
-     "why": "Article краткий. NHL Status Report подтверждает ожидание возвращения Сандерсона после восьми игр, но это ожидание, не готовый состав. В предел двух выбраны точный срок Линделля и активация Цуккарелло."
-    },
-    {
-     "id": "espn:50229361",
-     "why": "Тот же сюжет о возможных брошенных свитерах, без спортивного изменения."
-    },
-    {
-     "id": "sportsnet:nhl-article-panthers-jacob-markstrom-out-10-14-days-with-injury",
-     "why": "Срок Маркстрёма и вызов Блэка уже опубликованы, смысловой дубль."
-    },
-    {
-     "id": "sportsnet:l-video-expect-him-to-be-good-slafkovsky-not-worried-about-dobes-last-few-starts",
-     "why": "Слова поддержки вратаря, без нового статуса/решения."
-    },
-    {
-     "id": "sportsnet:hl-video-blue-jackets-bowness-wants-to-get-knies-more-involved-with-penalty-kill",
-     "why": "Article прочитан: намерение чаще использовать Ниса в меньшинстве. В пределах двух приоритет подтверждённым изменениям состава."
-    }
-   ],
-   "note": "Прочитаны общие правила, news, полный текущий промпт и стиль. Метаданные/recent/morning/summary до article; затем article Линделля, Сандерсона, Ниса и Задорова. Дополнительно свежие заголовки feed за4часа: найдена активация Цуккарелло вне12, прочитан полный body PHR и статья с первичной ссылкой клуба https://x.com/LAKings/status/2112593634482942384 . Линделль: блокированный бросок, нижняя часть тела, точный минимум недели сверены с NHL.com/fi https://www.nhl.com/fi/news/loukkaantuminen-pakottaa-esa-lindellin-lepoon и сегодняшним репортажем Dallas Morning News/Yahoo; Капобьянко только возможный выход, хозяева Даллас. Цуккарелло: активация из IR, два матча/одна передача, свободные места и отсутствие побед из body, старт в конкретной игре не обещан. Новые фамилии не добавлялись: все игроки по словарю. Фото из источников HTTP200 и просмотрены, для PHR тот же оригинал www вместо CDN. Дубли по очереди/recent/morning/posted проверены; пять новостей канала уже вышли, обе новые строго tg:false/hot:false, второй ready+40минут по промпту. Журнал30, live штатным скриптом, язык/длины/JSON проверены. Утреннюю страховку вне окна не выполнять; данные/модель/скрипты/готовые посты не менять."
-  },
-  {
    "t": "2026-10-20T21:18:00Z",
    "status": "ok",
    "picked": [
@@ -1768,6 +1713,61 @@
     }
    ],
    "note": "Фактическое время 13:2x Киров, вне окна утренней страховки. Article Леви и Ларкина прочитаны точечно. Лебрюн назван, согласия Ларкина на Монреаль и договорённости об обмене не утверждаем. Диагноз/сроки Леви не выдумываем; Жарри подтверждён, фамилия строго names_ru. Оба фото HTTP200 и просмотрены. Каналу два обычных материала, hot=false; второй ready +75мин, общий лимит с одной существующей заявкой соблюдён."
+  },
+  {
+   "t": "2026-10-24T11:20:31Z",
+   "status": "ok",
+   "picked": [
+    "rmnb:2026-10-23-capitals-recall-goaltender-mitch-gibson-logan-thompson-injury",
+    "nhl:nhl-status-report-news-and-notes-october-23-2026"
+   ],
+   "skipped": [
+    {
+     "id": "prohockeyrumors:2026-10-jets-place-vladislav-namestnikov-on-ir-jack-st-ivany-on-waivers-html",
+     "why": "Наместников и остальные перестановки уже в утренних новостях сайта."
+    },
+    {
+     "id": "sportsnet:nhl-article-centres-stabilize-canadiens-in-first-game-without-suzuki",
+     "why": "Разбор уже освещённого матча и центров «Монреаля»."
+    },
+    {
+     "id": "sportsnet:nhl-video-avalanches-challenge-goes-unsuccessful-after-lengthy-review",
+     "why": "Видео эпизода уже освещённого матча, самостоятельного нового события нет."
+    },
+    {
+     "id": "prohockeyrumors:2026-10-avalanche-activate-logan-oconnor-recall-taylor-makar-html",
+     "why": "Возвращение относится к уже завершённому матчу; нового поворота нет."
+    },
+    {
+     "id": "sportsnet:-article-oilers-place-devon-levi-on-injured-reserve-recall-matt-tomkins-from-ahl",
+     "why": "Перевод Леви и вызов Томкинса уже выбраны по Daily Faceoff."
+    },
+    {
+     "id": "rmnb:3-spencer-carbery-takes-responsibility-capitals-uneven-start-defensive-struggles",
+     "why": "Оценка старта и ответственности тренера; без нового решения, два конкретных кадровых события предпочтительнее."
+    },
+    {
+     "id": "sportsnet:nhl-video-how-hellebuyck-trade-could-impact-larkin-hughes",
+     "why": "Обсуждение последствий обмена без конкретного нового решения; свежий инсайд Лебрюна о Ларкине уже в очереди."
+    },
+    {
+     "id": "rmnb:2026-10-23-ryan-leonard-another-level-capitals-spencer-carbery",
+     "why": "Оценка прогресса Леонарда, нового кадрового события нет."
+    },
+    {
+     "id": "sportsnet:nhl-video-is-4th-line-what-separates-this-years-maple-leafs-from-last-season",
+     "why": "Тактическое обсуждение уже прошедшего матча."
+    },
+    {
+     "id": "sportsnet:nhl-article-maple-leafs-prepare-for-stiff-test-against-connor-mcdavid-oilers",
+     "why": "Превью встречи с Макдэвидом уже покрыто утренними текстами, нового кадрового события нет."
+    },
+    {
+     "id": "nhl:torotno-maple-leafs-hoping-to-slow-down-edmonton-oilers-connor-mcdavid",
+     "why": "Реакции на уже освещённый старт и рекорд Макдэвида, нового события нет."
+    }
+   ],
+   "note": "Вне утреннего окна. Article вызова Гибсона прочитан; официальный релиз Washington Capitals найден для проверки. За пределами12 проверены свежие заголовки feed за4ч (новыхнет), найден NHL Status Report: прочитан точечно body с потерями Бланкенбурга/Рифаи и вызовами Макуорда/Мермиса. Вызовы — новые темы, не повтор опубликованной операции Деарне или рекорда Макдэвида. Оба материала только сайт tg:false; канал сохраняет строгий отбор и очередь двух ранее написанных новостей. Митч Гибсон — новая прямая транскрипция по правилу промпта, остальные фамилии проверены по names_ru. Фото HTTP200 и просмотрены. Старые элементы и посты не переписаны."
   }
  ]
 }
