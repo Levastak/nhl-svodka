@@ -1,65 +1,6 @@
 {
  "runs": [
   {
-   "t": "2026-10-20T21:18:00Z",
-   "status": "ok",
-   "picked": [
-    "dailyfaceoff:gary-flames-mikael-backlund-upper-body-injury-nhl-news-hurricanes-wild-ben-jones",
-    "prohockeyrumors:2026-10-jets-place-walker-duehr-on-waivers-html"
-   ],
-   "skipped": [
-    {
-     "id": "sportsnet:l-video-tough-not-to-take-it-personal-fantilli-on-marchenko-leaving-blue-jackets",
-     "why": "Реакция на состоявшийся ранее обмен, а не новый обмен/запрос. Для сайта выбраны подтверждённые изменения составов."
-    },
-    {
-     "id": "thehockeynews:arov-saves-his-best-game-of-the-season-against-maple-leafs-idol-sergei-bobrovsky",
-     "why": "Оценка Аскарова и цитаты о Бобровском после уже освещённого матча; нового самостоятельного события нет."
-    },
-    {
-     "id": "dailyfaceoff:rangers-for-real-even-without-igor-shesterkin-nhl-alexis-lafreniere-dylan-garand",
-     "why": "Анализ старта Рейнджерс и уже известных травм, не свежее медицинское решение."
-    },
-    {
-     "id": "prohockeyrumors:2026-10-bruins-notes-zadorov-zacha-eyssimont-jokiharju-html",
-     "why": "Ранее прочитанный article о реакции Задорова на прежний пропуск игры; не новый пропуск или свежий обмен."
-    },
-    {
-     "id": "thehockeynews:ning-skate-michkov-leads-flyers-mckenna-comes-up-clutch-for-maple-leafs-and-more",
-     "why": "Обзор уже освещённых игр Мичкова/Маккенны, самостоятельного нового события нет."
-    },
-    {
-     "id": "thehockeynews:-hockey-news-wraparound-will-brady-tkachuk-feel-the-heat-in-his-return-to-ottawa",
-     "why": "Подкаст с очередным обсуждением уже анонсированного возвращения Ткачука; нового события нет."
-    },
-    {
-     "id": "sportsnet:e-knies-marchenko-brace-for-emotional-reunions-as-maple-leafs-visit-blue-jackets",
-     "why": "Реакции Ниса/Марченко на состоявшийся ранее обмен, не новые переговоры. В пределах двух выбраны новые медицинское обновление и результат драфта отказов."
-    },
-    {
-     "id": "sportsnet:video-can-garand-rangers-build-on-strong-start-to-be-serious-contenders-in-metro",
-     "why": "Экспертная оценка старта Рейнджерс и Гаранда, не новое решение клуба или сделка."
-    },
-    {
-     "id": "sportsnet:video-how-cowans-calder-cup-run-with-marlies-clearly-helped-with-his-development",
-     "why": "Оценка развития Коуэна, без новой роли или решения."
-    },
-    {
-     "id": "nhl:brady-tkachuk-return-to-ottawa-will-be-fun-game-for-senators",
-     "why": "Очередной анонс уже освещённого возвращения Ткачука, без нового спортивного события."
-    },
-    {
-     "id": "sportsnet:nhl-video-batherson-more-worried-about-getting-the-win-than-reception-for-brady",
-     "why": "Очередной комментарий к уже анонсированному возвращению Ткачука; нового спортивного события нет."
-    },
-    {
-     "id": "sportsnet:nhl-video-senators-green-hoping-sanderson-returns-for-big-test-vs-panthers",
-     "why": "Article краткий. NHL Status Report подтверждает ожидание возвращения Сандерсона после восьми игр, но это ожидание, не готовый состав. В предел двух выбраны точный срок Линделля и активация Цуккарелло."
-    }
-   ],
-   "note": "Полностью прочитаны operations/news/текущий промпт/стиль; сначала метаданные/recent/morning/summary без article. Короткий список без нового события: проверены заголовки feed за4часа. Вне12 найдены травма Бэклунда/вызов Джонса и прохождение Дьюром драфта отказов. Прочитаны body DFO/PHR/Sportsnet о Бэклунде, PHR о Джонсе, PHR об обновлении Дьюра20октября; полная PHR со ссылкой Фридмана https://x.com/FriedgeHNIC/status/2112605448952025356 . Это новый результат процедуры, а не повтор прежней новости о выставлении19октября. Состоявшийся перевод/выход за Манитобу не придумывались. У Бэклунда нет объявленного срока, четверг под вопросом, выход Джонса не гарантирован. Бэклунд по словарю, отсутствующий Бен Джонс транскрибирован, Уолкер Дьюр сохранён в ранее проверенном написании. Фото обоих источников HTTP200, скачаны/просмотрены; PHR тот же оригинал www вместо CDN. Выбрано ровно2, только сайт tg:false/hot:false из-за00:00–08:00МСК независимо от сброса дневного счётчика. Второй ready+40минут. Дубли по очереди/recent/morning/posted, даты18часов, длины/язык/JSON проверены. Журнал30, live штатным скриптом; утреннюю страховку вне окна не выполнял. Данные/модель/прошлые прогнозы/скрипты/опубликованные посты не изменены."
-  },
-  {
    "t": "2026-10-20T23:18:49Z",
    "status": "ok",
    "picked": [
@@ -1768,6 +1709,64 @@
     }
    ],
    "note": "Вне утреннего окна. Article вызова Гибсона прочитан; официальный релиз Washington Capitals найден для проверки. За пределами12 проверены свежие заголовки feed за4ч (новыхнет), найден NHL Status Report: прочитан точечно body с потерями Бланкенбурга/Рифаи и вызовами Макуорда/Мермиса. Вызовы — новые темы, не повтор опубликованной операции Деарне или рекорда Макдэвида. Оба материала только сайт tg:false; канал сохраняет строгий отбор и очередь двух ранее написанных новостей. Митч Гибсон — новая прямая транскрипция по правилу промпта, остальные фамилии проверены по names_ru. Фото HTTP200 и просмотрены. Старые элементы и посты не переписаны."
+  },
+  {
+   "t": "2026-10-24T13:25:35Z",
+   "status": "ok",
+   "picked": [
+    "prohockeyrumors:2026-10-wild-place-daemon-hunt-on-waivers-html"
+   ],
+   "skipped": [
+    {
+     "id": "dailyfaceoff:first-nhl-head-coach-fired-this-season-2026-27-prediction-bowness-huska-brunette",
+     "why": "Редакционные предположения о первом увольнении тренера, а не новое решение или конкретный инсайд."
+    },
+    {
+     "id": "sportsnet:nhl-article-centres-stabilize-canadiens-in-first-game-without-suzuki",
+     "why": "Разбор уже освещённого матча и героев."
+    },
+    {
+     "id": "sportsnet:nhl-video-avalanches-challenge-goes-unsuccessful-after-lengthy-review",
+     "why": "Видео эпизода уже освещённого матча."
+    },
+    {
+     "id": "prohockeyrumors:2026-10-avalanche-activate-logan-oconnor-recall-taylor-makar-html",
+     "why": "Возвращение относится к уже завершённому матчу, нового поворота нет."
+    },
+    {
+     "id": "sportsnet:-article-oilers-place-devon-levi-on-injured-reserve-recall-matt-tomkins-from-ahl",
+     "why": "Леви и вызов Томкинса уже опубликованы по Daily Faceoff."
+    },
+    {
+     "id": "rmnb:3-spencer-carbery-takes-responsibility-capitals-uneven-start-defensive-struggles",
+     "why": "Общая оценка старта команды тренером без нового решения."
+    },
+    {
+     "id": "sportsnet:nhl-video-how-hellebuyck-trade-could-impact-larkin-hughes",
+     "why": "Article содержит лишь описание видеообсуждения; нового конкретного сообщения по Ларкину или Хьюзу нет. Инсайд Лебрюна уже в очереди."
+    },
+    {
+     "id": "rmnb:2026-10-23-ryan-leonard-another-level-capitals-spencer-carbery",
+     "why": "Оценка прогресса Леонарда, нового кадрового события нет."
+    },
+    {
+     "id": "sportsnet:nhl-video-is-4th-line-what-separates-this-years-maple-leafs-from-last-season",
+     "why": "Тактическое обсуждение уже прошедшего матча."
+    },
+    {
+     "id": "sportsnet:nhl-article-maple-leafs-prepare-for-stiff-test-against-connor-mcdavid-oilers",
+     "why": "Превью матча и реакции на уже освещённый старт Макдэвида."
+    },
+    {
+     "id": "espn:50251984",
+     "why": "Общее превью12матчей, уже покрытых утренним выпуском; отдельного нового события не выбрано."
+    },
+    {
+     "id": "sportsnet:article-quick-shifts-maple-leafs-mike-babcock-set-to-reunite-as-foes-in-edmonton",
+     "why": "Прочитанный article — воспоминания и реакции перед встречей с бывшим тренером; нового назначения или решения нет."
+    }
+   ],
+   "note": "Фактическое время16:2xКиров: вне утренней страховки. Прочитаны article тренерской дискуссии DFO, видео Фридмана, Quick Shifts. Дополнительно проверены4свежих заголовка feed за4ч и непросмотренные кадровые/инсайдерские заголовки за18ч. За пределами12 найден Хант: body PHR прочитан полностью, новость23октября19:53:54UTC ещё в пределах18ч; отправки в АХЛ не утверждаем, итог драфта отказов не объявлен. Имя по names_ru. Фото Ханта в форме MIN HTTP200 и просмотрено. Небольшое кадровое событие только сайт tg:false, новый пост канала не добавляется. Старые очередь и посты сохранены."
   }
  ]
 }
