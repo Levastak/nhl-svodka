@@ -1,65 +1,6 @@
 {
  "runs": [
   {
-   "t": "2026-10-20T23:18:49Z",
-   "status": "ok",
-   "picked": [
-    "prohockeyrumors:2026-10-mammoth-recall-artem-duda-place-michael-carcone-on-ir-html",
-    "nhl:ben-kindel-status-update-october-20-2026"
-   ],
-   "skipped": [
-    {
-     "id": "sportsnet:ideo-happy-to-be-here-marchenko-talks-trade-to-toronto-and-first-leafs-hat-trick",
-     "why": "Интервью о прежнем обмене и ранее сыгранном хет-трике, без нового перехода/рекорда; кот и личные темы не спортивное событие."
-    },
-    {
-     "id": "sportsnet:l-video-tough-not-to-take-it-personal-fantilli-on-marchenko-leaving-blue-jackets",
-     "why": "Реакция на состоявшийся ранее обмен, а не новый обмен/запрос. Для сайта выбраны подтверждённые изменения составов."
-    },
-    {
-     "id": "thehockeynews:arov-saves-his-best-game-of-the-season-against-maple-leafs-idol-sergei-bobrovsky",
-     "why": "Оценка Аскарова и цитаты о Бобровском после уже освещённого матча; нового самостоятельного события нет."
-    },
-    {
-     "id": "dailyfaceoff:rangers-for-real-even-without-igor-shesterkin-nhl-alexis-lafreniere-dylan-garand",
-     "why": "Анализ старта Рейнджерс и уже известных травм, не свежее медицинское решение."
-    },
-    {
-     "id": "prohockeyrumors:2026-10-bruins-notes-zadorov-zacha-eyssimont-jokiharju-html",
-     "why": "Ранее прочитанный article о реакции Задорова на прежний пропуск игры; не новый пропуск или свежий обмен."
-    },
-    {
-     "id": "thehockeynews:ning-skate-michkov-leads-flyers-mckenna-comes-up-clutch-for-maple-leafs-and-more",
-     "why": "Обзор уже освещённых игр Мичкова/Маккенны, самостоятельного нового события нет."
-    },
-    {
-     "id": "prohockeyrumors:2026-10-panthers-jacob-markstrom-out-with-injury-html",
-     "why": "Травма Маркстрёма и срок10–14дней уже опубликованы, перепечатка не новое событие."
-    },
-    {
-     "id": "rmnb:2026-10-20-capitals-kings-live-updates-washington-seeks-third-straight-win",
-     "why": "Текущая трансляция и уже подготовленное превью, не независимая новость."
-    },
-    {
-     "id": "sportsnet:-video-hiller-says-you-cant-get-around-emotion-in-maple-leafs-blue-jackets-clash",
-     "why": "Очередная реакция на известный обмен перед тем же матчем, без нового спортивного решения."
-    },
-    {
-     "id": "sportsnet:l-article-why-brady-tkachuks-return-to-ottawa-promises-to-be-emotionally-charged",
-     "why": "Повтор уже освещённого анонса возвращения Ткачука."
-    },
-    {
-     "id": "rmnb:2026-10-20-tom-wilson-the-price-is-right-tonight-nhl-takeover-episode",
-     "why": "Телешоу и курьёз, без спортивного события."
-    },
-    {
-     "id": "dailyfaceoff:news-linus-ullmark-driving-force-behind-ottawa-senators-success",
-     "why": "Оценка текущего старта Ульмарка, без нового рекорда/статуса/сделки."
-    }
-   ],
-   "note": "Прочитаны полностью operations/news/актуальный промпт/стиль. Сначала метаданные/recent/morning/summary без article; короткий список без нового события. Проверены свежие заголовки4часа и непросмотренные составы/инсайды18часов; вне12 найдены Дуда/Карконе и Киндел. Прочитаны full body PHR и NHL.com с официальным заявлением Питтсбурга; полная PHR по Юте со ссылкой на объявление клуба https://x.com/UtahMammoth_PR/status/2112651458197979201 . Подтверждён вызов, дебют Дуды не обещан; 45очков103матча из body. Диагноз Киндела не выдуман: сознание/стабильность приписаны клубу, только обстоятельства госпитализации. Киндел/Карконе по словарю; отсутствующий Артём Дуда написан по-русски без изменения словаря в рамках новостей. Фото Дуды/Карконе взято из той же PHR, на нём Карконе — один из двух героев заголовка. NHL-изображение Киндела403: найдено архивное фото игрока из материала об этом событии в прочитанной PHR https://www.prohockeyrumors.com/2026/10/penguins-benjamin-kindel-taken-to-hospital.html . Оба изображения HTTP200, загружены и просмотрены; www оригиналы вместо CDN. Новые ID/смысл отсутствуют в очереди/recent/morning/posted; статья про Брауна и Штурма оставлена вне выбранных двух по приоритету россиянина и важного медицинского сообщения. Только сайт tg:false/hot:false из-за02:00МСК; ready второго+40минут, без ночного накопления Telegram. Журнал30, live штатным скриптом. Язык/имена/даты/длины/JSON проверены, вне окна утра не запускалось восстановление. Данные/модель/скрипты/готовые посты не тронуты."
-  },
-  {
    "t": "2026-10-21T01:23:26Z",
    "status": "ok",
    "picked": [
@@ -1767,6 +1708,65 @@
     }
    ],
    "note": "Фактическое время16:2xКиров: вне утренней страховки. Прочитаны article тренерской дискуссии DFO, видео Фридмана, Quick Shifts. Дополнительно проверены4свежих заголовка feed за4ч и непросмотренные кадровые/инсайдерские заголовки за18ч. За пределами12 найден Хант: body PHR прочитан полностью, новость23октября19:53:54UTC ещё в пределах18ч; отправки в АХЛ не утверждаем, итог драфта отказов не объявлен. Имя по names_ru. Фото Ханта в форме MIN HTTP200 и просмотрено. Небольшое кадровое событие только сайт tg:false, новый пост канала не добавляется. Старые очередь и посты сохранены."
+  },
+  {
+   "t": "2026-10-24T21:29:30Z",
+   "status": "ok",
+   "picked": [
+    "pittsburghhockeynow:penguins-recall-avery-hayes-injury-updates",
+    "prohockeyrumors:2026-10-avalanche-place-georgii-merkulov-on-waivers-html"
+   ],
+   "skipped": [
+    {
+     "id": "prohockeyrumors:2026-10-metropolitan-notes-dubois-sourdif-ovechkin-malkin-barzal-html",
+     "why": "Отсутствие Малкина и вызов Хэйеса выбраны по первичному репортажу Pittsburgh Hockey Now; остальные заметки статьи отложены, чтобы не смешивать события."
+    },
+    {
+     "id": "prohockeyrumors:2026-10-michkov-quieting-doubts-with-strong-start-html",
+     "why": "Оценка старта Мичкова перед уже завершённым матчем, нового отдельного решения нет."
+    },
+    {
+     "id": "nhl:quinn-hughes-not-sure-what-to-expect-in-first-trip-back-to-vancouver",
+     "why": "Заявления Хьюза перед возвращением в Ванкувер отложены: приоритет двух новых кадровых событий о россиянах."
+    },
+    {
+     "id": "espn:50269091",
+     "why": "Пересказ завершённого матча без нового рекорда или травмы; итоги отдельно."
+    },
+    {
+     "id": "sportsnet:nhl-video-flyers-joseph-woll-stretches-to-stonewall-ducks-cutter-gauthier",
+     "why": "Видео отдельного сейва, не новое событие."
+    },
+    {
+     "id": "dailyfaceoff:news-jared-mccann-seattle-kraken-miss-game-minnesota-wild-lower-body-injury",
+     "why": "Травма Маккэнна подтверждена и article прочитан; отложена из-за предела0–2 и приоритета Малкина/Меркулова."
+    },
+    {
+     "id": "sportsnet:nhl-video-ducks-leo-carlsson-capitalizes-on-giveaway-against-flyers",
+     "why": "Видео отдельного гола завершённого матча."
+    },
+    {
+     "id": "thehockeynews:in-facing-maple-leafs-and-former-assistant-jim-hiller-despite-intriguing-history",
+     "why": "Реакции перед встречей с бывшим тренером, нового решения нет."
+    },
+    {
+     "id": "sportsnet:nhl-video-skated-together-all-summer-long-hellebuyck-on-friendship-with-hughes",
+     "why": "Реакция на уже освещённый обмен Хеллибака."
+    },
+    {
+     "id": "sportsnet:nhl-article-senators-johansson-to-start-vs-rangers-burakovsky-draws-back-in",
+     "why": "Подтверждённый состав Оттавы: отложен ради двух событий о россиянах."
+    },
+    {
+     "id": "thehockeynews:ow-devils-gm-sunny-mehtas-patience-increased-the-chances-of-landing-quinn-hughes",
+     "why": "Аналитическое предположение о возможном переходе Хьюза без готового решения; приоритет подтверждённых кадровых новостей."
+    },
+    {
+     "id": "prohockeyrumors:2026-10-penguins-place-sam-girard-on-ir-recall-avery-hayes-html",
+     "why": "Перевод Жирара и вызов Хэйеса частично покрыты выбранной новостью, отдельное событие отложено из-за предела двух материалов."
+    }
+   ],
+   "note": "Heartbeat15:31UTC запущен фактически после21:21UTC, 00:2x25октября Киров. Только сайт tg:false у обоих, без утреннего накопления. PHR Metropolitan прочитан полностью: Малкин НЕ играет, а возвращаются Дюбуа/Сурдиф — не перепутано. Для события Малкина прочитан первичный репортаж Дэна Кингерски Pittsburgh Hockey Now, найденный через Yahoo; время16:01UTC из article:published_time. Обложка PHR была Дюбуа, поэтому взято фото Хэйеса из прочитанного первичного репортажа; он назван в заголовке и тексте. История Меркулова обнаружена вне12 по полной PHR, attribution Рено Лавуа сохранена; предположение автора о выздоровлении и комментарий читателя не выдаём за факт. Меркулов — Георгий; Эйвери Хэйес по спортивной русской прессе. Фото Хэйеса и Меркулова HTTP200, просмотрены. Маккэнн и Нюман проверены, но отложены по пределу двух/приоритету россиян. Статистику, матчи и прогнозы не меняли."
   }
  ]
 }
