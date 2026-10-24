@@ -1,65 +1,6 @@
 {
  "runs": [
   {
-   "t": "2026-10-21T03:18:01Z",
-   "status": "ok",
-   "picked": [
-    "sportsnet:article-maple-leafs-jake-mccabe-exits-after-taking-stick-to-face-vs-blue-jackets",
-    "dailyfaceoff:-kings-quinton-byfield-exits-game-washington-capitals-upper-body-injury-nhl-news"
-   ],
-   "skipped": [
-    {
-     "id": "sportsnet:nhl-video-marchenko-redirects-puck-past-greaves-to-score-against-former-team",
-     "why": "Отдельное видео гола в текущем матче, без самостоятельного нового рекорда/травмы; материал для итогов, не новостной пост."
-    },
-    {
-     "id": "sportsnet:ideo-happy-to-be-here-marchenko-talks-trade-to-toronto-and-first-leafs-hat-trick",
-     "why": "Интервью о прежнем обмене и ранее сыгранном хет-трике, без нового перехода/рекорда; кот и личные темы не спортивное событие."
-    },
-    {
-     "id": "sportsnet:l-video-tough-not-to-take-it-personal-fantilli-on-marchenko-leaving-blue-jackets",
-     "why": "Реакция на состоявшийся ранее обмен, а не новый обмен/запрос. Для сайта выбраны подтверждённые изменения составов."
-    },
-    {
-     "id": "thehockeynews:arov-saves-his-best-game-of-the-season-against-maple-leafs-idol-sergei-bobrovsky",
-     "why": "Оценка Аскарова и цитаты о Бобровском после уже освещённого матча; нового самостоятельного события нет."
-    },
-    {
-     "id": "dailyfaceoff:rangers-for-real-even-without-igor-shesterkin-nhl-alexis-lafreniere-dylan-garand",
-     "why": "Анализ старта Рейнджерс и уже известных травм, не свежее медицинское решение."
-    },
-    {
-     "id": "prohockeyrumors:2026-10-bruins-notes-zadorov-zacha-eyssimont-jokiharju-html",
-     "why": "Ранее прочитанный article о реакции Задорова на прежний пропуск игры; не новый пропуск или свежий обмен."
-    },
-    {
-     "id": "thehockeynews:ning-skate-michkov-leads-flyers-mckenna-comes-up-clutch-for-maple-leafs-and-more",
-     "why": "Обзор уже освещённых игр Мичкова/Маккенны, самостоятельного нового события нет."
-    },
-    {
-     "id": "sportsnet:nhl-video-maple-leafs-penalty-kill-stays-hot-as-cowan-buries-shorthanded-goal",
-     "why": "Отдельное видео гола без новой вехи/травмы; оставить в итогах матча."
-    },
-    {
-     "id": "sportsnet:l-video-canadiens-slafkovsky-chips-puck-to-himself-around-nurse-for-stellar-goal",
-     "why": "Красивый гол, без самостоятельного нового события; материал для итогов."
-    },
-    {
-     "id": "sportsnet:-nylander-matthews-pick-their-spots-46-seconds-apart-to-put-maple-leafs-in-front",
-     "why": "Видео голов текущего матча, не отдельное спортивное событие для ленты."
-    },
-    {
-     "id": "nhl:devils-jake-allen-receives-silver-stick-for-500-career-games",
-     "why": "Body прочитан:500-й матч сыгран10октября, сейчас только церемония; старую веху не выдавать за свежую."
-    },
-    {
-     "id": "sportsnet:nhl-video-bad-turnover-gives-sharks-celebrini-wide-open-lane-for-opening-goal",
-     "why": "Видео обычного гола текущего матча, без новой вехи."
-    }
-   ],
-   "note": "Operations/news/полный промпт/стиль прочитаны. Сначала metadata/recent/morning/summary, затем свежие заголовки4часа: травмы Маккейба/Байфилда вне12. Body Sportsnet и DFO прочитаны; отсутствие до конца игры подтверждено свежими RotoWire596650/596649, даты18часов. Сроков/диагнозов не придумывал. Reddit пересказывает успокаивающий комментарий Хиллера о Маккейбе, оригинал не получен: не использован как факт, длительная потеря не заявлена. Body Брауна/Штурма и PHR Evening Notes прочитаны, приоритет свежим травмам. Фото обоих источников HTTP200, просмотрены; имена по словарю. Очередь/recent/morning/posted без дублей, тексты3–5предложений≤700, заголовки≤90/без латиницы. Ночь06МСК: оба tg:false/hot:false, второй ready+40минут; журнал30, live штатным скриптом. Утреннюю страховку вне окна не выполнял; модель/данные/скрипты/готовые посты не менял."
-  },
-  {
    "t": "2026-10-21T05:26:06Z",
    "status": "ok",
    "picked": [
@@ -1759,6 +1700,61 @@
     }
    ],
    "note": "00:3x25октября Киров: оба материала только сайт tg:false, без утреннего накопления. Из PHR Metropolitan выбран ещё не освещённый раздел о возвращениях Дюбуа/Сурдифа, а не повтор Малкина. Article0 и5 прочитаны точечно, полная Metropolitan была прочитана в предыдущем проходе. Источник возвратов Сэмми Силбер назван. У Маккэнна нижняя часть тела, без выдуманного срока и без утверждения перевода в IR. Яни Нюман проверен по Спорт-Экспресс/Чемпионату, остальные фамилии по names_ru. Фото Дюбуа и Маккэнна HTTP200 и просмотрены в предыдущем проходе, URL не менялись. Прогнозы и статистика не затронуты."
+  },
+  {
+   "t": "2026-10-24T23:21:33Z",
+   "status": "ok",
+   "picked": [
+    "sportsnet:article-quinn-hughes-on-wild-contract-talks-my-two-feet-are-planted-in-minnesota",
+    "prohockeyrumors:2026-10-capitals-claim-jack-st-ivany-off-waivers-from-jets-html"
+   ],
+   "skipped": [
+    {
+     "id": "prohockeyrumors:2026-10-michkov-quieting-doubts-with-strong-start-html",
+     "why": "Оценка старта Мичкова перед уже завершённым матчем, нового события нет."
+    },
+    {
+     "id": "prohockeyrumors:2026-10-could-the-trade-market-favor-the-buyers-html",
+     "why": "Редакционный прогноз рынка обменов, без нового решения клуба или конкретного инсайда."
+    },
+    {
+     "id": "espn:50269978",
+     "why": "Пересказ матча Карлссона против Филадельфии, без отдельного нового события."
+    },
+    {
+     "id": "sportsnet:nhl-article-ducks-leo-carlsson-burns-flyers-with-goal-and-assist-in-win",
+     "why": "Другой пересказ того же завершённого матча."
+    },
+    {
+     "id": "prohockeyrumors:2026-10-kraken-recall-jani-nyman-following-injury-to-jared-mccann-html",
+     "why": "Травма Маккэнна и вызов Нюмана уже опубликованы."
+    },
+    {
+     "id": "nhl:quinn-hughes-not-sure-what-to-expect-in-first-trip-back-to-vancouver",
+     "why": "Второй материал о Хьюзе: выбран новый комментарий о контракте из Спортснет."
+    },
+    {
+     "id": "espn:50269091",
+     "why": "Пересказ завершённого матча."
+    },
+    {
+     "id": "sportsnet:nhl-video-flyers-joseph-woll-stretches-to-stonewall-ducks-cutter-gauthier",
+     "why": "Видео отдельного сейва, без нового события."
+    },
+    {
+     "id": "sportsnet:nhl-video-ducks-leo-carlsson-capitalizes-on-giveaway-against-flyers",
+     "why": "Видео отдельного гола, без нового события."
+    },
+    {
+     "id": "thehockeynews:in-facing-maple-leafs-and-former-assistant-jim-hiller-despite-intriguing-history",
+     "why": "Предматчевые реакции на встречу с бывшим тренером, нового решения нет."
+    },
+    {
+     "id": "sportsnet:nhl-video-skated-together-all-summer-long-hellebuyck-on-friendship-with-hughes",
+     "why": "Реакция на уже освещённый обмен Хеллибака."
+    }
+   ],
+   "note": "02:2x 25 октября Киров: оба материала только сайт, tg:false, без очереди на утро. Проверены recent_titles, morning_site_news и прежняя новость Джонстона: новый повод Хьюза — его собственный комментарий и начавшиеся переговоры, продление не объявлено. Article кандидатов 1 и 5 прочитаны; Сент-Айвани найден вне 12, body прочитан, переход через драфт отказов подтверждён сообщением Кена Уиба. Заголовок о переходе Ханта в Нэшвилл замечен вне списка и отложен по пределу двух; body не использован. Имена Хьюза/Сент-Айвани по names_ru, фото HTTP200 и просмотрены: Хьюз в Миннесоте, Сент-Айвани №6 в Виннипеге. Старая ошибка источника о позиции Фабера не перенесена. Файлы прогнозов и статистики не затронуты."
   }
  ]
 }
