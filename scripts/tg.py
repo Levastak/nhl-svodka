@@ -366,7 +366,7 @@ def head_path(D, name):
     return (D.get("heads") or {}).get(name)
 
 
-def build(D, A, M, E, S, N):
+def build(D, A, M, E, S, N, *, reuse_number=False):
     out = []
     rd, ud = D.get("results_date"), D.get("upcoming_date")
     n = D.get("daily") or {}
@@ -497,8 +497,13 @@ def build(D, A, M, E, S, N):
     if not edge_fresh(num_d, rd):
         num_d = {}
     # не повторять цифру, уже выходившую в канале (тот же вид находки и тот же клуб/игрок) — решение Льва 17.10
-    hist = [tuple(h) for h in (load(f"{TG}/state.json", {}) or {}).get("num_hist", [])]
+    number_state = load(f"{TG}/state.json", {}) or {}
+    hist = [tuple(h) for h in number_state.get("num_hist", [])]
     sig = lambda x: (x.get("kind"), ",".join(x.get("teams") or []) or ",".join(x.get("players") or []))
+    # Редактирование существующей карточки сохраняет выбранную цифру дня.
+    # Обычная публикация по-прежнему исключает все находки из истории.
+    if reuse_number and number_state.get("messages", {}).get(f"number:{rd}"):
+        hist = [h for h in hist if h != sig(num_d)]
     if num_d.get("big") and sig(num_d) in hist:
         num_d = {}
     last_kind = hist[-1][0] if hist else None
@@ -819,7 +824,7 @@ def main(mode, arg=None):
             media.feed(LOG)
         if mode == "feed":
             return
-    items = build(D, A, M, E, S, N)
+    items = build(D, A, M, E, S, N, reuse_number=(mode == "recard"))
     LOG["plan"] = [dict(key=x["key"], due=x["due"].astimezone(MSK).strftime("%d.%m %H:%M"), done=x["key"] in P) for x in items]
 
     if mode == "preview":
