@@ -167,7 +167,7 @@ def mp_players(kind, season, tmp):
                 rd = csv.DictReader(io.TextIOWrapper(fh, encoding="utf-8", errors="replace", newline=""))
                 hdr = rd.fieldnames or []
                 base = ["playerId", "name", "gameId", "gameDate", "situation", "icetime"]
-                need(hdr, base + (["xGoals", "goals", "ongoal"] if kind == "goalies" else ["position", "I_F_xGoals", "I_F_points"]),
+                need(hdr, base + (["xGoals", "goals", "ongoal"] if kind == "goalies" else ["position", "I_F_xGoals", "I_F_points", "I_F_goals"]),
                      f"{kind} {season} ({n})")
                 tcol = "playerTeam" if "playerTeam" in hdr else "team"
                 for r in rd:
@@ -188,7 +188,7 @@ def mp_players(kind, season, tmp):
                         rows.append([d, t, r["playerId"], r["name"], round(ice), num(r["xGoals"]), num(r["goals"]), num(r["ongoal"])])
                     else:
                         rows.append([d, t, r["playerId"], r["name"], r["position"], round(ice),
-                                     round(num(r["I_F_xGoals"]) or 0, 3), int(num(r["I_F_points"]) or 0)])
+                                     round(num(r["I_F_xGoals"]) or 0, 3), int(num(r["I_F_points"]) or 0), int(num(r["I_F_goals"]) or 0)])
     rows.sort(key=lambda r: (r[0], r[1]))
     return rows
 
@@ -269,18 +269,26 @@ def espn_core(eid, sample, season=0):
         if set(it) <= {"$ref"}:
             ref = it["$ref"].replace(".pvt", ".com").replace("http://", "https://")
             pid = ref.split("?")[0].rstrip("/").split("/")[-1]
-            if pid in PROV and not good_provider(PROV[pid]):
+            if pid in PROV and ("live" in PROV[pid].lower() or (season >= 2021 and not good_provider(PROV[pid]))):
                 continue
             r2 = fetch(ref)
             it = json.loads(r2) if r2 else {}
             nm = (it.get("provider") or {}).get("name")
             if nm: PROV[pid] = nm
-        if not it or not good_provider((it.get("provider") or {}).get("name")):
+        if not it:
             continue
         nm = (it.get("provider") or {}).get("name", "")
-        if "draft" in nm.lower() and season < 2025:
-            continue
-        out.append(core_pick(it))
+        if season >= 2021:   # правило, проверенное 15.10 (сезоны 2021–2026)
+            if not good_provider(nm) or ("draft" in nm.lower() and season < 2025):
+                continue
+            pk = core_pick(it)
+        else:                # старые сезоны: любая контора без «живых» кэфов, но с нормальной маржой
+            if "live" in nm.lower():
+                continue
+            pk = core_pick(it)
+            if not (pk[1] and pk[2] and 1.0 <= 1 / pk[1] + 1 / pk[2] <= 1.12):
+                continue
+        out.append(pk)
         if len(sample) < 2: sample.append({k: it.get(k) for k in ("provider", "overUnder", "homeTeamOdds", "awayTeamOdds", "close")})
         break   # одной нормальной линии на матч достаточно
     return out
@@ -330,7 +338,8 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--out", default="bt-data")
     ap.add_argument("--seasons", default="2016-2026", help="год начала сезона, диапазон или список через запятую")
-    ap.add_argument("--force", action="store_true")
+    ap.add_argument("--force", action="store_true", help="пересобрать пакеты сезонов (кэфы не трогает)")
+    ap.add_argument("--force-odds", action="store_true", help="пересобрать и кэфы")
     ap.add_argument("--skaters-from", type=int, default=2019, help="полевые нужны только с этого сезона (вратари — для истории сейвов — раньше)")
     ap.add_argument("--odds-from", type=int, default=2021, help="кэфы ESPN собирать с этого сезона")
     ap.add_argument("--core-limit", type=int, default=60, help="раздел core: сколько матчей сезона (0 — все)")
@@ -376,7 +385,7 @@ def main():
     # кэфы ESPN (отдельные файлы: собираются один раз, текущий сезон — заново)
     for s in seasons:
         op = os.path.join(a.out, f"odds_{s}.json.gz"); sp = os.path.join(a.out, f"season_{s}.json.gz")
-        if s < a.odds_from or not os.path.exists(sp) or (os.path.exists(op) and s < cur and not a.force):
+        if s < a.odds_from or not os.path.exists(sp) or (os.path.exists(op) and s < cur and not a.force_odds):
             continue
         games = json.load(gzip.open(sp, "rt", encoding="utf-8"))["games"]
         log(f"Кэфы ESPN {s}-{(s + 1) % 100:02d}: {len(games)} матчей…")
@@ -400,7 +409,7 @@ def main():
     for s in seasons:
         op = os.path.join(a.out, f"odds2_{s}.json.gz"); sp = os.path.join(a.out, f"season_{s}.json.gz")
         full = os.path.exists(op) and json.load(gzip.open(op, "rt", encoding="utf-8")).get("limit") == 0
-        if s < a.odds_from or not os.path.exists(sp) or (full and s < cur and not a.force) or (os.path.exists(op) and a.core_limit and s < cur):
+        if s < a.odds_from or not os.path.exists(sp) or (full and s < cur and not a.force_odds) or (os.path.exists(op) and a.core_limit and s < cur):
             continue
         games = json.load(gzip.open(sp, "rt", encoding="utf-8"))["games"]
         if a.core_limit: games = games[::max(1, len(games) // a.core_limit)][:a.core_limit]

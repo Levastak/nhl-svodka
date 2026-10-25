@@ -3,7 +3,10 @@
 # Первая модель — база, с ней сравниваются остальные на одних и тех же матчах.
 # Формат версии: метка=путь?ПАРАМЕТР=значение&goalies=projected (projected — вратарь не подтверждён, берётся ожидаемый)
 # Прогон с меткой версии (v4.4) — эталон: его цифры модель показывает в model.json (backtest).
-label: market
-seasons: 2021-2025
-data: --core-limit 0
+label: big-2018
+seasons: 2018-2025
+data: --seasons 2014-2026 --force --skaters-from 2016 --odds-from 2018 --core-limit 0
 model: v4.4=scripts/model.py
+model: noinj=scripts/model.py?INJ_FOR=0&INJ_AGAINST=0&D_TOI_K=0
+model: lam15=scripts/model.py?LAM=15
+model: lam60=scripts/model.py?LAM=60

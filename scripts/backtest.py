@@ -145,7 +145,7 @@ def build_day(pk, day, gmode="actual", odds=None):
     sx = {}; team_dates = defaultdict(list)
     for g in before:
         team_dates[g[2]].append(g[1]); team_dates[g[3]].append(g[1])
-    for d, t, pid, nm, pos, ice, ixg, pts in pk["skater"]:
+    for d, t, pid, nm, pos, ice, ixg, pts, *_ in pk["skater"]:
         if d >= day: continue
         x = sx.setdefault(pid, dict(name=nm, team=t, pos=pos, gp=0, pts=0, ice=0, ixg=0.0, last=d))
         x["team"] = t; x["last"] = d; x["gp"] += 1; x["pts"] += pts; x["ice"] += ice; x["ixg"] += ixg
@@ -154,7 +154,7 @@ def build_day(pk, day, gmode="actual", odds=None):
     skater_xg = {v["name"]: dict(team=v["team"], gp=v["gp"], ixg=round(v["ixg"], 2)) for v in sx.values()}
     # сегодняшние составы и вратари (кто провёл больше времени в воротах — «стартовый»)
     play_today = set(); start = {}
-    for d, t, pid, nm, pos, ice, ixg, pts in pk["skater"]:
+    for d, t, pid, nm, pos, ice, ixg, pts, *_ in pk["skater"]:
         if d == day: play_today.add(pid)
     starts = defaultdict(dict)   # (команда, дата) → стартовый (больше всех времени в воротах)
     for d, t, pid, nm, ice, xga, ga, sog in pk["goalie"]:
@@ -208,10 +208,12 @@ def load_odds(data, s):
         if not os.path.exists(p): continue
         for gid, picks in json.load(gzip.open(p, "rt", encoding="utf-8"))["odds"].items():
             if gid in out: continue
-            for pv, a, h, t, o, u, *_ in picks:
+            for pv, a, h, t, o, u, *rest in picks:
                 if "live" in (pv or "").lower(): continue          # кэфы по ходу игры — подглядывают в результат
                 if a and h and 1.0 <= 1 / a + 1 / h <= 1.12:
                     x = dict(away=a, home=h, source=f"ESPN {pv}")
+                    if fn == "odds2" and len(rest) >= 2 and rest[0] and rest[1] and 1.0 <= 1 / rest[0] + 1 / rest[1] <= 1.12:
+                        x.update(open_away=rest[0], open_home=rest[1])   # линия открытия (раздел core)
                     if t and o and u and 1.0 <= 1 / o + 1 / u <= 1.15: x.update(total=float(t), over=o, under=u)
                     out[gid] = x; break
     return out
@@ -266,7 +268,8 @@ def run_day(task):
                            edge=v.get("edge"), vs_market=v.get("vs_market"), total_side=t.get("side"), total_value=t.get("value"),
                            mkt_over=r.get("mkt_over"), edge_over=r.get("edge_over"))
                 o = res_odds.get(str(r["id"])) or {}
-                row.update(odds_home=o.get("home"), odds_away=o.get("away"), odds_total=o.get("total"), odds_over=o.get("over"), odds_under=o.get("under"), odds_src=o.get("source"))
+                row.update(odds_home=o.get("home"), odds_away=o.get("away"), odds_total=o.get("total"), odds_over=o.get("over"), odds_under=o.get("under"), odds_src=o.get("source"),
+                           odds_open_home=o.get("open_home"), odds_open_away=o.get("open_away"))
             out.append(row)
     return out
 

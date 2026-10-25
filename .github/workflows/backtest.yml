@@ -85,6 +85,14 @@ jobs:
             2>&1 | tee "backtest/results/${{ steps.cfg.outputs.label }}/run.log"
           exit ${PIPESTATUS[0]}
 
+      - name: Доп. проверки (шанс гола игрока)
+        continue-on-error: true
+        run: |
+          set -o pipefail
+          if [ -f scripts/bt_extra.py ]; then
+            python3 scripts/bt_extra.py --data bt-data --results "backtest/results/${{ steps.cfg.outputs.label }}" 2>&1 | tee "backtest/results/${{ steps.cfg.outputs.label }}/extra.log"
+          fi
+
       - name: Результаты в репозиторий
         if: always()
         run: |
