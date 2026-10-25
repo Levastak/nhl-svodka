@@ -1,0 +1,300 @@
+{
+ "rows": 141657,
+ "base_rate": 0.1507,
+ "logloss_constant": 0.42394,
+ "variants": {
+  "naive": {
+   "logloss": 0.39322,
+   "brier": 0.11982,
+   "mean_p": 0.1539,
+   "calibration": [
+    {
+     "range": "0-5%",
+     "n": 19432,
+     "predicted": 0.033,
+     "actual": 0.044
+    },
+    {
+     "range": "5-10%",
+     "n": 30007,
+     "predicted": 0.075,
+     "actual": 0.074
+    },
+    {
+     "range": "10-15%",
+     "n": 27792,
+     "predicted": 0.125,
+     "actual": 0.12
+    },
+    {
+     "range": "15-20%",
+     "n": 23643,
+     "predicted": 0.174,
+     "actual": 0.163
+    },
+    {
+     "range": "20-25%",
+     "n": 16320,
+     "predicted": 0.223,
+     "actual": 0.22
+    },
+    {
+     "range": "25-30%",
+     "n": 11402,
+     "predicted": 0.273,
+     "actual": 0.261
+    },
+    {
+     "range": "30-35%",
+     "n": 7282,
+     "predicted": 0.322,
+     "actual": 0.319
+    },
+    {
+     "range": "35-40%",
+     "n": 3998,
+     "predicted": 0.372,
+     "actual": 0.358
+    },
+    {
+     "range": "40-45%",
+     "n": 1379,
+     "predicted": 0.419,
+     "actual": 0.405
+    },
+    {
+     "range": "45-50%",
+     "n": 402,
+     "predicted": 0.475,
+     "actual": 0.458
+    }
+   ]
+  },
+  "xg": {
+   "logloss": 0.39267,
+   "brier": 0.11992,
+   "mean_p": 0.1569,
+   "calibration": [
+    {
+     "range": "0-5%",
+     "n": 17668,
+     "predicted": 0.039,
+     "actual": 0.039
+    },
+    {
+     "range": "5-10%",
+     "n": 25783,
+     "predicted": 0.072,
+     "actual": 0.071
+    },
+    {
+     "range": "10-15%",
+     "n": 27303,
+     "predicted": 0.126,
+     "actual": 0.106
+    },
+    {
+     "range": "15-20%",
+     "n": 27315,
+     "predicted": 0.175,
+     "actual": 0.161
+    },
+    {
+     "range": "20-25%",
+     "n": 20795,
+     "predicted": 0.222,
+     "actual": 0.214
+    },
+    {
+     "range": "25-30%",
+     "n": 13597,
+     "predicted": 0.274,
+     "actual": 0.282
+    },
+    {
+     "range": "30-35%",
+     "n": 6469,
+     "predicted": 0.321,
+     "actual": 0.337
+    },
+    {
+     "range": "35-40%",
+     "n": 2247,
+     "predicted": 0.369,
+     "actual": 0.373
+    },
+    {
+     "range": "40-45%",
+     "n": 421,
+     "predicted": 0.422,
+     "actual": 0.432
+    },
+    {
+     "range": "45-50%",
+     "n": 59,
+     "predicted": 0.457,
+     "actual": 0.492
+    }
+   ]
+  },
+  "xg_m": {
+   "logloss": 0.3922,
+   "brier": 0.11978,
+   "mean_p": 0.1565,
+   "calibration": [
+    {
+     "range": "0-5%",
+     "n": 17846,
+     "predicted": 0.039,
+     "actual": 0.038
+    },
+    {
+     "range": "5-10%",
+     "n": 26286,
+     "predicted": 0.073,
+     "actual": 0.072
+    },
+    {
+     "range": "10-15%",
+     "n": 27247,
+     "predicted": 0.125,
+     "actual": 0.106
+    },
+    {
+     "range": "15-20%",
+     "n": 27106,
+     "predicted": 0.175,
+     "actual": 0.163
+    },
+    {
+     "range": "20-25%",
+     "n": 20583,
+     "predicted": 0.223,
+     "actual": 0.214
+    },
+    {
+     "range": "25-30%",
+     "n": 12987,
+     "predicted": 0.273,
+     "actual": 0.282
+    },
+    {
+     "range": "30-35%",
+     "n": 6566,
+     "predicted": 0.321,
+     "actual": 0.339
+    },
+    {
+     "range": "35-40%",
+     "n": 2335,
+     "predicted": 0.37,
+     "actual": 0.376
+    },
+    {
+     "range": "40-45%",
+     "n": 559,
+     "predicted": 0.419,
+     "actual": 0.411
+    },
+    {
+     "range": "45-50%",
+     "n": 142,
+     "predicted": 0.472,
+     "actual": 0.493
+    }
+   ]
+  },
+  "blend_m": {
+   "logloss": 0.39115,
+   "brier": 0.11945,
+   "mean_p": 0.1558,
+   "calibration": [
+    {
+     "range": "0-5%",
+     "n": 18039,
+     "predicted": 0.038,
+     "actual": 0.039
+    },
+    {
+     "range": "5-10%",
+     "n": 26677,
+     "predicted": 0.073,
+     "actual": 0.069
+    },
+    {
+     "range": "10-15%",
+     "n": 28532,
+     "predicted": 0.125,
+     "actual": 0.11
+    },
+    {
+     "range": "15-20%",
+     "n": 26436,
+     "predicted": 0.175,
+     "actual": 0.163
+    },
+    {
+     "range": "20-25%",
+     "n": 19222,
+     "predicted": 0.223,
+     "actual": 0.219
+    },
+    {
+     "range": "25-30%",
+     "n": 12251,
+     "predicted": 0.274,
+     "actual": 0.279
+    },
+    {
+     "range": "30-35%",
+     "n": 6915,
+     "predicted": 0.322,
+     "actual": 0.337
+    },
+    {
+     "range": "35-40%",
+     "n": 2769,
+     "predicted": 0.37,
+     "actual": 0.375
+    },
+    {
+     "range": "40-45%",
+     "n": 666,
+     "predicted": 0.419,
+     "actual": 0.426
+    },
+    {
+     "range": "45-50%",
+     "n": 150,
+     "predicted": 0.473,
+     "actual": 0.493
+    }
+   ]
+  }
+ },
+ "by_season": {
+  "2023": {
+   "naive": 0.39339,
+   "xg": 0.39265,
+   "xg_m": 0.39196,
+   "blend_m": 0.39099
+  },
+  "2024": {
+   "naive": 0.39066,
+   "xg": 0.39042,
+   "xg_m": 0.38978,
+   "blend_m": 0.38867
+  },
+  "2025": {
+   "naive": 0.39561,
+   "xg": 0.39495,
+   "xg_m": 0.39486,
+   "blend_m": 0.39378
+  }
+ },
+ "stars": {
+  "n": 9602,
+  "predicted": 0.341,
+  "actual": 0.354
+ }
+}

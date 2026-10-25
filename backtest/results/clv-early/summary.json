@@ -1,0 +1,2211 @@
+{
+ "generated": "2026-10-25 00:57 UTC",
+ "seasons": [
+  "2023-24",
+  "2024-25",
+  "2025-26"
+ ],
+ "models": {
+  "v4.4": {
+   "path": "scripts/model.py",
+   "options": {},
+   "all": {
+    "games": 3936,
+    "accuracy": 0.593,
+    "logloss": 0.6658,
+    "brier": 0.2368,
+    "reg3_logloss": 1.039,
+    "reg3_brier": 0.6257,
+    "ot_share": {
+     "actual": 0.2208,
+     "predicted": 0.2171
+    },
+    "ot_home": {
+     "games": 869,
+     "actual": 0.5247,
+     "predicted": 0.5315,
+     "logloss": 0.6903
+    },
+    "totals": {
+     "5.5": {
+      "logloss": 0.6853,
+      "accuracy": 0.561,
+      "over_predicted": 0.5797,
+      "over_actual": 0.5612
+     },
+     "6.5": {
+      "logloss": 0.6877,
+      "accuracy": 0.5506,
+      "over_predicted": 0.469,
+      "over_actual": 0.4494
+     }
+    },
+    "goals": {
+     "predicted": 6.329,
+     "actual": 6.187
+    },
+    "calibration": [
+     {
+      "range": "50-55%",
+      "games": 1170,
+      "predicted": 0.524,
+      "actual": 0.528
+     },
+     {
+      "range": "55-60%",
+      "games": 1030,
+      "predicted": 0.573,
+      "actual": 0.563
+     },
+     {
+      "range": "60-65%",
+      "games": 792,
+      "predicted": 0.623,
+      "actual": 0.609
+     },
+     {
+      "range": "65-70%",
+      "games": 484,
+      "predicted": 0.672,
+      "actual": 0.651
+     },
+     {
+      "range": "70-75%",
+      "games": 263,
+      "predicted": 0.721,
+      "actual": 0.707
+     },
+     {
+      "range": "75-80%",
+      "games": 132,
+      "predicted": 0.772,
+      "actual": 0.727
+     },
+     {
+      "range": "80-85%",
+      "games": 56,
+      "predicted": 0.821,
+      "actual": 0.893
+     },
+     {
+      "range": "85-90%",
+      "games": 9,
+      "predicted": 0.864,
+      "actual": 0.778
+     }
+    ],
+    "incomplete_share": 0.0226
+   },
+   "goalie_miss": null,
+   "market": {
+    "games": 3936,
+    "logloss_model": 0.6658,
+    "logloss_market": 0.6651,
+    "logloss_blend60": 0.6635,
+    "accuracy_model": 0.593,
+    "accuracy_market": 0.5943,
+    "vs_market": {
+     "games": 627,
+     "model_right": 0.496
+    },
+    "bets_bet": {
+     "bets": 1744,
+     "won": 938,
+     "profit": 61.96,
+     "roi": 0.0355
+    },
+    "bets_lean": {
+     "bets": 750,
+     "won": 369,
+     "profit": -22.98,
+     "roi": -0.0306
+    },
+    "bets_all_model_fav": {
+     "bets": 3936,
+     "won": 2334,
+     "profit": -67.7,
+     "roi": -0.0172
+    },
+    "totals_value": {
+     "bets": 566,
+     "won": 300,
+     "profit": 15.59,
+     "roi": 0.0275
+    },
+    "by_source": [
+     "ESPN Caesars Sportsbook",
+     "ESPN Caesars Sportsbook (Colorado)",
+     "ESPN Draft Kings",
+     "ESPN ESPN BET"
+    ]
+   },
+   "market_by_season": {
+    "2023-24": {
+     "games": 1312,
+     "logloss_model": 0.6554,
+     "logloss_market": 0.6554,
+     "logloss_blend60": 0.6535,
+     "accuracy_model": 0.612,
+     "accuracy_market": 0.6174,
+     "vs_market": {
+      "games": 179,
+      "model_right": 0.4804
+     },
+     "bets_bet": {
+      "bets": 582,
+      "won": 325,
+      "profit": 19.07,
+      "roi": 0.0328
+     },
+     "bets_lean": {
+      "bets": 244,
+      "won": 129,
+      "profit": -1.72,
+      "roi": -0.007
+     },
+     "bets_all_model_fav": {
+      "bets": 1312,
+      "won": 803,
+      "profit": -6.7,
+      "roi": -0.0051
+     },
+     "totals_value": {
+      "bets": 155,
+      "won": 93,
+      "profit": 25.16,
+      "roi": 0.1623
+     },
+     "by_source": [
+      "ESPN Caesars Sportsbook",
+      "ESPN Caesars Sportsbook (Colorado)",
+      "ESPN ESPN BET"
+     ]
+    },
+    "2024-25": {
+     "games": 1312,
+     "logloss_model": 0.6617,
+     "logloss_market": 0.6582,
+     "logloss_blend60": 0.6578,
+     "accuracy_model": 0.5998,
+     "accuracy_market": 0.6128,
+     "vs_market": {
+      "games": 195,
+      "model_right": 0.4564
+     },
+     "bets_bet": {
+      "bets": 584,
+      "won": 285,
+      "profit": -7.53,
+      "roi": -0.0129
+     },
+     "bets_lean": {
+      "bets": 240,
+      "won": 112,
+      "profit": -1.21,
+      "roi": -0.0051
+     },
+     "bets_all_model_fav": {
+      "bets": 1312,
+      "won": 787,
+      "profit": -27.36,
+      "roi": -0.0209
+     },
+     "totals_value": {
+      "bets": 283,
+      "won": 135,
+      "profit": -21.25,
+      "roi": -0.0751
+     },
+     "by_source": [
+      "ESPN ESPN BET"
+     ]
+    },
+    "2025-26": {
+     "games": 1312,
+     "logloss_model": 0.6802,
+     "logloss_market": 0.6817,
+     "logloss_blend60": 0.6791,
+     "accuracy_model": 0.5671,
+     "accuracy_market": 0.5526,
+     "vs_market": {
+      "games": 253,
+      "model_right": 0.5375
+     },
+     "bets_bet": {
+      "bets": 578,
+      "won": 328,
+      "profit": 50.43,
+      "roi": 0.0872
+     },
+     "bets_lean": {
+      "bets": 266,
+      "won": 128,
+      "profit": -20.05,
+      "roi": -0.0754
+     },
+     "bets_all_model_fav": {
+      "bets": 1312,
+      "won": 744,
+      "profit": -33.64,
+      "roi": -0.0256
+     },
+     "totals_value": {
+      "bets": 128,
+      "won": 72,
+      "profit": 11.68,
+      "roi": 0.0912
+     },
+     "by_source": [
+      "ESPN Draft Kings",
+      "ESPN ESPN BET"
+     ]
+    }
+   },
+   "by_season": {
+    "2023-24": {
+     "games": 1312,
+     "accuracy": 0.612,
+     "logloss": 0.6554,
+     "brier": 0.2318,
+     "reg3_logloss": 1.022,
+     "reg3_brier": 0.6138,
+     "ot_share": {
+      "actual": 0.2073,
+      "predicted": 0.2135
+     },
+     "ot_home": {
+      "games": 272,
+      "actual": 0.5515,
+      "predicted": 0.5363,
+      "logloss": 0.681
+     },
+     "totals": {
+      "5.5": {
+       "logloss": 0.6817,
+       "accuracy": 0.5762,
+       "over_predicted": 0.5987,
+       "over_actual": 0.5732
+      },
+      "6.5": {
+       "logloss": 0.6885,
+       "accuracy": 0.5343,
+       "over_predicted": 0.4882,
+       "over_actual": 0.4566
+      }
+     },
+     "goals": {
+      "predicted": 6.45,
+      "actual": 6.226
+     },
+     "calibration": [
+      {
+       "range": "50-55%",
+       "games": 349,
+       "predicted": 0.525,
+       "actual": 0.513
+      },
+      {
+       "range": "55-60%",
+       "games": 307,
+       "predicted": 0.573,
+       "actual": 0.59
+      },
+      {
+       "range": "60-65%",
+       "games": 265,
+       "predicted": 0.623,
+       "actual": 0.645
+      },
+      {
+       "range": "65-70%",
+       "games": 165,
+       "predicted": 0.673,
+       "actual": 0.636
+      },
+      {
+       "range": "70-75%",
+       "games": 107,
+       "predicted": 0.721,
+       "actual": 0.71
+      },
+      {
+       "range": "75-80%",
+       "games": 70,
+       "predicted": 0.774,
+       "actual": 0.686
+      },
+      {
+       "range": "80-85%",
+       "games": 40,
+       "predicted": 0.821,
+       "actual": 0.9
+      },
+      {
+       "range": "85-90%",
+       "games": 9,
+       "predicted": 0.864,
+       "actual": 0.778
+      }
+     ],
+     "incomplete_share": 0.0183
+    },
+    "2024-25": {
+     "games": 1312,
+     "accuracy": 0.5998,
+     "logloss": 0.6617,
+     "brier": 0.2348,
+     "reg3_logloss": 1.0278,
+     "reg3_brier": 0.6185,
+     "ot_share": {
+      "actual": 0.2066,
+      "predicted": 0.2183
+     },
+     "ot_home": {
+      "games": 271,
+      "actual": 0.5387,
+      "predicted": 0.5344,
+      "logloss": 0.6888
+     },
+     "totals": {
+      "5.5": {
+       "logloss": 0.6935,
+       "accuracy": 0.5328,
+       "over_predicted": 0.5737,
+       "over_actual": 0.5373
+      },
+      "6.5": {
+       "logloss": 0.6852,
+       "accuracy": 0.577,
+       "over_predicted": 0.463,
+       "over_actual": 0.423
+      }
+     },
+     "goals": {
+      "predicted": 6.29,
+      "actual": 6.081
+     },
+     "calibration": [
+      {
+       "range": "50-55%",
+       "games": 383,
+       "predicted": 0.525,
+       "actual": 0.53
+      },
+      {
+       "range": "55-60%",
+       "games": 367,
+       "predicted": 0.574,
+       "actual": 0.586
+      },
+      {
+       "range": "60-65%",
+       "games": 269,
+       "predicted": 0.623,
+       "actual": 0.587
+      },
+      {
+       "range": "65-70%",
+       "games": 166,
+       "predicted": 0.672,
+       "actual": 0.687
+      },
+      {
+       "range": "70-75%",
+       "games": 86,
+       "predicted": 0.722,
+       "actual": 0.756
+      },
+      {
+       "range": "75-80%",
+       "games": 34,
+       "predicted": 0.769,
+       "actual": 0.765
+      },
+      {
+       "range": "80-85%",
+       "games": 7,
+       "predicted": 0.823,
+       "actual": 0.857
+      }
+     ],
+     "incomplete_share": 0.0267
+    },
+    "2025-26": {
+     "games": 1312,
+     "accuracy": 0.5671,
+     "logloss": 0.6802,
+     "brier": 0.2437,
+     "reg3_logloss": 1.0672,
+     "reg3_brier": 0.6448,
+     "ot_share": {
+      "actual": 0.2485,
+      "predicted": 0.2196
+     },
+     "ot_home": {
+      "games": 326,
+      "actual": 0.4908,
+      "predicted": 0.5252,
+      "logloss": 0.6994
+     },
+     "totals": {
+      "5.5": {
+       "logloss": 0.6808,
+       "accuracy": 0.5739,
+       "over_predicted": 0.5667,
+       "over_actual": 0.5732
+      },
+      "6.5": {
+       "logloss": 0.6895,
+       "accuracy": 0.5404,
+       "over_predicted": 0.456,
+       "over_actual": 0.4688
+      }
+     },
+     "goals": {
+      "predicted": 6.246,
+      "actual": 6.254
+     },
+     "calibration": [
+      {
+       "range": "50-55%",
+       "games": 438,
+       "predicted": 0.523,
+       "actual": 0.539
+      },
+      {
+       "range": "55-60%",
+       "games": 356,
+       "predicted": 0.572,
+       "actual": 0.517
+      },
+      {
+       "range": "60-65%",
+       "games": 258,
+       "predicted": 0.623,
+       "actual": 0.593
+      },
+      {
+       "range": "65-70%",
+       "games": 153,
+       "predicted": 0.67,
+       "actual": 0.627
+      },
+      {
+       "range": "70-75%",
+       "games": 70,
+       "predicted": 0.719,
+       "actual": 0.643
+      },
+      {
+       "range": "75-80%",
+       "games": 28,
+       "predicted": 0.771,
+       "actual": 0.786
+      },
+      {
+       "range": "80-85%",
+       "games": 9,
+       "predicted": 0.82,
+       "actual": 0.889
+      }
+     ],
+     "incomplete_share": 0.0229
+    }
+   }
+  },
+  "early": {
+   "path": "scripts/model.py",
+   "options": {
+    "goalies": "projected",
+    "INJ_FOR": "0",
+    "INJ_AGAINST": "0",
+    "D_TOI_K": "0"
+   },
+   "all": {
+    "games": 3936,
+    "accuracy": 0.5856,
+    "logloss": 0.6662,
+    "brier": 0.2369,
+    "reg3_logloss": 1.0411,
+    "reg3_brier": 0.6273,
+    "ot_share": {
+     "actual": 0.2208,
+     "predicted": 0.2189
+    },
+    "ot_home": {
+     "games": 869,
+     "actual": 0.5247,
+     "predicted": 0.5326,
+     "logloss": 0.6862
+    },
+    "totals": {
+     "5.5": {
+      "logloss": 0.6851,
+      "accuracy": 0.5595,
+      "over_predicted": 0.5741,
+      "over_actual": 0.5612
+     },
+     "6.5": {
+      "logloss": 0.6877,
+      "accuracy": 0.5523,
+      "over_predicted": 0.4636,
+      "over_actual": 0.4494
+     }
+    },
+    "goals": {
+     "predicted": 6.294,
+     "actual": 6.187
+    },
+    "calibration": [
+     {
+      "range": "50-55%",
+      "games": 1303,
+      "predicted": 0.524,
+      "actual": 0.504
+     },
+     {
+      "range": "55-60%",
+      "games": 1091,
+      "predicted": 0.573,
+      "actual": 0.575
+     },
+     {
+      "range": "60-65%",
+      "games": 777,
+      "predicted": 0.622,
+      "actual": 0.615
+     },
+     {
+      "range": "65-70%",
+      "games": 404,
+      "predicted": 0.673,
+      "actual": 0.661
+     },
+     {
+      "range": "70-75%",
+      "games": 231,
+      "predicted": 0.722,
+      "actual": 0.74
+     },
+     {
+      "range": "75-80%",
+      "games": 97,
+      "predicted": 0.773,
+      "actual": 0.794
+     },
+     {
+      "range": "80-85%",
+      "games": 32,
+      "predicted": 0.816,
+      "actual": 0.844
+     },
+     {
+      "range": "85-90%",
+      "games": 1,
+      "predicted": 0.856,
+      "actual": 1.0
+     }
+    ],
+    "incomplete_share": 0.0168
+   },
+   "goalie_miss": {
+    "games": 2690,
+    "accuracy": 0.5803,
+    "logloss": 0.6686,
+    "brier": 0.2381,
+    "reg3_logloss": 1.0409,
+    "reg3_brier": 0.6274,
+    "ot_share": {
+     "actual": 0.2193,
+     "predicted": 0.2185
+    },
+    "ot_home": {
+     "games": 590,
+     "actual": 0.5271,
+     "predicted": 0.5345,
+     "logloss": 0.6916
+    },
+    "totals": {
+     "5.5": {
+      "logloss": 0.6819,
+      "accuracy": 0.5695,
+      "over_predicted": 0.5755,
+      "over_actual": 0.5699
+     },
+     "6.5": {
+      "logloss": 0.6881,
+      "accuracy": 0.5465,
+      "over_predicted": 0.465,
+      "over_actual": 0.4584
+     }
+    },
+    "goals": {
+     "predicted": 6.303,
+     "actual": 6.241
+    },
+    "calibration": [
+     {
+      "range": "50-55%",
+      "games": 863,
+      "predicted": 0.524,
+      "actual": 0.503
+     },
+     {
+      "range": "55-60%",
+      "games": 731,
+      "predicted": 0.574,
+      "actual": 0.558
+     },
+     {
+      "range": "60-65%",
+      "games": 548,
+      "predicted": 0.622,
+      "actual": 0.611
+     },
+     {
+      "range": "65-70%",
+      "games": 279,
+      "predicted": 0.673,
+      "actual": 0.649
+     },
+     {
+      "range": "70-75%",
+      "games": 169,
+      "predicted": 0.724,
+      "actual": 0.734
+     },
+     {
+      "range": "75-80%",
+      "games": 78,
+      "predicted": 0.774,
+      "actual": 0.769
+     },
+     {
+      "range": "80-85%",
+      "games": 21,
+      "predicted": 0.813,
+      "actual": 0.857
+     },
+     {
+      "range": "85-90%",
+      "games": 1,
+      "predicted": 0.856,
+      "actual": 1.0
+     }
+    ],
+    "incomplete_share": 0.0071
+   },
+   "market": {
+    "games": 3936,
+    "logloss_model": 0.6662,
+    "logloss_market": 0.6651,
+    "logloss_blend60": 0.6641,
+    "accuracy_model": 0.5856,
+    "accuracy_market": 0.5943,
+    "vs_market": {
+     "games": 536,
+     "model_right": 0.4683
+    },
+    "bets_bet": {
+     "bets": 1368,
+     "won": 698,
+     "profit": 48.84,
+     "roi": 0.0357
+    },
+    "bets_lean": {
+     "bets": 797,
+     "won": 388,
+     "profit": -3.04,
+     "roi": -0.0038
+    },
+    "bets_all_model_fav": {
+     "bets": 3936,
+     "won": 2305,
+     "profit": -144.97,
+     "roi": -0.0368
+    },
+    "totals_value": {
+     "bets": 524,
+     "won": 270,
+     "profit": 3.84,
+     "roi": 0.0073
+    },
+    "by_source": [
+     "ESPN Caesars Sportsbook",
+     "ESPN Caesars Sportsbook (Colorado)",
+     "ESPN Draft Kings",
+     "ESPN ESPN BET"
+    ]
+   },
+   "market_by_season": {
+    "2023-24": {
+     "games": 1312,
+     "logloss_model": 0.656,
+     "logloss_market": 0.6554,
+     "logloss_blend60": 0.6544,
+     "accuracy_model": 0.6128,
+     "accuracy_market": 0.6174,
+     "vs_market": {
+      "games": 152,
+      "model_right": 0.4803
+     },
+     "bets_bet": {
+      "bets": 441,
+      "won": 231,
+      "profit": 6.97,
+      "roi": 0.0158
+     },
+     "bets_lean": {
+      "bets": 249,
+      "won": 130,
+      "profit": 13.73,
+      "roi": 0.0552
+     },
+     "bets_all_model_fav": {
+      "bets": 1312,
+      "won": 804,
+      "profit": -12.29,
+      "roi": -0.0094
+     },
+     "totals_value": {
+      "bets": 143,
+      "won": 85,
+      "profit": 23.55,
+      "roi": 0.1647
+     },
+     "by_source": [
+      "ESPN Caesars Sportsbook",
+      "ESPN Caesars Sportsbook (Colorado)",
+      "ESPN ESPN BET"
+     ]
+    },
+    "2024-25": {
+     "games": 1312,
+     "logloss_model": 0.6624,
+     "logloss_market": 0.6582,
+     "logloss_blend60": 0.6585,
+     "accuracy_model": 0.5861,
+     "accuracy_market": 0.6128,
+     "vs_market": {
+      "games": 159,
+      "model_right": 0.3899
+     },
+     "bets_bet": {
+      "bets": 450,
+      "won": 211,
+      "profit": -0.74,
+      "roi": -0.0016
+     },
+     "bets_lean": {
+      "bets": 274,
+      "won": 123,
+      "profit": -14.56,
+      "roi": -0.0531
+     },
+     "bets_all_model_fav": {
+      "bets": 1312,
+      "won": 769,
+      "profit": -71.57,
+      "roi": -0.0546
+     },
+     "totals_value": {
+      "bets": 246,
+      "won": 117,
+      "profit": -17.73,
+      "roi": -0.0721
+     },
+     "by_source": [
+      "ESPN ESPN BET"
+     ]
+    },
+    "2025-26": {
+     "games": 1312,
+     "logloss_model": 0.6801,
+     "logloss_market": 0.6817,
+     "logloss_blend60": 0.6794,
+     "accuracy_model": 0.5579,
+     "accuracy_market": 0.5526,
+     "vs_market": {
+      "games": 225,
+      "model_right": 0.5156
+     },
+     "bets_bet": {
+      "bets": 477,
+      "won": 256,
+      "profit": 42.61,
+      "roi": 0.0893
+     },
+     "bets_lean": {
+      "bets": 274,
+      "won": 135,
+      "profit": -2.21,
+      "roi": -0.0081
+     },
+     "bets_all_model_fav": {
+      "bets": 1312,
+      "won": 732,
+      "profit": -61.11,
+      "roi": -0.0466
+     },
+     "totals_value": {
+      "bets": 135,
+      "won": 68,
+      "profit": -1.97,
+      "roi": -0.0146
+     },
+     "by_source": [
+      "ESPN Draft Kings",
+      "ESPN ESPN BET"
+     ]
+    }
+   },
+   "by_season": {
+    "2023-24": {
+     "games": 1312,
+     "accuracy": 0.6128,
+     "logloss": 0.656,
+     "brier": 0.232,
+     "reg3_logloss": 1.0231,
+     "reg3_brier": 0.6146,
+     "ot_share": {
+      "actual": 0.2073,
+      "predicted": 0.2156
+     },
+     "ot_home": {
+      "games": 272,
+      "actual": 0.5515,
+      "predicted": 0.5357,
+      "logloss": 0.6806
+     },
+     "totals": {
+      "5.5": {
+       "logloss": 0.6818,
+       "accuracy": 0.5739,
+       "over_predicted": 0.5935,
+       "over_actual": 0.5732
+      },
+      "6.5": {
+       "logloss": 0.6886,
+       "accuracy": 0.5389,
+       "over_predicted": 0.4831,
+       "over_actual": 0.4566
+      }
+     },
+     "goals": {
+      "predicted": 6.417,
+      "actual": 6.226
+     },
+     "calibration": [
+      {
+       "range": "50-55%",
+       "games": 401,
+       "predicted": 0.524,
+       "actual": 0.534
+      },
+      {
+       "range": "55-60%",
+       "games": 330,
+       "predicted": 0.574,
+       "actual": 0.591
+      },
+      {
+       "range": "60-65%",
+       "games": 246,
+       "predicted": 0.623,
+       "actual": 0.626
+      },
+      {
+       "range": "65-70%",
+       "games": 151,
+       "predicted": 0.672,
+       "actual": 0.656
+      },
+      {
+       "range": "70-75%",
+       "games": 105,
+       "predicted": 0.724,
+       "actual": 0.762
+      },
+      {
+       "range": "75-80%",
+       "games": 52,
+       "predicted": 0.772,
+       "actual": 0.731
+      },
+      {
+       "range": "80-85%",
+       "games": 26,
+       "predicted": 0.817,
+       "actual": 0.885
+      },
+      {
+       "range": "85-90%",
+       "games": 1,
+       "predicted": 0.856,
+       "actual": 1.0
+      }
+     ],
+     "incomplete_share": 0.0152
+    },
+    "2024-25": {
+     "games": 1312,
+     "accuracy": 0.5861,
+     "logloss": 0.6624,
+     "brier": 0.2351,
+     "reg3_logloss": 1.0317,
+     "reg3_brier": 0.6217,
+     "ot_share": {
+      "actual": 0.2066,
+      "predicted": 0.2195
+     },
+     "ot_home": {
+      "games": 271,
+      "actual": 0.5387,
+      "predicted": 0.5367,
+      "logloss": 0.6805
+     },
+     "totals": {
+      "5.5": {
+       "logloss": 0.6925,
+       "accuracy": 0.532,
+       "over_predicted": 0.5685,
+       "over_actual": 0.5373
+      },
+      "6.5": {
+       "logloss": 0.6844,
+       "accuracy": 0.5785,
+       "over_predicted": 0.4579,
+       "over_actual": 0.423
+      }
+     },
+     "goals": {
+      "predicted": 6.258,
+      "actual": 6.081
+     },
+     "calibration": [
+      {
+       "range": "50-55%",
+       "games": 397,
+       "predicted": 0.526,
+       "actual": 0.481
+      },
+      {
+       "range": "55-60%",
+       "games": 372,
+       "predicted": 0.574,
+       "actual": 0.565
+      },
+      {
+       "range": "60-65%",
+       "games": 293,
+       "predicted": 0.622,
+       "actual": 0.635
+      },
+      {
+       "range": "65-70%",
+       "games": 141,
+       "predicted": 0.673,
+       "actual": 0.702
+      },
+      {
+       "range": "70-75%",
+       "games": 82,
+       "predicted": 0.722,
+       "actual": 0.72
+      },
+      {
+       "range": "75-80%",
+       "games": 23,
+       "predicted": 0.772,
+       "actual": 0.913
+      },
+      {
+       "range": "80-85%",
+       "games": 4,
+       "predicted": 0.812,
+       "actual": 0.75
+      }
+     ],
+     "incomplete_share": 0.0191
+    },
+    "2025-26": {
+     "games": 1312,
+     "accuracy": 0.5579,
+     "logloss": 0.6801,
+     "brier": 0.2436,
+     "reg3_logloss": 1.0686,
+     "reg3_brier": 0.6458,
+     "ot_share": {
+      "actual": 0.2485,
+      "predicted": 0.2215
+     },
+     "ot_home": {
+      "games": 326,
+      "actual": 0.4908,
+      "predicted": 0.5266,
+      "logloss": 0.6956
+     },
+     "totals": {
+      "5.5": {
+       "logloss": 0.6809,
+       "accuracy": 0.5724,
+       "over_predicted": 0.5604,
+       "over_actual": 0.5732
+      },
+      "6.5": {
+       "logloss": 0.69,
+       "accuracy": 0.5396,
+       "over_predicted": 0.4499,
+       "over_actual": 0.4688
+      }
+     },
+     "goals": {
+      "predicted": 6.208,
+      "actual": 6.254
+     },
+     "calibration": [
+      {
+       "range": "50-55%",
+       "games": 505,
+       "predicted": 0.523,
+       "actual": 0.499
+      },
+      {
+       "range": "55-60%",
+       "games": 389,
+       "predicted": 0.572,
+       "actual": 0.571
+      },
+      {
+       "range": "60-65%",
+       "games": 238,
+       "predicted": 0.622,
+       "actual": 0.58
+      },
+      {
+       "range": "65-70%",
+       "games": 112,
+       "predicted": 0.673,
+       "actual": 0.616
+      },
+      {
+       "range": "70-75%",
+       "games": 44,
+       "predicted": 0.719,
+       "actual": 0.727
+      },
+      {
+       "range": "75-80%",
+       "games": 22,
+       "predicted": 0.775,
+       "actual": 0.818
+      },
+      {
+       "range": "80-85%",
+       "games": 2,
+       "predicted": 0.816,
+       "actual": 0.5
+      }
+     ],
+     "incomplete_share": 0.016
+    }
+   }
+  },
+  "lam45": {
+   "path": "scripts/model.py",
+   "options": {
+    "LAM": "45"
+   },
+   "all": {
+    "games": 3936,
+    "accuracy": 0.5976,
+    "logloss": 0.6657,
+    "brier": 0.2367,
+    "reg3_logloss": 1.0389,
+    "reg3_brier": 0.6256,
+    "ot_share": {
+     "actual": 0.2208,
+     "predicted": 0.2173
+    },
+    "ot_home": {
+     "games": 869,
+     "actual": 0.5247,
+     "predicted": 0.5316,
+     "logloss": 0.6904
+    },
+    "totals": {
+     "5.5": {
+      "logloss": 0.6853,
+      "accuracy": 0.5597,
+      "over_predicted": 0.5798,
+      "over_actual": 0.5612
+     },
+     "6.5": {
+      "logloss": 0.6878,
+      "accuracy": 0.5516,
+      "over_predicted": 0.4691,
+      "over_actual": 0.4494
+     }
+    },
+    "goals": {
+     "predicted": 6.329,
+     "actual": 6.187
+    },
+    "calibration": [
+     {
+      "range": "50-55%",
+      "games": 1192,
+      "predicted": 0.524,
+      "actual": 0.546
+     },
+     {
+      "range": "55-60%",
+      "games": 1061,
+      "predicted": 0.573,
+      "actual": 0.566
+     },
+     {
+      "range": "60-65%",
+      "games": 778,
+      "predicted": 0.623,
+      "actual": 0.603
+     },
+     {
+      "range": "65-70%",
+      "games": 467,
+      "predicted": 0.672,
+      "actual": 0.653
+     },
+     {
+      "range": "70-75%",
+      "games": 257,
+      "predicted": 0.721,
+      "actual": 0.716
+     },
+     {
+      "range": "75-80%",
+      "games": 127,
+      "predicted": 0.772,
+      "actual": 0.74
+     },
+     {
+      "range": "80-85%",
+      "games": 46,
+      "predicted": 0.821,
+      "actual": 0.935
+     },
+     {
+      "range": "85-90%",
+      "games": 8,
+      "predicted": 0.861,
+      "actual": 0.75
+     }
+    ],
+    "incomplete_share": 0.0226
+   },
+   "goalie_miss": null,
+   "market": {
+    "games": 3936,
+    "logloss_model": 0.6657,
+    "logloss_market": 0.6651,
+    "logloss_blend60": 0.6635,
+    "accuracy_model": 0.5976,
+    "accuracy_market": 0.5943,
+    "vs_market": {
+     "games": 617,
+     "model_right": 0.5105
+    },
+    "bets_bet": {
+     "bets": 1697,
+     "won": 896,
+     "profit": 44.22,
+     "roi": 0.0261
+    },
+    "bets_lean": {
+     "bets": 780,
+     "won": 402,
+     "profit": 11.13,
+     "roi": 0.0143
+    },
+    "bets_all_model_fav": {
+     "bets": 3936,
+     "won": 2352,
+     "profit": -35.55,
+     "roi": -0.009
+    },
+    "totals_value": {
+     "bets": 536,
+     "won": 279,
+     "profit": 5.51,
+     "roi": 0.0103
+    },
+    "by_source": [
+     "ESPN Caesars Sportsbook",
+     "ESPN Caesars Sportsbook (Colorado)",
+     "ESPN Draft Kings",
+     "ESPN ESPN BET"
+    ]
+   },
+   "market_by_season": {
+    "2023-24": {
+     "games": 1312,
+     "logloss_model": 0.6551,
+     "logloss_market": 0.6554,
+     "logloss_blend60": 0.6535,
+     "accuracy_model": 0.6174,
+     "accuracy_market": 0.6174,
+     "vs_market": {
+      "games": 170,
+      "model_right": 0.5
+     },
+     "bets_bet": {
+      "bets": 561,
+      "won": 310,
+      "profit": 17.55,
+      "roi": 0.0313
+     },
+     "bets_lean": {
+      "bets": 259,
+      "won": 137,
+      "profit": 0.8,
+      "roi": 0.0031
+     },
+     "bets_all_model_fav": {
+      "bets": 1312,
+      "won": 810,
+      "profit": 4.3,
+      "roi": 0.0033
+     },
+     "totals_value": {
+      "bets": 148,
+      "won": 84,
+      "profit": 14.53,
+      "roi": 0.0982
+     },
+     "by_source": [
+      "ESPN Caesars Sportsbook",
+      "ESPN Caesars Sportsbook (Colorado)",
+      "ESPN ESPN BET"
+     ]
+    },
+    "2024-25": {
+     "games": 1312,
+     "logloss_model": 0.6616,
+     "logloss_market": 0.6582,
+     "logloss_blend60": 0.6579,
+     "accuracy_model": 0.6052,
+     "accuracy_market": 0.6128,
+     "vs_market": {
+      "games": 196,
+      "model_right": 0.4745
+     },
+     "bets_bet": {
+      "bets": 571,
+      "won": 270,
+      "profit": -16.34,
+      "roi": -0.0286
+     },
+     "bets_lean": {
+      "bets": 250,
+      "won": 127,
+      "profit": 13.87,
+      "roi": 0.0555
+     },
+     "bets_all_model_fav": {
+      "bets": 1312,
+      "won": 794,
+      "profit": -12.59,
+      "roi": -0.0096
+     },
+     "totals_value": {
+      "bets": 273,
+      "won": 132,
+      "profit": -16.82,
+      "roi": -0.0616
+     },
+     "by_source": [
+      "ESPN ESPN BET"
+     ]
+    },
+    "2025-26": {
+     "games": 1312,
+     "logloss_model": 0.6803,
+     "logloss_market": 0.6817,
+     "logloss_blend60": 0.6792,
+     "accuracy_model": 0.5701,
+     "accuracy_market": 0.5526,
+     "vs_market": {
+      "games": 251,
+      "model_right": 0.5458
+     },
+     "bets_bet": {
+      "bets": 565,
+      "won": 316,
+      "profit": 43.0,
+      "roi": 0.0761
+     },
+     "bets_lean": {
+      "bets": 271,
+      "won": 138,
+      "profit": -3.54,
+      "roi": -0.0131
+     },
+     "bets_all_model_fav": {
+      "bets": 1312,
+      "won": 748,
+      "profit": -27.26,
+      "roi": -0.0208
+     },
+     "totals_value": {
+      "bets": 115,
+      "won": 63,
+      "profit": 7.8,
+      "roi": 0.0678
+     },
+     "by_source": [
+      "ESPN Draft Kings",
+      "ESPN ESPN BET"
+     ]
+    }
+   },
+   "by_season": {
+    "2023-24": {
+     "games": 1312,
+     "accuracy": 0.6174,
+     "logloss": 0.6551,
+     "brier": 0.2317,
+     "reg3_logloss": 1.0216,
+     "reg3_brier": 0.6135,
+     "ot_share": {
+      "actual": 0.2073,
+      "predicted": 0.2137
+     },
+     "ot_home": {
+      "games": 272,
+      "actual": 0.5515,
+      "predicted": 0.5364,
+      "logloss": 0.6811
+     },
+     "totals": {
+      "5.5": {
+       "logloss": 0.6821,
+       "accuracy": 0.5747,
+       "over_predicted": 0.5989,
+       "over_actual": 0.5732
+      },
+      "6.5": {
+       "logloss": 0.6888,
+       "accuracy": 0.5373,
+       "over_predicted": 0.4884,
+       "over_actual": 0.4566
+      }
+     },
+     "goals": {
+      "predicted": 6.45,
+      "actual": 6.226
+     },
+     "calibration": [
+      {
+       "range": "50-55%",
+       "games": 349,
+       "predicted": 0.524,
+       "actual": 0.544
+      },
+      {
+       "range": "55-60%",
+       "games": 331,
+       "predicted": 0.574,
+       "actual": 0.598
+      },
+      {
+       "range": "60-65%",
+       "games": 250,
+       "predicted": 0.623,
+       "actual": 0.612
+      },
+      {
+       "range": "65-70%",
+       "games": 158,
+       "predicted": 0.672,
+       "actual": 0.652
+      },
+      {
+       "range": "70-75%",
+       "games": 112,
+       "predicted": 0.72,
+       "actual": 0.696
+      },
+      {
+       "range": "75-80%",
+       "games": 73,
+       "predicted": 0.774,
+       "actual": 0.712
+      },
+      {
+       "range": "80-85%",
+       "games": 31,
+       "predicted": 0.823,
+       "actual": 0.968
+      },
+      {
+       "range": "85-90%",
+       "games": 8,
+       "predicted": 0.861,
+       "actual": 0.75
+      }
+     ],
+     "incomplete_share": 0.0183
+    },
+    "2024-25": {
+     "games": 1312,
+     "accuracy": 0.6052,
+     "logloss": 0.6616,
+     "brier": 0.2347,
+     "reg3_logloss": 1.0278,
+     "reg3_brier": 0.6185,
+     "ot_share": {
+      "actual": 0.2066,
+      "predicted": 0.2185
+     },
+     "ot_home": {
+      "games": 271,
+      "actual": 0.5387,
+      "predicted": 0.5345,
+      "logloss": 0.6887
+     },
+     "totals": {
+      "5.5": {
+       "logloss": 0.6931,
+       "accuracy": 0.5335,
+       "over_predicted": 0.5737,
+       "over_actual": 0.5373
+      },
+      "6.5": {
+       "logloss": 0.685,
+       "accuracy": 0.5755,
+       "over_predicted": 0.463,
+       "over_actual": 0.423
+      }
+     },
+     "goals": {
+      "predicted": 6.29,
+      "actual": 6.081
+     },
+     "calibration": [
+      {
+       "range": "50-55%",
+       "games": 399,
+       "predicted": 0.525,
+       "actual": 0.546
+      },
+      {
+       "range": "55-60%",
+       "games": 370,
+       "predicted": 0.574,
+       "actual": 0.581
+      },
+      {
+       "range": "60-65%",
+       "games": 266,
+       "predicted": 0.623,
+       "actual": 0.602
+      },
+      {
+       "range": "65-70%",
+       "games": 159,
+       "predicted": 0.672,
+       "actual": 0.679
+      },
+      {
+       "range": "70-75%",
+       "games": 81,
+       "predicted": 0.722,
+       "actual": 0.79
+      },
+      {
+       "range": "75-80%",
+       "games": 30,
+       "predicted": 0.766,
+       "actual": 0.767
+      },
+      {
+       "range": "80-85%",
+       "games": 7,
+       "predicted": 0.821,
+       "actual": 0.857
+      }
+     ],
+     "incomplete_share": 0.0267
+    },
+    "2025-26": {
+     "games": 1312,
+     "accuracy": 0.5701,
+     "logloss": 0.6803,
+     "brier": 0.2438,
+     "reg3_logloss": 1.0672,
+     "reg3_brier": 0.6448,
+     "ot_share": {
+      "actual": 0.2485,
+      "predicted": 0.2197
+     },
+     "ot_home": {
+      "games": 326,
+      "actual": 0.4908,
+      "predicted": 0.5252,
+      "logloss": 0.6996
+     },
+     "totals": {
+      "5.5": {
+       "logloss": 0.6807,
+       "accuracy": 0.5709,
+       "over_predicted": 0.5668,
+       "over_actual": 0.5732
+      },
+      "6.5": {
+       "logloss": 0.6896,
+       "accuracy": 0.5419,
+       "over_predicted": 0.456,
+       "over_actual": 0.4688
+      }
+     },
+     "goals": {
+      "predicted": 6.246,
+      "actual": 6.254
+     },
+     "calibration": [
+      {
+       "range": "50-55%",
+       "games": 444,
+       "predicted": 0.523,
+       "actual": 0.547
+      },
+      {
+       "range": "55-60%",
+       "games": 360,
+       "predicted": 0.572,
+       "actual": 0.519
+      },
+      {
+       "range": "60-65%",
+       "games": 262,
+       "predicted": 0.624,
+       "actual": 0.595
+      },
+      {
+       "range": "65-70%",
+       "games": 150,
+       "predicted": 0.672,
+       "actual": 0.627
+      },
+      {
+       "range": "70-75%",
+       "games": 64,
+       "predicted": 0.721,
+       "actual": 0.656
+      },
+      {
+       "range": "75-80%",
+       "games": 24,
+       "predicted": 0.771,
+       "actual": 0.792
+      },
+      {
+       "range": "80-85%",
+       "games": 8,
+       "predicted": 0.814,
+       "actual": 0.875
+      }
+     ],
+     "incomplete_share": 0.0229
+    }
+   }
+  },
+  "lam90": {
+   "path": "scripts/model.py",
+   "options": {
+    "LAM": "90"
+   },
+   "all": {
+    "games": 3936,
+    "accuracy": 0.5948,
+    "logloss": 0.6658,
+    "brier": 0.2368,
+    "reg3_logloss": 1.039,
+    "reg3_brier": 0.6257,
+    "ot_share": {
+     "actual": 0.2208,
+     "predicted": 0.2177
+    },
+    "ot_home": {
+     "games": 869,
+     "actual": 0.5247,
+     "predicted": 0.5319,
+     "logloss": 0.6905
+    },
+    "totals": {
+     "5.5": {
+      "logloss": 0.6853,
+      "accuracy": 0.5605,
+      "over_predicted": 0.5799,
+      "over_actual": 0.5612
+     },
+     "6.5": {
+      "logloss": 0.6881,
+      "accuracy": 0.5485,
+      "over_predicted": 0.4692,
+      "over_actual": 0.4494
+     }
+    },
+    "goals": {
+     "predicted": 6.329,
+     "actual": 6.187
+    },
+    "calibration": [
+     {
+      "range": "50-55%",
+      "games": 1236,
+      "predicted": 0.524,
+      "actual": 0.542
+     },
+     {
+      "range": "55-60%",
+      "games": 1071,
+      "predicted": 0.573,
+      "actual": 0.57
+     },
+     {
+      "range": "60-65%",
+      "games": 788,
+      "predicted": 0.623,
+      "actual": 0.599
+     },
+     {
+      "range": "65-70%",
+      "games": 447,
+      "predicted": 0.673,
+      "actual": 0.655
+     },
+     {
+      "range": "70-75%",
+      "games": 241,
+      "predicted": 0.721,
+      "actual": 0.71
+     },
+     {
+      "range": "75-80%",
+      "games": 113,
+      "predicted": 0.771,
+      "actual": 0.788
+     },
+     {
+      "range": "80-85%",
+      "games": 35,
+      "predicted": 0.821,
+      "actual": 0.886
+     },
+     {
+      "range": "85-90%",
+      "games": 5,
+      "predicted": 0.858,
+      "actual": 0.8
+     }
+    ],
+    "incomplete_share": 0.0226
+   },
+   "goalie_miss": null,
+   "market": {
+    "games": 3936,
+    "logloss_model": 0.6658,
+    "logloss_market": 0.6651,
+    "logloss_blend60": 0.6636,
+    "accuracy_model": 0.5948,
+    "accuracy_market": 0.5943,
+    "vs_market": {
+     "games": 612,
+     "model_right": 0.5016
+    },
+    "bets_bet": {
+     "bets": 1683,
+     "won": 859,
+     "profit": 16.05,
+     "roi": 0.0095
+    },
+    "bets_lean": {
+     "bets": 762,
+     "won": 398,
+     "profit": 38.35,
+     "roi": 0.0503
+    },
+    "bets_all_model_fav": {
+     "bets": 3936,
+     "won": 2341,
+     "profit": -58.2,
+     "roi": -0.0148
+    },
+    "totals_value": {
+     "bets": 551,
+     "won": 276,
+     "profit": -13.29,
+     "roi": -0.0241
+    },
+    "by_source": [
+     "ESPN Caesars Sportsbook",
+     "ESPN Caesars Sportsbook (Colorado)",
+     "ESPN Draft Kings",
+     "ESPN ESPN BET"
+    ]
+   },
+   "market_by_season": {
+    "2023-24": {
+     "games": 1312,
+     "logloss_model": 0.6548,
+     "logloss_market": 0.6554,
+     "logloss_blend60": 0.6535,
+     "accuracy_model": 0.6189,
+     "accuracy_market": 0.6174,
+     "vs_market": {
+      "games": 164,
+      "model_right": 0.5061
+     },
+     "bets_bet": {
+      "bets": 541,
+      "won": 293,
+      "profit": 15.79,
+      "roi": 0.0292
+     },
+     "bets_lean": {
+      "bets": 251,
+      "won": 128,
+      "profit": -7.29,
+      "roi": -0.029
+     },
+     "bets_all_model_fav": {
+      "bets": 1312,
+      "won": 812,
+      "profit": 6.45,
+      "roi": 0.0049
+     },
+     "totals_value": {
+      "bets": 166,
+      "won": 89,
+      "profit": 5.84,
+      "roi": 0.0352
+     },
+     "by_source": [
+      "ESPN Caesars Sportsbook",
+      "ESPN Caesars Sportsbook (Colorado)",
+      "ESPN ESPN BET"
+     ]
+    },
+    "2024-25": {
+     "games": 1312,
+     "logloss_model": 0.6617,
+     "logloss_market": 0.6582,
+     "logloss_blend60": 0.6579,
+     "accuracy_model": 0.5983,
+     "accuracy_market": 0.6128,
+     "vs_market": {
+      "games": 201,
+      "model_right": 0.4527
+     },
+     "bets_bet": {
+      "bets": 586,
+      "won": 268,
+      "profit": -25.16,
+      "roi": -0.0429
+     },
+     "bets_lean": {
+      "bets": 251,
+      "won": 135,
+      "profit": 39.21,
+      "roi": 0.1562
+     },
+     "bets_all_model_fav": {
+      "bets": 1312,
+      "won": 785,
+      "profit": -28.63,
+      "roi": -0.0218
+     },
+     "totals_value": {
+      "bets": 257,
+      "won": 124,
+      "profit": -14.69,
+      "roi": -0.0572
+     },
+     "by_source": [
+      "ESPN ESPN BET"
+     ]
+    },
+    "2025-26": {
+     "games": 1312,
+     "logloss_model": 0.6808,
+     "logloss_market": 0.6817,
+     "logloss_blend60": 0.6794,
+     "accuracy_model": 0.5671,
+     "accuracy_market": 0.5526,
+     "vs_market": {
+      "games": 247,
+      "model_right": 0.5385
+     },
+     "bets_bet": {
+      "bets": 556,
+      "won": 298,
+      "profit": 25.42,
+      "roi": 0.0457
+     },
+     "bets_lean": {
+      "bets": 260,
+      "won": 135,
+      "profit": 6.42,
+      "roi": 0.0247
+     },
+     "bets_all_model_fav": {
+      "bets": 1312,
+      "won": 744,
+      "profit": -36.01,
+      "roi": -0.0274
+     },
+     "totals_value": {
+      "bets": 128,
+      "won": 63,
+      "profit": -4.43,
+      "roi": -0.0346
+     },
+     "by_source": [
+      "ESPN Draft Kings",
+      "ESPN ESPN BET"
+     ]
+    }
+   },
+   "by_season": {
+    "2023-24": {
+     "games": 1312,
+     "accuracy": 0.6189,
+     "logloss": 0.6548,
+     "brier": 0.2316,
+     "reg3_logloss": 1.0212,
+     "reg3_brier": 0.6133,
+     "ot_share": {
+      "actual": 0.2073,
+      "predicted": 0.2142
+     },
+     "ot_home": {
+      "games": 272,
+      "actual": 0.5515,
+      "predicted": 0.5367,
+      "logloss": 0.6813
+     },
+     "totals": {
+      "5.5": {
+       "logloss": 0.6826,
+       "accuracy": 0.5724,
+       "over_predicted": 0.5991,
+       "over_actual": 0.5732
+      },
+      "6.5": {
+       "logloss": 0.6894,
+       "accuracy": 0.5312,
+       "over_predicted": 0.4886,
+       "over_actual": 0.4566
+      }
+     },
+     "goals": {
+      "predicted": 6.451,
+      "actual": 6.226
+     },
+     "calibration": [
+      {
+       "range": "50-55%",
+       "games": 369,
+       "predicted": 0.525,
+       "actual": 0.55
+      },
+      {
+       "range": "55-60%",
+       "games": 323,
+       "predicted": 0.574,
+       "actual": 0.604
+      },
+      {
+       "range": "60-65%",
+       "games": 258,
+       "predicted": 0.623,
+       "actual": 0.616
+      },
+      {
+       "range": "65-70%",
+       "games": 160,
+       "predicted": 0.674,
+       "actual": 0.65
+      },
+      {
+       "range": "70-75%",
+       "games": 106,
+       "predicted": 0.721,
+       "actual": 0.698
+      },
+      {
+       "range": "75-80%",
+       "games": 66,
+       "predicted": 0.773,
+       "actual": 0.758
+      },
+      {
+       "range": "80-85%",
+       "games": 25,
+       "predicted": 0.823,
+       "actual": 0.92
+      },
+      {
+       "range": "85-90%",
+       "games": 5,
+       "predicted": 0.858,
+       "actual": 0.8
+      }
+     ],
+     "incomplete_share": 0.0183
+    },
+    "2024-25": {
+     "games": 1312,
+     "accuracy": 0.5983,
+     "logloss": 0.6617,
+     "brier": 0.2348,
+     "reg3_logloss": 1.028,
+     "reg3_brier": 0.6187,
+     "ot_share": {
+      "actual": 0.2066,
+      "predicted": 0.2189
+     },
+     "ot_home": {
+      "games": 271,
+      "actual": 0.5387,
+      "predicted": 0.5347,
+      "logloss": 0.6886
+     },
+     "totals": {
+      "5.5": {
+       "logloss": 0.6925,
+       "accuracy": 0.5381,
+       "over_predicted": 0.5738,
+       "over_actual": 0.5373
+      },
+      "6.5": {
+       "logloss": 0.6847,
+       "accuracy": 0.5747,
+       "over_predicted": 0.4631,
+       "over_actual": 0.423
+      }
+     },
+     "goals": {
+      "predicted": 6.29,
+      "actual": 6.081
+     },
+     "calibration": [
+      {
+       "range": "50-55%",
+       "games": 409,
+       "predicted": 0.524,
+       "actual": 0.523
+      },
+      {
+       "range": "55-60%",
+       "games": 384,
+       "predicted": 0.573,
+       "actual": 0.594
+      },
+      {
+       "range": "60-65%",
+       "games": 266,
+       "predicted": 0.622,
+       "actual": 0.598
+      },
+      {
+       "range": "65-70%",
+       "games": 146,
+       "predicted": 0.671,
+       "actual": 0.685
+      },
+      {
+       "range": "70-75%",
+       "games": 78,
+       "predicted": 0.722,
+       "actual": 0.756
+      },
+      {
+       "range": "75-80%",
+       "games": 23,
+       "predicted": 0.768,
+       "actual": 0.87
+      },
+      {
+       "range": "80-85%",
+       "games": 6,
+       "predicted": 0.819,
+       "actual": 0.833
+      }
+     ],
+     "incomplete_share": 0.0267
+    },
+    "2025-26": {
+     "games": 1312,
+     "accuracy": 0.5671,
+     "logloss": 0.6808,
+     "brier": 0.244,
+     "reg3_logloss": 1.0677,
+     "reg3_brier": 0.6452,
+     "ot_share": {
+      "actual": 0.2485,
+      "predicted": 0.22
+     },
+     "ot_home": {
+      "games": 326,
+      "actual": 0.4908,
+      "predicted": 0.5255,
+      "logloss": 0.6997
+     },
+     "totals": {
+      "5.5": {
+       "logloss": 0.6808,
+       "accuracy": 0.5709,
+       "over_predicted": 0.5668,
+       "over_actual": 0.5732
+      },
+      "6.5": {
+       "logloss": 0.6901,
+       "accuracy": 0.5396,
+       "over_predicted": 0.4561,
+       "over_actual": 0.4688
+      }
+     },
+     "goals": {
+      "predicted": 6.246,
+      "actual": 6.254
+     },
+     "calibration": [
+      {
+       "range": "50-55%",
+       "games": 458,
+       "predicted": 0.523,
+       "actual": 0.552
+      },
+      {
+       "range": "55-60%",
+       "games": 364,
+       "predicted": 0.573,
+       "actual": 0.516
+      },
+      {
+       "range": "60-65%",
+       "games": 264,
+       "predicted": 0.624,
+       "actual": 0.583
+      },
+      {
+       "range": "65-70%",
+       "games": 141,
+       "predicted": 0.672,
+       "actual": 0.631
+      },
+      {
+       "range": "70-75%",
+       "games": 57,
+       "predicted": 0.719,
+       "actual": 0.667
+      },
+      {
+       "range": "75-80%",
+       "games": 24,
+       "predicted": 0.768,
+       "actual": 0.792
+      },
+      {
+       "range": "80-85%",
+       "games": 4,
+       "predicted": 0.808,
+       "actual": 0.75
+      }
+     ],
+     "incomplete_share": 0.0229
+    }
+   }
+  }
+ },
+ "pairs": {
+  "early": {
+   "win": {
+    "diff": 0.00039,
+    "se": 0.00152,
+    "games": 3936
+   },
+   "reg3": {
+    "diff": 0.00214,
+    "se": 0.00149,
+    "games": 3936
+   },
+   "tot55": {
+    "diff": -0.00028,
+    "se": 0.00031,
+    "games": 3936
+   },
+   "tot65": {
+    "diff": -6e-05,
+    "se": 0.00031,
+    "games": 3936
+   },
+   "reg3_better_seasons": "0 из 3"
+  },
+  "lam45": {
+   "win": {
+    "diff": -0.0001,
+    "se": 0.0002,
+    "games": 3936
+   },
+   "reg3": {
+    "diff": -0.00013,
+    "se": 0.0002,
+    "games": 3936
+   },
+   "tot55": {
+    "diff": -6e-05,
+    "se": 0.00014,
+    "games": 3936
+   },
+   "tot65": {
+    "diff": 5e-05,
+    "se": 0.00014,
+    "games": 3936
+   },
+   "reg3_better_seasons": "2 из 3"
+  },
+  "lam90": {
+   "win": {
+    "diff": 0.0,
+    "se": 0.00056,
+    "games": 3936
+   },
+   "reg3": {
+    "diff": 1e-05,
+    "se": 0.00055,
+    "games": 3936
+   },
+   "tot55": {
+    "diff": -5e-05,
+    "se": 0.00038,
+    "games": 3936
+   },
+   "tot65": {
+    "diff": 0.00032,
+    "se": 0.00038,
+    "games": 3936
+   },
+   "reg3_better_seasons": "1 из 3"
+  }
+ },
+ "site_check": {
+  "v4.4": null,
+  "early": null,
+  "lam45": null,
+  "lam90": null
+ },
+ "seconds": 104
+}
