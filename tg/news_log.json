@@ -1,61 +1,6 @@
 {
  "runs": [
   {
-   "t": "2026-10-21T09:27:01Z",
-   "status": "ok",
-   "picked": [
-    "nhl:tampa-bay-lightning-vegas-golden-knights-game-recap-october-20-2026",
-    "prohockeyrumors:2026-10-wild-activate-nico-sturm-reassign-hunter-haight-html"
-   ],
-   "skipped": [
-    {
-     "id": "espn:50235118",
-     "why": "Рекорд Кучерова уже опубликован; для Чирелли использован отдельный фрагмент оригинала NHL.com."
-    },
-    {
-     "id": "sportsnet:nhl-article-marchenko-cowan-help-maple-leafs-earn-rout-in-columbus",
-     "why": "Гол/возвращение Марченко к бывшему клубу уже освещены в итогах, отдельной новой вехи или кадрового события нет."
-    },
-    {
-     "id": "sportsnet:nhl-video-marchenko-redirects-puck-past-greaves-to-score-against-former-team",
-     "why": "Гол/возвращение Марченко к бывшему клубу уже освещены в итогах, отдельной новой вехи или кадрового события нет."
-    },
-    {
-     "id": "sportsnet:ideo-happy-to-be-here-marchenko-talks-trade-to-toronto-and-first-leafs-hat-trick",
-     "why": "Прежний матч, интервью или анализ, без нового самостоятельного события."
-    },
-    {
-     "id": "sportsnet:l-video-tough-not-to-take-it-personal-fantilli-on-marchenko-leaving-blue-jackets",
-     "why": "Прежний матч, интервью или анализ, без нового самостоятельного события."
-    },
-    {
-     "id": "thehockeynews:arov-saves-his-best-game-of-the-season-against-maple-leafs-idol-sergei-bobrovsky",
-     "why": "Прежний матч, интервью или анализ, без нового самостоятельного события."
-    },
-    {
-     "id": "dailyfaceoff:rangers-for-real-even-without-igor-shesterkin-nhl-alexis-lafreniere-dylan-garand",
-     "why": "Прежний матч, интервью или анализ, без нового самостоятельного события."
-    },
-    {
-     "id": "sportsnet:nhl-article-oilers-ride-elite-power-play-to-win-over-tight-checking-wild",
-     "why": "Обзор или видео уже освещённого матча; самостоятельного нового события нет."
-    },
-    {
-     "id": "dailyfaceoff:news-connor-mcdavid-edmonton-oilers-nhl-record-fastest-assists-single-season",
-     "why": "Тот же рекорд Макдэвида уже опубликован, нового события нет."
-    },
-    {
-     "id": "sportsnet:nhl-video-nhl-highlights-oilers-4-wild-3-ot",
-     "why": "Обзор или видео уже освещённого матча; самостоятельного нового события нет."
-    },
-    {
-     "id": "sportsnet:nhl-video-oilers-bouchard-holds-before-rifling-home-pinpoint-ot-winner",
-     "why": "Обзор или видео уже освещённого матча; самостоятельного нового события нет."
-    }
-   ],
-   "note": "Прочитаны operations/news/полный промпт/стиль. Сначала metadata/recent/morning/summary12 без article. Достойного среди заголовков12 нет: рекорды Кучерова/Макдэвида уже вышли; свежие заголовки4ч также повторы. Проверены непросмотренные инсайды/травмы18ч и поиск Чирелли/Мэйфилд/Штурм. Чирелли найден в прочитанном оригинале NHL.com: не играл3период, последняя смена за1:09, Купер без update, следующийматчпятница; RotoWire596700 подтверждает уход, диагноз/длительное выбытие не объявляю. ID NHLrecap выбран для этого нового кадрового события, а не повторного рекорда Кучерова. Штурм: body PHR, транзакция подтверждена клубом, официальная заявкаНХЛ и наш полный протокол подтверждают возвращение10:10; Хэйт не играл при вызове. Брэди Ткачук: встреча с бывшим клубом уже есть в очереди под другимID. Мэйфилд: первоисточникTFP20окт12:35ET прочитан, возможный будущий запрос обмена пока не сделан; ниже приоритет подтверждённых кадровых событий. ФотоЧирелли: исходное фотоКучерова заменено официальным портретомНХЛ по heads,200/просмотр; Штурм — оригиналPHRизJSONLD,200/просмотр. Имена по словарю,4предложения≤700, заголовки≤90/без латиницы. Чирелли в канал hot:false, Штурм/Хэйт только сайт tg:false, второйready+40мин. Дублиqueue/recent/morning/posted проверены, журнал30, liveштатным скриптом. Утреннюю страховку внеокна12МСК не выполнял, готовое/данные/модель/скрипты не менял."
-  },
-  {
    "t": "2026-10-21T11:28:03Z",
    "status": "ok",
    "picked": [
@@ -1775,6 +1720,69 @@
     }
    ],
    "note": "00:5x 26 октября Киров: проход продолжен после длительного перерыва, main и кандидаты обновлены заново; прежний утренний отбор не публиковался. Вне 12 просмотрены заголовки/summary последних четырёх часов. Найдены официальное подписание Никишина и новый срок травмы Маккэнна; прочитаны полные body NHL/PHR о Никишине и Daily Faceoff о Маккэнне. Никишин ранее фигурировал только в новости об отказе от предложения, теперь соглашение подписано. Маккэнн ранее без срока, теперь объявлены десять недель и IR. Оба tg:false, без накопления в канал утром; hot у Никишина не отменяет запрета. Фото HTTP200 и просмотрены: Никишин №21, Маккэнн №19. Имена по names_ru; лимиты текста проверены. Утреннее восстановление вне окна 10:00–11:30 не выполнялось. Прогнозы и статистика не менялись."
+  },
+  {
+   "t": "2026-10-25T22:19:03Z",
+   "status": "ok",
+   "picked": [
+    "prohockeyrumors:2026-10-avalanche-place-georgii-merkulov-on-waivers-html",
+    "nhl:new-york-rangers-sign-james-reimer-to-one-year-contract"
+   ],
+   "skipped": [
+    {
+     "id": "espn:50273133",
+     "why": "Поздняя дата обновления ESPN, но сам рекорд Кучерова случился более 18 часов назад."
+    },
+    {
+     "id": "thehockeynews:oilers-trade-for-vasily-podkolzin-continues-to-work-wonders-with-breakout-season",
+     "why": "Оценка старого обмена и формы Подколзина, без нового решения."
+    },
+    {
+     "id": "prohockeyrumors:2026-10-morning-notes-girgensons-tarasov-gaucher-html",
+     "why": "Прочитана полная статья на сайте: Тарасов пропустил второй матч из-за прежней травмы, сроков и нового решения нет."
+    },
+    {
+     "id": "thehockeynews:ews-how-long-can-the-sharks-barely-survive-askarovs-play-to-start-the-nhl-season",
+     "why": "Оценка игры Аскарова, без нового кадрового события."
+    },
+    {
+     "id": "prohockeyrumors:2026-10-capitals-grant-ivan-miroshnichenko-permission-to-seek-trade-html",
+     "why": "Повтор сообщения Фридмана от 02:07 UTC, новый материал не обновляет решение; первичный повод старше 18 часов."
+    },
+    {
+     "id": "thehockeynews:an-rielly-has-found-the-sweetspot-rebounding-for-maple-leafs-this-2026-27-season",
+     "why": "Авторская оценка формы Райлли, без нового события."
+    },
+    {
+     "id": "sportsnet:nhl-video-maple-leafs-raddysh-talks-old-tweets-between-him-and-mcdavid",
+     "why": "Архивные твиты и отношения игроков, не новость."
+    },
+    {
+     "id": "dailyfaceoff:ews-fraser-minten-boston-bruins-already-showing-early-returns-contract-extension",
+     "why": "Оценка игры Минтена после ранее подписанного контракта."
+    },
+    {
+     "id": "rmnb:2026-10-25-spencer-carbery-evaluates-jack-st-ivany-capitals-waivers-claim-jets",
+     "why": "Реакция на уже освещённый переход Сент-Айвани."
+    },
+    {
+     "id": "rmnb:lan-strome-capitals-clutch-overtime-victory-sabres-numbers-for-the-morning-after",
+     "why": "Пересказ завершённого матча."
+    },
+    {
+     "id": "nhl:montreal-canadiens-adapting-without-nick-suzuki-for-heritage-classic",
+     "why": "Комментарии на фоне уже освещённого отсутствия Сузуки."
+    },
+    {
+     "id": "nhl:quinn-hughes-not-sure-what-to-expect-in-first-trip-back-to-vancouver",
+     "why": "Повтор уже освещённых комментариев Хьюза."
+    },
+    {
+     "id": "prohockeyrumors:2026-10-patrik-laine-not-seeking-international-offers-html",
+     "why": "Body прочитан: сведения Каплан относятся к этой неделе, свежесть исходного сообщения в пределах 18 часов не подтверждена."
+    }
+   ],
+   "note": "01:2x 26 октября Киров: только сайт tg:false. Дополнительно проверены свежие заголовки последних четырёх часов. Прочитаны body NHL и DFO о новом контракте Раймера, PHR о Лайне, полная Morning Notes для раздела Тарасова. На сайте PHR обнаружено новое воскресное обновление старой статьи Меркулова: Фридман подтвердил прохождение отказов. Оно прочитано целиком и внесено в существующий элемент с тем же ID/URL, без второго поста; прежний элемент в Telegram не публиковался. Результат отказов не выдан за оформленную отправку в АХЛ. Фото Меркулова и Раймера HTTP200 и просмотрены, архивные клубные формы не представлены как новые. Меркулов — русское имя, Раймер транскрибирован прямо по разрешению промпта, Гаранд/Шестёркин по names_ru; в тексте использован Шестёркин. Никишин и срок Маккэнна уже опубликованы, не повторены. Прогнозы и статистика не менялись."
   }
  ]
 }
