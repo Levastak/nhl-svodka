@@ -1,73 +1,6 @@
 {
  "runs": [
   {
-   "t": "2026-10-22T01:20:40Z",
-   "status": "ok",
-   "picked": [
-    "prohockeyrumors:2026-10-sabres-activate-jason-zucker-place-sam-carrick-on-ir-html",
-    "rmnb:2026-10-21-justin-sourdif-illness-update-capitals-practice"
-   ],
-   "skipped": [
-    {
-     "id": "thehockeynews:latest-news-bruins-agree-to-three-year-extension-with-forward-marat-khusnutdinov",
-     "why": "Официальное подписание уже опубликовано по NHL.com; новый заголовок другого издания не отдельное событие."
-    },
-    {
-     "id": "dailyfaceoff:ews-marat-khusnutdinov-boston-bruins-three-year-contract-extension-nhl-news-wild",
-     "why": "Официальное подписание уже опубликовано по NHL.com; новый заголовок другого издания не отдельное событие."
-    },
-    {
-     "id": "dailyfaceoff:-maple-leafs-last-laugh-return-columbus-blue-jackets-matthew-knies-adam-fantilli",
-     "why": "Анонсы и обсуждение возвращения Ткачука к бывшему клубу; матч уже идёт, нового отдельного события нет."
-    },
-    {
-     "id": "sportsnet:ticle-oilers-podkolzin-off-to-flying-start-riding-shotgun-with-mcdavid-draisaitl",
-     "why": "Ранее прочитанная история роста и старого обмена, без нового изменения роли."
-    },
-    {
-     "id": "nhl:nikolaj-ehlers-heating-up-ahead-of-carolina-hurricanes-clash-with-edmonton-oilers",
-     "why": "Форма и статистика перед следующей игрой, без нового самостоятельного события; подтверждённые травмы важнее."
-    },
-    {
-     "id": "sportsnet:hockey-nhl-games-f0a53914-5147-4511-bb4a-275de3520c51",
-     "why": "Анонсы и обсуждение возвращения Ткачука к бывшему клубу; матч уже идёт, нового отдельного события нет."
-    },
-    {
-     "id": "sportsnet:nhl-video-do-blue-jackets-have-culture-issue-after-poor-showing-vs-maple-leafs",
-     "why": "Реакции на уже освещённый матч, без нового кадрового решения."
-    },
-    {
-     "id": "sportsnet:nhl-video-how-should-panthers-tkachuk-be-received-in-ottawa-upon-return",
-     "why": "Анонсы и обсуждение возвращения Ткачука к бывшему клубу; матч уже идёт, нового отдельного события нет."
-    },
-    {
-     "id": "espn:50239618",
-     "why": "Анонсы и обсуждение возвращения Ткачука к бывшему клубу; матч уже идёт, нового отдельного события нет."
-    },
-    {
-     "id": "nhl:panthers-brady-tkachuk-ready-for-emotional-return-to-ottawa",
-     "why": "Анонсы и обсуждение возвращения Ткачука к бывшему клубу; матч уже идёт, нового отдельного события нет."
-    },
-    {
-     "id": "sportsnet:-video-bring-whatever-you-feel-maurice-on-how-senators-fans-should-welcome-brady",
-     "why": "Анонсы и обсуждение возвращения Ткачука к бывшему клубу; матч уже идёт, нового отдельного события нет."
-    },
-    {
-     "id": "prohockeyrumors:2026-10-the-devils-may-need-to-make-a-goaltending-upgrade-html",
-     "why": "Авторское рассуждение о вратарях без объявленного перехода или подтверждённого решения."
-    },
-    {
-     "id": "dailyfaceoff:shville-predators-looking-reshape-blueline-defensemen-nhl-trade-roman-josi-skjei",
-     "why": "Body прочитан: Паньотта об интересе к неназванному ветерану; близкой сделки нет. Подтверждённые изменения состояния игроков выше приоритетом, лимит двух."
-    },
-    {
-     "id": "prohockeyrumors:2026-10-kings-recall-jared-wright-html",
-     "why": "Body прочитан: новый вызов Райта из АХЛ, но обновления по двум травмам важнее в этом проходе."
-    }
-   ],
-   "note": "Полные operations/news/tg-news/style прочитаны. Сначала metadata/recent/morning/12 кандидатов без article; затем свежие заголовки четырёх часов и body Каррик/Сурдиф/Райт/Нэшвилл вне короткого списка. Каррик — новое IR, не дубль возвращения Цукера. Полный PHR прочитан через urllib после сбоя WebFetch: retroactive18Oct, пропуск субботы, точная дата возвращения неизвестна; клубный первоисточник подтверждает IR/middlebody. Сурдиф — первое самостоятельное катание после болезни, Дюбуа полноценная тренировка, суббота обоим не гарантирована; RMNB прочитан полностью. Имена строго names_ru, дублей queue/live/state/recent/morning/log нет. Фото PHR изображает Цукера, заменено официальным портретом Каррика по data.heads8475842: HTTP200 и просмотр; RMNB Сурдиф34 HTTP200/просмотр. Ночью оба tg:false/hot:false, второй ready+40мин. Длины/латиница/JSON проверены, журнал30, live штатно. Утреннюю страховку вне окна не выполнял, готовые прогнозы не трогал."
-  },
-  {
    "t": "2026-10-22T03:18:09Z",
    "status": "ok",
    "picked": [
@@ -1744,6 +1677,69 @@
     }
    ],
    "note": "После первого просмотра 12 кандидатов новых достойных событий в коротком списке не выбрано. Дополнительно проверены заголовки/summary feed за четыре часа, прочитаны body Ристолайнена, Холла, Хеллибака, Цуккарелло и официальный Status Report НХЛ. Новая травма Ристолайнена объявлена 26 октября; это не повтор прежнего отсутствия. Холл впервые вернулся к тренировкам, участие во вторник остаётся возможным, не гарантированным. Фото обоих героев из статей загружены и просмотрены; имена по словарю. Дублей в очереди, live, утреннем выпуске и опубликованных ID нет. Оба повода подходят расширенной ленте сайта, tg:false; канал сохраняет отбор главных новостей после Мирошниченко. У второго ready+40 минут по промпту; ночного накопления Telegram нет. Фактическое время 22:25 Киров, вне окна утренней страховки."
+  },
+  {
+   "t": "2026-10-26T21:22:25Z",
+   "status": "ok",
+   "picked": [
+    "sportsnet:nhl-article-maple-leafs-chris-tanev-practises-for-first-time-since-injury",
+    "rmnb:jakob-chychrun-misses-capitals-practice-logan-thompson-continues-injury-recovery"
+   ],
+   "skipped": [
+    {
+     "id": "thehockeynews:the-hockey-news-big-show-does-hellebuyck-make-the-devils-a-stanley-cup-contender",
+     "why": "Подкаст с оценками уже опубликованных обмена Хеллибака, контракта Никишина и возвращения Хьюза; нового решения нет."
+    },
+    {
+     "id": "sportsnet:nhl-article-maple-leafs-gm-chayka-talks-defence-cowan-mckenna",
+     "why": "Общая позиция Чайки об улучшении обороны и оценке рынка; конкретная новая сделка или решение не объявлены. Переговорный сюжет «Торонто» уже освещался."
+    },
+    {
+     "id": "sportsnet:nhl-video-mckenna-in-awe-of-cowans-two-way-play-on-maple-leafs-top-line",
+     "why": "Похвала Коуэну от партнёра, без нового события."
+    },
+    {
+     "id": "sportsnet:nhl-video-maple-leafs-hiller-really-impressed-by-cowans-play-without-the-puck",
+     "why": "Оценка игры Коуэна тренером, без нового кадрового решения."
+    },
+    {
+     "id": "prohockeyrumors:2026-10-avalanche-activate-logan-oconnor-recall-taylor-makar-html",
+     "why": "Новое только отправление Тэйлора Макара в АХЛ; активация О’Коннора от 23 октября. Свежие обновления восстановления Танева и Томпсона приоритетнее."
+    },
+    {
+     "id": "sportsnet:-video-babcock-isnt-ready-to-split-up-mcdavid-and-draisaitl-after-one-rough-loss",
+     "why": "Сохранение сочетания после поражения, без новой перестановки."
+    },
+    {
+     "id": "rmnb:2026-10-26-washington-capitals-new-gear-goalie-masks-hometown-remix-jerseys",
+     "why": "Экипировка и дизайн формы, без хоккейного события."
+    },
+    {
+     "id": "nhl:nhl-on-tap-news-and-notes-october-26-2026",
+     "why": "Мэттьюс пока на пороге 800 очков; новая достигнутая веха отсутствует, выбраны два подтверждённых обновления по восстановлению."
+    },
+    {
+     "id": "sportsnet:video-how-matthews-helped-build-such-a-positive-vibe-and-comradery-in-leafs-room",
+     "why": "Подкаст об атмосфере в команде, без события."
+    },
+    {
+     "id": "prohockeyrumors:2026-10-quinn-hughes-says-feet-are-planted-in-minnesota-html",
+     "why": "Повтор уже опубликованной позиции Хьюза по контракту."
+    },
+    {
+     "id": "thehockeynews:orning-skate-fowler-shines-in-heritage-classic-hughes-dominates-vancouver-return",
+     "why": "Подкаст с разбором уже освещённых игр и рекордов Фаулера и Хьюза."
+    },
+    {
+     "id": "thehockeynews:hl-injury-roundup-latest-on-oilers-levi-blackhawks-byram-krakens-mccann-and-more",
+     "why": "Сводка новостей последних дней. У Леви упомянут срок «несколько недель» со ссылкой на Грегора, но дата исходного сообщения не установлена; не выдаём обновление статьи за новый срок. Маккэнн на десять недель уже опубликован."
+    },
+    {
+     "id": "prohockeyrumors:2026-10-golden-knights-recall-jonas-rondbjerg-reassign-alexander-holtz-html",
+     "why": "Подтверждён обмен игроков между НХЛ и АХЛ; при лимите двух материалов приоритет свежим сообщениям о заметных защитниках и основном вратаре."
+    }
+   ],
+   "note": "Прочитаны article RMNB о Чикране/Томпсоне и интервью Чайки. Дополнительно просмотрены заголовки feed за четыре часа, прочитаны body Sportsnet о первой полной тренировке Танева, сводки травм THN и кадрового объявления «Вегаса». Новые самостоятельные поводы: полная тренировка Танева после травмы и работа Томпсона по плану восстановления 26 октября; старый вызов Гибсона не повторяется. Отдых Чикрана не превращён в объявленную травму или гарантированный выход. Возвращение обоих травмированных игроков в состав не объявляется. Фото статей загружены и просмотрены: Танев в форме «Торонто», Чикран и Томпсон на тренировке «Вашингтона». Имена сверены со словарём, очередь/live/утренний выпуск/опубликованные ID проверены. Ночь 00:20 Киров: оба tg:false, без утреннего накопления; второй ready+40 минут по промпту. Утреннюю страховку вне её окна не запускали."
   }
  ]
 }
