@@ -1,57 +1,6 @@
 {
  "runs": [
   {
-   "t": "2026-10-22T03:18:09Z",
-   "status": "ok",
-   "picked": [
-    "sportsnet:nhl-article-senators-linus-ullmark-exits-vs-panthers-with-apparent-injury",
-    "prohockeyrumors:2026-10-latest-on-quinn-hughes-future-with-wild-html"
-   ],
-   "skipped": [
-    {
-     "id": "sportsnet:-video-panthers-tkachuk-hears-boos-from-senators-fans-before-being-dumped-by-zub",
-     "why": "Видео стычек, свиста и реакций вокруг возвращения Ткачука; обычный эпизод матча, не отдельная новость."
-    },
-    {
-     "id": "thehockeynews:latest-news-bruins-agree-to-three-year-extension-with-forward-marat-khusnutdinov",
-     "why": "Официальный контракт уже опубликован; другая статья не новое событие."
-    },
-    {
-     "id": "dailyfaceoff:ews-marat-khusnutdinov-boston-bruins-three-year-contract-extension-nhl-news-wild",
-     "why": "Официальный контракт уже опубликован; другая статья не новое событие."
-    },
-    {
-     "id": "dailyfaceoff:-maple-leafs-last-laugh-return-columbus-blue-jackets-matthew-knies-adam-fantilli",
-     "why": "Видео стычек, свиста и реакций вокруг возвращения Ткачука; обычный эпизод матча, не отдельная новость."
-    },
-    {
-     "id": "sportsnet:ticle-oilers-podkolzin-off-to-flying-start-riding-shotgun-with-mcdavid-draisaitl",
-     "why": "Ранее прочитанная история роста в известном звене и старого обмена; новой роли или решения нет."
-    },
-    {
-     "id": "espn:50243435",
-     "why": "Видео стычек, свиста и реакций вокруг возвращения Ткачука; обычный эпизод матча, не отдельная новость."
-    },
-    {
-     "id": "dailyfaceoff:rs-linus-ullmark-leaves-game-against-florida-panthers-lower-body-injury-nhl-news",
-     "why": "Одна новость о травме по Sportsnet, body DFO прочитан для подтверждения; второй пост не нужен."
-    },
-    {
-     "id": "sportsnet:nhl-video-senators-fans-boo-brady-tkachuk-during-tribute-video",
-     "why": "Видео стычек, свиста и реакций вокруг возвращения Ткачука; обычный эпизод матча, не отдельная новость."
-    },
-    {
-     "id": "sportsnet:nhl-video-brady-tkachuk-lands-in-penalty-box-as-senators-and-panthers-scrap",
-     "why": "Видео стычек, свиста и реакций вокруг возвращения Ткачука; обычный эпизод матча, не отдельная новость."
-    },
-    {
-     "id": "sportsnet:hl-video-brady-tkachuks-goal-sparks-tilt-between-senators-hodgson-panthers-imama",
-     "why": "Видео стычек, свиста и реакций вокруг возвращения Ткачука; обычный эпизод матча, не отдельная новость."
-    }
-   ],
-   "note": "Прочитаны полные operations/news/tg-news/style. Сначала metadata/recent/morning/12 кандидатов без article, затем article обоих источников Ульмарка и Хьюза. Дополнительно свежие заголовки/summary четырёх часов. Sportsnet+DFO: Ульмарк ушёл с помощью после отражённого броска в третьем периоде,16/17, заменил Эрссон; подтверждённый диагноз/сроки не заявлены, прогнозы не тронуты. У Хьюза body1800 содержит только старые заявления: полный PHR скачан и прочитан, дальше есть новая оценка Криса Джонстона в сегодняшнем trade board. В тексте и заголовке явная атрибуция/условие, нет утверждения, что клуб уже ищет обмен или игрок отказался от продления. Прямой Athletic недоступен, сведения взяты из полного прочитанного PHR, как разрешает промпт; пустой поиск не основание выдумывать детали. Старое возвращение Хьюза в Ванкувер иной сюжет. Queue/live/state/recent/morning/log проверены на дубли. Имена по names_ru, Крис Джонстон транскрибирован. Фото Sportsnet Ульмарк35 и оригинал PHR Хьюз43: HTTP200, просмотрены. Оба tg:false/hot:false ночью06МСК, второйready+40мин, канал без накопления. Длины/латиница/JSON проверены, журнал30 и штатный news_live.py. Утреннюю страховку вне окна не выполнял."
-  },
-  {
    "t": "2026-10-22T05:26:49Z",
    "status": "ok",
    "picked": [
@@ -1740,6 +1689,80 @@
     }
    ],
    "note": "Прочитаны article RMNB о Чикране/Томпсоне и интервью Чайки. Дополнительно просмотрены заголовки feed за четыре часа, прочитаны body Sportsnet о первой полной тренировке Танева, сводки травм THN и кадрового объявления «Вегаса». Новые самостоятельные поводы: полная тренировка Танева после травмы и работа Томпсона по плану восстановления 26 октября; старый вызов Гибсона не повторяется. Отдых Чикрана не превращён в объявленную травму или гарантированный выход. Возвращение обоих травмированных игроков в состав не объявляется. Фото статей загружены и просмотрены: Танев в форме «Торонто», Чикран и Томпсон на тренировке «Вашингтона». Имена сверены со словарём, очередь/live/утренний выпуск/опубликованные ID проверены. Ночь 00:20 Киров: оба tg:false, без утреннего накопления; второй ready+40 минут по промпту. Утреннюю страховку вне её окна не запускали."
+  },
+  {
+   "t": "2026-10-26T23:23:47Z",
+   "status": "ok",
+   "picked": [
+    "prohockeyrumors:2026-10-kings-place-mats-zuccarello-on-injured-reserve-html",
+    "dailyfaceoff:arolina-hurricanes-taylor-hall-expected-return-injury-five-game-absence-nhl-news"
+   ],
+   "skipped": [
+    {
+     "id": "rmnb:2026-10-26-spencer-carbery-ivan-miroshnichenko-healthy-scratches-trade-rumors",
+     "why": "Новый комментарий тренера о профессионализме Мирошниченко, но без нового решения по составу или обмену. Разрешение искать переход и сравнение компенсации с Чинаховым уже опубликованы."
+    },
+    {
+     "id": "sportsnet:nhl-video-is-maple-leafs-net-situation-a-goalie-battle-or-a-gameplan",
+     "why": "Обсуждение вратарской ротации без нового назначения основного вратаря."
+    },
+    {
+     "id": "thehockeynews:the-hockey-news-big-show-does-hellebuyck-make-the-devils-a-stanley-cup-contender",
+     "why": "Подкаст с оценками уже опубликованных обмена Хеллибака, контракта Никишина и возвращения Хьюза."
+    },
+    {
+     "id": "sportsnet:nhl-article-maple-leafs-gm-chayka-talks-defence-cowan-mckenna",
+     "why": "Общее интервью об обороне и трансферном рынке; новой сделки или конкретного решения нет."
+    },
+    {
+     "id": "sportsnet:nhl-video-mckenna-in-awe-of-cowans-two-way-play-on-maple-leafs-top-line",
+     "why": "Похвала Коуэну от партнёра без самостоятельного события."
+    },
+    {
+     "id": "sportsnet:nhl-video-maple-leafs-hiller-really-impressed-by-cowans-play-without-the-puck",
+     "why": "Оценка игры Коуэна тренером, без кадрового изменения."
+    },
+    {
+     "id": "prohockeyrumors:2026-10-avalanche-activate-logan-oconnor-recall-taylor-makar-html",
+     "why": "Новое только отправление Тэйлора Макара в АХЛ; активация О’Коннора от 23 октября. Более значимы два выбранных изменения списка травмированных."
+    },
+    {
+     "id": "sportsnet:-video-babcock-isnt-ready-to-split-up-mcdavid-and-draisaitl-after-one-rough-loss",
+     "why": "Комментарий о сохранении сочетания после поражения, без новой перестановки."
+    },
+    {
+     "id": "rmnb:2026-10-26-washington-capitals-new-gear-goalie-masks-hometown-remix-jerseys",
+     "why": "Дизайн экипировки без хоккейного события."
+    },
+    {
+     "id": "nhl:nhl-on-tap-news-and-notes-october-26-2026",
+     "why": "Мэттьюс ещё на пороге 800 очков, новой достигнутой вехи нет; выбраны подтверждённые кадровые решения."
+    },
+    {
+     "id": "sportsnet:video-how-matthews-helped-build-such-a-positive-vibe-and-comradery-in-leafs-room",
+     "why": "Подкаст об атмосфере в команде, без события."
+    },
+    {
+     "id": "prohockeyrumors:2026-10-quinn-hughes-says-feet-are-planted-in-minnesota-html",
+     "why": "Повтор уже опубликованной позиции Хьюза о контракте."
+    },
+    {
+     "id": "prohockeyrumors:2026-10-islanders-make-multiple-roster-moves-html",
+     "why": "Ричи и Макчелли травмированы с 17 октября, сроки объявлены 19-го; вызовы Айтчесона и Энгвалла описаны как бумажные, участия в ближайшей игре не предполагается."
+    },
+    {
+     "id": "dailyfaceoff:fs-update-injury-status-chris-tanev-john-tavares-max-domi-dakota-joshua-nhl-news",
+     "why": "Танев уже освещён по более конкретному сообщению о полной тренировке. Таварес и Доми возобновили катание, скорый вызов Джошуа ожидается, но ещё не оформлен; приоритет двум подтверждённым решениям."
+    }
+   ],
+   "updated": [
+    "dailyfaceoff:arolina-hurricanes-taylor-hall-expected-return-injury-five-game-absence-nhl-news"
+   ],
+   "source_event_ids": [
+    "prohockeyrumors:2026-10-kings-place-mats-zuccarello-on-injured-reserve-html",
+    "sportsnet:nhl-article-hurricanes-activate-taylor-hall-from-injured-reserve"
+   ],
+   "note": "В коротком списке нового самостоятельного события не выбрано. Прочитан article Карбери о Мирошниченко: оценка характера, без решения по обмену. Дополнительно просмотрены заголовки feed за четыре часа и прочитаны body: Цуккарелло IR, активация Холла (PHR и Sportsnet), кадровые операции «Айлендерс», обновление травм «Торонто». Новый Цуккарелло — официальное повторное помещение в IR, а не прежняя новость о пропуске матча; предполагаемую дату активации 1 ноября из условного расчёта статьи не выдаём за срок восстановления. По Холлу новое решение — выход из IR: обновлён существующий элемент сайта, без второго поста и смены его ID/written; актуальный источник Sportsnet, фото заменено просмотренным фото той статьи. Названы оба участника кадровой операции, включая Скайлера Бриндамора. Фото Цуккарелло и Холла загружены и просмотрены; имена по словарю, дубли/опубликованные ID проверены. Ночь 02:22 Киров: оба tg:false, обновление Холла ready+40 минут как второй материал. Начавшиеся матчи, прогнозы и журнал модели не изменяются. Утренняя страховка вне окна не выполнялась."
   }
  ]
 }
