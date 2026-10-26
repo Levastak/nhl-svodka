@@ -1,65 +1,6 @@
 {
  "runs": [
   {
-   "t": "2026-10-21T21:27:33Z",
-   "status": "ok",
-   "picked": [
-    "dailyfaceoff:ws-vegas-golden-knights-place-lukas-cormier-nhl-waivers-ahl-henderson-alex-holtz",
-    "prohockeyrumors:2026-10-canadiens-reassign-owen-beck-david-reinbacher-html"
-   ],
-   "skipped": [
-    {
-     "id": "dailyfaceoff:ews-marat-khusnutdinov-boston-bruins-three-year-contract-extension-nhl-news-wild",
-     "why": "Article прочитан: reportedly agreed, источники те же Уикс/Каплан,3года/3.95млн уже опубликованы; громкий заголовок не доказывает нового официального объявления."
-    },
-    {
-     "id": "dailyfaceoff:-maple-leafs-last-laugh-return-columbus-blue-jackets-matthew-knies-adam-fantilli",
-     "why": "Гол и возвращение к бывшему клубу уже освещены."
-    },
-    {
-     "id": "sportsnet:ticle-oilers-podkolzin-off-to-flying-start-riding-shotgun-with-mcdavid-draisaitl",
-     "why": "История прежнего обмена и роста в уже известном звене, без нового кадрового решения."
-    },
-    {
-     "id": "espn:50235118",
-     "why": "Рекорд Кучерова уже опубликован."
-    },
-    {
-     "id": "sportsnet:nhl-article-marchenko-cowan-help-maple-leafs-earn-rout-in-columbus",
-     "why": "Гол и возвращение к бывшему клубу уже освещены."
-    },
-    {
-     "id": "sportsnet:nhl-video-how-should-panthers-tkachuk-be-received-in-ottawa-upon-return",
-     "why": "Возвращение Ткачука и реакции вокруг него уже освещены, нового перехода или кадрового решения нет."
-    },
-    {
-     "id": "espn:50239618",
-     "why": "Возвращение Ткачука и реакции вокруг него уже освещены, нового перехода или кадрового решения нет."
-    },
-    {
-     "id": "nhl:panthers-brady-tkachuk-ready-for-emotional-return-to-ottawa",
-     "why": "Возвращение Ткачука и реакции вокруг него уже освещены, нового перехода или кадрового решения нет."
-    },
-    {
-     "id": "sportsnet:-video-bring-whatever-you-feel-maurice-on-how-senators-fans-should-welcome-brady",
-     "why": "Возвращение Ткачука и реакции вокруг него уже освещены, нового перехода или кадрового решения нет."
-    },
-    {
-     "id": "prohockeyrumors:2026-10-the-devils-may-need-to-make-a-goaltending-upgrade-html",
-     "why": "Авторский анализ потребности во вратаре, не объявленные переговоры или трансфер."
-    },
-    {
-     "id": "sportsnet:nhl-video-how-cozens-feels-tkachuk-should-be-remembered-by-senators-fanbase",
-     "why": "Возвращение Ткачука и реакции вокруг него уже освещены, нового перехода или кадрового решения нет."
-    },
-    {
-     "id": "sportsnet:nhl-video-why-senators-green-isnt-concerned-with-what-reception-brady-will-get",
-     "why": "Возвращение Ткачука и реакции вокруг него уже освещены, нового перехода или кадрового решения нет."
-    }
-   ],
-   "note": "Прочитаны operations/news/полный промпт/стиль. Сначала metadata/recent/morning/12summary без article; затем articleХуснутдинов. DFOподписали в заголовке, но body reportedly/thesameKaplan — не новое официальное объявление, точныеусловия уже опубликованы20:20. Дополнительно заголовки4ч и непросмотренные травмы/транзакции18ч. Вне12 найдены Кормье/Хольц и Бек/Райнбахер; оба feed.body прочитаны. DFObody достаточно: выставлен, ещё НЕпрошёлотказы; назначение вХендерсон толькоеслинепотребуют, вызовХольца отдельнаяподтверждённаяоперация. ПрямаяDFOстраница403, факты естьвbody, не отказалсяиззасети. PHRМонреаль подтверждён официальным https://www.nhl.com/canadiens/news/canadiens-loan-beck-reinbacher-to-laval-rocket-oct-21-2026: Бек2НХЛ/Райнбахер1НХЛ, оба4АХЛ/1и2передачи. Возможныйобратныйвызоввпятницу не выдаюзаплан. НевсловареКормье/Хольц: написанияЛукасКормье/АлександерХольц проверены поSportsruсоставуиChampionatкарточкам; names_ruнеизменёнврамках3файлов. Бек/Райнбахер строгоnames_ru. ФотоDFOКормье51 и PHRРайнбахер64 оригиналJSONLD HTTP200/просмотрены. Дублиqueue/recent/morning/state/log/live проверены; обаночьюtg:false/hot:false безутреннейочереди; второйready+40мин. 4и3предложения≤700/заголовки≤90/безлатиницы; журнал30/liveштатно. Утреннююстраховкувнеокна00МСКне выполнял, готовое/финал/модель/скриптынетрогал."
-  },
-  {
    "t": "2026-10-21T23:23:05Z",
    "status": "ok",
    "picked": [
@@ -1744,6 +1685,57 @@
     }
    ],
    "note": "Утро и подписи при фактическом старте 10:43 Киров проверены: daily.date=tg.date=results_date, auto_texts отсутствует, day_complete/daily_ready=true; восстановление не требовалось. После паузы main обновлён, отбор пересчитан. Прочитан article НХЛ: новый возрастной рекорд Фаулера; обычный пересказ не дублируется. Только сайт: сам матч и герой уже в утренних постах канала. По свежим заголовкам feed за четыре часа новых самостоятельных поводов нет. Фото НХЛ вернуло 403, использован просмотренный снимок Sportsnet того же матча: Фаулер №32 в форме «Монреаля». Статья и официальный boxscore показывают 33/34 против 34/35 в сохранённых данных. Точечный повторный сбор штатными build_game/game_extras подтвердил 33/34 и 34 броска «Виннипега»; исправляются источник, текст обзора и подписи, посты 217/218 — на месте через edits, карточка 218 — последним recard. Статистические числа получены сборщиком, scripts/workflows и старые прогнозы не меняются."
+  },
+  {
+   "t": "2026-10-26T18:39:44Z",
+   "status": "ok",
+   "picked": [
+    "rmnb:2026-10-26-ivan-miroshnichenko-capitals-trade-return-elliotte-friedman-rumor",
+    "nhl:draisaitl-cooley-fowler-named-nhl-3-stars-of-week-october-26-2026"
+   ],
+   "skipped": [
+    {
+     "id": "prohockeyrumors:2026-10-avalanche-activate-logan-oconnor-recall-taylor-makar-html",
+     "why": "В обновлении от 26 октября новое только возвращение Тэйлора Макара в АХЛ; активация О’Коннора от 23 октября. Более значимы два выбранных свежих повода."
+    },
+    {
+     "id": "sportsnet:-video-babcock-isnt-ready-to-split-up-mcdavid-and-draisaitl-after-one-rough-loss",
+     "why": "Комментарий о сохранении сочетания Макдэвида и Драйзайтля после поражения: без нового кадрового решения."
+    },
+    {
+     "id": "rmnb:2026-10-26-washington-capitals-new-gear-goalie-masks-hometown-remix-jerseys",
+     "why": "Экипировка и дизайн формы, без самостоятельного хоккейного события."
+    },
+    {
+     "id": "nhl:nhl-on-tap-news-and-notes-october-26-2026",
+     "why": "Мэттьюс пока на пороге 800 очков; веха ещё не достигнута. Два выбранных новых события приоритетнее превью."
+    },
+    {
+     "id": "sportsnet:video-how-matthews-helped-build-such-a-positive-vibe-and-comradery-in-leafs-room",
+     "why": "Разговор об атмосфере в раздевалке, без нового события."
+    },
+    {
+     "id": "prohockeyrumors:2026-10-quinn-hughes-says-feet-are-planted-in-minnesota-html",
+     "why": "Повтор уже освещённой позиции Хьюза по будущему в «Миннесоте»."
+    },
+    {
+     "id": "thehockeynews:orning-skate-fowler-shines-in-heritage-classic-hughes-dominates-vancouver-return",
+     "why": "Подкаст и пересказ прошедших матчей; рекорды Фаулера и Хьюза уже опубликованы."
+    },
+    {
+     "id": "dailyfaceoff:hl-crosby-pass-dionne-points-karlsson-chelios-defenseman-record-hockey-halloween",
+     "why": "Недельный анонс возможных будущих вех; новых достигнутых рекордов нет."
+    },
+    {
+     "id": "sportsnet:nhl-article-unfazed-hughes-burns-former-team-as-wild-hand-canucks-another-loss",
+     "why": "Пересказ возвращения Хьюза в Ванкувер; матч и 500 очков уже освещены."
+    },
+    {
+     "id": "sportsnet:nhl-video-got-some-cheers-that-was-cool-hughes-on-passion-from-fans-in-return",
+     "why": "Эмоции Хьюза после уже освещённого матча, без нового события."
+    }
+   ],
+   "note": "Прочитаны article Мирошниченко, обновления О’Коннора/Макара, трёх звёзд НХЛ и On Tap; полная статья RMNB дополнительно проверена. Новая часть сюжета Мирошниченко — оценка компенсации Фридманом, а не прежнее разрешение искать обмен. В старом обмене Чинахова названы все активы, включая Хейнена; текущий обмен не объявлен. Официальные три звезды недели — новое решение НХЛ, не редакторские герои ночи: только сайт. Фото обеих статей загружены и просмотрены; имена сверены со словарём, дубли и опубликованные ID проверены. Первый материал tg:true/hot:true, второй tg:false/ready+40 минут по промпту. Фактическое время вне окна утренней страховки."
   }
  ]
 }
