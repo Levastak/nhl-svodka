@@ -1,33 +1,6 @@
 {
   "runs": [
     {
-      "t": "2026-10-22T17:22:29Z",
-      "status": "ok",
-      "picked": [
-        "nhl:montreal-canadiens-nick-suzuki-injury-status-update-october-22-2026",
-        "dailyfaceoff:news-ottawa-senators-place-linus-ullmark-injured-reserve"
-      ],
-      "skipped": [
-        {
-          "id": "dailyfaceoff:s-matthew-tkachuk-ottawa-senators-nick-cousins-fined-following-heated-game-brady",
-          "why": "штраф $5000 за драку в уже обсуждённом матче, мелко"
-        },
-        {
-          "id": "thehockeynews:latest-news-nhl-rumor-roundup-update-on-simon-edvinsson-the-latest-on-the-flames",
-          "why": "сборник слухов, нет конкретики"
-        },
-        {
-          "id": "sportsnet:-video-panthers-tkachuk-hears-boos-from-senators-fans-before-being-dumped-by-zub",
-          "why": "видео вчерашнего матча"
-        },
-        {
-          "id": "dailyfaceoff:news-brady-tkachuk-return-ottawa-senators-lived-up-hype-boos-you-suck-crayons",
-          "why": "пересказ прошедшего матча"
-        }
-      ],
-      "note": "Сверка Codex параллельного запуска20:20: оба выбранных события уже приняты main в f120b6a, новых постов/записей журнала не создавал. Полные instructions прочитаны; article NHL Сузуки/PHR Бек/DFO IR и полные оригиналы NHL/DFO проверены. В ещё не опубликованном посте Ульмарка исправлены только Сэмюэль→Самуэль (names_ru), Йонас→Юнас (транскрипция подтверждена Sports.ru/Чемпионатом), две соседние фразы соединены точкой с запятой до лимита5предложений. Статистика/прогнозы/готовые тексты остальных постов не переписывались. Фото обоих источников HTTP200/просмотрены. Состояние канала:1новостьсегодня, очередь2, лимит5 соблюдён; бот сохраняет75минмеждуновостями/20междулюбымипостами. Источник/сайт обновлены через news_live; same log entry дополнена без дубля."
-    },
-    {
       "t": "2026-10-22T19:20:03Z",
       "status": "ok",
       "picked": [
@@ -1796,6 +1769,77 @@
         "https://www.sports.ru/hockey/1115981005-14-letnij-zashhitnik-dyupon-stal-2-m-igrokom-s-isklyuchitelnym-statuso.html"
       ],
       "note": "Сначала прочитаны метаданные, recent_titles, morning_site_news и заголовки/summary 12 кандидатов без article. За последние четыре часа (с 07:21 UTC) в feed нет новых заголовков, feed обновлён 10:40 UTC. Дополнительно просмотрены непросмотренные заголовки/инсайды/кадровые поводы во всём 18-часовом окне. Прочитаны body Sportsnet и Daily Faceoff о первом списке Центрального скаутского бюро; затем полностью открыт Sportsnet. Это выпуск списка от 26 октября, впервые освещаемый на сайте, а не очередной пересказ матча. 28 игроков имеют оценку A как потенциальные кандидаты в первый раунд; не выдаём её за нумерованный рейтинг или уже определённый первый выбор. В тексте явно названа дата события, январский/апрельский рейтинги — планы. Единственный игрок — Лэндон Дюпон: в names_ru отсутствует, написание проверено по российской прессе (Sports.ru/«Чемпионат»), словарь в новостной задаче не меняется. Фото Sportsnet загружено и просмотрено, игрок в форме Мичиганского университета. Дубли очереди/live/утренних новостей и опубликованные ID проверены. Новость только для сайта: tg:false/hot:false; два оставшихся места канала сохраняются для главных событий. Очередь очищена от элементов старше трёх дней. Фактическое местное время после 11:30: страховка утра не выполняется; готовые данные, подписи и прогнозы не меняются."
+    },
+    {
+      "t": "2026-10-27T14:04:13Z",
+      "status": "ok",
+      "picked": [],
+      "skipped": [
+        {
+          "id": "sportsnet:nhl-video-i-thought-about-it-for-a-long-time-flames-gridin-on-griddy-celebration",
+          "why": "Интервью о танце после уже разобранного матча; Гридин уже в итогах, звёздах и видео."
+        },
+        {
+          "id": "nhl:pyotr-kochetkov-just-thinking-about-hockey-during-perfect-start-for-hurricanes",
+          "why": "Профиль прежней победной серии Кочеткова; интервью прошлой недели, нового решения или рекорда нет."
+        },
+        {
+          "id": "rmnb:26-10-26-rod-brindamour-alexander-nikishin-agent-criticism-holdout-trade-request",
+          "why": "Договор Никишина уже освещён; трактовка общей реплики Бриндамора не даёт нового решения клуба."
+        },
+        {
+          "id": "rmnb:2026-10-26-spencer-carbery-ivan-miroshnichenko-healthy-scratches-trade-rumors",
+          "why": "Разрешение искать обмен и оценка Фридмана уже опубликованы; новая реплика Карбери об отношении игрока без нового предложения или решения."
+        },
+        {
+          "id": "sportsnet:nhl-article-youngsters-set-tone-for-flames-in-griddy-win",
+          "why": "Повтор разобранного матча «Калгари» и празднования Гридина."
+        },
+        {
+          "id": "sportsnet:nhl-article-maple-leafs-auston-matthews-unhappy-with-delay-of-game-penalty",
+          "why": "Реакция Мэттьюса на удаление в разобранном матче, нового решения лиги нет."
+        },
+        {
+          "id": "sportsnet:nhl-video-nhl-highlights-red-wings-4-oilers-3-so",
+          "why": "Хайлайты уже разобранного матча «Эдмонтон» — «Детройт»."
+        },
+        {
+          "id": "sportsnet:nhl-video-nhl-highlights-flames-5-maple-leafs-2-2",
+          "why": "Хайлайты уже разобранного матча «Калгари» — «Торонто»."
+        },
+        {
+          "id": "rmnb:2026-10-26-quinn-hughes-nearby-options-nhl-free-agency-devils-wild-rumor",
+          "why": "Ранее прочитанный прогноз Паньотты об абстрактных соседних вариантах: без названных клубов, предложения или нового решения."
+        },
+        {
+          "id": "sportsnet:nhl-article-kings-continue-hot-eastern-conference-trip-with-win-over-rangers",
+          "why": "Повтор матча «Рейнджерс» — «Лос-Анджелес», который есть в итогах и колонке."
+        },
+        {
+          "id": "sportsnet:nhl-video-nhl-highlights-kings-6-rangers-3",
+          "why": "Хайлайты того же матча, уже разобранного на сайте и в канале."
+        },
+        {
+          "id": "sportsnet:nhl-video-flames-conroy-on-cooley-hes-the-most-popular-person-in-canada",
+          "why": "Похвала Кули в интервью без нового решения по составу, контракта или рекорда."
+        }
+      ],
+      "checks": {
+        "feed_t": "2026-10-27T12:30:45Z",
+        "fresh_titles_last_4h": 0,
+        "expanded_window_hours": 18,
+        "additional_review": [
+          {
+            "id": "nhl:drew-doughty-wants-to-play-past-40-win-another-stanley-cup-championship-with-kings",
+            "why": "Прочитан body: интервью прошлой недели о желании играть после 40 и предварительных разговорах; нового контракта нет."
+          },
+          {
+            "id": "dailyfaceoff:innipeg-jets-run-three-goalie-tandem-stuart-skinner-nico-daws-clay-stevenson-nhl",
+            "why": "Прочитан body: обсуждение ведущими возможной тройки вратарей после уже опубликованного обмена, без нового решения клуба."
+          }
+        ],
+        "direct_search": "Проверен поиск свежих сообщений клубов/НХЛ по травмам Марченко, Хаймана и возвращениям «Торонто»; новой подтверждённой публикации в допустимом окне не найдено."
+      }
     }
   ]
 }
