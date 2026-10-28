@@ -1,77 +1,6 @@
 {
   "runs": [
     {
-      "t": "2026-10-25T01:26:42Z",
-      "status": "ok",
-      "picked": [
-        "dailyfaceoff:ws-victor-hedman-tampa-bay-lightning-out-lower-body-injury-not-play-utah-mammoth",
-        "prohockeyrumors:2026-10-dallas-stars-injury-updates-html"
-      ],
-      "skipped": [
-        {
-          "id": "prohockeyrumors:2026-10-michkov-quieting-doubts-with-strong-start-html",
-          "why": "Анализ старта Мичкова перед уже завершённым матчем, не новое событие."
-        },
-        {
-          "id": "nhl:new-jersey-devils-players-excited-to-have-connor-hellebuyck-in-net",
-          "why": "Прочитан article: реакции игроков на уже освещённый обмен Хеллибака, нового кадрового решения нет."
-        },
-        {
-          "id": "sportsnet:nhl-video-maple-leafs-roslovic-opens-scoring-in-return-to-edmonton",
-          "why": "Видео отдельного гола Рословика."
-        },
-        {
-          "id": "sportsnet:nhl-video-senators-batherson-stutzle-strike-just-over-a-minute-apart-vs-rangers",
-          "why": "Видео двух голов, не отдельное новое событие."
-        },
-        {
-          "id": "prohockeyrumors:2026-10-could-the-trade-market-favor-the-buyers-html",
-          "why": "Редакционный прогноз рынка обменов уже рассмотрен: конкретного нового инсайда нет."
-        },
-        {
-          "id": "espn:50269978",
-          "why": "Пересказ завершённого матча Карлссона."
-        },
-        {
-          "id": "sportsnet:nhl-article-ducks-leo-carlsson-burns-flyers-with-goal-and-assist-in-win",
-          "why": "Другой пересказ того же матча."
-        },
-        {
-          "id": "prohockeyrumors:2026-10-kraken-recall-jani-nyman-following-injury-to-jared-mccann-html",
-          "why": "Травма Маккэнна и вызов Нюмана уже опубликованы."
-        },
-        {
-          "id": "nhl:quinn-hughes-not-sure-what-to-expect-in-first-trip-back-to-vancouver",
-          "why": "Комментарий Хьюза о контракте уже опубликован; возвращение в Ванкувер не требует второго текста."
-        },
-        {
-          "id": "espn:50269091",
-          "why": "Обычный пересказ завершённого матча."
-        },
-        {
-          "id": "sportsnet:nhl-video-flyers-joseph-woll-stretches-to-stonewall-ducks-cutter-gauthier",
-          "why": "Видео отдельного сейва."
-        },
-        {
-          "id": "sportsnet:nhl-video-ducks-leo-carlsson-capitalizes-on-giveaway-against-flyers",
-          "why": "Видео отдельного гола."
-        },
-        {
-          "id": "prohockeyrumors:2026-10-predators-claim-daemon-hunt-off-waivers-html",
-          "why": "Body прочитан: переход Ханта новый, но отложен по пределу двух в пользу более свежих обновлений Хедмана и Далласа."
-        },
-        {
-          "id": "prohockeyrumors:2026-10-wild-recall-mason-shaw-html",
-          "why": "Вызов Шоу отложен в пользу более значимых обновлений по травмам."
-        },
-        {
-          "id": "prohockeyrumors:2026-10-jets-recall-elias-salomonsson-2-html",
-          "why": "Вызов Саломонссона отложен по пределу двух."
-        }
-      ],
-      "note": "04:2x 25 октября Киров: ночное окно, обе новости только сайт tg:false. Короткий список проверен; дополнительно просмотрены заголовки/summary последних четырёх часов и кадровые сюжеты в допустимых 18 часах. Оба выбранных body прочитаны полностью из feed. У Хедмана новый факт после утренней неизвестной причины ухода: нижняя часть тела и отсутствие против Юты; разницу 9/10 матчей внутри статьи не переносили. У Далласа подтверждены обычный IR Линделля и LTIR Бэка; возможный вызов из фарма не выдан за решение. Фамилии по names_ru; обе фотографии HTTP200 и просмотрены (Хедман, Линделль №23). Прогнозы и статистика не затронуты."
-    },
-    {
       "t": "2026-10-25T22:00:33Z",
       "status": "ok",
       "picked": [
@@ -1982,6 +1911,72 @@
         "photos": "Просмотрены снимки первоисточников. Капризов №97 на льду — Brad Rempel/Getty Images; Хайман в игровой форме на льду — Leila Devlin/Getty Images. Обе фотографии редакционные, не служебные портреты из карточек; кредиты и ссылки сохранены.",
         "telegram": "Сейчас после 20:20 Europe/Kirov, до ночного запрета. За день две новости feed, slots_left=3; добавлены две в пределах общего лимита. Капризов hot=true, Хайман ready +40 минут; бот дополнительно соблюдает 75 минут между feed и 20 минут между любыми постами."
       }
+    },
+    {
+      "t": "2026-10-28T19:23:20Z",
+      "status": "ok",
+      "picked": [
+        "sportsnet:nhl-article-maple-leafs-provide-injury-updates-for-several-players",
+        "prohockeyrumors:2026-10-sharks-make-multiple-roster-moves-html"
+      ],
+      "skipped": [
+        {
+          "id": "nhl:semyon-varlamov-gets-first-win-after-two-years-for-new-york-islanders",
+          "why": "Первая победа после долгого восстановления уже разобрана в итогах; статья не сообщает нового медицинского допуска или решения о составе."
+        },
+        {
+          "id": "dailyfaceoff:innesota-wild-hot-start-more-sustainable-league-leading-goals-draisaitl-lehkonen",
+          "why": "Анализ, видео или реакция на уже освещённый матч; нового самостоятельного события нет."
+        },
+        {
+          "id": "prohockeyrumors:2026-10-trade-notes-yurov-wright-hague-html",
+          "why": "Повтор вчерашнего инсайда Джонстона: первичное сообщение от 27.10 до 18:53 UTC уже старше 18 часов."
+        },
+        {
+          "id": "rmnb:2026-10-28-capitals-return-goaltender-mitch-gibson-hershey-bears-ahl",
+          "why": "Полный материал прочитан: новое снятие Томпсона с IR подтверждено приведённым пресс-релизом клуба. При максимуме двух тем выбраны новые статусы россиян Марченко и Чернышова."
+        },
+        {
+          "id": "sportsnet:nhl-video-hes-done-a-really-good-job-huska-on-cooleys-recent-form",
+          "why": "Анализ, видео или реакция на уже освещённый матч; нового самостоятельного события нет."
+        },
+        {
+          "id": "dailyfaceoff:rs-matthew-schaefer-impresses-yet-again-lengthy-overtime-nhl-nashville-predators",
+          "why": "Рекорд пяти минут овертайма уже освещён в утреннем выпуске и канале."
+        },
+        {
+          "id": "sportsnet:nhl-video-people-take-a-lot-of-pride-bouchard-on-battle-of-alberta",
+          "why": "Анализ, видео или реакция на уже освещённый матч; нового самостоятельного события нет."
+        },
+        {
+          "id": "sportsnet:nhl-video-is-fowler-making-an-early-case-for-the-calder-trophy",
+          "why": "Анализ, видео или реакция на уже освещённый матч; нового самостоятельного события нет."
+        },
+        {
+          "id": "nhl:jacob-fowler-sets-montreal-canadiens-record-for-saves-by-rookie",
+          "why": "Ранее прочитан: впервые освещаемый рекорд новичка клуба по сейвам, но при максимуме двух новостей приоритет у новых медицинских статусов россиян. Сам матч подробно разобран утром."
+        },
+        {
+          "id": "sportsnet:cle-unflappable-guy-matthew-schaefer-off-to-strong-sophomore-start-for-islanders",
+          "why": "Рекорд пяти минут овертайма уже освещён в утреннем выпуске и канале."
+        },
+        {
+          "id": "thehockeynews:all-in-devils-debut-fowler-shuts-the-door-vs-blues-the-hockey-news-morning-skate",
+          "why": "Анализ, видео или реакция на уже освещённый матч; нового самостоятельного события нет."
+        },
+        {
+          "id": "sportsnet:article-thomas-chabot-nearing-return-as-senators-place-cameron-crotty-on-waivers",
+          "why": "Полный материал прочитан: новое выставление Кротти на драфт отказов и возможное возвращение Шабо; ниже двух выбранных российских сюжетов."
+        },
+        {
+          "id": "sportsnet:nhl-article-despite-prohibitive-price-larkin-trade-to-canadiens-remains-possible",
+          "why": "Полный текст Энгельса прочитан: оценка цены и наблюдений скаута, без согласованного обмена или нового решения Ларкина; приоритет у подтверждённых статусов россиян."
+        },
+        {
+          "id": "fresh_feed_scan:2026-10-28:15:30-19:30Z",
+          "why": "Дополнительно просмотрены заголовки последних четырёх часов вне 12 кандидатов: найдено обновление по Марченко. Остальное — уже освещённый Хайман, отказы Суси/Кротти, анализ, предполагаемые составы, высказывания перед матчами. В канал новые материалы не ставим: последняя новость 18:55:53Z +75 минут =20:10:53Z, уже после 23:00 местного."
+        }
+      ]
     }
   ]
 }
