@@ -1,61 +1,6 @@
 {
   "runs": [
     {
-      "t": "2026-10-24T11:20:31Z",
-      "status": "ok",
-      "picked": [
-        "rmnb:2026-10-23-capitals-recall-goaltender-mitch-gibson-logan-thompson-injury",
-        "nhl:nhl-status-report-news-and-notes-october-23-2026"
-      ],
-      "skipped": [
-        {
-          "id": "prohockeyrumors:2026-10-jets-place-vladislav-namestnikov-on-ir-jack-st-ivany-on-waivers-html",
-          "why": "Наместников и остальные перестановки уже в утренних новостях сайта."
-        },
-        {
-          "id": "sportsnet:nhl-article-centres-stabilize-canadiens-in-first-game-without-suzuki",
-          "why": "Разбор уже освещённого матча и центров «Монреаля»."
-        },
-        {
-          "id": "sportsnet:nhl-video-avalanches-challenge-goes-unsuccessful-after-lengthy-review",
-          "why": "Видео эпизода уже освещённого матча, самостоятельного нового события нет."
-        },
-        {
-          "id": "prohockeyrumors:2026-10-avalanche-activate-logan-oconnor-recall-taylor-makar-html",
-          "why": "Возвращение относится к уже завершённому матчу; нового поворота нет."
-        },
-        {
-          "id": "sportsnet:-article-oilers-place-devon-levi-on-injured-reserve-recall-matt-tomkins-from-ahl",
-          "why": "Перевод Леви и вызов Томкинса уже выбраны по Daily Faceoff."
-        },
-        {
-          "id": "rmnb:3-spencer-carbery-takes-responsibility-capitals-uneven-start-defensive-struggles",
-          "why": "Оценка старта и ответственности тренера; без нового решения, два конкретных кадровых события предпочтительнее."
-        },
-        {
-          "id": "sportsnet:nhl-video-how-hellebuyck-trade-could-impact-larkin-hughes",
-          "why": "Обсуждение последствий обмена без конкретного нового решения; свежий инсайд Лебрюна о Ларкине уже в очереди."
-        },
-        {
-          "id": "rmnb:2026-10-23-ryan-leonard-another-level-capitals-spencer-carbery",
-          "why": "Оценка прогресса Леонарда, нового кадрового события нет."
-        },
-        {
-          "id": "sportsnet:nhl-video-is-4th-line-what-separates-this-years-maple-leafs-from-last-season",
-          "why": "Тактическое обсуждение уже прошедшего матча."
-        },
-        {
-          "id": "sportsnet:nhl-article-maple-leafs-prepare-for-stiff-test-against-connor-mcdavid-oilers",
-          "why": "Превью встречи с Макдэвидом уже покрыто утренними текстами, нового кадрового события нет."
-        },
-        {
-          "id": "nhl:torotno-maple-leafs-hoping-to-slow-down-edmonton-oilers-connor-mcdavid",
-          "why": "Реакции на уже освещённый старт и рекорд Макдэвида, нового события нет."
-        }
-      ],
-      "note": "Вне утреннего окна. Article вызова Гибсона прочитан; официальный релиз Washington Capitals найден для проверки. За пределами12 проверены свежие заголовки feed за4ч (новыхнет), найден NHL Status Report: прочитан точечно body с потерями Бланкенбурга/Рифаи и вызовами Макуорда/Мермиса. Вызовы — новые темы, не повтор опубликованной операции Деарне или рекорда Макдэвида. Оба материала только сайт tg:false; канал сохраняет строгий отбор и очередь двух ранее написанных новостей. Митч Гибсон — новая прямая транскрипция по правилу промпта, остальные фамилии проверены по names_ru. Фото HTTP200 и просмотрены. Старые элементы и посты не переписаны."
-    },
-    {
       "t": "2026-10-24T13:25:35Z",
       "status": "ok",
       "picked": [
@@ -1931,6 +1876,68 @@
         "names": "Джош Моррисси — names_ru. Андре Лакруа отсутствует в словаре; написание подтверждено русскоязычным интервью Sports.ru от 19.11.2020. Словарь не менялся.",
         "photos": "Просмотрены исходные снимки. Для Лакруа отклонена обложка-коллаж с хоккейной карточкой, взят отдельный игровой снимок из того же некролога: Graphic Artists/Hockey Hall of Fame. Для Моррисси взято живое фото №44 из официальной статьи WinnipegJets.com от 15.10; это архивная иллюстрация, старые сведения из статьи не выданы за новую новость. Ссылки и доступные кредиты сохранены.",
         "telegram": "Фактическое время около 04:20 Europe/Kirov, оба элемента tg:false. Ночных новостей для утренней очереди не добавлено; прогнозы и результаты не изменялись."
+      }
+    },
+    {
+      "t": "2026-10-28T13:05:36Z",
+      "status": "ok",
+      "picked": [],
+      "skipped": [
+        {
+          "id": "nhl:noah-kahan-george-kittle-attend-nashville-predators-game",
+          "why": "Знаменитости на трибунах; не хоккейное событие для ленты."
+        },
+        {
+          "id": "espn:50304728",
+          "why": "Рекорд Шефера уже включён в восстановленный выпуск сайта и главную новость канала; не дублировать."
+        },
+        {
+          "id": "sportsnet:nhl-video-lekkerimaki-nets-two-goals-in-a-minute-to-tie-game-late-vs-ducks",
+          "why": "Пересказ матча или видео эпизода; итоги и видео уже подготовлены в полном выпуске."
+        },
+        {
+          "id": "sportsnet:nhl-article-fowler-cementing-place-as-canadiens-starter-with-another-win",
+          "why": "Пересказ матча или видео эпизода; итоги и видео уже подготовлены в полном выпуске."
+        },
+        {
+          "id": "sportsnet:nhl-article-jets-fall-to-panthers-for-sixth-straight-loss",
+          "why": "Пересказ матча или видео эпизода; итоги и видео уже подготовлены в полном выпуске."
+        },
+        {
+          "id": "sportsnet:hockey-nhl-games-e7eaa7cb-8eb2-4007-8d02-e19c2cae139f",
+          "why": "Анонс трансляции уже завершённого матча."
+        },
+        {
+          "id": "sportsnet:nhl-video-canadiens-fowler-makes-flurry-of-stellar-saves-vs-blues",
+          "why": "Пересказ матча или видео эпизода; итоги и видео уже подготовлены в полном выпуске."
+        },
+        {
+          "id": "prohockeyrumors:2026-10-injury-notes-ducks-trudeau-oilers-html",
+          "why": "Полный article прочитан: прежний статус Минтюкова и восстановление Терри без даты возвращения; отдельного нового решения по ним нет. Катание Мура — небольшой шаг восстановления."
+        },
+        {
+          "id": "sportsnet:nhl-video-blue-jackets-johnson-finishes-off-2-on-0-to-bury-ot-winner-vs-flyers",
+          "why": "Пересказ матча или видео эпизода; итоги и видео уже подготовлены в полном выпуске."
+        },
+        {
+          "id": "sportsnet:ideo-jets-lowry-scores-wrap-around-goal-after-brutal-miscue-from-panthers-schmid",
+          "why": "Пересказ матча или видео эпизода; итоги и видео уже подготовлены в полном выпуске."
+        },
+        {
+          "id": "sportsnet:nhl-video-blue-jackets-strike-quick-for-three-goals-in-three-minutes-vs-flyers",
+          "why": "Пересказ матча или видео эпизода; итоги и видео уже подготовлены в полном выпуске."
+        },
+        {
+          "id": "rmnb:026-10-27-spencer-carbery-pierre-luc-dubois-auston-matthews-big-part-of-our-team",
+          "why": "Оценка роли Дюбуа и прежняя история с Мэттьюсом; нового решения нет."
+        }
+      ],
+      "checks": {
+        "recovery": "Проверка начата в 11:29 Europe/Kirov: пропущены ручное утро и подписи. Штатный am 6057d04 принят, затем восстановлены все 11 recaps, daily по полным протоколам, 4 превью, журнал только новыми записями, колонка EDGE и 5 новостей; подписи отдельным коммитом a54fe41.",
+        "sources": "Прочитаны полные Sportsnet о пятиминутной смене Шефера и Daily Faceoff о травме Капобьянко, PHR о первом вызове Уайтхеда. Первые два события включены в data.news при восстановлении, отдельная очередь дала бы дубль.",
+        "freshness": "Просмотрены свежие заголовки feed за четыре часа: только новый по дате пересказ дебюта Хеллибака, событие и результат уже освещены. Повторы счёта не добавлены.",
+        "photos": "Проверены реальные фотографии. Обложка колонки — Леккеримяки в игре. Исправлены автоматически выбранные обложки Лакруа (коллаж заменён игровым снимком) и Моррисси (ошибочно подтянулся Харт из общей статьи).",
+        "telegram": "Шефер опубликован главной новостью дня, ещё один feed-пост о том же событии не создаётся. Утренние посты исправляются на месте без повторной публикации."
       }
     }
   ]
