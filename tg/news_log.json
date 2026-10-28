@@ -1,69 +1,6 @@
 {
   "runs": [
     {
-      "t": "2026-10-25T22:19:03Z",
-      "status": "ok",
-      "picked": [
-        "prohockeyrumors:2026-10-avalanche-place-georgii-merkulov-on-waivers-html",
-        "nhl:new-york-rangers-sign-james-reimer-to-one-year-contract"
-      ],
-      "skipped": [
-        {
-          "id": "espn:50273133",
-          "why": "Поздняя дата обновления ESPN, но сам рекорд Кучерова случился более 18 часов назад."
-        },
-        {
-          "id": "thehockeynews:oilers-trade-for-vasily-podkolzin-continues-to-work-wonders-with-breakout-season",
-          "why": "Оценка старого обмена и формы Подколзина, без нового решения."
-        },
-        {
-          "id": "prohockeyrumors:2026-10-morning-notes-girgensons-tarasov-gaucher-html",
-          "why": "Прочитана полная статья на сайте: Тарасов пропустил второй матч из-за прежней травмы, сроков и нового решения нет."
-        },
-        {
-          "id": "thehockeynews:ews-how-long-can-the-sharks-barely-survive-askarovs-play-to-start-the-nhl-season",
-          "why": "Оценка игры Аскарова, без нового кадрового события."
-        },
-        {
-          "id": "prohockeyrumors:2026-10-capitals-grant-ivan-miroshnichenko-permission-to-seek-trade-html",
-          "why": "Повтор сообщения Фридмана от 02:07 UTC, новый материал не обновляет решение; первичный повод старше 18 часов."
-        },
-        {
-          "id": "thehockeynews:an-rielly-has-found-the-sweetspot-rebounding-for-maple-leafs-this-2026-27-season",
-          "why": "Авторская оценка формы Райлли, без нового события."
-        },
-        {
-          "id": "sportsnet:nhl-video-maple-leafs-raddysh-talks-old-tweets-between-him-and-mcdavid",
-          "why": "Архивные твиты и отношения игроков, не новость."
-        },
-        {
-          "id": "dailyfaceoff:ews-fraser-minten-boston-bruins-already-showing-early-returns-contract-extension",
-          "why": "Оценка игры Минтена после ранее подписанного контракта."
-        },
-        {
-          "id": "rmnb:2026-10-25-spencer-carbery-evaluates-jack-st-ivany-capitals-waivers-claim-jets",
-          "why": "Реакция на уже освещённый переход Сент-Айвани."
-        },
-        {
-          "id": "rmnb:lan-strome-capitals-clutch-overtime-victory-sabres-numbers-for-the-morning-after",
-          "why": "Пересказ завершённого матча."
-        },
-        {
-          "id": "nhl:montreal-canadiens-adapting-without-nick-suzuki-for-heritage-classic",
-          "why": "Комментарии на фоне уже освещённого отсутствия Сузуки."
-        },
-        {
-          "id": "nhl:quinn-hughes-not-sure-what-to-expect-in-first-trip-back-to-vancouver",
-          "why": "Повтор уже освещённых комментариев Хьюза."
-        },
-        {
-          "id": "prohockeyrumors:2026-10-patrik-laine-not-seeking-international-offers-html",
-          "why": "Body прочитан: сведения Каплан относятся к этой неделе, свежесть исходного сообщения в пределах 18 часов не подтверждена."
-        }
-      ],
-      "note": "01:2x 26 октября Киров: только сайт tg:false. Дополнительно проверены свежие заголовки последних четырёх часов. Прочитаны body NHL и DFO о новом контракте Раймера, PHR о Лайне, полная Morning Notes для раздела Тарасова. На сайте PHR обнаружено новое воскресное обновление старой статьи Меркулова: Фридман подтвердил прохождение отказов. Оно прочитано целиком и внесено в существующий элемент с тем же ID/URL, без второго поста; прежний элемент в Telegram не публиковался. Результат отказов не выдан за оформленную отправку в АХЛ. Фото Меркулова и Раймера HTTP200 и просмотрены, архивные клубные формы не представлены как новые. Меркулов — русское имя, Раймер транскрибирован прямо по разрешению промпта, Гаранд/Шестёркин по names_ru; в тексте использован Шестёркин. Никишин и срок Маккэнна уже опубликованы, не повторены. Прогнозы и статистика не менялись."
-    },
-    {
       "t": "2026-10-25T23:20:24Z",
       "status": "ok",
       "picked": [
@@ -1994,6 +1931,76 @@
         {
           "id": "sportsnet:nhl-article-mckenna-unites-with-matthews-as-maple-leafs-juggle-lineup:source-check",
           "why": "Полный текст Люка Фокса прочитан: Хиллер впервые начнёт с Маккенной и Мэттьюсом в одном звене, третий Рословик. Проверены дата/статистика совместного времени 19:04. Фото обоих игроков на льду просмотрено. Дата feed 20:45, метаданные сайта 16:45 UTC; оба времени в пределах 18 часов."
+        }
+      ]
+    },
+    {
+      "t": "2026-10-28T23:21:38Z",
+      "status": "ok",
+      "picked": [
+        "sportsnet:hl-article-wild-gm-bill-guerin-talks-hughes-negotiations-i-havent-really-decided",
+        "sportsnet:nhl-article-oilers-dickinson-ekholm-expected-to-return-vs-flames"
+      ],
+      "skipped": [
+        {
+          "id": "sportsnet:icle-scouts-analysis-what-matvei-michkovs-trajectory-means-for-his-next-contract",
+          "why": "Полный текст прочитан ранее: анализ Букалы и предположения о цене будущего контракта. Нового решения или переговоров нет."
+        },
+        {
+          "id": "nhl:kirill-marchenko-injury-status-update-october-28-2026",
+          "why": "Срок восстановления уже опубликован по Sportsnet; тот же медицинский статус без нового решения."
+        },
+        {
+          "id": "dailyfaceoff:leafs-kirill-marchenko-nick-blankenburg-john-tavares-out-week-to-week-nhl-injury",
+          "why": "Срок восстановления уже опубликован по Sportsnet; тот же медицинский статус без нового решения."
+        },
+        {
+          "id": "nhl:semyon-varlamov-gets-first-win-after-two-years-for-new-york-islanders",
+          "why": "Реакция на уже разобранный матч и первую победу после восстановления; отдельного нового события нет."
+        },
+        {
+          "id": "dailyfaceoff:innesota-wild-hot-start-more-sustainable-league-leading-goals-draisaitl-lehkonen",
+          "why": "Видео по уже освещённой роли Маккенны или отдельный фрагмент ранее рассмотренного дебюта Сент-Айвани; не новый самостоятельный повод."
+        },
+        {
+          "id": "prohockeyrumors:2026-10-trade-notes-yurov-wright-hague-html",
+          "why": "Пересказ сообщения Джонстона, уже опубликованного 27.10 до 18:53 UTC; первичное событие старше 18 часов."
+        },
+        {
+          "id": "rmnb:2026-10-28-ryan-leonard-cole-hutson-capitals-halloween-prank",
+          "why": "Розыгрыш партнёров перед Хэллоуином — курьёз, не новость для этой ленты."
+        },
+        {
+          "id": "thehockeynews:news-the-calgary-flames-have-a-goaltending-controversy-for-all-the-right-reasons",
+          "why": "Article прочитан: авторская оценка конкуренции Кули и Вулфа на фоне уже освещённой серии. Назначение на новый срок или самостоятельное кадровое решение не объявлено."
+        },
+        {
+          "id": "prohockeyrumors:2026-10-capitals-activate-logan-thompson-reassign-mitch-gibson-html",
+          "why": "Article прочитан; официальный пресс-релиз клуба также прочитан ранее в RMNB. Снятие Томпсона с IR — новый повод, но при максимуме двух тем выбраны более свежая позиция Герина по звезде и новое решение о Дикинсоне."
+        },
+        {
+          "id": "sportsnet:nhl-video-hiller-breaks-down-mckennas-growth-throughout-first-month-in-nhl",
+          "why": "Видео по уже освещённой роли Маккенны или отдельный фрагмент ранее рассмотренного дебюта Сент-Айвани; не новый самостоятельный повод."
+        },
+        {
+          "id": "rmnb:2026-10-28-jack-st-ivany-capitals-debut-cole-hutson-spencer-carbery",
+          "why": "Article прочитан в прошлом проходе: подтверждён клубный дебют в третьей паре. Ниже двух выбранных контрактного/медицинского событий."
+        },
+        {
+          "id": "sportsnet:nhl-video-why-capitals-st-ivany-will-have-to-learn-how-to-read-hutsons-play",
+          "why": "Видео по уже освещённой роли Маккенны или отдельный фрагмент ранее рассмотренного дебюта Сент-Айвани; не новый самостоятельный повод."
+        },
+        {
+          "id": "sportsnet:hl-article-wild-gm-bill-guerin-talks-hughes-negotiations-i-havent-really-decided:source-check",
+          "why": "Body и полный текст Sportsnet прочитаны: новое выступление Герина в среду на WCCO, длительная пауза в обсуждении с игроком/Бриссоном. Не объявлено ни ухода Хьюза, ни обмена, ни разрыва переговоров. Первичное время страницы 28.10 18:22 UTC; фото Герина с рекламным фоном не использовано, альтернативный видеокадр низкого качества отвергнут — материал без изображения."
+        },
+        {
+          "id": "sportsnet:nhl-article-oilers-dickinson-ekholm-expected-to-return-vs-flames:source-check",
+          "why": "Body и полный текст прочитаны. Отличие от прежнего «могут вернуться»: Дикинсон активирован из IR в среду; участие обоих по-прежнему ожидается, не гарантируется. Дата первичной страницы 28.10 17:24 UTC. Редакционный снимок Дикинсона на льду просмотрен; автор Jason Franson/CP указан источником."
+        },
+        {
+          "id": "fresh_feed_scan:2026-10-28:19:16-23:16Z",
+          "why": "Просмотрены заголовки последних четырёх часов вне 12 кандидатов: найдены Герин/Хьюз и новый статус Дикинсона. Остальное — уже освещённые Марченко/Маккенна, рост нагрузки Шефера, подтверждения предполагаемых составов, ранее рассмотренные кадровые перемещения Питтсбурга/Далласа. Ночь: оба новых элемента tg:false."
         }
       ]
     }
