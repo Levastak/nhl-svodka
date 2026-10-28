@@ -1,65 +1,6 @@
 {
   "runs": [
     {
-      "t": "2026-10-24T21:29:30Z",
-      "status": "ok",
-      "picked": [
-        "pittsburghhockeynow:penguins-recall-avery-hayes-injury-updates",
-        "prohockeyrumors:2026-10-avalanche-place-georgii-merkulov-on-waivers-html"
-      ],
-      "skipped": [
-        {
-          "id": "prohockeyrumors:2026-10-metropolitan-notes-dubois-sourdif-ovechkin-malkin-barzal-html",
-          "why": "Отсутствие Малкина и вызов Хэйеса выбраны по первичному репортажу Pittsburgh Hockey Now; остальные заметки статьи отложены, чтобы не смешивать события."
-        },
-        {
-          "id": "prohockeyrumors:2026-10-michkov-quieting-doubts-with-strong-start-html",
-          "why": "Оценка старта Мичкова перед уже завершённым матчем, нового отдельного решения нет."
-        },
-        {
-          "id": "nhl:quinn-hughes-not-sure-what-to-expect-in-first-trip-back-to-vancouver",
-          "why": "Заявления Хьюза перед возвращением в Ванкувер отложены: приоритет двух новых кадровых событий о россиянах."
-        },
-        {
-          "id": "espn:50269091",
-          "why": "Пересказ завершённого матча без нового рекорда или травмы; итоги отдельно."
-        },
-        {
-          "id": "sportsnet:nhl-video-flyers-joseph-woll-stretches-to-stonewall-ducks-cutter-gauthier",
-          "why": "Видео отдельного сейва, не новое событие."
-        },
-        {
-          "id": "dailyfaceoff:news-jared-mccann-seattle-kraken-miss-game-minnesota-wild-lower-body-injury",
-          "why": "Травма Маккэнна подтверждена и article прочитан; отложена из-за предела0–2 и приоритета Малкина/Меркулова."
-        },
-        {
-          "id": "sportsnet:nhl-video-ducks-leo-carlsson-capitalizes-on-giveaway-against-flyers",
-          "why": "Видео отдельного гола завершённого матча."
-        },
-        {
-          "id": "thehockeynews:in-facing-maple-leafs-and-former-assistant-jim-hiller-despite-intriguing-history",
-          "why": "Реакции перед встречей с бывшим тренером, нового решения нет."
-        },
-        {
-          "id": "sportsnet:nhl-video-skated-together-all-summer-long-hellebuyck-on-friendship-with-hughes",
-          "why": "Реакция на уже освещённый обмен Хеллибака."
-        },
-        {
-          "id": "sportsnet:nhl-article-senators-johansson-to-start-vs-rangers-burakovsky-draws-back-in",
-          "why": "Подтверждённый состав Оттавы: отложен ради двух событий о россиянах."
-        },
-        {
-          "id": "thehockeynews:ow-devils-gm-sunny-mehtas-patience-increased-the-chances-of-landing-quinn-hughes",
-          "why": "Аналитическое предположение о возможном переходе Хьюза без готового решения; приоритет подтверждённых кадровых новостей."
-        },
-        {
-          "id": "prohockeyrumors:2026-10-penguins-place-sam-girard-on-ir-recall-avery-hayes-html",
-          "why": "Перевод Жирара и вызов Хэйеса частично покрыты выбранной новостью, отдельное событие отложено из-за предела двух материалов."
-        }
-      ],
-      "note": "Heartbeat15:31UTC запущен фактически после21:21UTC, 00:2x25октября Киров. Только сайт tg:false у обоих, без утреннего накопления. PHR Metropolitan прочитан полностью: Малкин НЕ играет, а возвращаются Дюбуа/Сурдиф — не перепутано. Для события Малкина прочитан первичный репортаж Дэна Кингерски Pittsburgh Hockey Now, найденный через Yahoo; время16:01UTC из article:published_time. Обложка PHR была Дюбуа, поэтому взято фото Хэйеса из прочитанного первичного репортажа; он назван в заголовке и тексте. История Меркулова обнаружена вне12 по полной PHR, attribution Рено Лавуа сохранена; предположение автора о выздоровлении и комментарий читателя не выдаём за факт. Меркулов — Георгий; Эйвери Хэйес по спортивной русской прессе. Фото Хэйеса и Меркулова HTTP200, просмотрены. Маккэнн и Нюман проверены, но отложены по пределу двух/приоритету россиян. Статистику, матчи и прогнозы не меняли."
-    },
-    {
       "t": "2026-10-24T21:34:50Z",
       "status": "ok",
       "picked": [
@@ -1945,6 +1886,69 @@
         "names": "Маттиас Экхольм и Джейсон Дикинсон — строго names_ru.",
         "photos": "Просмотрено фото первоисточника: Экхольм №14 на льду в форме «Эдмонтона», не служебный портрет. В alt снимка указан GettyImages; ссылка на официальный источник сохранена.",
         "telegram": "Первая новость feed за день, slots_left=5; интервал 20 минут между любыми постами контролирует бот. Новостей feed ранее сегодня нет."
+      }
+    },
+    {
+      "t": "2026-10-28T13:25:18Z",
+      "status": "ok",
+      "picked": [],
+      "skipped": [
+        {
+          "id": "espn:50297614",
+          "why": "Портрет Кули и подборка цитат без нового кадрового решения или рекорда."
+        },
+        {
+          "id": "nhl:noah-kahan-george-kittle-attend-nashville-predators-game",
+          "why": "Знаменитости на трибунах; не хоккейная новость для ленты."
+        },
+        {
+          "id": "espn:50304728",
+          "why": "Рекорд Шефера уже опубликован в утре и канале."
+        },
+        {
+          "id": "sportsnet:nhl-video-lekkerimaki-nets-two-goals-in-a-minute-to-tie-game-late-vs-ducks",
+          "why": "Разбор или видео уже освещённого матча, нового события в summary нет."
+        },
+        {
+          "id": "sportsnet:nhl-article-fowler-cementing-place-as-canadiens-starter-with-another-win",
+          "why": "Разбор или видео уже освещённого матча, нового события в summary нет."
+        },
+        {
+          "id": "sportsnet:nhl-article-jets-fall-to-panthers-for-sixth-straight-loss",
+          "why": "Разбор или видео уже освещённого матча, нового события в summary нет."
+        },
+        {
+          "id": "sportsnet:hockey-nhl-games-e7eaa7cb-8eb2-4007-8d02-e19c2cae139f",
+          "why": "Анонс трансляции завершённого матча."
+        },
+        {
+          "id": "sportsnet:nhl-video-canadiens-fowler-makes-flurry-of-stellar-saves-vs-blues",
+          "why": "Разбор или видео уже освещённого матча, нового события в summary нет."
+        },
+        {
+          "id": "prohockeyrumors:2026-10-injury-notes-ducks-trudeau-oilers-html",
+          "why": "Полный текст прочитан в предыдущем проходе. Уточнение об Экхольме и Дикинсоне уже опубликовано по первоисточнику; у Минтюкова прежний статус, Мур и Трюдо возобновили катание без срока возвращения."
+        },
+        {
+          "id": "sportsnet:nhl-video-blue-jackets-johnson-finishes-off-2-on-0-to-bury-ot-winner-vs-flyers",
+          "why": "Разбор или видео уже освещённого матча, нового события в summary нет."
+        },
+        {
+          "id": "sportsnet:ideo-jets-lowry-scores-wrap-around-goal-after-brutal-miscue-from-panthers-schmid",
+          "why": "Разбор или видео уже освещённого матча, нового события в summary нет."
+        },
+        {
+          "id": "sportsnet:nhl-video-blue-jackets-strike-quick-for-three-goals-in-three-minutes-vs-flyers",
+          "why": "Разбор или видео уже освещённого матча, нового события в summary нет."
+        }
+      ],
+      "checks": {
+        "feed_t": "2026-10-28T13:14:43Z",
+        "previous_run": "2026-10-28T13:20:21Z",
+        "additional_review": "Проверены свежие заголовки и summary feed за четыре часа вне 12 кандидатов: сезонный обзор ESPN, обсуждение шансов Брандсегг-Нюгорда на приз новичку, пересказ дебюта Хеллибака и портрет Кули. Новых решений/травм/рекордов не заявлено. После предыдущего прохода feed не обновлялся.",
+        "duplicates": "Новости сайта, recent_titles и опубликованные ID сверены помощником; новый элемент об Экхольме и Дикинсоне уже в очереди и не дублируется.",
+        "telegram": "В очереди одна новость, slots_left=4; новых материалов не добавлено.",
+        "scope": "Фактическое время 16:24 Europe/Kirov; страховка утра вне временного окна не выполнялась. Готовые тексты, фотографии, прогнозы и посты не изменялись."
       }
     }
   ]
