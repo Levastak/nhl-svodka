@@ -1,57 +1,6 @@
 {
   "runs": [
     {
-      "t": "2026-10-24T21:34:50Z",
-      "status": "ok",
-      "picked": [
-        "prohockeyrumors:2026-10-metropolitan-notes-dubois-sourdif-ovechkin-malkin-barzal-html",
-        "dailyfaceoff:news-jared-mccann-seattle-kraken-miss-game-minnesota-wild-lower-body-injury"
-      ],
-      "skipped": [
-        {
-          "id": "prohockeyrumors:2026-10-michkov-quieting-doubts-with-strong-start-html",
-          "why": "Оценка старта Мичкова перед уже завершённым матчем; нового кадрового события нет."
-        },
-        {
-          "id": "nhl:quinn-hughes-not-sure-what-to-expect-in-first-trip-back-to-vancouver",
-          "why": "Публичные слова Хьюза о возвращении в Ванкувер отложены: два более конкретных изменения состава."
-        },
-        {
-          "id": "espn:50269091",
-          "why": "Разбор завершённого матча без нового рекорда или травмы."
-        },
-        {
-          "id": "sportsnet:nhl-video-flyers-joseph-woll-stretches-to-stonewall-ducks-cutter-gauthier",
-          "why": "Видео отдельного сейва, не новое событие."
-        },
-        {
-          "id": "sportsnet:nhl-video-ducks-leo-carlsson-capitalizes-on-giveaway-against-flyers",
-          "why": "Видео отдельного гола завершённого матча."
-        },
-        {
-          "id": "thehockeynews:in-facing-maple-leafs-and-former-assistant-jim-hiller-despite-intriguing-history",
-          "why": "Реакции перед игрой с бывшим тренером, нового решения нет."
-        },
-        {
-          "id": "sportsnet:nhl-video-skated-together-all-summer-long-hellebuyck-on-friendship-with-hughes",
-          "why": "Реакция на уже освещённый обмен Хеллибака."
-        },
-        {
-          "id": "sportsnet:nhl-article-senators-johansson-to-start-vs-rangers-burakovsky-draws-back-in",
-          "why": "Состав Оттавы отложен по пределу двух и приоритету выбранных кадровых событий."
-        },
-        {
-          "id": "thehockeynews:ow-devils-gm-sunny-mehtas-patience-increased-the-chances-of-landing-quinn-hughes",
-          "why": "Аналитическое предположение о возможном переходе Хьюза без готового решения."
-        },
-        {
-          "id": "prohockeyrumors:2026-10-penguins-place-sam-girard-on-ir-recall-avery-hayes-html",
-          "why": "Вызов Хэйеса уже в новости об отсутствии Малкина; перевод Жирара как отдельный сюжет отложен."
-        }
-      ],
-      "note": "00:3x25октября Киров: оба материала только сайт tg:false, без утреннего накопления. Из PHR Metropolitan выбран ещё не освещённый раздел о возвращениях Дюбуа/Сурдифа, а не повтор Малкина. Article0 и5 прочитаны точечно, полная Metropolitan была прочитана в предыдущем проходе. Источник возвратов Сэмми Силбер назван. У Маккэнна нижняя часть тела, без выдуманного срока и без утверждения перевода в IR. Яни Нюман проверен по Спорт-Экспресс/Чемпионату, остальные фамилии по names_ru. Фото Дюбуа и Маккэнна HTTP200 и просмотрены в предыдущем проходе, URL не менялись. Прогнозы и статистика не затронуты."
-    },
-    {
       "t": "2026-10-24T23:21:33Z",
       "status": "ok",
       "picked": [
@@ -1949,6 +1898,77 @@
         "duplicates": "Новости сайта, recent_titles и опубликованные ID сверены помощником; новый элемент об Экхольме и Дикинсоне уже в очереди и не дублируется.",
         "telegram": "В очереди одна новость, slots_left=4; новых материалов не добавлено.",
         "scope": "Фактическое время 16:24 Europe/Kirov; страховка утра вне временного окна не выполнялась. Готовые тексты, фотографии, прогнозы и посты не изменялись."
+      }
+    },
+    {
+      "t": "2026-10-28T15:29:01Z",
+      "status": "ok",
+      "picked": [
+        "nhl:nhl-on-tap-news-and-notes-october-28-2026",
+        "prohockeyrumors:2026-10-flames-morgan-frost-begin-extension-talks-html"
+      ],
+      "skipped": [
+        {
+          "id": "prohockeyrumors:2026-10-trade-notes-yurov-wright-hague-html",
+          "why": "Полный текст прочитан. Это пересказ вчерашнего материала Джонстона; тот же инсайд о Юрове уже опубликован Yahoo 27.10 в 18:53 UTC, более 20 часов назад. Свежая дата PHR не делает событие новым."
+        },
+        {
+          "id": "sportsnet:cle-unflappable-guy-matthew-schaefer-off-to-strong-sophomore-start-for-islanders",
+          "why": "Обзор, реакция или видео уже освещённого матча; нового события в summary нет."
+        },
+        {
+          "id": "thehockeynews:all-in-devils-debut-fowler-shuts-the-door-vs-blues-the-hockey-news-morning-skate",
+          "why": "Обзор, реакция или видео уже освещённого матча; нового события в summary нет."
+        },
+        {
+          "id": "espn:50297614",
+          "why": "Портрет Кули и подборка цитат, без нового решения."
+        },
+        {
+          "id": "nhl:noah-kahan-george-kittle-attend-nashville-predators-game",
+          "why": "Знаменитости на трибунах; не хоккейная новость для ленты."
+        },
+        {
+          "id": "espn:50304728",
+          "why": "Рекорд Шефера уже опубликован на сайте и в канале."
+        },
+        {
+          "id": "sportsnet:nhl-video-lekkerimaki-nets-two-goals-in-a-minute-to-tie-game-late-vs-ducks",
+          "why": "Обзор, реакция или видео уже освещённого матча; нового события в summary нет."
+        },
+        {
+          "id": "sportsnet:nhl-article-fowler-cementing-place-as-canadiens-starter-with-another-win",
+          "why": "Обзор, реакция или видео уже освещённого матча; нового события в summary нет."
+        },
+        {
+          "id": "sportsnet:nhl-article-jets-fall-to-panthers-for-sixth-straight-loss",
+          "why": "Обзор, реакция или видео уже освещённого матча; нового события в summary нет."
+        },
+        {
+          "id": "sportsnet:hockey-nhl-games-e7eaa7cb-8eb2-4007-8d02-e19c2cae139f",
+          "why": "Анонс трансляции завершённого матча."
+        },
+        {
+          "id": "sportsnet:nhl-video-canadiens-fowler-makes-flurry-of-stellar-saves-vs-blues",
+          "why": "Обзор, реакция или видео уже освещённого матча; нового события в summary нет."
+        },
+        {
+          "id": "prohockeyrumors:2026-10-injury-notes-ducks-trudeau-oilers-html",
+          "why": "Раздел об Экхольме и Дикинсоне уже опубликован по первоисточнику; остальные статусы проверены ранее, нового срока нет."
+        }
+      ],
+      "checks": {
+        "feed_t": "2026-10-28T15:05:36Z",
+        "outside_candidates": [
+          "nhl:nhl-on-tap-news-and-notes-october-28-2026",
+          "prohockeyrumors:2026-10-flames-morgan-frost-begin-extension-talks-html"
+        ],
+        "sources": "Прочитаны NHL On Tap целиком в нужных разделах и полный PHR о Фросте. У НХЛ прямо указаны 762 передачи Бэкстрема, одна до равенства для Овечкина и 279 передач Бэкстрема на его голы. Это анонс возможной вехи, не объявление достижения. PHR прямо приписывает переговоры Лебрюну; первичный выпуск TSN опубликован 28.10 в 01:03:07 UTC, менее 18 часов назад. Обоюдный интерес не выдан за подписанный контракт.",
+        "freshness": "Юров: первоисточник The Athletic 27.10 недоступен (403), но тот же текст Джонстона уже цитировался Yahoo в 18:53 UTC 27.10; https://sports.yahoo.com/articles/wild-danila-yurov-trade-slips-185333870.html . Причина отказа — возраст события, а не закрытость первоисточника.",
+        "additional_review": "Проверены свежие заголовки feed за четыре часа вне короткого списка. Там найдены выбранные два сюжета. Материал Бродо об уже состоявшемся обмене и обзоры Фаулера/Шефера — повтор обсуждённых событий; новых решений в summary нет.",
+        "names": "Александр Овечкин и Морган Фрост — names_ru. Никлас Бэкстрем отсутствует; написание подтверждено Sports.ru: https://www.sports.ru/hockey/1117404611-ovechkin-sdelal-761-yu-peredachu-za-vashington-do-rekorda-bekstrema-1-.html . Словарь не менялся.",
+        "photos": "Просмотрены оба снимка: Овечкин №8 в игре против «Филадельфии», Getty Images; Фрост №16 на льду в форме «Калгари», Sergei Belski-Imagn Images. Служебных портретов нет, ссылки и кредиты сохранены.",
+        "telegram": "Овечкин — первый уровень, hot=true в пределах лимита; одна новость feed уже опубликована сегодня, свободно четыре места, с неё прошло больше 75 минут. Фрост — только сайт tg:false. Интервал между любыми постами контролирует бот."
       }
     }
   ]
