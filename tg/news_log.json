@@ -1,60 +1,6 @@
 {
   "runs": [
     {
-      "t": "2026-10-26T14:37:40Z",
-      "status": "ok",
-      "picked": [
-        "nhl:jacob-fowler-heritage-classic-sider-october-25-2026"
-      ],
-      "skipped": [
-        {
-          "id": "espn:50273133",
-          "why": "Рекорд Кучерова произошёл более 18 часов назад; поздняя дата обновления ESPN не делает его новым."
-        },
-        {
-          "id": "thehockeynews:oilers-trade-for-vasily-podkolzin-continues-to-work-wonders-with-breakout-season",
-          "why": "Оценка старого обмена и формы Подколзина, без нового решения."
-        },
-        {
-          "id": "sportsnet:nhl-article-unfazed-hughes-burns-former-team-as-wild-hand-canucks-another-loss",
-          "why": "Возвращение Хьюза, эмоции и пересказ уже опубликованного матча; веха 500 очков уже вышла."
-        },
-        {
-          "id": "sportsnet:nhl-video-got-some-cheers-that-was-cool-hughes-on-passion-from-fans-in-return",
-          "why": "Возвращение Хьюза, эмоции и пересказ уже опубликованного матча; веха 500 очков уже вышла."
-        },
-        {
-          "id": "sportsnet:nhl-article-hughes-scores-in-return-to-vancouver-as-canucks-lose-to-wild",
-          "why": "Возвращение Хьюза, эмоции и пересказ уже опубликованного матча; веха 500 очков уже вышла."
-        },
-        {
-          "id": "sportsnet:canadiens-fowler-proves-big-game-reputation-in-win-over-jets-in-heritage-classic",
-          "why": "Пересказ игры и оценка Фаулера уже представлены в итогах; новый возрастной рекорд взят по первоисточнику НХЛ."
-        },
-        {
-          "id": "espn:41589293",
-          "why": "Справочный список бомбардиров, без нового рекорда."
-        },
-        {
-          "id": "sportsnet:nhl-article-wilds-quinn-hughes-hears-boos-in-return-to-vancouver",
-          "why": "Возвращение Хьюза, эмоции и пересказ уже опубликованного матча; веха 500 очков уже вышла."
-        },
-        {
-          "id": "sportsnet:nhl-video-fans-welcome-hughes-to-vancouver-with-chants-cheers-after-he-is-hit",
-          "why": "Возвращение Хьюза, эмоции и пересказ уже опубликованного матча; веха 500 очков уже вышла."
-        },
-        {
-          "id": "sportsnet:nhl-article-fowler-leads-canadiens-over-jets-in-heritage-classic",
-          "why": "Пересказ игры и оценка Фаулера уже представлены в итогах; новый возрастной рекорд взят по первоисточнику НХЛ."
-        },
-        {
-          "id": "dailyfaceoff:er-canucks-fans-boo-quinn-hughes-minnesota-wild-return-nhl-trade-first-game-back",
-          "why": "Возвращение Хьюза, эмоции и пересказ уже опубликованного матча; веха 500 очков уже вышла."
-        }
-      ],
-      "note": "Утро и подписи при фактическом старте 10:43 Киров проверены: daily.date=tg.date=results_date, auto_texts отсутствует, day_complete/daily_ready=true; восстановление не требовалось. После паузы main обновлён, отбор пересчитан. Прочитан article НХЛ: новый возрастной рекорд Фаулера; обычный пересказ не дублируется. Только сайт: сам матч и герой уже в утренних постах канала. По свежим заголовкам feed за четыре часа новых самостоятельных поводов нет. Фото НХЛ вернуло 403, использован просмотренный снимок Sportsnet того же матча: Фаулер №32 в форме «Монреаля». Статья и официальный boxscore показывают 33/34 против 34/35 в сохранённых данных. Точечный повторный сбор штатными build_game/game_extras подтвердил 33/34 и 34 броска «Виннипега»; исправляются источник, текст обзора и подписи, посты 217/218 — на месте через edits, карточка 218 — последним recard. Статистические числа получены сборщиком, scripts/workflows и старые прогнозы не меняются."
-    },
-    {
       "t": "2026-10-26T18:39:44Z",
       "status": "ok",
       "picked": [
@@ -2041,6 +1987,75 @@
         {
           "id": "rmnb:2026-10-29-matt-roy-two-penalties-eight-seconds-abuse-of-officials",
           "why": "Эпизод и судейская реакция в уже разобранном матче, не новая дисциплинарная мера лиги."
+        }
+      ]
+    },
+    {
+      "t": "2026-10-29T09:21:36Z",
+      "status": "ok",
+      "picked": [
+        "dailyfaceoff:lom-justin-brazeau-pittsburgh-penguins-injury-injured-reserve-conditioning-stint"
+      ],
+      "skipped": [
+        {
+          "id": "sportsnet:nhl-article-maple-leafs-bobrovsky-allows-last-minute-goal-in-loss-to-kraken",
+          "why": "Разбор уже освещённой игры Бобровского без новой травмы или решения клуба."
+        },
+        {
+          "id": "sportsnet:nhl-video-we-deserved-a-point-at-least-bobrovsky-on-maple-leafs-last-minute-loss",
+          "why": "Послематчевая реакция Бобровского, повтор результата."
+        },
+        {
+          "id": "rmnb:2026-10-29-alex-tuch-alex-ovechkin-having-beers-winning-games",
+          "why": "Реплика о пиве и победах — курьёз без нового спортивного события."
+        },
+        {
+          "id": "sportsnet:icle-scouts-analysis-what-matvei-michkovs-trajectory-means-for-his-next-contract",
+          "why": "Авторский анализ будущего контракта Мичкова без новых переговоров."
+        },
+        {
+          "id": "dailyfaceoff:leafs-kirill-marchenko-nick-blankenburg-john-tavares-out-week-to-week-nhl-injury",
+          "why": "Сроки травмы Марченко уже опубликованы."
+        },
+        {
+          "id": "nhl:semyon-varlamov-gets-first-win-after-two-years-for-new-york-islanders",
+          "why": "Реакция на старый матч; не первое возвращение после травмы."
+        },
+        {
+          "id": "dailyfaceoff:innesota-wild-hot-start-more-sustainable-league-leading-goals-draisaitl-lehkonen",
+          "why": "Анализ уже освещённой серии Капризова."
+        },
+        {
+          "id": "rmnb:-29-lynden-lakovic-career-high-three-points-five-game-point-streak-hershey-bears",
+          "why": "Обзор матча АХЛ и личный максимум новичка без рекорда клуба/лиги либо нового кадрового события."
+        },
+        {
+          "id": "sportsnet:nhl-article-flames-wolf-gets-feet-wet-again-to-mixed-results-after-cooley-injury",
+          "why": "Разбор Вулфа после уже освещённой травмы Кули."
+        },
+        {
+          "id": "sportsnet:nhl-article-oilers-cruise-past-rebuilding-flames-in-tame-battle-of-alberta",
+          "why": "Пересказ прошедшего матча."
+        },
+        {
+          "id": "nhl:jackson-lacombe-boosted-by-olympic-experience-with-team-usa",
+          "why": "Ретроспектива Олимпиады без нового решения."
+        },
+        {
+          "id": "sportsnet:-video-oilers-mcdavid-sets-up-joseph-goal-to-record-assist-in-13th-straight-game",
+          "why": "Видео уже опубликованного рекорда Макдэвида."
+        },
+        {
+          "id": "rmnb:capitals-more-offense-big-time-offseason-additions-numbers-for-the-morning-after",
+          "why": "Статистический разбор уже освещённого матча «Вашингтона» с «Филадельфией»."
+        },
+        {
+          "id": "dailyfaceoff:news-charlie-jacobs-owner-takeover-father-jeremy-boston-bruins-governor-nhl-news",
+          "why": "Административная смена представителя клуба в совете лиги; ниже по редакционному приоритету восстановления игрока. Не заполнять второй слот ради количества."
+        },
+        {
+          "id": "prohockeyrumors:2026-10-maple-leafs-injury-updates-html",
+          "why": "Основное событие — уже опубликованная травма Марченко; повтор не добавлен."
         }
       ]
     }
