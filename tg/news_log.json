@@ -1,65 +1,6 @@
 {
   "runs": [
     {
-      "t": "2026-10-27T05:23:12Z",
-      "status": "ok",
-      "picked": [
-        "prohockeyrumors:2026-10-evening-notes-marchenko-suniev-chabot-html"
-      ],
-      "skipped": [
-        {
-          "id": "nhl:pyotr-kochetkov-just-thinking-about-hockey-during-perfect-start-for-hurricanes",
-          "why": "Профиль с интервью прошлой недели и серией, достигнутой в субботу, без нового решения или свежего рекорда."
-        },
-        {
-          "id": "sportsnet:nhl-article-maple-leafs-kirill-marchenko-exits-vs-flames-with-lower-body-injury",
-          "why": "Травма Марченко объединена с травмой Сюниева в одну публикацию по полной статье PHR, этот ID отдельно не дублируем."
-        },
-        {
-          "id": "rmnb:2026-10-26-spencer-carbery-ivan-miroshnichenko-healthy-scratches-trade-rumors",
-          "why": "Комментарий Карбери о профессионализме Мирошниченко, без нового решения по составу или обмену; разрешение искать переход и оценка компенсации уже опубликованы."
-        },
-        {
-          "id": "sportsnet:ticle-auston-matthews-becomes-fastest-in-maple-leafs-history-to-reach-800-points",
-          "why": "800 очков Мэттьюса и рекорд клуба уже опубликованы ночью по НХЛ и официальному протоколу."
-        },
-        {
-          "id": "rmnb:2026-10-26-quinn-hughes-nearby-options-nhl-free-agency-devils-wild-rumor",
-          "why": "Новая оценка Паньотты о неназванных соседних вариантах для Хьюза не содержит конкретного предложения клуба; приоритет двум свежим повреждениям россиян."
-        },
-        {
-          "id": "sportsnet:nhl-article-kings-continue-hot-eastern-conference-trip-with-win-over-rangers",
-          "why": "Пересказ матча и очки Панарина будут в полном утреннем выпуске; отдельного нового рекорда или травмы в заголовке/summary нет."
-        },
-        {
-          "id": "sportsnet:nhl-video-flames-conroy-on-cooley-hes-the-most-popular-person-in-canada",
-          "why": "Похвала Кули и оценка его популярности, без нового решения."
-        },
-        {
-          "id": "sportsnet:nhl-video-is-maple-leafs-net-situation-a-goalie-battle-or-a-gameplan",
-          "why": "Обсуждение вратарской ротации без нового назначения основного вратаря."
-        },
-        {
-          "id": "thehockeynews:the-hockey-news-big-show-does-hellebuyck-make-the-devils-a-stanley-cup-contender",
-          "why": "Подкаст об уже опубликованных обмене Хеллибака, контракте Никишина и возвращении Хьюза."
-        },
-        {
-          "id": "sportsnet:nhl-article-maple-leafs-gm-chayka-talks-defence-cowan-mckenna",
-          "why": "Общее интервью о трансферном рынке и развитии молодых, без новой сделки или конкретного кадрового решения."
-        },
-        {
-          "id": "sportsnet:nhl-video-mckenna-in-awe-of-cowans-two-way-play-on-maple-leafs-top-line",
-          "why": "Похвала Коуэну от партнёра, без самостоятельного события."
-        }
-      ],
-      "note": "Прочитаны article Кочеткова, Sportsnet о Марченко, Evening Notes и инсайд Паньотты о Хьюзе. Для отдельного пункта Сюниева полностью прочитан исходный PHR: он ушёл в первом периоде после эпизода с Коуэном. Марченко ушёл во втором после столкновения с Шаранговичем; Sportsnet приводит подтверждение клуба о lower-body injury и невозвращении. Оба повреждения впервые освещаются, объединены в одну новость одного матча. Предположение PHR о характере травмы головы Сюниева не превращается в диагноз; сроки и длительность отсутствия не выдумываются. Фото PHR и Sportsnet загружены и просмотрены: Марченко №86 в форме «Торонто»; для общего сообщения взят снимок PHR. Имена по словарю, дубли в очереди/live/утренних новостях и опубликованные ID проверены. Фактическое время 08:23 Киров: новый элемент tg:true/hot:true, cap=5 и интервалы 75 минут ленты/20 минут всех постов соблюдены; это не перенос ночного tg:false в канал. Ночные материалы сохраняют свои tg:false. Утренняя страховка вне окна 10:00–11:30 не выполняется, итоговые тексты и прогнозы не меняются.",
-      "correction": {
-        "t": "2026-10-27T06:08:49Z",
-        "why": "При подготовке полного утреннего выпуска официальный play-by-play показал броски Сюниева во втором и третьем периодах. Вывод из раннего сообщения PHR о досрочном завершении его матча был ошибочным. Исправлены тот же элемент очереди, live и пост 231 через edits, без перепубликации.",
-        "source": "https://api-web.nhle.com/v1/gamecenter/2026020186/play-by-play"
-      }
-    },
-    {
       "t": "2026-10-27T07:29:41Z",
       "status": "ok",
       "picked": [
@@ -2087,6 +2028,68 @@
         {
           "id": "dailyfaceoff:news-konsta-helenius-buffalo-sabres-upper-body-injury-nhl-news-sam-carrick",
           "why": "Свежая травма; на этом проходе выше приоритет обновлений Баркова, Маршана и Холла."
+        }
+      ]
+    },
+    {
+      "t": "2026-10-29T23:23:06Z",
+      "status": "ok",
+      "picked": [
+        "dailyfaceoff:news-dylan-larkin-detroit-red-wings-suspension-without-pay-trade-request",
+        "prohockeyrumors:2026-10-central-notes-robertson-kaliyev-vlasic-html"
+      ],
+      "skipped": [
+        {
+          "id": "rmnb:2026-10-29-ivan-miroshnichenko-nhl-insiders-trade-rumor-teams-price-capitals",
+          "why": "Пересказ эфира среды, использованного ранее; свежая дата статьи не делает исходный инсайд новым."
+        },
+        {
+          "id": "prohockeyrumors:2026-10-snapshots-shabanov-lardis-2027-draft-html",
+          "why": "Оценка возможного будущего контракта без новых переговоров или решения."
+        },
+        {
+          "id": "dailyfaceoff:-maple-leafs-sergei-bobrovsky-struggles-continue-poor-showing-seattle-kraken-nhl",
+          "why": "Разбор прошедшего матча; нового кадрового решения или медицинского обновления нет."
+        },
+        {
+          "id": "rmnb:2026-10-29-alex-ovechkin-41-hunter-mcdonald-massive-shove-flyers",
+          "why": "Эпизод прошедшего и обсуждённого матча, без нового события."
+        },
+        {
+          "id": "thehockeynews:orning-skate-bobrovsky-struggles-in-seattle-cooley-injured-as-oilers-beat-flames",
+          "why": "Разбор прошедшего матча; нового кадрового решения или медицинского обновления нет."
+        },
+        {
+          "id": "sportsnet:nhl-article-maple-leafs-bobrovsky-allows-last-minute-goal-in-loss-to-kraken",
+          "why": "Разбор прошедшего матча; нового кадрового решения или медицинского обновления нет."
+        },
+        {
+          "id": "sportsnet:nhl-video-we-deserved-a-point-at-least-bobrovsky-on-maple-leafs-last-minute-loss",
+          "why": "Разбор прошедшего матча; нового кадрового решения или медицинского обновления нет."
+        },
+        {
+          "id": "espn:50322532",
+          "why": "То же новое решение об отстранении: взято по Daily Faceoff и сверено с полным заявлением клуба на NHL.com."
+        },
+        {
+          "id": "rmnb:6-10-29-dylan-larkin-suspended-without-pay-red-wings-trade-request-capitals-list",
+          "why": "То же новое решение об отстранении: взято по Daily Faceoff и сверено с полным заявлением клуба на NHL.com."
+        },
+        {
+          "id": "prohockeyrumors:2026-10-atlantic-notes-barkov-marchand-montembeault-foegele-html",
+          "why": "Барков и Маршан уже опубликованы в предыдущем проходе; свежая сводка повторяет те же сроки."
+        },
+        {
+          "id": "thehockeynews:ted-by-his-decision-red-wings-release-statement-suspend-dylan-larkin-without-pay",
+          "why": "То же новое решение об отстранении: взято по Daily Faceoff и сверено с полным заявлением клуба на NHL.com."
+        },
+        {
+          "id": "prohockeyrumors:2026-10-sabres-to-activate-sam-carrick-html",
+          "why": "Свежий повод для сайта; приоритет новому решению по Ларкину и контрактному инсайду о Робертсоне."
+        },
+        {
+          "id": "sportsnet:nhl-article-flames-awaiting-update-on-injured-goaltender-devin-cooley",
+          "why": "Заголовок об ожидании медицинского обновления; приоритет двум более определённым событиям."
         }
       ]
     }
