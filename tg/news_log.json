@@ -1,65 +1,6 @@
 {
   "runs": [
     {
-      "t": "2026-10-25T23:20:24Z",
-      "status": "ok",
-      "picked": [
-        "prohockeyrumors:2026-10-canucks-place-jack-thompson-on-waivers-html",
-        "prohockeyrumors:2026-10-stars-recall-matthew-seminoff-dylan-hryckowian-html"
-      ],
-      "skipped": [
-        {
-          "id": "espn:50273133",
-          "why": "Поздняя дата обновления ESPN, но сам рекорд Кучерова случился более 18 часов назад."
-        },
-        {
-          "id": "thehockeynews:oilers-trade-for-vasily-podkolzin-continues-to-work-wonders-with-breakout-season",
-          "why": "Оценка старого обмена и формы Подколзина, без нового решения."
-        },
-        {
-          "id": "prohockeyrumors:2026-10-morning-notes-girgensons-tarasov-gaucher-html",
-          "why": "Прочитана полная статья на сайте: Тарасов пропустил второй матч из-за прежней травмы, сроков и нового решения нет."
-        },
-        {
-          "id": "thehockeynews:ews-how-long-can-the-sharks-barely-survive-askarovs-play-to-start-the-nhl-season",
-          "why": "Оценка игры Аскарова, без нового кадрового события."
-        },
-        {
-          "id": "prohockeyrumors:2026-10-capitals-grant-ivan-miroshnichenko-permission-to-seek-trade-html",
-          "why": "Повтор сообщения Фридмана от 02:07 UTC, новый материал не обновляет решение; первичный повод старше 18 часов."
-        },
-        {
-          "id": "thehockeynews:an-rielly-has-found-the-sweetspot-rebounding-for-maple-leafs-this-2026-27-season",
-          "why": "Авторская оценка формы Райлли, без нового события."
-        },
-        {
-          "id": "sportsnet:nhl-video-maple-leafs-raddysh-talks-old-tweets-between-him-and-mcdavid",
-          "why": "Архивные твиты и отношения игроков, не новость."
-        },
-        {
-          "id": "dailyfaceoff:ews-fraser-minten-boston-bruins-already-showing-early-returns-contract-extension",
-          "why": "Оценка игры Минтена после ранее подписанного контракта."
-        },
-        {
-          "id": "rmnb:2026-10-25-spencer-carbery-evaluates-jack-st-ivany-capitals-waivers-claim-jets",
-          "why": "Реакция на уже освещённый переход Сент-Айвани."
-        },
-        {
-          "id": "rmnb:lan-strome-capitals-clutch-overtime-victory-sabres-numbers-for-the-morning-after",
-          "why": "Пересказ завершённого матча."
-        },
-        {
-          "id": "nhl:montreal-canadiens-adapting-without-nick-suzuki-for-heritage-classic",
-          "why": "Комментарии на фоне уже освещённого отсутствия Сузуки."
-        },
-        {
-          "id": "nhl:nhl-status-report-news-and-notes-october-25-2026",
-          "why": "Срок отсутствия Маккэнна уже опубликован; повтор сводки не нужен."
-        }
-      ],
-      "note": "02:2x 26 октября Киров: короткий список без новых самостоятельных событий. Проверены заголовки/summary за четыре часа и кадровые сюжеты в 18-часовом окне. Выбраны два изменения состава вне 12; оба body прочитаны из feed. Томпсон только выставлен на отказы, отправка в АХЛ условная; мартовский обмен не пересказывается. Вызов двух игроков Далласа не выдан за уже состоявшийся дебют. Хрыцковян — фамилия по существующему Justin Hryckowian в names_ru; новые имена Джек Томпсон и Мэттью Семинофф транскрибированы по правилу промпта, словарь не изменён. Фото HTTP200 и просмотрены: Томпсон №26 в прежней форме Сан-Хосе; Дилан Хрыцковян №46 в Далласе, номер проверен по официальному предсезонному протоколу NHL. Только сайт tg:false, без утреннего накопления в канал. Прогнозы и статистика не менялись."
-    },
-    {
       "t": "2026-10-26T01:25:23Z",
       "status": "ok",
       "picked": [
@@ -2001,6 +1942,76 @@
         {
           "id": "fresh_feed_scan:2026-10-28:19:16-23:16Z",
           "why": "Просмотрены заголовки последних четырёх часов вне 12 кандидатов: найдены Герин/Хьюз и новый статус Дикинсона. Остальное — уже освещённые Марченко/Маккенна, рост нагрузки Шефера, подтверждения предполагаемых составов, ранее рассмотренные кадровые перемещения Питтсбурга/Далласа. Ночь: оба новых элемента tg:false."
+        }
+      ]
+    },
+    {
+      "t": "2026-10-29T01:21:23Z",
+      "status": "ok",
+      "picked": [
+        "rmnb:2026-10-28-capitals-flyers-live-updates-logan-thompson-jack-st-ivany-debut",
+        "dailyfaceoff:capobianco-dallas-stars-lower-body-injury-out-week-sam-steel-return-david-perron"
+      ],
+      "skipped": [
+        {
+          "id": "sportsnet:icle-scouts-analysis-what-matvei-michkovs-trajectory-means-for-his-next-contract",
+          "why": "Полный текст прочитан ранее: скаутский анализ и предположения о будущем контракте, без нового решения или переговоров."
+        },
+        {
+          "id": "nhl:kirill-marchenko-injury-status-update-october-28-2026",
+          "why": "Срок отсутствия Марченко уже опубликован, нового медицинского статуса нет."
+        },
+        {
+          "id": "dailyfaceoff:leafs-kirill-marchenko-nick-blankenburg-john-tavares-out-week-to-week-nhl-injury",
+          "why": "Срок отсутствия Марченко уже опубликован, нового медицинского статуса нет."
+        },
+        {
+          "id": "nhl:semyon-varlamov-gets-first-win-after-two-years-for-new-york-islanders",
+          "why": "Реакция на первую победу и уже разобранный матч; нет нового допуска или решения о составе."
+        },
+        {
+          "id": "dailyfaceoff:innesota-wild-hot-start-more-sustainable-league-leading-goals-draisaitl-lehkonen",
+          "why": "Повтор или анализ ранее освещённого сюжета без нового самостоятельного события."
+        },
+        {
+          "id": "prohockeyrumors:2026-10-trade-notes-yurov-wright-hague-html",
+          "why": "Пересказ сообщения Джонстона от 27.10 до 18:53 UTC; первичное событие старше 18 часов."
+        },
+        {
+          "id": "dailyfaceoff:dont-know-minnesota-wild-gm-bill-guerin-sheds-light-quinn-hughes-future-contract",
+          "why": "Article прочитан: тот же эфир Герина на WCCO, уже опубликованный по Sportsnet. Новый сайт/дата пересказа не создают вторую новость."
+        },
+        {
+          "id": "thehockeynews:ting-for-oilers-jake-walman-as-early-defensive-struggles-lead-to-healthy-scratch",
+          "why": "Article прочитан: авторский разбор исключения Уолмана из состава; само решение уже отражено в новости о возвращении Дикинсона/Экхольма."
+        },
+        {
+          "id": "rmnb:2026-10-28-devin-cooley-flames-goalie-viral-interviews-quotes-pet-bunny",
+          "why": "Подборка философских интервью Кули и история о питомце; нет нового спортивного решения."
+        },
+        {
+          "id": "rmnb:2026-10-28-ryan-leonard-cole-hutson-capitals-halloween-prank",
+          "why": "Розыгрыш партнёров — курьёз, не самостоятельный хоккейный повод."
+        },
+        {
+          "id": "thehockeynews:news-the-calgary-flames-have-a-goaltending-controversy-for-all-the-right-reasons",
+          "why": "Авторская оценка конкуренции Кули и Вулфа на фоне уже освещённой серии; нового назначения не объявлено."
+        },
+        {
+          "id": "prohockeyrumors:2026-10-capitals-activate-logan-thompson-reassign-mitch-gibson-html",
+          "why": "Article и полный текст прочитаны: активация Томпсона и отправка Гибсона в АХЛ подтверждают кадровую часть выбранной новости. Отдельную вторую запись о том же возвращении не создаём."
+        },
+        {
+          "id": "rmnb:2026-10-28-capitals-flyers-live-updates-logan-thompson-jack-st-ivany-debut:source-check",
+          "why": "Полная актуальная трансляция RMNB прочитана: Томпсон в стартовом составе, игра уже идёт. Итог матча/промежуточный счёт не публикуем. Прямой API NHL вернул HTTP 403, веб-страница Gamecenter отдала оболочку без протокола; старт подтверждён текущей трансляцией RMNB. Пресс-релиз об активации ранее прочитан. Фото с тренировки RMNB просмотрено, Katie Adler/RMNB сохранено."
+        },
+        {
+          "id": "dailyfaceoff:capobianco-dallas-stars-lower-body-injury-out-week-sam-steel-return-david-perron:source-check",
+          "why": "Body и полный текст DFO прочитаны, дата 28.10 20:41 UTC. Впервые публикуем минимальный срок — неделя, дольше возможно, точной даты нет до МРТ. В источнике ошибка дня недели матча с NJD, её не переносим. Фото повреждения Капобьянко на льду просмотрено, Jerome Miron/Imagn Images подтверждён в метаданных."
+        },
+        {
+          "id": "fresh_feed_scan:2026-10-28T21:17Z_2026-10-29T01:17Z",
+          "why": "Просмотрены заголовки feed за четыре часа вне 12 кандидатов. Свежий DFO о Герине — дубль, анализ Уолмана — уже освещённое решение; ник Шор в Швейцарии ниже приоритета. Из ранее непринятых свежих событий в пределах 18 часов выбраны медицинские обновления Томпсона и Капобьянко. Ночь: оба tg:false."
         }
       ]
     }
