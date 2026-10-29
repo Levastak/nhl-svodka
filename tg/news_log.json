@@ -1,85 +1,6 @@
 {
   "runs": [
     {
-      "t": "2026-10-27T03:19:27Z",
-      "status": "ok",
-      "picked": [
-        "nhl:nhl-on-tap-news-and-notes-october-26-2026"
-      ],
-      "skipped": [
-        {
-          "id": "rmnb:2026-10-26-spencer-carbery-ivan-miroshnichenko-healthy-scratches-trade-rumors",
-          "why": "Комментарий Карбери о профессионализме Мирошниченко, без нового решения по составу или обмену; основные сообщения об обмене уже опубликованы."
-        },
-        {
-          "id": "sportsnet:nhl-video-is-maple-leafs-net-situation-a-goalie-battle-or-a-gameplan",
-          "why": "Обсуждение вратарской ротации без нового назначения основного вратаря."
-        },
-        {
-          "id": "thehockeynews:the-hockey-news-big-show-does-hellebuyck-make-the-devils-a-stanley-cup-contender",
-          "why": "Подкаст с оценками уже опубликованных обмена Хеллибака, контракта Никишина и возвращения Хьюза."
-        },
-        {
-          "id": "sportsnet:nhl-article-maple-leafs-gm-chayka-talks-defence-cowan-mckenna",
-          "why": "Общее интервью о трансферном рынке, без новой сделки или конкретного решения."
-        },
-        {
-          "id": "sportsnet:nhl-video-mckenna-in-awe-of-cowans-two-way-play-on-maple-leafs-top-line",
-          "why": "Похвала Коуэну от партнёра, без события."
-        },
-        {
-          "id": "sportsnet:nhl-video-maple-leafs-hiller-really-impressed-by-cowans-play-without-the-puck",
-          "why": "Оценка игры Коуэна тренером, без кадрового изменения."
-        },
-        {
-          "id": "prohockeyrumors:2026-10-avalanche-activate-logan-oconnor-recall-taylor-makar-html",
-          "why": "Новое только отправление Тэйлора Макара в АХЛ; активация О’Коннора от 23 октября. Приоритет новому рекорду клуба."
-        },
-        {
-          "id": "sportsnet:-video-babcock-isnt-ready-to-split-up-mcdavid-and-draisaitl-after-one-rough-loss",
-          "why": "Комментарий о сохранении сочетания после поражения, без новой перестановки."
-        },
-        {
-          "id": "rmnb:2026-10-26-washington-capitals-new-gear-goalie-masks-hometown-remix-jerseys",
-          "why": "Дизайн экипировки без хоккейного события."
-        },
-        {
-          "id": "sportsnet:video-how-matthews-helped-build-such-a-positive-vibe-and-comradery-in-leafs-room",
-          "why": "Подкаст об атмосфере в команде, без события."
-        },
-        {
-          "id": "prohockeyrumors:2026-10-quinn-hughes-says-feet-are-planted-in-minnesota-html",
-          "why": "Повтор уже опубликованной позиции Хьюза о контракте."
-        },
-        {
-          "id": "rmnb:26-10-26-rod-brindamour-alexander-nikishin-agent-criticism-holdout-trade-request",
-          "why": "Новый комментарий о советах бывших агентов, но решения по контракту, обмену или составу нет. Подписание Никишина уже опубликовано."
-        },
-        {
-          "id": "sportsnet:nhl-video-flames-backlund-fires-home-wrister-in-his-return-to-lineup",
-          "why": "Видеоподпись сообщает о равенстве с Годро в списке бомбардиров клуба, но чисел и места нет. Поиск первоисточника не дал достаточного подтверждения для отдельного развёрнутого сообщения; взят более значимый подтверждённый рекорд Мэттьюса."
-        },
-        {
-          "id": "prohockeyrumors:2026-10-flyers-rasmus-ristolainen-out-two-weeks-html",
-          "why": "Срок отсутствия Ристолайнена уже опубликован по Daily Faceoff."
-        },
-        {
-          "id": "sportsnet:nhl-article-james-reimer-pulled-after-first-period-in-rangers-debut",
-          "why": "Замена по ходу игры относится к разбору матча, отдельной новости ленты не требует."
-        },
-        {
-          "id": "nhl:rangers-hold-moment-of-silence-for-ron-duguay",
-          "why": "Церемония памяти, не новое сообщение о смерти; Дюге умер 22 октября."
-        }
-      ],
-      "verified_sources": [
-        "https://www.nhl.com/news/nhl-on-tap-news-and-notes-october-26-2026",
-        "https://api-web.nhle.com/v1/gamecenter/2026020186/boxscore",
-        "https://api-web.nhle.com/v1/gamecenter/2026020186/play-by-play"
-      ],
-      "note": "После проверки 12 кандидатов дополнительно просмотрены заголовки/summary feed за четыре часа, прочитаны body комментария Бриндамора и видео Бэклунда. Предматчевый article НХЛ о возможных 800 очках сам по себе не был подтверждением достижения. Проведена отдельная проверка официальных boxscore/play-by-play: Мэттьюсу засчитана вторая передача на гол Нюландера на 6:06 третьего периода; boxscore FINAL подтверждает одну передачу. Исходные 799 очков в 702 матчах и прежний рекорд Ситтлера 742 игры прямо указаны в article НХЛ, поэтому это 800-е очко в 703-й игре и новый рекорд клуба. Перед публикацией веха уже произошла; не повторяем предматчевый анонс и не пересказываем игру. Первые запросы API без User-Agent вернули 403, повтор с обычным User-Agent успешен; JSON протоколов сохранены вне репо. Фото статьи НХЛ загружено и просмотрено: Мэттьюс №34, капитанская нашивка, форма «Торонто». Мэттьюс и Нюландер по словарю; Ситтлер в нём отсутствует, передан по-русски без изменения существующих имён. Дубли в очереди/live/утренних новостях/опубликованных ID проверены. Одна новость, ночью 06:16 Киров tg:false без утреннего накопления. Неполные итоги дня и прогнозы не меняются, утренняя страховка вне окна не выполняется."
-    },
-    {
       "t": "2026-10-27T05:23:12Z",
       "status": "ok",
       "picked": [
@@ -2096,6 +2017,76 @@
         {
           "id": "sportsnet:nhl-article-dylan-larkin-to-stay-out-of-games-until-red-wings-complete-trade",
           "why": "Продолжение того же объявленного отсутствия Ларкина до обмена, уже освещённого в 20:20; отдельный повтор не создаётся."
+        }
+      ]
+    },
+    {
+      "t": "2026-10-29T21:21:10Z",
+      "status": "ok",
+      "picked": [
+        "nhl:panthers-aleksander-barkov-could-return-in-four-weeks",
+        "dailyfaceoff:news-taylor-hall-carolina-hurricanes-out-upper-body-injury-miss-games"
+      ],
+      "skipped": [
+        {
+          "id": "rmnb:2026-10-29-ivan-miroshnichenko-nhl-insiders-trade-rumor-teams-price-capitals",
+          "why": "Пересказ эфира среды, уже использованного в новости о вариантах сделки; свежая дата RMNB не подтверждает новый инсайд."
+        },
+        {
+          "id": "prohockeyrumors:2026-10-snapshots-shabanov-lardis-2027-draft-html",
+          "why": "Авторская оценка возможной прибавки к будущему контракту; нет новых переговоров или решения."
+        },
+        {
+          "id": "dailyfaceoff:-maple-leafs-sergei-bobrovsky-struggles-continue-poor-showing-seattle-kraken-nhl",
+          "why": "Разбор прошедшего матча, без нового решения тренера или кадрового события."
+        },
+        {
+          "id": "rmnb:2026-10-29-alex-ovechkin-41-hunter-mcdonald-massive-shove-flyers",
+          "why": "Эпизод уже обсуждённого матча или послематчевые слова; нет нового события."
+        },
+        {
+          "id": "thehockeynews:orning-skate-bobrovsky-struggles-in-seattle-cooley-injured-as-oilers-beat-flames",
+          "why": "Обсуждение реакции на известную травму, без нового диагноза или срока."
+        },
+        {
+          "id": "sportsnet:nhl-article-maple-leafs-bobrovsky-allows-last-minute-goal-in-loss-to-kraken",
+          "why": "Разбор прошедшего матча, без нового решения тренера или кадрового события."
+        },
+        {
+          "id": "sportsnet:nhl-video-we-deserved-a-point-at-least-bobrovsky-on-maple-leafs-last-minute-loss",
+          "why": "Разбор прошедшего матча, без нового решения тренера или кадрового события."
+        },
+        {
+          "id": "rmnb:2026-10-29-alex-tuch-alex-ovechkin-having-beers-winning-games",
+          "why": "Эпизод уже обсуждённого матча или послематчевые слова; нет нового события."
+        },
+        {
+          "id": "dailyfaceoff:inn-hughes-minnesota-wild-resign-extension-contract-year-unrestricted-free-agent",
+          "why": "Обсуждение возможного годичного контракта, без новых переговоров; заявление Герина уже опубликовано."
+        },
+        {
+          "id": "sportsnet:nhl-video-huska-unconcerned-with-flames-response-to-cooley-injury-a-fine-line",
+          "why": "Обсуждение реакции на известную травму, без нового диагноза или срока."
+        },
+        {
+          "id": "prohockeyrumors:2026-10-central-notes-robertson-kaliyev-vlasic-html",
+          "why": "Свежий инсайд Лебрюна о намерении начать переговоры; на этом проходе выбраны подтверждённые сроки восстановления и новое повреждение."
+        },
+        {
+          "id": "prohockeyrumors:2026-10-avalanches-josh-manson-suffers-lower-body-injury-html",
+          "why": "Травма уже опубликована в утреннем выпуске и ленте."
+        },
+        {
+          "id": "sportsnet:nhl-article-penguins-activate-kindel-and-girard-off-injured-reserve",
+          "why": "Возвращение Киндела уже освещено; административная активация не требует повтора."
+        },
+        {
+          "id": "sportsnet:nhl-article-senators-thomas-chabot-to-return-against-kings-warren-foegele-out",
+          "why": "Свежий составной повод; приоритет двум обновлениям звёзд, учтён в финальном прогнозе."
+        },
+        {
+          "id": "dailyfaceoff:news-konsta-helenius-buffalo-sabres-upper-body-injury-nhl-news-sam-carrick",
+          "why": "Свежая травма; на этом проходе выше приоритет обновлений Баркова, Маршана и Холла."
         }
       ]
     }
