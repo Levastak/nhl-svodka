@@ -1,77 +1,6 @@
 {
   "runs": [
     {
-      "t": "2026-10-27T14:04:13Z",
-      "status": "ok",
-      "picked": [],
-      "skipped": [
-        {
-          "id": "sportsnet:nhl-video-i-thought-about-it-for-a-long-time-flames-gridin-on-griddy-celebration",
-          "why": "Интервью о танце после уже разобранного матча; Гридин уже в итогах, звёздах и видео."
-        },
-        {
-          "id": "nhl:pyotr-kochetkov-just-thinking-about-hockey-during-perfect-start-for-hurricanes",
-          "why": "Профиль прежней победной серии Кочеткова; интервью прошлой недели, нового решения или рекорда нет."
-        },
-        {
-          "id": "rmnb:26-10-26-rod-brindamour-alexander-nikishin-agent-criticism-holdout-trade-request",
-          "why": "Договор Никишина уже освещён; трактовка общей реплики Бриндамора не даёт нового решения клуба."
-        },
-        {
-          "id": "rmnb:2026-10-26-spencer-carbery-ivan-miroshnichenko-healthy-scratches-trade-rumors",
-          "why": "Разрешение искать обмен и оценка Фридмана уже опубликованы; новая реплика Карбери об отношении игрока без нового предложения или решения."
-        },
-        {
-          "id": "sportsnet:nhl-article-youngsters-set-tone-for-flames-in-griddy-win",
-          "why": "Повтор разобранного матча «Калгари» и празднования Гридина."
-        },
-        {
-          "id": "sportsnet:nhl-article-maple-leafs-auston-matthews-unhappy-with-delay-of-game-penalty",
-          "why": "Реакция Мэттьюса на удаление в разобранном матче, нового решения лиги нет."
-        },
-        {
-          "id": "sportsnet:nhl-video-nhl-highlights-red-wings-4-oilers-3-so",
-          "why": "Хайлайты уже разобранного матча «Эдмонтон» — «Детройт»."
-        },
-        {
-          "id": "sportsnet:nhl-video-nhl-highlights-flames-5-maple-leafs-2-2",
-          "why": "Хайлайты уже разобранного матча «Калгари» — «Торонто»."
-        },
-        {
-          "id": "rmnb:2026-10-26-quinn-hughes-nearby-options-nhl-free-agency-devils-wild-rumor",
-          "why": "Ранее прочитанный прогноз Паньотты об абстрактных соседних вариантах: без названных клубов, предложения или нового решения."
-        },
-        {
-          "id": "sportsnet:nhl-article-kings-continue-hot-eastern-conference-trip-with-win-over-rangers",
-          "why": "Повтор матча «Рейнджерс» — «Лос-Анджелес», который есть в итогах и колонке."
-        },
-        {
-          "id": "sportsnet:nhl-video-nhl-highlights-kings-6-rangers-3",
-          "why": "Хайлайты того же матча, уже разобранного на сайте и в канале."
-        },
-        {
-          "id": "sportsnet:nhl-video-flames-conroy-on-cooley-hes-the-most-popular-person-in-canada",
-          "why": "Похвала Кули в интервью без нового решения по составу, контракта или рекорда."
-        }
-      ],
-      "checks": {
-        "feed_t": "2026-10-27T12:30:45Z",
-        "fresh_titles_last_4h": 0,
-        "expanded_window_hours": 18,
-        "additional_review": [
-          {
-            "id": "nhl:drew-doughty-wants-to-play-past-40-win-another-stanley-cup-championship-with-kings",
-            "why": "Прочитан body: интервью прошлой недели о желании играть после 40 и предварительных разговорах; нового контракта нет."
-          },
-          {
-            "id": "dailyfaceoff:innipeg-jets-run-three-goalie-tandem-stuart-skinner-nico-daws-clay-stevenson-nhl",
-            "why": "Прочитан body: обсуждение ведущими возможной тройки вратарей после уже опубликованного обмена, без нового решения клуба."
-          }
-        ],
-        "direct_search": "Проверен поиск свежих сообщений клубов/НХЛ по травмам Марченко, Хаймана и возвращениям «Торонто»; новой подтверждённой публикации в допустимом окне не найдено."
-      }
-    },
-    {
       "t": "2026-10-27T15:25:28Z",
       "status": "ok",
       "picked": [
@@ -2088,6 +2017,80 @@
         {
           "id": "nhl:european-notebook-nhl-prospects-eight-defensemen-contributing-offense",
           "why": "Обзор развития проспектов, без нового кадрового решения в заголовке/summary."
+        }
+      ]
+    },
+    {
+      "t": "2026-10-30T07:28:58Z",
+      "status": "ok",
+      "picked": [
+        "sportsnet:nhl-article-could-the-edmonton-oilers-be-eyeing-matt-rempe",
+        "dailyfaceoff:nnesota-wild-claim-cameron-crotty-off-waivers-ottawa-senators-nhl-ahl-belleville"
+      ],
+      "skipped": [
+        {
+          "id": "rmnb:2026-10-30-barry-trotz-alex-ovechkin-reunion-predators-golden-hall-induction",
+          "why": "Церемония Тротца и встреча с Овечкиным — вне текущего спортивного отбора; прощальный визит уже освещён."
+        },
+        {
+          "id": "rmnb:2026-10-29-alex-ovechkin-custom-guitar-farewell-tour-nashville-predators",
+          "why": "Подарок-гитара и прощальный визит уже анонсированы; отдельного спортивного события нет."
+        },
+        {
+          "id": "nhl:lightning-kucherov-all-time-leading-scorer-fans",
+          "why": "Рекорд Кучерова установлен 24.10; сегодняшняя статья посвящена чествованию, не новому рекорду."
+        },
+        {
+          "id": "rmnb:-10-29-capitals-predators-live-updates-ovechkin-final-nashville-game-barry-trotz",
+          "why": "Лайвблог уже завершившегося матча, визит Овечкина освещён."
+        },
+        {
+          "id": "nhl:alex-ovechkin-nhl-teams-farewell-tour",
+          "why": "Обновляемая подборка прощального тура, новизны спортивного события нет."
+        },
+        {
+          "id": "rmnb:2026-10-29-ivan-miroshnichenko-nhl-insiders-trade-rumor-teams-price-capitals",
+          "why": "Первоисточник Паньотты — эфир 28.10, старше 18 часов; новый пересказ прежнего слуха."
+        },
+        {
+          "id": "prohockeyrumors:2026-10-snapshots-shabanov-lardis-2027-draft-html",
+          "why": "Прогноз автора о будущем контракте Шабанова, не новые переговоры или решение клуба."
+        },
+        {
+          "id": "dailyfaceoff:-maple-leafs-sergei-bobrovsky-struggles-continue-poor-showing-seattle-kraken-nhl",
+          "why": "Оценка уже обсуждённого матча Бобровского, без нового решения о роли вратаря."
+        },
+        {
+          "id": "rmnb:2026-10-29-alex-ovechkin-41-hunter-mcdonald-massive-shove-flyers",
+          "why": "Силовой эпизод уже прошедшего матча, не новая трансферная или кадровая новость."
+        },
+        {
+          "id": "thehockeynews:orning-skate-bobrovsky-struggles-in-seattle-cooley-injured-as-oilers-beat-flames",
+          "why": "Подкаст о старых матчах и уже известной травме Кули, новых решений нет."
+        },
+        {
+          "id": "dailyfaceoff:in-moritz-seider-detroit-red-wings-response-suspension-without-pay-trade-request",
+          "why": "Реакция Зайдера после матча на уже опубликованное отстранение Ларкина, без новой сделки."
+        },
+        {
+          "id": "sportsnet:nhl-article-canucks-surrender-three-third-period-goals-blow-lead-vs-sharks",
+          "why": "Пересказ матча, включённого в готовую утреннюю сводку."
+        },
+        {
+          "id": "dailyfaceoff:news-konsta-helenius-buffalo-sabres-upper-body-injury-nhl-news-sam-carrick",
+          "why": "Полный материал прочитан, новая травма подтверждена; ниже двух выбранных сюжетов. При следующем отборе проверить остаток 18-часового окна и не выдавать уже пропущенный матч за будущий."
+        },
+        {
+          "id": "thehockeynews:mor-roundup-maple-leafs-winger-easton-cowan-not-untradeable-kraken-seek-a-scorer",
+          "why": "Слова Чайки о Коуэне сказаны 26.10; свежий пересказ не делает их новым событием."
+        },
+        {
+          "id": "prohockeyrumors:2026-10-avalanches-josh-manson-suffers-lower-body-injury-html",
+          "why": "Травма и отсутствие срока возвращения уже опубликованы, новых подробностей нет."
+        },
+        {
+          "id": "prohockeyrumors:2026-10-senators-place-cameron-crotty-on-waivers-html",
+          "why": "Тот же переход Кротти, выбран по Daily Faceoff; вторую новость не дублировать."
         }
       ]
     }
