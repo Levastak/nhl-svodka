@@ -1,69 +1,6 @@
 {
   "runs": [
     {
-      "t": "2026-10-27T07:29:41Z",
-      "status": "ok",
-      "picked": [
-        "sportsnet:nhl-article-oilers-zach-hyman-exits-vs-red-wings-with-head-injury",
-        "prohockeyrumors:2026-10-wild-assign-rieger-lorenz-to-ahl-iowa-html"
-      ],
-      "skipped": [
-        {
-          "id": "sportsnet:nhl-video-i-thought-about-it-for-a-long-time-flames-gridin-on-griddy-celebration",
-          "why": "Празднование и послематчевый разговор Гридина; его дубль уже включён в полные итоги и видео, самостоятельного нового события нет."
-        },
-        {
-          "id": "nhl:pyotr-kochetkov-just-thinking-about-hockey-during-perfect-start-for-hurricanes",
-          "why": "Профиль Кочеткова с интервью прошлой недели и серией, достигнутой в субботу; нового рекорда, повреждения или решения по составу нет."
-        },
-        {
-          "id": "rmnb:26-10-26-rod-brindamour-alexander-nikishin-agent-criticism-holdout-trade-request",
-          "why": "Интерпретация общей реплики Бриндамора о советах агентов после уже освещённого контракта Никишина; без нового кадрового решения."
-        },
-        {
-          "id": "rmnb:2026-10-26-spencer-carbery-ivan-miroshnichenko-healthy-scratches-trade-rumors",
-          "why": "Похвала профессионализму Мирошниченко без нового решения; разрешение искать обмен и оценка компенсации уже опубликованы."
-        },
-        {
-          "id": "dailyfaceoff:s-alexander-nikishin-carolina-hurricanes-contract-extension-underwhelming-ending",
-          "why": "Оценки уже опубликованного контракта Никишина, без нового события."
-        },
-        {
-          "id": "dailyfaceoff:rricanes-gm-eric-tulsky-discusses-alexander-nikishin-contract-extension-nhl-news",
-          "why": "Разбор завершившихся переговоров Никишина, контракт уже освещён."
-        },
-        {
-          "id": "sportsnet:nhl-video-what-made-nikishin-wave-the-white-flag-in-talks-with-hurricanes",
-          "why": "Обсуждение причин уже объявленного контракта Никишина, без нового соглашения или конкретного перехода."
-        },
-        {
-          "id": "thehockeynews:atest-news-what-nikishins-one-year-contract-means-for-his-future-with-hurricanes",
-          "why": "Разбор уже опубликованного однолетнего контракта Никишина."
-        },
-        {
-          "id": "sportsnet:nhl-article-youngsters-set-tone-for-flames-in-griddy-win",
-          "why": "Пересказ победы «Калгари» и празднования Гридина; матч уже в утреннем выпуске."
-        },
-        {
-          "id": "sportsnet:nhl-article-maple-leafs-auston-matthews-unhappy-with-delay-of-game-penalty",
-          "why": "Реакция Мэттьюса на удаление в уже разобранном матче, без решения лиги."
-        },
-        {
-          "id": "rmnb:2026-10-26-quinn-hughes-nearby-options-nhl-free-agency-devils-wild-rumor",
-          "why": "Предварительная оценка Паньотты о неназванных соседних вариантах для Хьюза; конкретного предложения нет. Приоритет подтверждённой травме и кадровому изменению для сайта."
-        },
-        {
-          "id": "sportsnet:nhl-article-kings-continue-hot-eastern-conference-trip-with-win-over-rangers",
-          "why": "Пересказ встречи «Рейнджерс» — «Лос-Анджелес», уже разобранной в итогах и колонке."
-        }
-      ],
-      "verified_sources": [
-        "https://www.sportsnet.ca/nhl/article/oilers-zach-hyman-exits-vs-red-wings-with-head-injury/",
-        "https://www.prohockeyrumors.com/2026/10/wild-assign-rieger-lorenz-to-ahl-iowa.html"
-      ],
-      "note": "Утренняя страховка в фактическом окне 10:00–11:30: daily.date=tg.date=results_date=2026-10-26, auto_texts отсутствует, утро и подписи уже готовы — не переписываются. После 12 кандидатов проверены заголовки/summary feed за четыре часа и непросмотренные кадровые поводы за 18 часов. Хайман найден вне короткого списка: полностью прочитан Sportsnet, включая послематчевый комментарий тренера; протокол box подтверждает 8:25 и два броска. Не называем диагноз или длительность отсутствия. Полностью прочитан PHR о Лоренце; отправка в АХЛ — новый кадровый повод для сайта, без повторения утренних новостей. Фото обоих источников загружены и просмотрены; Хайман №18 «Эдмонтон», Лоренц №61 «Миннесота». Имена по names_ru, очередь/live/сайт/опубликованные ID проверены. Хайман tg:true/hot:false, Лоренц tg:false; второго в канал не ставим, ready +40 минут сохранён по промпту. Для сайта у нового второго материала time=written вместо будущего ready, чтобы не показывать публикацию из будущего. Лимит ленты 5, интервалы 75 минут ленты и 20 минут всех постов соблюдаются штатным ботом. Только очередь/live/log, без изменения готового выпуска или прогнозов."
-    },
-    {
       "t": "2026-10-27T09:28:55Z",
       "status": "ok",
       "picked": [
@@ -2090,6 +2027,72 @@
         {
           "id": "sportsnet:nhl-article-flames-awaiting-update-on-injured-goaltender-devin-cooley",
           "why": "Заголовок об ожидании медицинского обновления; приоритет двум более определённым событиям."
+        }
+      ]
+    },
+    {
+      "t": "2026-10-30T01:20:29Z",
+      "status": "ok",
+      "picked": [
+        "sportsnet:l-article-canadiens-defenceman-mike-matheson-out-vs-stars-with-lower-body-injury",
+        "dailyfaceoff:apobianco-sam-steel-dallas-stars-four-weeks-lower-body-injury-return-undisclosed"
+      ],
+      "skipped": [
+        {
+          "id": "rmnb:-10-29-capitals-predators-live-updates-ovechkin-final-nashville-game-barry-trotz",
+          "why": "Онлайн уже анонсированного прощального матча или эпизод прошлой игры; отдельного нового события нет."
+        },
+        {
+          "id": "nhl:alex-ovechkin-nhl-teams-farewell-tour",
+          "why": "Прочитан article: подарки перед прощальным матчем; сам визит и чествование уже анонсированы, нового спортивного события нет."
+        },
+        {
+          "id": "rmnb:2026-10-29-ivan-miroshnichenko-nhl-insiders-trade-rumor-teams-price-capitals",
+          "why": "Пересказ уже использованного эфира среды; нового инсайда в допустимом окне не подтверждено."
+        },
+        {
+          "id": "prohockeyrumors:2026-10-snapshots-shabanov-lardis-2027-draft-html",
+          "why": "Авторская оценка будущего контракта, без новых переговоров или решения."
+        },
+        {
+          "id": "dailyfaceoff:-maple-leafs-sergei-bobrovsky-struggles-continue-poor-showing-seattle-kraken-nhl",
+          "why": "Разбор уже обсуждённого матча, без нового кадрового решения или медицинского сообщения."
+        },
+        {
+          "id": "rmnb:2026-10-29-alex-ovechkin-41-hunter-mcdonald-massive-shove-flyers",
+          "why": "Онлайн уже анонсированного прощального матча или эпизод прошлой игры; отдельного нового события нет."
+        },
+        {
+          "id": "thehockeynews:orning-skate-bobrovsky-struggles-in-seattle-cooley-injured-as-oilers-beat-flames",
+          "why": "Разбор уже обсуждённого матча, без нового кадрового решения или медицинского сообщения."
+        },
+        {
+          "id": "espn:50322532",
+          "why": "Отстранение без зарплаты уже опубликовано в предыдущем проходе; обновление даты не делает событие новым."
+        },
+        {
+          "id": "dailyfaceoff:g-a-lot-today-detroit-red-wings-general-manager-shawn-horcoff-dylan-larkin-trade",
+          "why": "Прочитан article: реакция генменеджера и поиск сделки после уже опубликованного отстранения; нового соглашения нет."
+        },
+        {
+          "id": "nhl:dylan-larkin-will-no-longer-play-for-detroit-red-wings",
+          "why": "Отстранение без зарплаты уже опубликовано в предыдущем проходе; обновление даты не делает событие новым."
+        },
+        {
+          "id": "sportsnet:nhl-video-off-the-rails-what-comes-next-for-larkin-red-wings",
+          "why": "Отстранение без зарплаты уже опубликовано в предыдущем проходе; обновление даты не делает событие новым."
+        },
+        {
+          "id": "rmnb:6-10-29-dylan-larkin-suspended-without-pay-red-wings-trade-request-capitals-list",
+          "why": "Отстранение без зарплаты уже опубликовано в предыдущем проходе; обновление даты не делает событие новым."
+        },
+        {
+          "id": "prohockeyrumors:2026-10-hurricanes-taylor-hall-out-day-to-day-html",
+          "why": "Новое повреждение Холла и пропуск нескольких матчей уже опубликованы, повтор общей оценки без точной даты."
+        },
+        {
+          "id": "prohockeyrumors:2026-10-sabres-to-activate-sam-carrick-html",
+          "why": "Прочитан body: активация Кэррика и травма Хелениуса — допустимый клубный повод; на этом проходе выбраны два медицинских обновления."
         }
       ]
     }
