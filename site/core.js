@@ -69,9 +69,9 @@ const endLong=e=>e==="OT"?"овертайм":e==="SO"?"буллиты":"";
 const sideTeam=(m,s)=>s==="home"?m.home:m.away;
 
 /* ---------- логотипы и фото ---------- */
-const LG="https://assets.nhle.com/logos/nhl/svg/",MG="https://assets.nhle.com/mugs/nhl/";
+const LG="assets/logos/nhl/svg/",MG="assets/mugs/nhl/";
 let LOGO={};
-function logoUrl(a,dark){let u=LOGO[a]||`${LG}${a}_light.svg`;if(dark)u=u.replace(/_light\.svg$/,"_dark.svg");return u}
+function logoUrl(a,dark){let u=(LOGO[a]||`${LG}${a}_light.svg`).replace(/^https:\/\/assets\.nhle\.com\//,"assets/");if(dark)u=u.replace(/_light\.svg$/,"_dark.svg");return u}
 function puck(a){const c=COLORS[a]||["#556070","#8892A0"];const fg=lum(c[0])>.45?"#10131A":"#FFFFFF";return `<svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="19" fill="${c[0]}"/><circle cx="20" cy="20" r="16" fill="none" stroke="${c[1]}" stroke-width="1.6"/><text x="20" y="24.5" text-anchor="middle" font-family="Arial Narrow,Arial,sans-serif" font-weight="700" font-size="12" fill="${fg}">${esc(AB[a]||a)}</text></svg>`}
 window._lgf=function(img){const s=img.closest(".lg");if(s)s.innerHTML=puck(s.dataset.a)};
 function logo(a,s=28){if(!COLORS[a])return `<span class="lg" style="--s:${s}px">${puck(a)}</span>`;

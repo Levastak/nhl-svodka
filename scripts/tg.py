@@ -19,6 +19,7 @@ import mimetypes
 import os
 import subprocess
 import sys
+import time
 import urllib.parse
 import urllib.request
 import uuid
@@ -29,7 +30,7 @@ from game_day import day_complete, daily_ready
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE = os.path.join(ROOT, "site")
 TG = os.path.join(ROOT, "tg")
-URL = "https://levastak.github.io/nhl-svodka/"
+URL = "https://nhl-stats.ru/"
 TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN", "").strip()
 LOG = {"t": None, "mode": None, "ok": [], "fail": []}
 FOOT = f'\n\n🏒 <a href="{URL}">NHL-STATS.RU</a> — статистика, прогнозы и аналитика НХЛ по-русски'
@@ -1078,23 +1079,28 @@ def apply_edits(chat, MSG, cfg=None):
         mid, text = x.get("message_id"), x.get("text") or ""
         try:
             try:
+                if len(re.sub("<[^>]+>", "", html.unescape(text))) > 1024:
+                    raise ValueError("no caption: text post exceeds caption limit")
                 _call("editMessageCaption", dict(chat_id=chat, message_id=mid, caption=text, parse_mode="HTML"))
             except Exception as ex:
                 if "no caption" in str(ex).lower() or "there is no" in str(ex).lower():
-                    _call("editMessageText", dict(chat_id=chat, message_id=mid, text=text, parse_mode="HTML"))
+                    preview = dict(url=x["preview_url"], prefer_large_media=True, show_above_text=True) if x.get("preview_url") else None
+                    _call("editMessageText", dict(chat_id=chat, message_id=mid, text=text, parse_mode="HTML", link_preview_options=preview))
                 elif "not modified" not in str(ex).lower():
                     raise
             x["status"] = "done"
             LOG["ok"].append(f"пост {mid} поправлен")
-            if cfg:
+            if cfg and x.get("notify", True):
                 _admin_send(cfg, f"Поправил пост {mid}" + (f": {html.escape(x.get('summary', ''))[:300]}" if x.get("summary") else "."))
         except Exception as ex:
             x["status"] = "error"
             x["error"] = str(ex)[:200]
             LOG["fail"].append(f"правка {mid}: {ex}"[:200])
         changed = True
+        if x.get("notify") is False:
+            time.sleep(1.1)  # Bulk link-only maintenance; do not flood Telegram or the admin chat.
     if changed:
-        ed["items"] = ed["items"][-50:]
+        ed["items"] = [x for x in ed["items"] if x.get("status") != "done"] + [x for x in ed["items"] if x.get("status") == "done"][-50:]
         save(p, ed)
 
 

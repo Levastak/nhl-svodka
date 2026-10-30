@@ -1,0 +1,13 @@
+const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const vm = require('node:vm');
+const path = require('node:path');
+const context = vm.createContext({setInterval(){}, window:{}, document:{addEventListener(){}, querySelector(){return {addEventListener(){}}}}});
+for (const file of ['site/core.js','site/views.js']) vm.runInContext(fs.readFileSync(path.join(__dirname,'..',file),'utf8'),context);
+const run = s => vm.runInContext(s,context);
+run(`D={heads:{'Test Player':'20262027/TBL/8476453'},numbers:{},skaters:[],goalies:[]}; LOGO.WSH='https://assets.nhle.com/logos/nhl/svg/WSH_secondary_light.svg';`);
+assert.equal(run(`logoUrl('TBL')`),'assets/logos/nhl/svg/TBL_light.svg');
+assert.equal(run(`logoUrl('WSH',true)`),'assets/logos/nhl/svg/WSH_secondary_dark.svg');
+assert.match(run(`photo('Test Player','TBL')`), /src="assets\/mugs\/nhl\/20262027\/TBL\/8476453.png"/);
+assert.doesNotMatch(run(`logo('WSH')+badge('TBL')+photo('Test Player','TBL')`), /https:\/\/assets.nhle.com/);
+console.log('Same-domain logo and portrait URLs verified');

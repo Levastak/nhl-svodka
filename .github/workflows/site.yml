@@ -86,6 +86,19 @@ jobs:
       - name: Версия скриптов
         if: (steps.mode.outputs.mode != 'night' && steps.mode.outputs.mode != 'watch') || steps.save.outputs.changed == '1'
         run: echo "${{ github.run_id }}" > site/version.txt
+      - name: Дата кэша изображений
+        if: (steps.mode.outputs.mode != 'night' && steps.mode.outputs.mode != 'watch') || steps.save.outputs.changed == '1'
+        id: assets-date
+        run: echo "day=$(date -u +%F)" >> $GITHUB_OUTPUT
+      - uses: actions/cache@v4
+        if: (steps.mode.outputs.mode != 'night' && steps.mode.outputs.mode != 'watch') || steps.save.outputs.changed == '1'
+        with:
+          path: .cache/nhl-assets
+          key: nhl-site-assets-v1-${{ steps.assets-date.outputs.day }}
+          restore-keys: nhl-site-assets-v1-
+      - name: Логотипы и фото с нашего домена
+        if: (steps.mode.outputs.mode != 'night' && steps.mode.outputs.mode != 'watch') || steps.save.outputs.changed == '1'
+        run: python3 scripts/cache_site_assets.py
       - uses: actions/configure-pages@v5
         if: (steps.mode.outputs.mode != 'night' && steps.mode.outputs.mode != 'watch') || steps.save.outputs.changed == '1'
       - uses: actions/upload-pages-artifact@v3
