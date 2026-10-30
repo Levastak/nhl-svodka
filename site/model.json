@@ -1,7 +1,7 @@
 {
  "version": 4.4,
  "xg_used": true,
- "generated": "2026-10-30T11:42Z",
+ "generated": "2026-10-30T20:43Z",
  "league": {
   "goals_pg": 3.142,
   "home_adv": 0.019,
@@ -86,7 +86,7 @@
    ],
    "shares_adj": -0.09,
    "goalie_away": {
-    "name": "Connor Hellebuyck (не подтв.)",
+    "name": "Connor Hellebuyck (подтв.)",
     "gsax_rate": 0.0989,
     "talent": 0.896,
     "team_level": 0.8951,
@@ -127,18 +127,18 @@
     "att": 1.048,
     "dfn": 0.926
    },
-   "mkt_home": 0.517,
-   "mkt_away": 0.483,
-   "edge_home": -0.044,
-   "edge_away": 0.044,
-   "p_home_blend": 0.499,
-   "p_away_blend": 0.501,
+   "mkt_home": 0.512,
+   "mkt_away": 0.488,
+   "edge_home": -0.039,
+   "edge_away": 0.039,
+   "p_home_blend": 0.496,
+   "p_away_blend": 0.504,
    "fatigue_edge": false,
    "value": null,
-   "mkt_over": 0.509,
-   "edge_over": -0.009,
-   "p_over_blend": 0.505,
-   "p_under_blend": 0.495,
+   "mkt_over": 0.497,
+   "edge_over": 0.003,
+   "p_over_blend": 0.498,
+   "p_under_blend": 0.502,
    "value_total": null,
    "soft": [],
    "h2h": [],
@@ -148,7 +148,6 @@
    "p_home_reg_raw": 0.381,
    "p_ot_home_raw": 0.511,
    "missing": [
-    "goalie_away_unconfirmed",
     "goalie_home_unconfirmed",
     "injuries_unmatched"
    ],
@@ -160,22 +159,22 @@
     "vs_market": true,
     "level": "lean",
     "edge_side": "away",
-    "edge": 0.044,
+    "edge": 0.039,
     "fatigue": false,
     "bet": {
      "kind": "win",
      "side": "away",
-     "odds": 2.01,
+     "odds": 2.0,
      "p_model": 0.527,
-     "p_mkt": 0.483,
+     "p_mkt": 0.488,
      "src": "Pinnacle"
     },
     "total": {
      "side": "over",
      "line": 6.0,
      "p": 0.5,
-     "mkt_side": "over",
-     "vs_market": false,
+     "mkt_side": "under",
+     "vs_market": true,
      "value": null
     }
    }
@@ -230,7 +229,7 @@
     ]
    },
    "goalie_home": {
-    "name": "Akira Schmid (не подтв.)",
+    "name": "Akira Schmid (подтв.)",
     "gsax_rate": -0.0034,
     "talent": 0.8938,
     "team_level": 0.8922,
@@ -275,18 +274,18 @@
     "att": 1.0,
     "dfn": 0.978
    },
-   "mkt_home": 0.665,
-   "mkt_away": 0.335,
-   "edge_home": -0.009,
-   "edge_away": 0.009,
-   "p_home_blend": 0.661,
-   "p_away_blend": 0.339,
+   "mkt_home": 0.675,
+   "mkt_away": 0.325,
+   "edge_home": -0.019,
+   "edge_away": 0.019,
+   "p_home_blend": 0.667,
+   "p_away_blend": 0.333,
    "fatigue_edge": true,
    "value": null,
-   "mkt_over": 0.516,
-   "edge_over": 0.008,
-   "p_over_blend": 0.519,
-   "p_under_blend": 0.481,
+   "mkt_over": 0.528,
+   "edge_over": -0.004,
+   "p_over_blend": 0.527,
+   "p_under_blend": 0.473,
    "value_total": null,
    "soft": [],
    "h2h": [
@@ -304,8 +303,7 @@
    "p_home_reg_raw": 0.481,
    "p_ot_home_raw": 0.597,
    "missing": [
-    "goalie_away_unconfirmed",
-    "goalie_home_unconfirmed"
+    "goalie_away_unconfirmed"
    ],
    "incomplete": false,
    "verdict": {
@@ -315,7 +313,7 @@
     "vs_market": false,
     "level": "pass",
     "edge_side": "away",
-    "edge": 0.009,
+    "edge": 0.019,
     "fatigue": false,
     "total": {
      "side": "over",
@@ -377,7 +375,7 @@
     ]
    },
    "goalie_home": {
-    "name": "Dustin Wolf (не подтв.)",
+    "name": "Dustin Wolf (подтв.)",
     "gsax_rate": -0.0184,
     "talent": 0.8933,
     "team_level": 0.8981,
@@ -430,10 +428,10 @@
    "p_away_blend": 0.521,
    "fatigue_edge": false,
    "value": null,
-   "mkt_over": 0.482,
-   "edge_over": -0.001,
-   "p_over_blend": 0.481,
-   "p_under_blend": 0.519,
+   "mkt_over": 0.487,
+   "edge_over": -0.006,
+   "p_over_blend": 0.484,
+   "p_under_blend": 0.516,
    "value_total": null,
    "soft": [],
    "h2h": [
@@ -458,8 +456,7 @@
    "p_home_reg_raw": 0.38,
    "p_ot_home_raw": 0.508,
    "missing": [
-    "goalie_away_unconfirmed",
-    "goalie_home_unconfirmed"
+    "goalie_away_unconfirmed"
    ],
    "incomplete": false,
    "verdict": {
@@ -494,9 +491,9 @@
    "p_home_reg": 0.596,
    "p_away_reg": 0.2,
    "exp_total": 6.34,
-   "line": 5.5,
-   "p_over": 0.584,
-   "p_under": 0.416,
+   "line": 6.0,
+   "p_over": 0.531,
+   "p_under": 0.469,
    "fair_home": 1.37,
    "fair_away": 3.68,
    "b2b_away": false,
@@ -552,6 +549,19 @@
     "att": 1.032,
     "dfn": 0.964
    },
+   "mkt_home": 0.668,
+   "mkt_away": 0.332,
+   "edge_home": 0.061,
+   "edge_away": -0.061,
+   "p_home_blend": 0.692,
+   "p_away_blend": 0.308,
+   "fatigue_edge": false,
+   "value": "home",
+   "mkt_over": 0.501,
+   "edge_over": 0.03,
+   "p_over_blend": 0.513,
+   "p_under_blend": 0.487,
+   "value_total": null,
    "soft": [],
    "h2h": [],
    "id": 2026020217,
@@ -561,14 +571,41 @@
    "p_ot_home_raw": 0.65,
    "missing": [
     "goalie_away",
-    "goalie_home",
-    "odds"
+    "goalie_home"
    ],
    "incomplete": true,
    "verdict": {
     "fav": "home",
     "p_fav": 0.729,
-    "level": "noodds"
+    "mkt_fav": "home",
+    "vs_market": false,
+    "level": "bet",
+    "edge_side": "home",
+    "edge": 0.061,
+    "fatigue": false,
+    "sure": {
+     "side": "home",
+     "p": 0.729,
+     "mkt": 0.668,
+     "edge": 0.061,
+     "odds": 1.45
+    },
+    "bet": {
+     "kind": "win",
+     "side": "home",
+     "odds": 1.45,
+     "p_model": 0.729,
+     "p_mkt": 0.668,
+     "src": "Pinnacle"
+    },
+    "total": {
+     "side": "over",
+     "line": 6.0,
+     "p": 0.531,
+     "mkt_side": "over",
+     "vs_market": false,
+     "value": null
+    }
    }
   },
   {
@@ -582,9 +619,9 @@
    "p_home_reg": 0.38,
    "p_away_reg": 0.394,
    "exp_total": 6.12,
-   "line": 5.5,
-   "p_over": 0.546,
-   "p_under": 0.454,
+   "line": 6.0,
+   "p_over": 0.49,
+   "p_under": 0.51,
    "fair_home": 2.01,
    "fair_away": 1.99,
    "b2b_away": false,
@@ -649,6 +686,19 @@
     "att": 0.984,
     "dfn": 0.964
    },
+   "mkt_home": 0.49,
+   "mkt_away": 0.51,
+   "edge_home": 0.007,
+   "edge_away": -0.007,
+   "p_home_blend": 0.493,
+   "p_away_blend": 0.507,
+   "fatigue_edge": false,
+   "value": null,
+   "mkt_over": 0.485,
+   "edge_over": 0.005,
+   "p_over_blend": 0.487,
+   "p_under_blend": 0.513,
+   "value_total": null,
    "soft": [],
    "h2h": [],
    "id": 2026020218,
@@ -658,14 +708,26 @@
    "p_ot_home_raw": 0.516,
    "missing": [
     "goalie_away",
-    "goalie_home",
-    "odds"
+    "goalie_home"
    ],
    "incomplete": true,
    "verdict": {
     "fav": "away",
     "p_fav": 0.503,
-    "level": "noodds"
+    "mkt_fav": "away",
+    "vs_market": false,
+    "level": "pass",
+    "edge_side": "home",
+    "edge": 0.007,
+    "fatigue": false,
+    "total": {
+     "side": "under",
+     "line": 6.0,
+     "p": 0.51,
+     "mkt_side": "under",
+     "vs_market": false,
+     "value": null
+    }
    }
   },
   {
@@ -679,9 +741,9 @@
    "p_home_reg": 0.312,
    "p_away_reg": 0.474,
    "exp_total": 6.62,
-   "line": 5.5,
-   "p_over": 0.626,
-   "p_under": 0.374,
+   "line": 6.0,
+   "p_over": 0.58,
+   "p_under": 0.42,
    "fair_home": 2.42,
    "fair_away": 1.7,
    "b2b_away": false,
@@ -737,6 +799,19 @@
     "att": 0.986,
     "dfn": 1.009
    },
+   "mkt_home": 0.381,
+   "mkt_away": 0.619,
+   "edge_home": 0.032,
+   "edge_away": -0.032,
+   "p_home_blend": 0.394,
+   "p_away_blend": 0.606,
+   "fatigue_edge": false,
+   "value": null,
+   "mkt_over": 0.506,
+   "edge_over": 0.074,
+   "p_over_blend": 0.536,
+   "p_under_blend": 0.464,
+   "value_total": "over",
    "soft": [],
    "h2h": [],
    "id": 2026020219,
@@ -746,14 +821,34 @@
    "p_ot_home_raw": 0.47,
    "missing": [
     "goalie_away",
-    "goalie_home",
-    "odds"
+    "goalie_home"
    ],
    "incomplete": true,
    "verdict": {
     "fav": "away",
     "p_fav": 0.587,
-    "level": "noodds"
+    "mkt_fav": "away",
+    "vs_market": false,
+    "level": "lean",
+    "edge_side": "home",
+    "edge": 0.032,
+    "fatigue": false,
+    "bet": {
+     "kind": "win",
+     "side": "home",
+     "odds": 2.55,
+     "p_model": 0.413,
+     "p_mkt": 0.381,
+     "src": "Pinnacle"
+    },
+    "total": {
+     "side": "over",
+     "line": 6.0,
+     "p": 0.58,
+     "mkt_side": "over",
+     "vs_market": false,
+     "value": "over"
+    }
    }
   },
   {
@@ -767,9 +862,9 @@
    "p_home_reg": 0.41,
    "p_away_reg": 0.372,
    "exp_total": 6.54,
-   "line": 5.5,
-   "p_over": 0.612,
-   "p_under": 0.388,
+   "line": 6.0,
+   "p_over": 0.565,
+   "p_under": 0.435,
    "fair_home": 1.91,
    "fair_away": 2.1,
    "b2b_away": false,
@@ -843,6 +938,19 @@
     "att": 0.968,
     "dfn": 0.992
    },
+   "mkt_home": 0.453,
+   "mkt_away": 0.547,
+   "edge_home": 0.07,
+   "edge_away": -0.07,
+   "p_home_blend": 0.481,
+   "p_away_blend": 0.519,
+   "fatigue_edge": false,
+   "value": "home",
+   "mkt_over": 0.526,
+   "edge_over": 0.039,
+   "p_over_blend": 0.542,
+   "p_under_blend": 0.458,
+   "value_total": null,
    "soft": [],
    "h2h": [],
    "id": 2026020220,
@@ -853,14 +961,34 @@
    "missing": [
     "goalie_away",
     "goalie_home",
-    "injuries_unmatched",
-    "odds"
+    "injuries_unmatched"
    ],
    "incomplete": true,
    "verdict": {
     "fav": "home",
     "p_fav": 0.523,
-    "level": "noodds"
+    "mkt_fav": "away",
+    "vs_market": true,
+    "level": "bet",
+    "edge_side": "home",
+    "edge": 0.07,
+    "fatigue": false,
+    "bet": {
+     "kind": "win",
+     "side": "home",
+     "odds": 2.15,
+     "p_model": 0.523,
+     "p_mkt": 0.453,
+     "src": "Pinnacle"
+    },
+    "total": {
+     "side": "over",
+     "line": 6.0,
+     "p": 0.565,
+     "mkt_side": "over",
+     "vs_market": false,
+     "value": null
+    }
    }
   },
   {
@@ -874,9 +1002,9 @@
    "p_home_reg": 0.315,
    "p_away_reg": 0.469,
    "exp_total": 6.45,
-   "line": 5.5,
-   "p_over": 0.599,
-   "p_under": 0.401,
+   "line": 6.0,
+   "p_over": 0.549,
+   "p_under": 0.451,
    "fair_home": 2.42,
    "fair_away": 1.7,
    "b2b_away": false,
@@ -949,6 +1077,19 @@
     "att": 0.954,
     "dfn": 0.988
    },
+   "mkt_home": 0.469,
+   "mkt_away": 0.531,
+   "edge_home": -0.056,
+   "edge_away": 0.056,
+   "p_home_blend": 0.447,
+   "p_away_blend": 0.553,
+   "fatigue_edge": false,
+   "value": "away",
+   "mkt_over": 0.491,
+   "edge_over": 0.058,
+   "p_over_blend": 0.514,
+   "p_under_blend": 0.486,
+   "value_total": "over",
    "soft": [],
    "h2h": [],
    "id": 2026020221,
@@ -958,14 +1099,34 @@
    "p_ot_home_raw": 0.452,
    "missing": [
     "goalie_away",
-    "goalie_home",
-    "odds"
+    "goalie_home"
    ],
    "incomplete": true,
    "verdict": {
     "fav": "away",
     "p_fav": 0.587,
-    "level": "noodds"
+    "mkt_fav": "away",
+    "vs_market": false,
+    "level": "bet",
+    "edge_side": "away",
+    "edge": 0.056,
+    "fatigue": false,
+    "bet": {
+     "kind": "win",
+     "side": "away",
+     "odds": 1.83,
+     "p_model": 0.587,
+     "p_mkt": 0.531,
+     "src": "Pinnacle"
+    },
+    "total": {
+     "side": "over",
+     "line": 6.0,
+     "p": 0.549,
+     "mkt_side": "under",
+     "vs_market": true,
+     "value": "over"
+    }
    }
   },
   {
@@ -979,9 +1140,9 @@
    "p_home_reg": 0.282,
    "p_away_reg": 0.506,
    "exp_total": 6.59,
-   "line": 5.5,
-   "p_over": 0.621,
-   "p_under": 0.379,
+   "line": 6.5,
+   "p_over": 0.511,
+   "p_under": 0.489,
    "fair_home": 2.66,
    "fair_away": 1.6,
    "b2b_away": false,
@@ -1055,6 +1216,19 @@
     "att": 0.948,
     "dfn": 1.079
    },
+   "mkt_home": 0.448,
+   "mkt_away": 0.552,
+   "edge_home": -0.072,
+   "edge_away": 0.072,
+   "p_home_blend": 0.419,
+   "p_away_blend": 0.581,
+   "fatigue_edge": false,
+   "value": "away",
+   "mkt_over": 0.501,
+   "edge_over": 0.01,
+   "p_over_blend": 0.505,
+   "p_under_blend": 0.495,
+   "value_total": null,
    "soft": [],
    "h2h": [
     {
@@ -1072,14 +1246,34 @@
    "p_ot_home_raw": 0.446,
    "missing": [
     "goalie_away",
-    "goalie_home",
-    "odds"
+    "goalie_home"
    ],
    "incomplete": true,
    "verdict": {
     "fav": "away",
     "p_fav": 0.624,
-    "level": "noodds"
+    "mkt_fav": "away",
+    "vs_market": false,
+    "level": "bet",
+    "edge_side": "away",
+    "edge": 0.072,
+    "fatigue": false,
+    "bet": {
+     "kind": "win",
+     "side": "away",
+     "odds": 1.76,
+     "p_model": 0.624,
+     "p_mkt": 0.552,
+     "src": "Pinnacle"
+    },
+    "total": {
+     "side": "over",
+     "line": 6.5,
+     "p": 0.511,
+     "mkt_side": "over",
+     "vs_market": false,
+     "value": null
+    }
    }
   },
   {
@@ -1093,9 +1287,9 @@
    "p_home_reg": 0.466,
    "p_away_reg": 0.325,
    "exp_total": 6.88,
-   "line": 5.5,
-   "p_over": 0.663,
-   "p_under": 0.337,
+   "line": 6.5,
+   "p_over": 0.556,
+   "p_under": 0.444,
    "fair_home": 1.71,
    "fair_away": 2.41,
    "b2b_away": false,
@@ -1177,6 +1371,19 @@
     "att": 1.033,
     "dfn": 1.008
    },
+   "mkt_home": 0.578,
+   "mkt_away": 0.422,
+   "edge_home": 0.006,
+   "edge_away": -0.006,
+   "p_home_blend": 0.581,
+   "p_away_blend": 0.419,
+   "fatigue_edge": false,
+   "value": null,
+   "mkt_over": 0.517,
+   "edge_over": 0.039,
+   "p_over_blend": 0.533,
+   "p_under_blend": 0.467,
+   "value_total": null,
    "soft": [],
    "h2h": [
     {
@@ -1194,14 +1401,26 @@
    "p_ot_home_raw": 0.567,
    "missing": [
     "goalie_away",
-    "goalie_home",
-    "odds"
+    "goalie_home"
    ],
    "incomplete": true,
    "verdict": {
     "fav": "home",
     "p_fav": 0.584,
-    "level": "noodds"
+    "mkt_fav": "home",
+    "vs_market": false,
+    "level": "pass",
+    "edge_side": "home",
+    "edge": 0.006,
+    "fatigue": false,
+    "total": {
+     "side": "over",
+     "line": 6.5,
+     "p": 0.556,
+     "mkt_side": "over",
+     "vs_market": false,
+     "value": null
+    }
    }
   },
   {
@@ -1215,9 +1434,9 @@
    "p_home_reg": 0.367,
    "p_away_reg": 0.424,
    "exp_total": 6.98,
-   "line": 5.5,
-   "p_over": 0.676,
-   "p_under": 0.324,
+   "line": 6.5,
+   "p_over": 0.571,
+   "p_under": 0.429,
    "fair_home": 2.14,
    "fair_away": 1.88,
    "b2b_away": false,
@@ -1290,6 +1509,19 @@
     "att": 0.916,
     "dfn": 1.167
    },
+   "mkt_home": 0.402,
+   "mkt_away": 0.598,
+   "edge_home": 0.066,
+   "edge_away": -0.066,
+   "p_home_blend": 0.428,
+   "p_away_blend": 0.572,
+   "fatigue_edge": false,
+   "value": "home",
+   "mkt_over": 0.537,
+   "edge_over": 0.034,
+   "p_over_blend": 0.55,
+   "p_under_blend": 0.45,
+   "value_total": null,
    "soft": [],
    "h2h": [],
    "id": 2026020224,
@@ -1299,14 +1531,34 @@
    "p_ot_home_raw": 0.482,
    "missing": [
     "goalie_away",
-    "goalie_home",
-    "odds"
+    "goalie_home"
    ],
    "incomplete": true,
    "verdict": {
     "fav": "away",
     "p_fav": 0.532,
-    "level": "noodds"
+    "mkt_fav": "away",
+    "vs_market": false,
+    "level": "bet",
+    "edge_side": "home",
+    "edge": 0.066,
+    "fatigue": false,
+    "bet": {
+     "kind": "win",
+     "side": "home",
+     "odds": 2.41,
+     "p_model": 0.468,
+     "p_mkt": 0.402,
+     "src": "Pinnacle"
+    },
+    "total": {
+     "side": "over",
+     "line": 6.5,
+     "p": 0.571,
+     "mkt_side": "over",
+     "vs_market": false,
+     "value": null
+    }
    }
   },
   {
@@ -1395,6 +1647,19 @@
     "att": 0.962,
     "dfn": 0.903
    },
+   "mkt_home": 0.625,
+   "mkt_away": 0.375,
+   "edge_home": -0.025,
+   "edge_away": 0.025,
+   "p_home_blend": 0.615,
+   "p_away_blend": 0.385,
+   "fatigue_edge": false,
+   "value": null,
+   "mkt_over": 0.485,
+   "edge_over": 0.036,
+   "p_over_blend": 0.499,
+   "p_under_blend": 0.501,
+   "value_total": null,
    "soft": [],
    "h2h": [],
    "id": 2026020225,
@@ -1404,14 +1669,26 @@
    "p_ot_home_raw": 0.556,
    "missing": [
     "goalie_away",
-    "goalie_home",
-    "odds"
+    "goalie_home"
    ],
    "incomplete": true,
    "verdict": {
     "fav": "home",
     "p_fav": 0.6,
-    "level": "noodds"
+    "mkt_fav": "home",
+    "vs_market": false,
+    "level": "pass",
+    "edge_side": "away",
+    "edge": 0.025,
+    "fatigue": false,
+    "total": {
+     "side": "over",
+     "line": 5.5,
+     "p": 0.521,
+     "mkt_side": "under",
+     "vs_market": true,
+     "value": null
+    }
    }
   },
   {
@@ -1425,9 +1702,9 @@
    "p_home_reg": 0.719,
    "p_away_reg": 0.104,
    "exp_total": 6.63,
-   "line": 5.5,
-   "p_over": 0.63,
-   "p_under": 0.37,
+   "line": 6.5,
+   "p_over": 0.513,
+   "p_under": 0.487,
    "fair_home": 1.18,
    "fair_away": 6.52,
    "b2b_away": true,
@@ -1492,6 +1769,19 @@
     "att": 1.122,
     "dfn": 0.953
    },
+   "mkt_home": 0.747,
+   "mkt_away": 0.253,
+   "edge_home": 0.1,
+   "edge_away": -0.1,
+   "p_home_blend": 0.787,
+   "p_away_blend": 0.213,
+   "fatigue_edge": true,
+   "value": "home",
+   "mkt_over": 0.513,
+   "edge_over": -0.0,
+   "p_over_blend": 0.513,
+   "p_under_blend": 0.487,
+   "value_total": null,
    "soft": [],
    "h2h": [
     {
@@ -1509,14 +1799,41 @@
    "p_ot_home_raw": 0.721,
    "missing": [
     "goalie_away",
-    "goalie_home",
-    "odds"
+    "goalie_home"
    ],
    "incomplete": true,
    "verdict": {
     "fav": "home",
     "p_fav": 0.847,
-    "level": "noodds"
+    "mkt_fav": "home",
+    "vs_market": false,
+    "level": "bet",
+    "edge_side": "home",
+    "edge": 0.1,
+    "fatigue": true,
+    "sure": {
+     "side": "home",
+     "p": 0.847,
+     "mkt": 0.747,
+     "edge": 0.1,
+     "odds": 1.3
+    },
+    "bet": {
+     "kind": "win",
+     "side": "home",
+     "odds": 1.3,
+     "p_model": 0.847,
+     "p_mkt": 0.747,
+     "src": "betonlineag"
+    },
+    "total": {
+     "side": "over",
+     "line": 6.5,
+     "p": 0.513,
+     "mkt_side": "over",
+     "vs_market": false,
+     "value": null
+    }
    }
   },
   {
