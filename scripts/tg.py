@@ -889,10 +889,20 @@ def main(mode, arg=None):
             if not pre or not x["key"].startswith(pre) or not MSG.get(x["key"]):
                 continue
             if not x.get("specs"):
-                # пост без нашей картинки (новость с фото из статьи) — правим только подпись
+                # Новостное фото заменяем на месте; длинные посты используют превью.
                 try:
-                    _call("editMessageCaption", dict(chat_id=chat, message_id=MSG[x["key"]][0], caption=x["text"], parse_mode="HTML"))
-                    LOG["ok"].append(f"подпись обновлена {x['key']}")
+                    vis = len(re.sub("<[^>]+>", "", html.unescape(x["text"])))
+                    if x.get("photo") and vis <= 1024:
+                        media = dict(type="photo", media=x["photo"], caption=x["text"], parse_mode="HTML")
+                        _call("editMessageMedia", dict(chat_id=chat, message_id=MSG[x["key"]][0], media=media))
+                        LOG["ok"].append(f"фото обновлено {x['key']}")
+                    elif x.get("photo"):
+                        _call("editMessageText", dict(chat_id=chat, message_id=MSG[x["key"]][0], text=x["text"], parse_mode="HTML",
+                                                      link_preview_options={"url": x["photo"], "prefer_large_media": True, "show_above_text": True}))
+                        LOG["ok"].append(f"превью обновлено {x['key']}")
+                    else:
+                        _call("editMessageCaption", dict(chat_id=chat, message_id=MSG[x["key"]][0], caption=x["text"], parse_mode="HTML"))
+                        LOG["ok"].append(f"подпись обновлена {x['key']}")
                 except Exception as ex:
                     try:
                         _call("editMessageText", dict(chat_id=chat, message_id=MSG[x["key"]][0], text=x["text"], parse_mode="HTML",

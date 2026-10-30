@@ -13,6 +13,53 @@ import tg
 
 
 class PublicationRules(unittest.TestCase):
+    def run_news_recard(self, text, media_error=False):
+        key = "feed:existing"
+        photo = "https://example.com/replacement.jpg"
+        item = {"key": key, "text": text, "photo": photo,
+                "due": dt.datetime(2026, 10, 30, 10, tzinfo=dt.timezone.utc)}
+        calls = []
+
+        def api(method, fields, files=None):
+            calls.append((method, fields))
+            if media_error and method == "editMessageMedia":
+                raise RuntimeError("message is a text post")
+            return True
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            site, queue = root / "site", root / "tg"
+            site.mkdir()
+            queue.mkdir()
+            for filename, data in {"state.json": {"posted": {key: "2026-10-30T10:00:00Z"},
+                                                   "messages": {key: [296]}},
+                                   "config.json": {"chat_id": 1}, "feed.json": {"items": []}}.items():
+                (queue / filename).write_text(json.dumps(data), encoding="utf-8")
+            with patch.object(tg, "SITE", str(site)), patch.object(tg, "TG", str(queue)), \
+                    patch.object(tg, "LOG", {"ok": [], "fail": []}), \
+                    patch.object(tg, "build", return_value=[item]), patch.object(tg, "_call", side_effect=api):
+                tg.main("recard", key)
+                self.assertEqual(tg.LOG["fail"], [])
+        return calls
+
+    def test_news_recard_replaces_photo_on_same_message(self):
+        calls = self.run_news_recard("<b>Existing caption</b>")
+        self.assertEqual([method for method, _ in calls], ["editMessageMedia"])
+        fields = calls[0][1]
+        self.assertEqual(fields["message_id"], 296)
+        self.assertEqual(fields["media"]["media"], "https://example.com/replacement.jpg")
+        self.assertEqual(fields["media"]["caption"], "<b>Existing caption</b>")
+
+    def test_long_news_recard_changes_preview_without_exceeding_caption_limit(self):
+        calls = self.run_news_recard("x" * 1100)
+        self.assertEqual([method for method, _ in calls], ["editMessageText"])
+        self.assertEqual(calls[0][1]["link_preview_options"]["url"], "https://example.com/replacement.jpg")
+
+    def test_news_recard_can_update_existing_text_fallback(self):
+        calls = self.run_news_recard("Existing text", media_error=True)
+        self.assertEqual([method for method, _ in calls], ["editMessageMedia", "editMessageText"])
+        self.assertTrue(all(fields["message_id"] == 296 for _, fields in calls))
+
     def run_auto(self, local_time, key="feed:new", gap_minutes=60, posted=None, hot=False):
         now = dt.datetime.fromisoformat(local_time).astimezone(dt.timezone.utc)
 

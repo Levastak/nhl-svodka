@@ -107,11 +107,11 @@ function confLine(){const ex=confLegs();return ex.length?`<p class="txt">Сам�
 function todayGames(){return (D.upcoming||[]).slice().sort((a,b)=>String(a.start).localeCompare(String(b.start)))}
 function vGames(){const u=todayGames();const mo=D.motd?u.find(x=>x.away===D.motd.away&&x.home===D.motd.home):null;
   if(!u.length)return `<div class="col">${noGames()}${weekList()}</div>`;
-  return `<div class="col"><section class="sec"><div class="hd"><h1>Матчи<small>${esc(dLong(D.upcoming_date))}, время по Кирову</small></h1></div>${confLine()}
+  return `<div class="col"><section class="sec"><div class="hd"><h1>Матчи<small>${esc(dLong(D.upcoming_date))}, время МСК</small></h1></div>${confLine()}
     <div class="box">${u.map(m=>gRow(m,{mo:m===mo})).join("")}</div>
     <p class="note">Проценты и прогнозы — собственная оценка модели, без подмешивания рынка; кэфы — линия-ориентир. «Против рынка» — модель выбрала не ту сторону, что фаворит линии: это самые интересные прогнозы, их счёт ведётся отдельно в «Прогнозах». Во время матча счёт обновляется сам.</p></section>${weekList()}</div>`}
 function noGames(){const nx=(D.week||[]).filter(g=>state(g.start)==="pre").sort((a,b)=>a.start<b.start?-1:1)[0];
-  return `<section class="sec"><div class="hd"><h1>Матчи</h1></div><div class="box empty">Сегодня матчей нет.${nx?` Следующий игровой день — ${esc(dLong(nx.date||nhlDate(nx.start)))}, первый матч в ${kt(nx.start)} по Кирову.`:""}</div></section>`}
+  return `<section class="sec"><div class="hd"><h1>Матчи</h1></div><div class="box empty">Сегодня матчей нет.${nx?` Следующий игровой день — ${esc(dLong(nx.date||nhlDate(nx.start)))}, первый матч в ${kt(nx.start)} МСК.`:""}</div></section>`}
 
 /* ===================== главная ===================== */
 function topScorer(t){return (D.skaters||[]).filter(s=>s.team===t).sort((a,b)=>b.pts-a.pts||b.g-a.g)[0]}
@@ -129,7 +129,7 @@ function posterSec(){const mo=D.motd;if(!mo)return"";const m=(D.upcoming||[]).fi
     <div class="stars">${pl(m.away,"a")}${pl(m.home,"h")}</div>
     ${mo.text?`<p>${esc(mo.text)}</p>`:""}</div></section>`}
 function todaySec(){const u=todayGames();if(!u.length)return noGames();const mo=D.motd?u.find(x=>x.away===D.motd.away&&x.home===D.motd.home):null;
-  return `<section class="sec"><div class="hd"><h2>Сегодня<small>${esc(dLong(D.upcoming_date))}, время по Кирову</small></h2><button class="lnk" data-go="games">Все матчи</button></div>
+  return `<section class="sec"><div class="hd"><h2>Сегодня<small>${esc(dLong(D.upcoming_date))}, время МСК</small></h2><button class="lnk" data-go="games">Все матчи</button></div>
     <div class="box">${u.map(m=>gRow(m,{nav:true,mo:m===mo&&false})).join("")}</div>${confLine()}</section>`}
 function nightSec(){const d=lastDate();if(!d)return"";/* пока идёт игровой день, его финалы уже видны в «Сегодня» — блок «Ночь» не дублируем */if(D.upcoming_date&&d>=D.upcoming_date)return"";const gs=A.games.filter(g=>g.date===d);
   return `<section class="sec"><div class="hd"><h2>Ночь<small>${esc(dLong(d))}</small></h2><button class="lnk" data-go="results">Итоги и протоколы</button></div>

@@ -59,8 +59,8 @@ const plural=(n,a,b,c)=>{const m=n%10,k=n%100;return n+" "+(m===1&&k!==11?a:m>=2
 function dShort(iso){return new Date(iso+"T12:00:00Z").toLocaleDateString("ru-RU",{day:"numeric",month:"short"}).replace(".","")}
 function dLong(iso){return new Date(iso+"T12:00:00Z").toLocaleDateString("ru-RU",{weekday:"long",day:"numeric",month:"long"})}
 function dWd(iso){return new Date(iso+"T12:00:00Z").toLocaleDateString("ru-RU",{weekday:"short"})}
-function kt(iso){return new Date(iso).toLocaleTimeString("ru-RU",{timeZone:"Europe/Kirov",hour:"2-digit",minute:"2-digit"})}
-function kdt(iso){return new Date(iso).toLocaleString("ru-RU",{timeZone:"Europe/Kirov",day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"}).replace(".","")}
+function kt(iso){return new Date(iso).toLocaleTimeString("ru-RU",{timeZone:"Europe/Moscow",hour:"2-digit",minute:"2-digit"})}
+function kdt(iso){return new Date(iso).toLocaleString("ru-RU",{timeZone:"Europe/Moscow",day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"}).replace(".","")}
 function rel(iso){const ms=new Date(iso)-Date.now();if(ms<=0)return "";const h=Math.floor(ms/36e5);return h>=24?`через ${Math.floor(h/24)} д`:h?`через ${h} ч`:`через ${Math.max(1,Math.floor(ms/6e4))} мин`}
 function state(iso){const ms=Date.now()-new Date(iso);return ms<0?"pre":ms<3.6*36e5?"live":"done"}
 function nhlDate(iso){return new Date(new Date(iso)-6*36e5).toISOString().slice(0,10)}
@@ -212,5 +212,5 @@ function metaHtml(x){return `<span class="meta">${x.kind==="column"?`<span class
 
 /* ---------- обновление данных ---------- */
 function freshness(){if(!D||!D.generated)return {txt:"",old:false};const g=new Date(D.generated);const h=(Date.now()-g)/36e5;
-  const today=new Date().toLocaleDateString("ru-RU",{timeZone:"Europe/Kirov"})===g.toLocaleDateString("ru-RU",{timeZone:"Europe/Kirov"});
+  const today=new Date().toLocaleDateString("ru-RU",{timeZone:"Europe/Moscow"})===g.toLocaleDateString("ru-RU",{timeZone:"Europe/Moscow"});
   return {txt:`обновлено <b>${today?"в "+kt(D.generated):kdt(D.generated)}</b>`,old:h>30}}
