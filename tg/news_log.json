@@ -1,71 +1,6 @@
 {
   "runs": [
     {
-      "t": "2026-10-28T13:20:21Z",
-      "status": "ok",
-      "picked": [
-        "nhl:blog-ekholm-dickinson-close-to-returning-could-be-back-against-calgary"
-      ],
-      "skipped": [
-        {
-          "id": "espn:50297614",
-          "why": "Портрет Кули и подборка цитат; нового события в заголовке и summary нет."
-        },
-        {
-          "id": "nhl:noah-kahan-george-kittle-attend-nashville-predators-game",
-          "why": "Знаменитости на трибунах; не событие для хоккейной ленты."
-        },
-        {
-          "id": "espn:50304728",
-          "why": "Рекорд Шефера уже опубликован на сайте и в канале, повтор другим источником."
-        },
-        {
-          "id": "sportsnet:nhl-video-lekkerimaki-nets-two-goals-in-a-minute-to-tie-game-late-vs-ducks",
-          "why": "Разбор или видео уже освещённого матча; нового кадрового решения или рекорда в summary нет."
-        },
-        {
-          "id": "sportsnet:nhl-article-fowler-cementing-place-as-canadiens-starter-with-another-win",
-          "why": "Разбор или видео уже освещённого матча; нового кадрового решения или рекорда в summary нет."
-        },
-        {
-          "id": "sportsnet:nhl-article-jets-fall-to-panthers-for-sixth-straight-loss",
-          "why": "Разбор или видео уже освещённого матча; нового кадрового решения или рекорда в summary нет."
-        },
-        {
-          "id": "sportsnet:hockey-nhl-games-e7eaa7cb-8eb2-4007-8d02-e19c2cae139f",
-          "why": "Анонс трансляции завершённого матча."
-        },
-        {
-          "id": "sportsnet:nhl-video-canadiens-fowler-makes-flurry-of-stellar-saves-vs-blues",
-          "why": "Разбор или видео уже освещённого матча; нового кадрового решения или рекорда в summary нет."
-        },
-        {
-          "id": "sportsnet:nhl-video-blue-jackets-johnson-finishes-off-2-on-0-to-bury-ot-winner-vs-flyers",
-          "why": "Разбор или видео уже освещённого матча; нового кадрового решения или рекорда в summary нет."
-        },
-        {
-          "id": "sportsnet:ideo-jets-lowry-scores-wrap-around-goal-after-brutal-miscue-from-panthers-schmid",
-          "why": "Разбор или видео уже освещённого матча; нового кадрового решения или рекорда в summary нет."
-        },
-        {
-          "id": "sportsnet:nhl-video-blue-jackets-strike-quick-for-three-goals-in-three-minutes-vs-flyers",
-          "why": "Разбор или видео уже освещённого матча; нового кадрового решения или рекорда в summary нет."
-        }
-      ],
-      "checks": {
-        "feed_t": "2026-10-28T13:14:43Z",
-        "outside_candidates": [
-          "nhl:blog-ekholm-dickinson-close-to-returning-could-be-back-against-calgary"
-        ],
-        "sources": "Прочитаны article и полный текст PHR, включая пункты о Трюдо и «Эдмонтоне». В разделе о «Эдмонтоне» найден новый повод, затем прочитан полный первоисточник клуба Джейми Амбаха: опубликован 28.10 в 00:30:21 UTC, изменён в 00:37:43. Экхольм прошёл протокол проверки; решение по его и Дикинсона выходу остаётся за медштабом. Участие в матче не объявлено подтверждённым.",
-        "duplicates": "Экхольм и Дикинсон отсутствуют в очереди, live и новостях утра; прежняя травма Хаймана — другой предмет. Шефер, Капобьянко и первый вызов Уайтхеда уже в утре и не повторяются.",
-        "additional_review": "Проверены свежие заголовки feed за четыре часа и травмы/составы в допустимом окне. Вне короткого списка — сезонный обзор прорывов ESPN, обсуждение шансов Брандсегг-Нюгорда на приз новичку, повтор дебюта Хеллибака; новых решений в summary нет.",
-        "names": "Маттиас Экхольм и Джейсон Дикинсон — строго names_ru.",
-        "photos": "Просмотрено фото первоисточника: Экхольм №14 на льду в форме «Эдмонтона», не служебный портрет. В alt снимка указан GettyImages; ссылка на официальный источник сохранена.",
-        "telegram": "Первая новость feed за день, slots_left=5; интервал 20 минут между любыми постами контролирует бот. Новостей feed ранее сегодня нет."
-      }
-    },
-    {
       "t": "2026-10-28T13:25:18Z",
       "status": "ok",
       "picked": [],
@@ -2084,6 +2019,80 @@
         {
           "id": "sportsnet:nhl-article-ducks-assign-nikita-klepov-to-ohls-spirit",
           "why": "Тот же перевод Клепова, уже выбран по другому источнику; отдельный дубль не нужен."
+        }
+      ]
+    },
+    {
+      "t": "2026-10-30T23:26:44Z",
+      "status": "ok",
+      "picked": [
+        "sportsnet:nhl-article-sources-nikita-kucherov-tells-lightning-he-wont-re-sign-asks-for-trade",
+        "sportsnet:nhl-article-maple-leafs-chris-tanev-says-hes-ready-to-return-against-canucks"
+      ],
+      "skipped": [
+        {
+          "id": "sportsnet:nhl-video-doug-maclean-comments-on-sergei-bobrovskys-play-for-the-maple-leafs",
+          "why": "Прочитан article: лишь описание разговора Маклина об игре Бобровского. Конкретного нового решения, травмы или переговоров текст не подтверждает."
+        },
+        {
+          "id": "thehockeynews:n-larkin-saga-takes-a-turn-senators-seek-scoring-blackhawks-in-on-miroshnichenko",
+          "why": "Полный источник прочитан: о Мирошниченко пересказывает Chicago Hockey Now от 29.10 07:04 UTC и прежний слух Паньотты; старше 18 часов. Отстранение Ларкина уже опубликовано."
+        },
+        {
+          "id": "rmnb:2026-10-30-barry-trotz-alex-ovechkin-reunion-predators-golden-hall-induction",
+          "why": "Церемония Тротца и встреча с Овечкиным; прощальный визит уже освещён, нового спортивного события нет."
+        },
+        {
+          "id": "sportsnet:nhl-video-different-tone-oilers-draisaitl-on-what-babcock-has-brought-to-team",
+          "why": "Общие оценки Драйзайтлем работы тренера; самостоятельного нового кадрового события нет."
+        },
+        {
+          "id": "sportsnet:nhl-video-oilers-babcock-on-team-confidence-success-through-injuries-embrace-it",
+          "why": "Общие слова тренера об уверенности и игре команды на фоне травм; нового кадрового решения или сроков нет."
+        },
+        {
+          "id": "sportsnet:nhl-article-maple-leafs-starting-anthony-stolarz-vs-canucks",
+          "why": "Прочитан article: обычный заранее запланированный старт Столарза, без нового решения о роли Бобровского или травмы."
+        },
+        {
+          "id": "sportsnet:l-article-avalanches-josh-manson-out-approximately-eight-weeks-with-ankle-injury",
+          "why": "Срок восемь недель уже опубликован на сайте по прямому сообщению NHL.com в предыдущем запуске."
+        },
+        {
+          "id": "rmnb:2026-10-30-alex-tuch-leads-nhl-game-winning-goals-70-goal-pace",
+          "why": "Пересказ уже обсуждённой победы и арифметический темп на сезон, не новый рекорд или кадровое событие."
+        },
+        {
+          "id": "prohockeyrumors:2026-10-assessing-elias-petterssons-potential-trade-value-html",
+          "why": "Прочитан article: авторская оценка возможной цены Петтерссона, без подтверждённых новых переговоров или предложения."
+        },
+        {
+          "id": "thehockeynews:t-is-quinn-hughes-fully-committed-to-the-minnesota-wild-the-hockey-news-big-show",
+          "why": "Прочитан article: список тем подкаста, без конкретного нового решения или подтверждённых переговоров по Хьюзу."
+        },
+        {
+          "id": "dailyfaceoff:s-why-does-dylan-larkin-think-sitting-out-right-move-detroit-red-wings-nhl-trade",
+          "why": "Прочитан article: обсуждение и предположения Марека о мотивах уже опубликованного отстранения Ларкина, без нового решения или предложения."
+        },
+        {
+          "id": "sportsnet:nhl-article-flames-goaltender-devin-cooley-week-to-week-with-lower-body-injury",
+          "why": "Новые сведения о списке травмированных и вызове Сергеева объединены с подтверждённой клубом новостью о вызовах, отдельный дубль не нужен."
+        },
+        {
+          "id": "sportsnet:nhl-article-report-senators-place-forward-warren-foegele-on-il-with-knee-injury",
+          "why": "Прочитан полный источник и ссылка на Гарриока: перевод Фогеле в список травмированных — новый повод. Отложен при лимите двух материалов ради свежего запроса Кучерова на обмен и готовности Танева вернуться."
+        },
+        {
+          "id": "prohockeyrumors:2026-10-golden-knights-recall-cameron-whitehead-reassign-jonas-rondbjerg-html",
+          "why": "Прочитан body: административный вызов Рёндбьерга и отправка Уайтхеда; вывод автора о здоровье Харта прямо клубом в этом источнике не подтверждён. Уступает двум выбранным событиям."
+        },
+        {
+          "id": "prohockeyrumors:2026-10-canucks-recall-jacob-quillan-place-filip-chytil-on-ir-html",
+          "why": "Хитил и вызов Куиллана уже опубликованы в предыдущем запуске по проверенному объявлению клуба."
+        },
+        {
+          "id": "nhl:hayden-hodgson-to-have-player-safety-hearing-for-actions-in-ottawa-senators-game",
+          "why": "Прямой поиск проверен: нового решения о наказании пока не найдено, есть лишь прежнее слушание."
         }
       ]
     }
