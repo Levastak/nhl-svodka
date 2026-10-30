@@ -119,11 +119,18 @@ def _call(method, fields, files=None):
         req = urllib.request.Request(url, data=body, headers={"Content-Type": f"multipart/form-data; boundary={bd}"})
     else:
         req = urllib.request.Request(url, data=urllib.parse.urlencode(fields).encode())
-    try:
-        with urllib.request.urlopen(req, timeout=90) as r:
-            j = json.loads(r.read().decode())
-    except urllib.error.HTTPError as ex:
-        j = json.loads(ex.read().decode() or "{}")
+    for attempt in range(3):
+        try:
+            with urllib.request.urlopen(req, timeout=90) as r:
+                j = json.loads(r.read().decode())
+        except urllib.error.HTTPError as ex:
+            with ex:
+                j = json.loads(ex.read().decode() or "{}")
+        delay = (j.get("parameters") or {}).get("retry_after")
+        if j.get("error_code") == 429 and attempt < 2 and isinstance(delay, (int, float)) and 0 < delay <= 60:
+            time.sleep(delay + 1)
+            continue
+        break
     if not j.get("ok"):
         raise RuntimeError(f"{method}: {j.get('error_code')} {j.get('description')}")
     return j["result"]
@@ -1098,7 +1105,7 @@ def apply_edits(chat, MSG, cfg=None):
             LOG["fail"].append(f"правка {mid}: {ex}"[:200])
         changed = True
         if x.get("notify") is False:
-            time.sleep(1.1)  # Bulk link-only maintenance; do not flood Telegram or the admin chat.
+            time.sleep(3.2)  # Stay below 20 edits/minute for channel maintenance; do not flood Telegram or the admin chat.
     if changed:
         ed["items"] = [x for x in ed["items"] if x.get("status") != "done"] + [x for x in ed["items"] if x.get("status") == "done"][-50:]
         save(p, ed)
