@@ -1,8 +1,12 @@
 {
- "t": "2026-10-31T19:23:19Z",
+ "t": "2026-10-31T19:27:17Z",
  "mode": "auto",
- "ok": [],
- "fail": [],
+ "ok": [
+  "feed:nhl:nhl-status-report-news-and-notes-october-31-2026"
+ ],
+ "fail": [
+  "картинка не ушла, шлю текстом: sendPhoto: 400 Bad Request: failed to get HTTP URL content"
+ ],
  "plan": [
   {
    "key": "am:2026-10-30",
@@ -75,16 +79,6 @@
    "done": true
   },
   {
-   "key": "feed:web:www-nhl-com-news-nhl-edge-stats-kirill-kaprizov-goal-scoring-minnesota-wild-2026-27",
-   "due": "28.10 20:32",
-   "done": true
-  },
-  {
-   "key": "feed:nhl:nhl-status-report-news-and-notes-october-28-2026",
-   "due": "28.10 21:12",
-   "done": true
-  },
-  {
    "key": "feed:prohockeyrumors:2026-10-senators-searching-for-scoring-help-html",
    "due": "29.10 08:25",
    "done": true
@@ -138,6 +132,11 @@
    "key": "feed:prohockeyrumors:2026-10-canadiens-announce-injury-updates-html",
    "due": "31.10 20:27",
    "done": true
+  },
+  {
+   "key": "feed:nhl:nhl-status-report-news-and-notes-october-31-2026",
+   "due": "31.10 22:25",
+   "done": false
   }
  ]
 }
