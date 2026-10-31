@@ -1,10 +1,17 @@
 {
- "t": "2026-10-31T14:32:22Z",
+ "t": "2026-10-31T14:42:24Z",
  "mode": "auto",
  "ok": [
-  "gl:2026-10-31:0"
+  "лента: 250 историй, новых 0; Sportsnet 91, NHL.com 56, Daily Faceoff 27, ESPN 26, ProHockeyRumors 22, The Hockey News 15, RMNB 11, nhl.com 1"
  ],
  "fail": [],
+ "warn": [
+  "лента Bing: ParseError('not well-formed (invalid token): line 1, column 41')",
+  "лента Bing: ParseError('not well-formed (invalid token): line 1, column 41')",
+  "лента Bing: ParseError('not well-formed (invalid token): line 1, column 41')",
+  "лента Bing: ParseError('not well-formed (invalid token): line 1, column 41')",
+  "лента Bing: ParseError('not well-formed (invalid token): line 1, column 41')"
+ ],
  "plan": [
   {
    "key": "am:2026-10-30",
@@ -49,7 +56,7 @@
   {
    "key": "gl:2026-10-31:0",
    "due": "31.10 17:30",
-   "done": false
+   "done": true
   },
   {
    "key": "gl:2026-10-31:1",
