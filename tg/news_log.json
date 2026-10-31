@@ -1,77 +1,6 @@
 {
   "runs": [
     {
-      "t": "2026-10-28T15:29:01Z",
-      "status": "ok",
-      "picked": [
-        "nhl:nhl-on-tap-news-and-notes-october-28-2026",
-        "prohockeyrumors:2026-10-flames-morgan-frost-begin-extension-talks-html"
-      ],
-      "skipped": [
-        {
-          "id": "prohockeyrumors:2026-10-trade-notes-yurov-wright-hague-html",
-          "why": "Полный текст прочитан. Это пересказ вчерашнего материала Джонстона; тот же инсайд о Юрове уже опубликован Yahoo 27.10 в 18:53 UTC, более 20 часов назад. Свежая дата PHR не делает событие новым."
-        },
-        {
-          "id": "sportsnet:cle-unflappable-guy-matthew-schaefer-off-to-strong-sophomore-start-for-islanders",
-          "why": "Обзор, реакция или видео уже освещённого матча; нового события в summary нет."
-        },
-        {
-          "id": "thehockeynews:all-in-devils-debut-fowler-shuts-the-door-vs-blues-the-hockey-news-morning-skate",
-          "why": "Обзор, реакция или видео уже освещённого матча; нового события в summary нет."
-        },
-        {
-          "id": "espn:50297614",
-          "why": "Портрет Кули и подборка цитат, без нового решения."
-        },
-        {
-          "id": "nhl:noah-kahan-george-kittle-attend-nashville-predators-game",
-          "why": "Знаменитости на трибунах; не хоккейная новость для ленты."
-        },
-        {
-          "id": "espn:50304728",
-          "why": "Рекорд Шефера уже опубликован на сайте и в канале."
-        },
-        {
-          "id": "sportsnet:nhl-video-lekkerimaki-nets-two-goals-in-a-minute-to-tie-game-late-vs-ducks",
-          "why": "Обзор, реакция или видео уже освещённого матча; нового события в summary нет."
-        },
-        {
-          "id": "sportsnet:nhl-article-fowler-cementing-place-as-canadiens-starter-with-another-win",
-          "why": "Обзор, реакция или видео уже освещённого матча; нового события в summary нет."
-        },
-        {
-          "id": "sportsnet:nhl-article-jets-fall-to-panthers-for-sixth-straight-loss",
-          "why": "Обзор, реакция или видео уже освещённого матча; нового события в summary нет."
-        },
-        {
-          "id": "sportsnet:hockey-nhl-games-e7eaa7cb-8eb2-4007-8d02-e19c2cae139f",
-          "why": "Анонс трансляции завершённого матча."
-        },
-        {
-          "id": "sportsnet:nhl-video-canadiens-fowler-makes-flurry-of-stellar-saves-vs-blues",
-          "why": "Обзор, реакция или видео уже освещённого матча; нового события в summary нет."
-        },
-        {
-          "id": "prohockeyrumors:2026-10-injury-notes-ducks-trudeau-oilers-html",
-          "why": "Раздел об Экхольме и Дикинсоне уже опубликован по первоисточнику; остальные статусы проверены ранее, нового срока нет."
-        }
-      ],
-      "checks": {
-        "feed_t": "2026-10-28T15:05:36Z",
-        "outside_candidates": [
-          "nhl:nhl-on-tap-news-and-notes-october-28-2026",
-          "prohockeyrumors:2026-10-flames-morgan-frost-begin-extension-talks-html"
-        ],
-        "sources": "Прочитаны NHL On Tap целиком в нужных разделах и полный PHR о Фросте. У НХЛ прямо указаны 762 передачи Бэкстрема, одна до равенства для Овечкина и 279 передач Бэкстрема на его голы. Это анонс возможной вехи, не объявление достижения. PHR прямо приписывает переговоры Лебрюну; первичный выпуск TSN опубликован 28.10 в 01:03:07 UTC, менее 18 часов назад. Обоюдный интерес не выдан за подписанный контракт.",
-        "freshness": "Юров: первоисточник The Athletic 27.10 недоступен (403), но тот же текст Джонстона уже цитировался Yahoo в 18:53 UTC 27.10; https://sports.yahoo.com/articles/wild-danila-yurov-trade-slips-185333870.html . Причина отказа — возраст события, а не закрытость первоисточника.",
-        "additional_review": "Проверены свежие заголовки feed за четыре часа вне короткого списка. Там найдены выбранные два сюжета. Материал Бродо об уже состоявшемся обмене и обзоры Фаулера/Шефера — повтор обсуждённых событий; новых решений в summary нет.",
-        "names": "Александр Овечкин и Морган Фрост — names_ru. Никлас Бэкстрем отсутствует; написание подтверждено Sports.ru: https://www.sports.ru/hockey/1117404611-ovechkin-sdelal-761-yu-peredachu-za-vashington-do-rekorda-bekstrema-1-.html . Словарь не менялся.",
-        "photos": "Просмотрены оба снимка: Овечкин №8 в игре против «Филадельфии», Getty Images; Фрост №16 на льду в форме «Калгари», Sergei Belski-Imagn Images. Служебных портретов нет, ссылки и кредиты сохранены.",
-        "telegram": "Овечкин — первый уровень, hot=true в пределах лимита; одна новость feed уже опубликована сегодня, свободно четыре места, с неё прошло больше 75 минут. Фрост — только сайт tg:false. Интервал между любыми постами контролирует бот."
-      }
-    },
-    {
       "t": "2026-10-28T17:32:16Z",
       "status": "ok",
       "picked": [
@@ -2096,6 +2025,76 @@
         {
           "id": "prohockeyrumors:2026-10-red-wings-recall-jacob-bernard-docker-reassign-axel-sandin-pellikka-html",
           "why": "Прочитан body: кадровые перемещения защитников, отложены ради двух более значимых новых событий."
+        }
+      ]
+    },
+    {
+      "t": "2026-10-31T03:23:51Z",
+      "status": "ok",
+      "picked": [
+        "sportsnet:nhl-article-lightning-have-no-intention-of-trading-nikita-kucherov",
+        "prohockeyrumors:2026-10-senators-recall-two-move-warren-foegele-to-ir-html"
+      ],
+      "skipped": [
+        {
+          "id": "rmnb:2026-10-30-nikita-kucherov-tampa-bay-lightning-trade-request-nhl",
+          "why": "Запрос обмена, разногласия по контракту и предпочтение партнёра-суперзвезды уже опубликованы по первичным источникам Фридмана и Каплан."
+        },
+        {
+          "id": "sportsnet:nhl-video-what-would-be-ideal-landing-spots-for-lightnings-kucherov",
+          "why": "Панель обсуждает возможные направления, без новых подтверждённых переговоров или предложения."
+        },
+        {
+          "id": "thehockeynews:news-latest-news-report-nikita-kucherov-requests-trade-from-tampa-bay-lightning",
+          "why": "Повтор уже опубликованного запроса Кучерова на обмен, новых самостоятельных сведений нет."
+        },
+        {
+          "id": "sportsnet:nhl-video-the-fan-pregame-reacts-to-kucherov-asking-for-trade-from-lightning",
+          "why": "Повтор уже опубликованного запроса Кучерова на обмен, новых самостоятельных сведений нет."
+        },
+        {
+          "id": "prohockeyrumors:2026-10-nikita-kucherov-requests-trade-from-lightning-html",
+          "why": "Повтор уже опубликованного запроса Кучерова на обмен, новых самостоятельных сведений нет."
+        },
+        {
+          "id": "dailyfaceoff:ws-nikita-kucherov-tampa-bay-lightning-nhl-breaking-news-trade-request-top-story",
+          "why": "Повтор уже опубликованного запроса Кучерова на обмен, новых самостоятельных сведений нет."
+        },
+        {
+          "id": "sportsnet:l-article-sources-nikita-kucherov-tells-lightning-he-wont-re-sign-asks-for-trade",
+          "why": "Повтор уже опубликованного запроса Кучерова на обмен, новых самостоятельных сведений нет."
+        },
+        {
+          "id": "sportsnet:nhl-video-doug-maclean-comments-on-sergei-bobrovskys-play-for-the-maple-leafs",
+          "why": "Описание разговора об игре Бобровского; нового конкретного решения, травмы или переговоров нет."
+        },
+        {
+          "id": "thehockeynews:n-larkin-saga-takes-a-turn-senators-seek-scoring-blackhawks-in-on-miroshnichenko",
+          "why": "Слух о Мирошниченко основан на источнике от 29.10 07:04 UTC, событие старше 18 часов. Отстранение Ларкина уже опубликовано."
+        },
+        {
+          "id": "nhl:nhl-hockey-halloween-costumes-2026",
+          "why": "Костюмы игроков — развлекательный курьёз, без нового спортивного события."
+        },
+        {
+          "id": "espn:50332537",
+          "why": "Прочитаны полный ESPN и первичный NHL.com. Оба дают Джонсу 18 очков за октябрь, но ESPN говорит о побитом рекорде Яндла 17, NHL.com — о повторении его 18. Без разрешения расхождения не выдавать за новый рекорд; обычный пересказ матча не выбран."
+        },
+        {
+          "id": "espn:50331644",
+          "why": "Статья обновлена ответом Брисбуа; новое официальное заявление объединено в выбранный материал по проверенному сообщению клуба, не дублировать существующий ID."
+        },
+        {
+          "id": "prohockeyrumors:2026-10-blues-recall-theo-lindstein-html",
+          "why": "Вызов Линдстайна на фоне травмы Парайко — самостоятельный сайтный повод, уступает официальному заявлению по Кучерову и двум вызовам «Оттавы» при лимите двух материалов."
+        },
+        {
+          "id": "nhl:matt-pavelich-1st-hall-of-fame-linesman-dies-at-92",
+          "why": "Сообщение о смерти члена Зала славы найдено в расширенном feed; уступает двум выбранным спортивным событиям при лимите двух материалов."
+        },
+        {
+          "id": "rmnb:2026-10-30-cole-hutson-two-jaw-dropping-goals-predators-multi-goal-game",
+          "why": "Пересказ уже сыгранного матча с двумя красивыми голами; самостоятельного нового рекорда нет."
         }
       ]
     }
