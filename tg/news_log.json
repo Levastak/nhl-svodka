@@ -1,73 +1,6 @@
 {
   "runs": [
     {
-      "t": "2026-10-28T17:32:16Z",
-      "status": "ok",
-      "picked": [
-        "web:www-nhl-com-news-nhl-edge-stats-kirill-kaprizov-goal-scoring-minnesota-wild-2026-27",
-        "nhl:nhl-status-report-news-and-notes-october-28-2026"
-      ],
-      "skipped": [
-        {
-          "id": "nhl:semyon-varlamov-gets-first-win-after-two-years-for-new-york-islanders",
-          "why": "Article прочитан: первая победа после долгого восстановления и реакция партнёров на уже разобранный матч. Ни нового допуска, ни нового решения о составе нет."
-        },
-        {
-          "id": "dailyfaceoff:innesota-wild-hot-start-more-sustainable-league-leading-goals-draisaitl-lehkonen",
-          "why": "Авторский анализ устойчивости результативности Капризова. Саму впервые освещаемую историческую веху выбрали по первоисточнику НХЛ, второй пост о ней не нужен."
-        },
-        {
-          "id": "prohockeyrumors:2026-10-trade-notes-yurov-wright-hague-html",
-          "why": "Проверен ранее: повтор вчерашнего инсайда Джонстона, уже цитировавшегося 27.10 до 18:53 UTC; старше 18 часов."
-        },
-        {
-          "id": "nhl:jacob-fowler-sets-montreal-canadiens-record-for-saves-by-rookie",
-          "why": "Article прочитан: новый для нашей ленты рекорд новичка «Монреаля» по сейвам, но при лимите двух тем выбраны российская историческая веха и свежий официальный статус Хаймана. Сам «сухарь» Фаулера подробно освещён утром."
-        },
-        {
-          "id": "sportsnet:cle-unflappable-guy-matthew-schaefer-off-to-strong-sophomore-start-for-islanders",
-          "why": "Разбор или видео уже освещённого матча, без нового решения в заголовке и summary."
-        },
-        {
-          "id": "thehockeynews:all-in-devils-debut-fowler-shuts-the-door-vs-blues-the-hockey-news-morning-skate",
-          "why": "Разбор или видео уже освещённого матча, без нового решения в заголовке и summary."
-        },
-        {
-          "id": "espn:50297614",
-          "why": "Портрет Кули и подборка цитат, без нового решения."
-        },
-        {
-          "id": "nhl:noah-kahan-george-kittle-attend-nashville-predators-game",
-          "why": "Знаменитости на трибунах, не новость для хоккейной ленты."
-        },
-        {
-          "id": "espn:50304728",
-          "why": "Рекорд Шефера уже опубликован на сайте и в канале."
-        },
-        {
-          "id": "sportsnet:nhl-video-lekkerimaki-nets-two-goals-in-a-minute-to-tie-game-late-vs-ducks",
-          "why": "Разбор или видео уже освещённого матча, без нового решения в заголовке и summary."
-        },
-        {
-          "id": "sportsnet:nhl-article-fowler-cementing-place-as-canadiens-starter-with-another-win",
-          "why": "Разбор или видео уже освещённого матча, без нового решения в заголовке и summary."
-        }
-      ],
-      "checks": {
-        "feed_t": "2026-10-28T17:05:39Z",
-        "outside_candidates": [
-          "nhl:nhl-status-report-news-and-notes-october-28-2026"
-        ],
-        "sources": "Прочитаны article Варламова, Фаулера и Капризова; затем целевые разделы полных первоисточников НХЛ. Историческая веха Капризова (14+ голов за один октябрь, восьмой игрок) ранее не освещалась и не подменяет пересказ матча. У Хаймана новый официальный IR и уточнение про шею; диагноз «сотрясение» и гарантированный срок не объявлялись.",
-        "freshness": "Проверены метаданные первоисточников: статья Капризова datePublished=2026-10-28T15:05:16.434Z, dateModified=15:50:53.597Z; поисковый элемент feed ошибочно помечен 08:05. Новый Status Report: datePublished=17:09:00Z, dateModified=17:09:43.582Z. Все события в допустимом окне.",
-        "additional_review": "Проверены заголовки feed за четыре часа. Три независимых источника про IR Хаймана найдены вне короткого списка. Смена клубного губернатора «Бостона» ниже по приоритету выбранных тем; прочие материалы — реакции, прогнозы старых слухов, колонки и уже освещённые новости.",
-        "duplicates": "Капризов впервые освещается именно как восьмой игрок с 14+ голами за октябрь; обычные очки и гол ночи не пересказываются. Прежние новости Хаймана — уход после столкновения и прогноз Грегора о неделе отсутствия; официальный IR/шея — новое подтверждённое уточнение.",
-        "names": "Кирилл Капризов, Зак Хайман и Андреас Энглунд сверены по names_ru. Марио Лемье и Бретт Халл отсутствуют, применено общепринятое русское написание; словарь не менялся.",
-        "photos": "Просмотрены снимки первоисточников. Капризов №97 на льду — Brad Rempel/Getty Images; Хайман в игровой форме на льду — Leila Devlin/Getty Images. Обе фотографии редакционные, не служебные портреты из карточек; кредиты и ссылки сохранены.",
-        "telegram": "Сейчас после 20:20 Europe/Kirov, до ночного запрета. За день две новости feed, slots_left=3; добавлены две в пределах общего лимита. Капризов hot=true, Хайман ready +40 минут; бот дополнительно соблюдает 75 минут между feed и 20 минут между любыми постами."
-      }
-    },
-    {
       "t": "2026-10-28T19:23:20Z",
       "status": "ok",
       "picked": [
@@ -2095,6 +2028,88 @@
         {
           "id": "rmnb:2026-10-30-cole-hutson-two-jaw-dropping-goals-predators-multi-goal-game",
           "why": "Пересказ уже сыгранного матча с двумя красивыми голами; самостоятельного нового рекорда нет."
+        }
+      ]
+    },
+    {
+      "t": "2026-10-31T05:21:03Z",
+      "status": "ok",
+      "picked": [
+        "nhl:nhl-status-report-news-and-notes-october-30-2026",
+        "prohockeyrumors:2026-10-blues-recall-theo-lindstein-html"
+      ],
+      "skipped": [
+        {
+          "id": "sportsnet:nhl-video-elliotte-friedman-sheds-light-on-kucherovs-trade-request",
+          "why": "Article — только описание видео. Новые конкретные сведения о переговорах или решении не подтверждены текстом; запрос обмена и разногласия по контракту уже опубликованы."
+        },
+        {
+          "id": "nhl:tampa-bay-lightning-have-no-intention-of-trading-nikita-kucherov",
+          "why": "Прочитан article: то же официальное заявление Брисбуа, уже опубликованное и проверенное по клубу. Контекст сентября не новое событие."
+        },
+        {
+          "id": "rmnb:2026-10-30-nikita-kucherov-tampa-bay-lightning-trade-request-nhl",
+          "why": "Запрос обмена и новые сведения Каплан уже опубликованы, самостоятельного нового события нет."
+        },
+        {
+          "id": "sportsnet:nhl-video-what-would-be-ideal-landing-spots-for-lightnings-kucherov",
+          "why": "Обсуждение гипотетических направлений обмена, без подтверждённого нового предложения."
+        },
+        {
+          "id": "thehockeynews:news-latest-news-report-nikita-kucherov-requests-trade-from-tampa-bay-lightning",
+          "why": "Повтор ранее опубликованного запроса Кучерова на обмен; нового самостоятельного подтверждённого события нет."
+        },
+        {
+          "id": "sportsnet:nhl-video-the-fan-pregame-reacts-to-kucherov-asking-for-trade-from-lightning",
+          "why": "Повтор ранее опубликованного запроса Кучерова на обмен; нового самостоятельного подтверждённого события нет."
+        },
+        {
+          "id": "prohockeyrumors:2026-10-nikita-kucherov-requests-trade-from-lightning-html",
+          "why": "Повтор ранее опубликованного запроса Кучерова на обмен; нового самостоятельного подтверждённого события нет."
+        },
+        {
+          "id": "dailyfaceoff:ws-nikita-kucherov-tampa-bay-lightning-nhl-breaking-news-trade-request-top-story",
+          "why": "Повтор ранее опубликованного запроса Кучерова на обмен; нового самостоятельного подтверждённого события нет."
+        },
+        {
+          "id": "sportsnet:l-article-sources-nikita-kucherov-tells-lightning-he-wont-re-sign-asks-for-trade",
+          "why": "Повтор ранее опубликованного запроса Кучерова на обмен; нового самостоятельного подтверждённого события нет."
+        },
+        {
+          "id": "sportsnet:nhl-video-doug-maclean-comments-on-sergei-bobrovskys-play-for-the-maple-leafs",
+          "why": "Разговор о выступлениях Бобровского, конкретного нового кадрового решения или травмы нет."
+        },
+        {
+          "id": "thehockeynews:n-larkin-saga-takes-a-turn-senators-seek-scoring-blackhawks-in-on-miroshnichenko",
+          "why": "Слух о Мирошниченко пересказывает источник от 29.10 07:04 UTC, старше 18 часов. Отстранение Ларкина уже опубликовано."
+        },
+        {
+          "id": "espn:50332490",
+          "why": "Дисквалификация Ходжсона на две игры уже опубликована по первичному сообщению NHL.com; обновление времени ESPN не новое событие."
+        },
+        {
+          "id": "prohockeyrumors:2026-10-red-wings-recall-jacob-bernard-docker-reassign-axel-sandin-pellikka-html",
+          "why": "Прочитан body: обмен защитников между основной командой и фармом — новый сайтный повод, отложен при лимите двух материалов ради восстановления Корписало и глубины защиты «Сент-Луиса»."
+        },
+        {
+          "id": "dailyfaceoff:ry-flames-wranglers-injury-news-nhl-ahl-connor-zary-devin-cooley-brennan-othmann",
+          "why": "Прочитан body: операция на колене Зари — новый повод фарм-клуба; Кули и Сергеев уже опубликованы, выход Цыплакова — контекст завершённого матча. Отложено при лимите двух материалов."
+        },
+        {
+          "id": "nhl:matt-pavelich-1st-hall-of-fame-linesman-dies-at-92",
+          "why": "Сообщение найдено в расширенном feed, уступает двум выбранным текущим кадровым событиям при лимите двух материалов."
+        },
+        {
+          "id": "espn:50332537",
+          "why": "В предыдущем проходе прочитаны ESPN и NHL.com: расходятся о прежнем рекорде Яндла (17 или 18). Без подтверждения не выдавать Джонса за нового рекордсмена."
+        },
+        {
+          "id": "nhl:nhl-on-tap-news-and-notes-october-31-2026",
+          "why": "Общий анонс расписания и серии «Монреаля», не самостоятельное новое кадровое событие или рекорд."
+        },
+        {
+          "id": "nhl:chris-cuthbert-says-winning-foster-hewitt-award-ultimate-honor",
+          "why": "Интервью о ранее присуждённой награде, не новый спортивный повод."
         }
       ]
     }
