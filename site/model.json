@@ -1,12 +1,12 @@
 {
  "version": 4.4,
  "xg_used": true,
- "generated": "2026-11-01T23:37Z",
+ "generated": "2026-11-02T10:02Z",
  "league": {
-  "goals_pg": 3.146,
-  "home_adv": 0.017,
+  "goals_pg": 3.147,
+  "home_adv": 0.019,
   "sv": 0.8959,
-  "games": 228
+  "games": 231
  },
  "backtest": {
   "source": "backtest/results/v4.4",
@@ -51,751 +51,21 @@
  },
  "games": [
   {
-   "away": "WPG",
-   "home": "CAR",
-   "lam_away": 2.45,
-   "lam_home": 3.8,
-   "p_home": 0.812,
-   "p_away": 0.188,
-   "p_ot": 0.193,
-   "p_home_reg": 0.679,
-   "p_away_reg": 0.128,
-   "exp_total": 6.4,
-   "line": 6.0,
-   "p_over": 0.541,
-   "p_under": 0.459,
-   "fair_home": 1.23,
-   "fair_away": 5.31,
-   "b2b_away": false,
-   "b2b_home": false,
-   "pacific_home": false,
-   "playoff": false,
-   "neutral": false,
-   "out_home": false,
-   "out_away": false,
-   "new_coach_home": false,
-   "new_coach_away": false,
-   "p_ot_home": 0.689,
-   "shares_home": [
-    0.608,
-    0.597
-   ],
-   "shares_away": [
-    0.486,
-    0.483
-   ],
-   "shares_adj": 0.159,
-   "goalie_away": {
-    "name": "Stuart Skinner (не подтв.)",
-    "gsax_rate": 0.0184,
-    "talent": 0.8915,
-    "team_level": 0.891,
-    "factor": 0.995,
-    "sv": 0.887,
-    "gp": 10,
-    "last": [
-     50,
-     1267,
-     0.888
-    ]
-   },
-   "goalie_home": {
-    "name": "Pyotr Kochetkov (не подтв.)",
-    "gsax_rate": 0.0303,
-    "talent": 0.8984,
-    "team_level": 0.8963,
-    "factor": 0.992,
-    "sv": 0.929,
-    "gp": 10,
-    "last": [
-     9,
-     189,
-     0.899
-    ]
-   },
-   "inj_away": [
-    {
-     "name": "Josh Morrissey",
-     "ixg_pg": 0.12,
-     "toi": 20.1,
-     "basis": "toi",
-     "d_for": 0.019,
-     "d_against": 0.013
-    }
-   ],
-   "inj_home": [],
-   "inj_adj_away": 0.019,
-   "inj_adj_home": 0.0,
-   "inj_def_away": 0.013,
-   "inj_def_home": 0.0,
-   "rating_away": {
-    "att": 0.927,
-    "dfn": 1.037
-   },
-   "rating_home": {
-    "att": 1.129,
-    "dfn": 0.884
-   },
-   "mkt_home": 0.713,
-   "mkt_away": 0.287,
-   "edge_home": 0.099,
-   "edge_away": -0.099,
-   "p_home_blend": 0.753,
-   "p_away_blend": 0.247,
-   "fatigue_edge": false,
-   "value": "home",
-   "mkt_over": 0.509,
-   "edge_over": 0.032,
-   "p_over_blend": 0.522,
-   "p_under_blend": 0.478,
-   "value_total": null,
-   "soft": [],
-   "h2h": [
-    {
-     "date": "2026-10-17",
-     "away": "CAR",
-     "home": "WPG",
-     "score": "3:2",
-     "end": "REG"
-    },
-    {
-     "date": "2026-11-01",
-     "away": "WPG",
-     "home": "CAR",
-     "score": "0:7",
-     "end": "REG"
-    }
-   ],
-   "id": 2026020227,
-   "date": "2026-11-01",
-   "start": "2026-11-01T18:00:00Z",
-   "p_home_reg_raw": 0.594,
-   "p_ot_home_raw": 0.689,
-   "missing": [
-    "goalie_away_unconfirmed",
-    "goalie_home_unconfirmed"
-   ],
-   "incomplete": false,
-   "verdict": {
-    "fav": "home",
-    "p_fav": 0.812,
-    "mkt_fav": "home",
-    "vs_market": false,
-    "level": "bet",
-    "edge_side": "home",
-    "edge": 0.099,
-    "fatigue": false,
-    "sure": {
-     "side": "home",
-     "p": 0.812,
-     "mkt": 0.713,
-     "edge": 0.099,
-     "odds": 1.36
-    },
-    "bet": {
-     "kind": "win",
-     "side": "home",
-     "odds": 1.36,
-     "p_model": 0.812,
-     "p_mkt": 0.713,
-     "src": "Pinnacle"
-    },
-    "total": {
-     "side": "over",
-     "line": 6.0,
-     "p": 0.541,
-     "mkt_side": "over",
-     "vs_market": false,
-     "value": null
-    }
-   }
-  },
-  {
-   "away": "MIN",
-   "home": "WSH",
-   "lam_away": 3.31,
-   "lam_home": 3.05,
-   "p_home": 0.419,
-   "p_away": 0.581,
-   "p_ot": 0.217,
-   "p_home_reg": 0.315,
-   "p_away_reg": 0.468,
-   "exp_total": 6.52,
-   "line": 6.0,
-   "p_over": 0.562,
-   "p_under": 0.438,
-   "fair_home": 2.38,
-   "fair_away": 1.72,
-   "b2b_away": false,
-   "b2b_home": false,
-   "pacific_home": false,
-   "playoff": false,
-   "neutral": false,
-   "out_home": false,
-   "out_away": false,
-   "new_coach_home": false,
-   "new_coach_away": false,
-   "p_ot_home": 0.482,
-   "shares_home": [
-    0.485,
-    0.49
-   ],
-   "shares_away": [
-    0.517,
-    0.504
-   ],
-   "shares_adj": -0.097,
-   "goalie_away": {
-    "name": "Jesper Wallstedt (подтв.)",
-    "gsax_rate": 0.033,
-    "talent": 0.9063,
-    "team_level": 0.9032,
-    "factor": 0.992,
-    "sv": 0.916,
-    "gp": 13,
-    "last": [
-     35,
-     1020,
-     0.916
-    ]
-   },
-   "goalie_home": {
-    "name": "Logan Thompson (не подтв.)",
-    "gsax_rate": 0.078,
-    "talent": 0.9042,
-    "team_level": 0.8997,
-    "factor": 0.98,
-    "sv": 0.903,
-    "gp": 8,
-    "last": [
-     58,
-     1587,
-     0.912
-    ]
-   },
-   "inj_away": [
-    {
-     "name": "Jared Spurgeon",
-     "ixg_pg": 0.072,
-     "toi": 20.5,
-     "basis": "toi",
-     "d_for": 0.016,
-     "d_against": 0.018
-    }
-   ],
-   "inj_home": [
-    {
-     "name": "Vincent Desharnais",
-     "ixg_pg": 0.026,
-     "toi": 19.4,
-     "basis": "toi",
-     "d_for": 0.014,
-     "d_against": 0.012
-    }
-   ],
-   "inj_adj_away": 0.016,
-   "inj_adj_home": 0.014,
-   "inj_def_away": 0.018,
-   "inj_def_home": 0.012,
-   "rating_away": {
-    "att": 1.073,
-    "dfn": 0.898
-   },
-   "rating_home": {
-    "att": 1.058,
-    "dfn": 1.029
-   },
-   "mkt_home": 0.5,
-   "mkt_away": 0.5,
-   "edge_home": -0.081,
-   "edge_away": 0.081,
-   "p_home_blend": 0.468,
-   "p_away_blend": 0.532,
-   "fatigue_edge": false,
-   "value": "away",
-   "mkt_over": 0.518,
-   "edge_over": 0.044,
-   "p_over_blend": 0.536,
-   "p_under_blend": 0.464,
-   "value_total": null,
-   "soft": [
-    {
-     "book": "1xBet",
-     "bet": "П2 MIN (осн. время)",
-     "odds": 2.52,
-     "fair": 2.42,
-     "ev": 0.043
-    }
-   ],
-   "h2h": [
-    {
-     "date": "2026-11-01",
-     "away": "MIN",
-     "home": "WSH",
-     "score": "5:1",
-     "end": "REG"
-    }
-   ],
-   "id": 2026020228,
-   "date": "2026-11-01",
-   "start": "2026-11-01T20:30:00Z",
-   "p_home_reg_raw": 0.353,
-   "p_ot_home_raw": 0.482,
-   "missing": [
-    "goalie_home_unconfirmed"
-   ],
-   "incomplete": false,
-   "verdict": {
-    "fav": "away",
-    "p_fav": 0.581,
-    "mkt_fav": "home",
-    "vs_market": true,
-    "level": "bet",
-    "edge_side": "away",
-    "edge": 0.081,
-    "fatigue": false,
-    "bet": {
-     "kind": "win",
-     "side": "away",
-     "odds": 1.94,
-     "p_model": 0.581,
-     "p_mkt": 0.5,
-     "src": "Pinnacle"
-    },
-    "total": {
-     "side": "over",
-     "line": 6.0,
-     "p": 0.562,
-     "mkt_side": "over",
-     "vs_market": false,
-     "value": null
-    }
-   }
-  },
-  {
-   "away": "UTA",
-   "home": "PHI",
-   "lam_away": 3.18,
-   "lam_home": 2.79,
-   "p_home": 0.383,
-   "p_away": 0.617,
-   "p_ot": 0.223,
-   "p_home_reg": 0.28,
-   "p_away_reg": 0.497,
-   "exp_total": 6.14,
-   "line": 6.0,
-   "p_over": 0.494,
-   "p_under": 0.506,
-   "fair_home": 2.61,
-   "fair_away": 1.62,
-   "b2b_away": false,
-   "b2b_home": false,
-   "pacific_home": false,
-   "playoff": false,
-   "neutral": false,
-   "out_home": false,
-   "out_away": false,
-   "new_coach_home": false,
-   "new_coach_away": false,
-   "p_ot_home": 0.465,
-   "shares_home": [
-    0.463,
-    0.461
-   ],
-   "shares_away": [
-    0.546,
-    0.541
-   ],
-   "shares_adj": -0.123,
-   "goalie_away": {
-    "name": "Karel Vejmelka (подтв.)",
-    "gsax_rate": 0.0082,
-    "talent": 0.8946,
-    "team_level": 0.8919,
-    "factor": 0.998,
-    "sv": 0.881,
-    "gp": 11,
-    "last": [
-     64,
-     1626,
-     0.897
-    ]
-   },
-   "goalie_home": {
-    "name": "Dan Vladar (подтв.)",
-    "gsax_rate": -0.0027,
-    "talent": 0.8995,
-    "team_level": 0.8984,
-    "factor": 1.001,
-    "sv": 0.888,
-    "gp": 7,
-    "last": [
-     52,
-     1283,
-     0.906
-    ]
-   },
-   "inj_away": [
-    {
-     "name": "John Marino",
-     "ixg_pg": 0.056,
-     "toi": 20.4,
-     "basis": "toi",
-     "d_for": 0.016,
-     "d_against": 0.02
-    }
-   ],
-   "inj_home": [],
-   "inj_adj_away": 0.016,
-   "inj_adj_home": 0.0,
-   "inj_def_away": 0.02,
-   "inj_def_home": 0.0,
-   "rating_away": {
-    "att": 1.058,
-    "dfn": 0.968
-   },
-   "rating_home": {
-    "att": 0.881,
-    "dfn": 0.995
-   },
-   "mkt_home": 0.397,
-   "mkt_away": 0.603,
-   "edge_home": -0.014,
-   "edge_away": 0.014,
-   "p_home_blend": 0.392,
-   "p_away_blend": 0.608,
-   "fatigue_edge": false,
-   "value": null,
-   "mkt_over": 0.496,
-   "edge_over": -0.002,
-   "p_over_blend": 0.495,
-   "p_under_blend": 0.505,
-   "value_total": null,
-   "soft": [],
-   "h2h": [],
-   "id": 2026020229,
-   "date": "2026-11-01",
-   "start": "2026-11-01T21:00:00Z",
-   "p_home_reg_raw": 0.331,
-   "p_ot_home_raw": 0.465,
-   "missing": [],
-   "incomplete": false,
-   "verdict": {
-    "fav": "away",
-    "p_fav": 0.617,
-    "mkt_fav": "away",
-    "vs_market": false,
-    "level": "pass",
-    "edge_side": "away",
-    "edge": 0.014,
-    "fatigue": false,
-    "total": {
-     "side": "under",
-     "line": 6.0,
-     "p": 0.506,
-     "mkt_side": "under",
-     "vs_market": false,
-     "value": null
-    }
-   }
-  },
-  {
-   "away": "EDM",
-   "home": "NYR",
-   "lam_away": 2.92,
-   "lam_home": 3.45,
-   "p_home": 0.578,
-   "p_away": 0.422,
-   "p_ot": 0.214,
-   "p_home_reg": 0.453,
-   "p_away_reg": 0.333,
-   "exp_total": 6.53,
-   "line": 6.5,
-   "p_over": 0.502,
-   "p_under": 0.498,
-   "fair_home": 1.73,
-   "fair_away": 2.37,
-   "b2b_away": true,
-   "b2b_home": false,
-   "pacific_home": false,
-   "playoff": false,
-   "neutral": false,
-   "out_home": false,
-   "out_away": false,
-   "new_coach_home": false,
-   "new_coach_away": false,
-   "p_ot_home": 0.586,
-   "shares_home": [
-    0.465,
-    0.484
-   ],
-   "shares_away": [
-    0.492,
-    0.494
-   ],
-   "shares_adj": -0.195,
-   "goalie_away": {
-    "name": "Matt Tomkins (подтв.)",
-    "gsax_rate": 0.001,
-    "talent": 0.89,
-    "team_level": 0.8912,
-    "factor": 1.0,
-    "sv": null,
-    "gp": null,
-    "last": null
-   },
-   "goalie_home": {
-    "name": "Dylan Garand (подтв.)",
-    "gsax_rate": 0.0118,
-    "talent": 0.8947,
-    "team_level": 0.8967,
-    "factor": 0.997,
-    "sv": 0.899,
-    "gp": 10,
-    "last": [
-     3,
-     96,
-     0.948
-    ]
-   },
-   "inj_away": [
-    {
-     "name": "Zach Hyman",
-     "ixg_pg": 0.482,
-     "toi": 17.9,
-     "basis": "xg",
-     "d_for": 0.044,
-     "d_against": 0.063
-    }
-   ],
-   "inj_home": [],
-   "inj_adj_away": 0.044,
-   "inj_adj_home": 0.0,
-   "inj_def_away": 0.063,
-   "inj_def_home": 0.0,
-   "rating_away": {
-    "att": 1.064,
-    "dfn": 0.972
-   },
-   "rating_home": {
-    "att": 0.986,
-    "dfn": 0.987
-   },
-   "mkt_home": 0.549,
-   "mkt_away": 0.451,
-   "edge_home": 0.029,
-   "edge_away": -0.029,
-   "p_home_blend": 0.561,
-   "p_away_blend": 0.439,
-   "fatigue_edge": true,
-   "value": null,
-   "mkt_over": 0.514,
-   "edge_over": -0.012,
-   "p_over_blend": 0.509,
-   "p_under_blend": 0.491,
-   "value_total": null,
-   "soft": [],
-   "h2h": [],
-   "id": 2026020230,
-   "date": "2026-11-01",
-   "start": "2026-11-01T23:00:00Z",
-   "p_home_reg_raw": 0.469,
-   "p_ot_home_raw": 0.586,
-   "missing": [
-    "injuries_unmatched"
-   ],
-   "incomplete": true,
-   "verdict": {
-    "fav": "home",
-    "p_fav": 0.578,
-    "mkt_fav": "home",
-    "vs_market": false,
-    "level": "bet",
-    "edge_side": "home",
-    "edge": 0.029,
-    "fatigue": true,
-    "bet": {
-     "kind": "win",
-     "side": "home",
-     "odds": 1.78,
-     "p_model": 0.578,
-     "p_mkt": 0.549,
-     "src": "Pinnacle"
-    },
-    "total": {
-     "side": "over",
-     "line": 6.5,
-     "p": 0.502,
-     "mkt_side": "over",
-     "vs_market": false,
-     "value": null
-    }
-   }
-  },
-  {
-   "away": "OTT",
-   "home": "ANA",
-   "lam_away": 3.46,
-   "lam_home": 3.33,
-   "p_home": 0.511,
-   "p_away": 0.489,
-   "p_ot": 0.211,
-   "p_home_reg": 0.405,
-   "p_away_reg": 0.384,
-   "exp_total": 6.95,
-   "line": 6.5,
-   "p_over": 0.567,
-   "p_under": 0.433,
-   "fair_home": 1.96,
-   "fair_away": 2.04,
-   "b2b_away": true,
-   "b2b_home": false,
-   "pacific_home": true,
-   "playoff": false,
-   "neutral": false,
-   "out_home": false,
-   "out_away": false,
-   "new_coach_home": false,
-   "new_coach_away": false,
-   "p_ot_home": 0.501,
-   "shares_home": [
-    0.515,
-    0.506
-   ],
-   "shares_away": [
-    0.505,
-    0.512
-   ],
-   "shares_adj": 0.139,
-   "goalie_away": {
-    "name": "Jonas Johansson (не подтв.)",
-    "gsax_rate": -0.0525,
-    "talent": 0.8905,
-    "team_level": 0.892,
-    "factor": 1.013,
-    "sv": 0.861,
-    "gp": 3,
-    "last": [
-     25,
-     670,
-     0.884
-    ]
-   },
-   "goalie_home": {
-    "name": "Laurent Brossoit (подтв.)",
-    "gsax_rate": 0.0244,
-    "talent": 0.8883,
-    "team_level": 0.8896,
-    "factor": 0.994,
-    "sv": null,
-    "gp": null,
-    "last": [
-     1,
-     23,
-     0.783
-    ]
-   },
-   "inj_away": [
-    {
-     "name": "William Eklund",
-     "ixg_pg": 0.347,
-     "toi": 13.9,
-     "basis": "xg",
-     "d_for": 0.029,
-     "d_against": 0.044
-    }
-   ],
-   "inj_home": [
-    {
-     "name": "Troy Terry",
-     "ixg_pg": 0.325,
-     "toi": null,
-     "basis": "xg",
-     "d_for": 0.031,
-     "d_against": 0.036
-    }
-   ],
-   "inj_adj_away": 0.029,
-   "inj_adj_home": 0.031,
-   "inj_def_away": 0.044,
-   "inj_def_home": 0.036,
-   "rating_away": {
-    "att": 1.035,
-    "dfn": 0.969
-   },
-   "rating_home": {
-    "att": 1.025,
-    "dfn": 1.105
-   },
-   "mkt_home": 0.473,
-   "mkt_away": 0.527,
-   "edge_home": 0.038,
-   "edge_away": -0.038,
-   "p_home_blend": 0.488,
-   "p_away_blend": 0.512,
-   "fatigue_edge": true,
-   "value": null,
-   "mkt_over": 0.546,
-   "edge_over": 0.021,
-   "p_over_blend": 0.554,
-   "p_under_blend": 0.446,
-   "value_total": null,
-   "soft": [],
-   "h2h": [],
-   "id": 2026020231,
-   "date": "2026-11-01",
-   "start": "2026-11-02T01:00:00Z",
-   "p_home_reg_raw": 0.377,
-   "p_ot_home_raw": 0.501,
-   "missing": [
-    "goalie_away_unconfirmed"
-   ],
-   "incomplete": false,
-   "verdict": {
-    "fav": "home",
-    "p_fav": 0.511,
-    "mkt_fav": "away",
-    "vs_market": true,
-    "level": "bet",
-    "edge_side": "home",
-    "edge": 0.038,
-    "fatigue": true,
-    "bet": {
-     "kind": "win",
-     "side": "home",
-     "odds": 2.06,
-     "p_model": 0.511,
-     "p_mkt": 0.473,
-     "src": "Pinnacle"
-    },
-    "total": {
-     "side": "over",
-     "line": 6.5,
-     "p": 0.567,
-     "mkt_side": "over",
-     "vs_market": false,
-     "value": null
-    }
-   }
-  }
- ],
- "horizon": [
-  {
    "away": "VGK",
    "home": "BOS",
-   "lam_away": 3.1,
+   "lam_away": 3.04,
    "lam_home": 3.11,
-   "p_home": 0.529,
-   "p_away": 0.471,
-   "p_ot": 0.221,
-   "p_home_reg": 0.414,
-   "p_away_reg": 0.365,
-   "exp_total": 6.37,
+   "p_home": 0.541,
+   "p_away": 0.459,
+   "p_ot": 0.222,
+   "p_home_reg": 0.424,
+   "p_away_reg": 0.354,
+   "exp_total": 6.32,
    "line": 6.0,
-   "p_over": 0.535,
-   "p_under": 0.465,
-   "fair_home": 1.89,
-   "fair_away": 2.12,
+   "p_over": 0.526,
+   "p_under": 0.474,
+   "fair_home": 1.85,
+   "fair_away": 2.18,
    "b2b_away": false,
    "b2b_home": false,
    "pacific_home": false,
@@ -805,7 +75,7 @@
    "out_away": false,
    "new_coach_home": false,
    "new_coach_away": false,
-   "p_ot_home": 0.519,
+   "p_ot_home": 0.527,
    "shares_home": [
     0.495,
     0.488
@@ -814,26 +84,34 @@
     0.508,
     0.52
    ],
-   "shares_adj": 0.082,
+   "shares_adj": 0.073,
    "goalie_away": {
-    "name": null,
-    "gsax_rate": 0.0,
-    "talent": 0.89,
+    "name": "Carter Hart (не подтв.)",
+    "gsax_rate": -0.0079,
+    "talent": 0.8901,
     "team_level": 0.8895,
-    "factor": 1.0,
-    "sv": null,
-    "gp": null,
-    "last": null
+    "factor": 1.002,
+    "sv": 0.889,
+    "gp": 8,
+    "last": [
+     18,
+     422,
+     0.891
+    ]
    },
    "goalie_home": {
-    "name": null,
-    "gsax_rate": 0.0,
-    "talent": 0.89,
+    "name": "Jeremy Swayman (не подтв.)",
+    "gsax_rate": 0.0659,
+    "talent": 0.9034,
     "team_level": 0.9009,
-    "factor": 1.0,
-    "sv": null,
-    "gp": null,
-    "last": null
+    "factor": 0.984,
+    "sv": 0.912,
+    "gp": 11,
+    "last": [
+     55,
+     1571,
+     0.908
+    ]
    },
    "inj_away": [],
    "inj_home": [],
@@ -843,58 +121,58 @@
    "inj_def_home": 0.0,
    "rating_away": {
     "att": 1.033,
-    "dfn": 0.934
+    "dfn": 0.933
    },
    "rating_home": {
-    "att": 1.034,
-    "dfn": 0.975
+    "att": 1.033,
+    "dfn": 0.974
    },
-   "mkt_home": 0.496,
-   "mkt_away": 0.504,
-   "edge_home": 0.033,
-   "edge_away": -0.033,
-   "p_home_blend": 0.509,
-   "p_away_blend": 0.491,
+   "mkt_home": 0.494,
+   "mkt_away": 0.506,
+   "edge_home": 0.047,
+   "edge_away": -0.047,
+   "p_home_blend": 0.513,
+   "p_away_blend": 0.487,
    "fatigue_edge": false,
    "value": null,
-   "mkt_over": 0.514,
-   "edge_over": 0.021,
-   "p_over_blend": 0.523,
-   "p_under_blend": 0.477,
+   "mkt_over": 0.522,
+   "edge_over": 0.004,
+   "p_over_blend": 0.524,
+   "p_under_blend": 0.476,
    "value_total": null,
    "soft": [],
    "h2h": [],
    "id": 2026020232,
    "date": "2026-11-02",
    "start": "2026-11-03T00:00:00Z",
-   "p_home_reg_raw": 0.391,
-   "p_ot_home_raw": 0.519,
+   "p_home_reg_raw": 0.4,
+   "p_ot_home_raw": 0.527,
    "missing": [
-    "goalie_away",
-    "goalie_home"
+    "goalie_away_unconfirmed",
+    "goalie_home_unconfirmed"
    ],
-   "incomplete": true,
+   "incomplete": false,
    "verdict": {
     "fav": "home",
-    "p_fav": 0.529,
+    "p_fav": 0.541,
     "mkt_fav": "away",
     "vs_market": true,
     "level": "lean",
     "edge_side": "home",
-    "edge": 0.033,
+    "edge": 0.047,
     "fatigue": false,
     "bet": {
      "kind": "win",
      "side": "home",
-     "odds": 1.96,
-     "p_model": 0.529,
-     "p_mkt": 0.496,
+     "odds": 1.97,
+     "p_model": 0.541,
+     "p_mkt": 0.494,
      "src": "Pinnacle"
     },
     "total": {
      "side": "over",
      "line": 6.0,
-     "p": 0.535,
+     "p": 0.526,
      "mkt_side": "over",
      "vs_market": false,
      "value": null
@@ -905,18 +183,18 @@
    "away": "DET",
    "home": "FLA",
    "lam_away": 2.96,
-   "lam_home": 3.21,
-   "p_home": 0.606,
-   "p_away": 0.394,
-   "p_ot": 0.221,
-   "p_home_reg": 0.484,
-   "p_away_reg": 0.295,
+   "lam_home": 3.22,
+   "p_home": 0.607,
+   "p_away": 0.393,
+   "p_ot": 0.22,
+   "p_home_reg": 0.486,
+   "p_away_reg": 0.294,
    "exp_total": 6.34,
    "line": 6.0,
-   "p_over": 0.53,
-   "p_under": 0.47,
+   "p_over": 0.531,
+   "p_under": 0.469,
    "fair_home": 1.65,
-   "fair_away": 2.54,
+   "fair_away": 2.55,
    "b2b_away": false,
    "b2b_home": false,
    "pacific_home": false,
@@ -926,7 +204,7 @@
    "out_away": false,
    "new_coach_home": false,
    "new_coach_away": false,
-   "p_ot_home": 0.55,
+   "p_ot_home": 0.552,
    "shares_home": [
     0.539,
     0.535
@@ -935,26 +213,34 @@
     0.495,
     0.508
    ],
-   "shares_adj": 0.172,
+   "shares_adj": 0.17,
    "goalie_away": {
-    "name": null,
-    "gsax_rate": 0.0,
-    "talent": 0.89,
+    "name": "Daniil Tarasov (не подтв.)",
+    "gsax_rate": -0.0032,
+    "talent": 0.8983,
     "team_level": 0.8945,
-    "factor": 1.0,
-    "sv": null,
-    "gp": null,
-    "last": null
+    "factor": 1.001,
+    "sv": 0.94,
+    "gp": 4,
+    "last": [
+     33,
+     925,
+     0.895
+    ]
    },
    "goalie_home": {
-    "name": null,
-    "gsax_rate": 0.0,
-    "talent": 0.89,
+    "name": "Akira Schmid (не подтв.)",
+    "gsax_rate": -0.0019,
+    "talent": 0.8941,
     "team_level": 0.8925,
     "factor": 1.0,
-    "sv": null,
-    "gp": null,
-    "last": null
+    "sv": 0.889,
+    "gp": 8,
+    "last": [
+     34,
+     791,
+     0.893
+    ]
    },
    "inj_away": [
     {
@@ -985,68 +271,68 @@
     "dfn": 0.974
    },
    "rating_home": {
-    "att": 1.012,
-    "dfn": 0.974
+    "att": 1.013,
+    "dfn": 0.973
    },
-   "mkt_home": 0.609,
-   "mkt_away": 0.391,
-   "edge_home": -0.003,
-   "edge_away": 0.003,
-   "p_home_blend": 0.608,
-   "p_away_blend": 0.392,
+   "mkt_home": 0.617,
+   "mkt_away": 0.383,
+   "edge_home": -0.01,
+   "edge_away": 0.01,
+   "p_home_blend": 0.613,
+   "p_away_blend": 0.387,
    "fatigue_edge": false,
    "value": null,
-   "mkt_over": 0.477,
-   "edge_over": 0.053,
-   "p_over_blend": 0.498,
-   "p_under_blend": 0.502,
-   "value_total": "over",
+   "mkt_over": 0.483,
+   "edge_over": 0.048,
+   "p_over_blend": 0.502,
+   "p_under_blend": 0.498,
+   "value_total": null,
    "soft": [],
    "h2h": [],
    "id": 2026020233,
    "date": "2026-11-02",
    "start": "2026-11-03T00:00:00Z",
-   "p_home_reg_raw": 0.427,
-   "p_ot_home_raw": 0.55,
+   "p_home_reg_raw": 0.428,
+   "p_ot_home_raw": 0.552,
    "missing": [
-    "goalie_away",
-    "goalie_home"
+    "goalie_away_unconfirmed",
+    "goalie_home_unconfirmed"
    ],
-   "incomplete": true,
+   "incomplete": false,
    "verdict": {
     "fav": "home",
-    "p_fav": 0.606,
+    "p_fav": 0.607,
     "mkt_fav": "home",
     "vs_market": false,
     "level": "pass",
     "edge_side": "away",
-    "edge": 0.003,
+    "edge": 0.01,
     "fatigue": false,
     "total": {
      "side": "over",
      "line": 6.0,
-     "p": 0.53,
+     "p": 0.531,
      "mkt_side": "under",
      "vs_market": true,
-     "value": "over"
+     "value": null
     }
    }
   },
   {
    "away": "COL",
    "home": "CHI",
-   "lam_away": 3.76,
-   "lam_home": 2.69,
-   "p_home": 0.247,
-   "p_away": 0.753,
-   "p_ot": 0.2,
-   "p_home_reg": 0.171,
-   "p_away_reg": 0.63,
-   "exp_total": 6.6,
+   "lam_away": 3.73,
+   "lam_home": 2.68,
+   "p_home": 0.249,
+   "p_away": 0.751,
+   "p_ot": 0.201,
+   "p_home_reg": 0.172,
+   "p_away_reg": 0.627,
+   "exp_total": 6.56,
    "line": 6.5,
-   "p_over": 0.512,
-   "p_under": 0.488,
-   "fair_home": 4.05,
+   "p_over": 0.505,
+   "p_under": 0.495,
+   "fair_home": 4.01,
    "fair_away": 1.33,
    "b2b_away": false,
    "b2b_home": false,
@@ -1057,7 +343,7 @@
    "out_away": false,
    "new_coach_home": false,
    "new_coach_away": false,
-   "p_ot_home": 0.382,
+   "p_ot_home": 0.384,
    "shares_home": [
     0.449,
     0.451
@@ -1066,26 +352,34 @@
     0.56,
     0.548
    ],
-   "shares_adj": -0.149,
+   "shares_adj": -0.152,
    "goalie_away": {
-    "name": null,
-    "gsax_rate": 0.0,
-    "talent": 0.89,
+    "name": "Mackenzie Blackwood (не подтв.)",
+    "gsax_rate": 0.0192,
+    "talent": 0.8988,
     "team_level": 0.9008,
-    "factor": 1.0,
-    "sv": null,
-    "gp": null,
-    "last": null
+    "factor": 0.995,
+    "sv": 0.897,
+    "gp": 10,
+    "last": [
+     39,
+     933,
+     0.904
+    ]
    },
    "goalie_home": {
-    "name": null,
-    "gsax_rate": 0.0,
-    "talent": 0.89,
+    "name": "Spencer Knight (не подтв.)",
+    "gsax_rate": 0.0325,
+    "talent": 0.8988,
     "team_level": 0.8964,
-    "factor": 1.0,
-    "sv": null,
-    "gp": null,
-    "last": null
+    "factor": 0.992,
+    "sv": 0.897,
+    "gp": 11,
+    "last": [
+     55,
+     1583,
+     0.902
+    ]
    },
    "inj_away": [],
    "inj_home": [],
@@ -1095,65 +389,65 @@
    "inj_def_home": 0.0,
    "rating_away": {
     "att": 1.127,
-    "dfn": 0.946
+    "dfn": 0.945
    },
    "rating_home": {
-    "att": 0.885,
+    "att": 0.884,
     "dfn": 1.086
    },
-   "mkt_home": 0.323,
-   "mkt_away": 0.677,
-   "edge_home": -0.076,
-   "edge_away": 0.076,
-   "p_home_blend": 0.293,
-   "p_away_blend": 0.707,
+   "mkt_home": 0.318,
+   "mkt_away": 0.682,
+   "edge_home": -0.069,
+   "edge_away": 0.069,
+   "p_home_blend": 0.291,
+   "p_away_blend": 0.709,
    "fatigue_edge": false,
    "value": "away",
-   "mkt_over": 0.473,
-   "edge_over": 0.039,
-   "p_over_blend": 0.488,
-   "p_under_blend": 0.512,
+   "mkt_over": 0.478,
+   "edge_over": 0.027,
+   "p_over_blend": 0.489,
+   "p_under_blend": 0.511,
    "value_total": null,
    "soft": [],
    "h2h": [],
    "id": 2026020234,
    "date": "2026-11-02",
    "start": "2026-11-03T01:00:00Z",
-   "p_home_reg_raw": 0.25,
-   "p_ot_home_raw": 0.382,
+   "p_home_reg_raw": 0.252,
+   "p_ot_home_raw": 0.384,
    "missing": [
-    "goalie_away",
-    "goalie_home"
+    "goalie_away_unconfirmed",
+    "goalie_home_unconfirmed"
    ],
-   "incomplete": true,
+   "incomplete": false,
    "verdict": {
     "fav": "away",
-    "p_fav": 0.753,
+    "p_fav": 0.751,
     "mkt_fav": "away",
     "vs_market": false,
     "level": "bet",
     "edge_side": "away",
-    "edge": 0.076,
+    "edge": 0.069,
     "fatigue": false,
     "sure": {
      "side": "away",
-     "p": 0.753,
-     "mkt": 0.677,
-     "edge": 0.076,
-     "odds": 1.43
+     "p": 0.751,
+     "mkt": 0.682,
+     "edge": 0.069,
+     "odds": 1.42
     },
     "bet": {
      "kind": "win",
      "side": "away",
-     "odds": 1.43,
-     "p_model": 0.753,
-     "p_mkt": 0.677,
+     "odds": 1.42,
+     "p_model": 0.751,
+     "p_mkt": 0.682,
      "src": "Pinnacle"
     },
     "total": {
      "side": "over",
      "line": 6.5,
-     "p": 0.512,
+     "p": 0.505,
      "mkt_side": "under",
      "vs_market": true,
      "value": null
@@ -1163,17 +457,17 @@
   {
    "away": "CGY",
    "home": "SJS",
-   "lam_away": 3.26,
-   "lam_home": 2.98,
-   "p_home": 0.464,
-   "p_away": 0.536,
+   "lam_away": 3.27,
+   "lam_home": 2.99,
+   "p_home": 0.463,
+   "p_away": 0.537,
    "p_ot": 0.219,
    "p_home_reg": 0.358,
    "p_away_reg": 0.423,
-   "exp_total": 6.4,
+   "exp_total": 6.42,
    "line": 6.5,
-   "p_over": 0.481,
-   "p_under": 0.519,
+   "p_over": 0.485,
+   "p_under": 0.515,
    "fair_home": 2.16,
    "fair_away": 1.86,
    "b2b_away": false,
@@ -1185,7 +479,7 @@
    "out_away": false,
    "new_coach_home": false,
    "new_coach_away": false,
-   "p_ot_home": 0.481,
+   "p_ot_home": 0.48,
    "shares_home": [
     0.455,
     0.46
@@ -1196,24 +490,32 @@
    ],
    "shares_adj": 0.093,
    "goalie_away": {
-    "name": null,
-    "gsax_rate": 0.0,
-    "talent": 0.89,
+    "name": "Dustin Wolf (не подтв.)",
+    "gsax_rate": -0.0175,
+    "talent": 0.8933,
     "team_level": 0.8973,
-    "factor": 1.0,
-    "sv": null,
-    "gp": null,
-    "last": null
+    "factor": 1.004,
+    "sv": 0.847,
+    "gp": 7,
+    "last": [
+     57,
+     1558,
+     0.899
+    ]
    },
    "goalie_home": {
-    "name": null,
-    "gsax_rate": 0.0,
-    "talent": 0.89,
+    "name": "Yaroslav Askarov (не подтв.)",
+    "gsax_rate": -0.019,
+    "talent": 0.8912,
     "team_level": 0.8932,
-    "factor": 1.0,
-    "sv": null,
-    "gp": null,
-    "last": null
+    "factor": 1.005,
+    "sv": 0.9,
+    "gp": 9,
+    "last": [
+     47,
+     1341,
+     0.884
+    ]
    },
    "inj_away": [
     {
@@ -1249,39 +551,32 @@
    "inj_def_home": 0.065,
    "rating_away": {
     "att": 0.904,
-    "dfn": 1.036
+    "dfn": 1.035
    },
    "rating_home": {
-    "att": 0.939,
+    "att": 0.938,
     "dfn": 1.092
    },
-   "mkt_home": 0.558,
-   "mkt_away": 0.442,
-   "edge_home": -0.094,
-   "edge_away": 0.094,
-   "p_home_blend": 0.52,
-   "p_away_blend": 0.48,
+   "mkt_home": 0.543,
+   "mkt_away": 0.457,
+   "edge_home": -0.08,
+   "edge_away": 0.08,
+   "p_home_blend": 0.511,
+   "p_away_blend": 0.489,
    "fatigue_edge": false,
    "value": "away",
-   "mkt_over": 0.483,
-   "edge_over": -0.002,
-   "p_over_blend": 0.482,
-   "p_under_blend": 0.518,
+   "mkt_over": 0.482,
+   "edge_over": 0.003,
+   "p_over_blend": 0.483,
+   "p_under_blend": 0.517,
    "value_total": null,
    "soft": [
     {
      "book": "1xBet",
      "bet": "П2 CGY (осн. время)",
-     "odds": 2.89,
-     "fair": 2.75,
-     "ev": 0.05
-    },
-    {
-     "book": "Марафон",
-     "bet": "П2 CGY (осн. время)",
-     "odds": 2.85,
-     "fair": 2.75,
-     "ev": 0.035
+     "odds": 2.79,
+     "fair": 2.69,
+     "ev": 0.038
     }
    ],
    "h2h": [],
@@ -1289,54 +584,56 @@
    "date": "2026-11-02",
    "start": "2026-11-03T02:00:00Z",
    "p_home_reg_raw": 0.35,
-   "p_ot_home_raw": 0.481,
+   "p_ot_home_raw": 0.48,
    "missing": [
-    "goalie_away",
-    "goalie_home"
+    "goalie_away_unconfirmed",
+    "goalie_home_unconfirmed"
    ],
-   "incomplete": true,
+   "incomplete": false,
    "verdict": {
     "fav": "away",
-    "p_fav": 0.536,
+    "p_fav": 0.537,
     "mkt_fav": "home",
     "vs_market": true,
     "level": "bet",
     "edge_side": "away",
-    "edge": 0.094,
+    "edge": 0.08,
     "fatigue": false,
     "bet": {
      "kind": "win",
      "side": "away",
-     "odds": 2.2,
-     "p_model": 0.536,
-     "p_mkt": 0.442,
+     "odds": 2.13,
+     "p_model": 0.537,
+     "p_mkt": 0.457,
      "src": "Pinnacle"
     },
     "total": {
      "side": "under",
      "line": 6.5,
-     "p": 0.519,
+     "p": 0.515,
      "mkt_side": "under",
      "vs_market": false,
      "value": null
     }
    }
-  },
+  }
+ ],
+ "horizon": [
   {
    "away": "UTA",
    "home": "TOR",
    "lam_away": 3.62,
-   "lam_home": 3.01,
-   "p_home": 0.35,
-   "p_away": 0.65,
+   "lam_home": 3.05,
+   "p_home": 0.351,
+   "p_away": 0.649,
    "p_ot": 0.208,
    "p_home_reg": 0.258,
-   "p_away_reg": 0.533,
-   "exp_total": 6.78,
+   "p_away_reg": 0.534,
+   "exp_total": 6.82,
    "line": 5.5,
-   "p_over": 0.649,
-   "p_under": 0.351,
-   "fair_home": 2.86,
+   "p_over": 0.655,
+   "p_under": 0.345,
+   "fair_home": 2.85,
    "fair_away": 1.54,
    "b2b_away": false,
    "b2b_home": false,
@@ -1347,21 +644,21 @@
    "out_away": false,
    "new_coach_home": false,
    "new_coach_away": false,
-   "p_ot_home": 0.44,
+   "p_ot_home": 0.445,
    "shares_home": [
     0.462,
     0.457
    ],
    "shares_away": [
-    0.546,
+    0.549,
     0.541
    ],
-   "shares_adj": -0.089,
+   "shares_adj": -0.124,
    "goalie_away": {
     "name": null,
     "gsax_rate": 0.0,
     "talent": 0.89,
-    "team_level": 0.8919,
+    "team_level": 0.8911,
     "factor": 1.0,
     "sv": null,
     "gp": null,
@@ -1406,12 +703,12 @@
     }
    ],
    "inj_adj_away": 0.015,
-   "inj_adj_home": 0.067,
+   "inj_adj_home": 0.066,
    "inj_def_away": 0.017,
    "inj_def_home": 0.081,
    "rating_away": {
-    "att": 1.058,
-    "dfn": 0.968
+    "att": 1.059,
+    "dfn": 0.979
    },
    "rating_home": {
     "att": 1.018,
@@ -1430,8 +727,8 @@
    "id": 2026020236,
    "date": "2026-11-03",
    "start": "2026-11-04T00:00:00Z",
-   "p_home_reg_raw": 0.31,
-   "p_ot_home_raw": 0.44,
+   "p_home_reg_raw": 0.316,
+   "p_ot_home_raw": 0.445,
    "missing": [
     "goalie_away",
     "goalie_home",
@@ -1440,7 +737,7 @@
    "incomplete": true,
    "verdict": {
     "fav": "away",
-    "p_fav": 0.65,
+    "p_fav": 0.649,
     "level": "noodds"
    }
   },
@@ -1448,18 +745,18 @@
    "away": "WPG",
    "home": "MTL",
    "lam_away": 2.93,
-   "lam_home": 3.44,
-   "p_home": 0.636,
-   "p_away": 0.364,
-   "p_ot": 0.214,
-   "p_home_reg": 0.512,
-   "p_away_reg": 0.274,
-   "exp_total": 6.53,
+   "lam_home": 3.46,
+   "p_home": 0.645,
+   "p_away": 0.355,
+   "p_ot": 0.213,
+   "p_home_reg": 0.52,
+   "p_away_reg": 0.266,
+   "exp_total": 6.55,
    "line": 5.5,
-   "p_over": 0.611,
-   "p_under": 0.389,
-   "fair_home": 1.57,
-   "fair_away": 2.75,
+   "p_over": 0.615,
+   "p_under": 0.385,
+   "fair_home": 1.55,
+   "fair_away": 2.82,
    "b2b_away": false,
    "b2b_home": false,
    "pacific_home": false,
@@ -1469,16 +766,16 @@
    "out_away": false,
    "new_coach_home": false,
    "new_coach_away": false,
-   "p_ot_home": 0.583,
+   "p_ot_home": 0.585,
    "shares_home": [
     0.518,
     0.507
    ],
    "shares_away": [
-    0.486,
-    0.483
+    0.483,
+    0.484
    ],
-   "shares_adj": 0.072,
+   "shares_adj": 0.092,
    "goalie_away": {
     "name": null,
     "gsax_rate": 0.0,
@@ -1524,11 +821,11 @@
    "inj_def_away": 0.014,
    "inj_def_home": 0.033,
    "rating_away": {
-    "att": 0.927,
-    "dfn": 1.037
+    "att": 0.928,
+    "dfn": 1.043
    },
    "rating_home": {
-    "att": 1.036,
+    "att": 1.037,
     "dfn": 1.013
    },
    "soft": [],
@@ -1544,8 +841,8 @@
    "id": 2026020237,
    "date": "2026-11-03",
    "start": "2026-11-04T00:00:00Z",
-   "p_home_reg_raw": 0.466,
-   "p_ot_home_raw": 0.583,
+   "p_home_reg_raw": 0.469,
+   "p_ot_home_raw": 0.585,
    "missing": [
     "goalie_away",
     "goalie_home",
@@ -1554,7 +851,7 @@
    "incomplete": true,
    "verdict": {
     "fav": "home",
-    "p_fav": 0.636,
+    "p_fav": 0.645,
     "level": "noodds"
    }
   },
@@ -1566,14 +863,14 @@
    "p_home": 0.73,
    "p_away": 0.27,
    "p_ot": 0.198,
-   "p_home_reg": 0.599,
+   "p_home_reg": 0.6,
    "p_away_reg": 0.202,
    "exp_total": 6.62,
    "line": 5.5,
    "p_over": 0.626,
    "p_under": 0.374,
    "fair_home": 1.37,
-   "fair_away": 3.7,
+   "fair_away": 3.71,
    "b2b_away": true,
    "b2b_home": false,
    "pacific_home": false,
@@ -1658,17 +955,17 @@
   {
    "away": "STL",
    "home": "NYR",
-   "lam_away": 2.94,
-   "lam_home": 3.09,
+   "lam_away": 2.93,
+   "lam_home": 3.05,
    "p_home": 0.521,
    "p_away": 0.479,
-   "p_ot": 0.224,
+   "p_ot": 0.225,
    "p_home_reg": 0.401,
-   "p_away_reg": 0.375,
-   "exp_total": 6.19,
+   "p_away_reg": 0.374,
+   "exp_total": 6.15,
    "line": 5.5,
-   "p_over": 0.558,
-   "p_under": 0.442,
+   "p_over": 0.552,
+   "p_under": 0.448,
    "fair_home": 1.92,
    "fair_away": 2.09,
    "b2b_away": false,
@@ -1680,16 +977,16 @@
    "out_away": false,
    "new_coach_home": false,
    "new_coach_away": false,
-   "p_ot_home": 0.537,
+   "p_ot_home": 0.533,
    "shares_home": [
-    0.465,
-    0.484
+    0.47,
+    0.485
    ],
    "shares_away": [
     0.479,
     0.487
    ],
-   "shares_adj": -0.081,
+   "shares_adj": -0.049,
    "goalie_away": {
     "name": null,
     "gsax_rate": 0.0,
@@ -1704,7 +1001,7 @@
     "name": null,
     "gsax_rate": 0.0,
     "talent": 0.89,
-    "team_level": 0.8967,
+    "team_level": 0.8964,
     "factor": 1.0,
     "sv": null,
     "gp": null,
@@ -1721,7 +1018,7 @@
     "dfn": 0.973
    },
    "rating_home": {
-    "att": 0.986,
+    "att": 0.973,
     "dfn": 0.987
    },
    "soft": [],
@@ -1729,8 +1026,8 @@
    "id": 2026020240,
    "date": "2026-11-03",
    "start": "2026-11-04T00:00:00Z",
-   "p_home_reg_raw": 0.411,
-   "p_ot_home_raw": 0.537,
+   "p_home_reg_raw": 0.405,
+   "p_ot_home_raw": 0.533,
    "missing": [
     "goalie_away",
     "goalie_home",
@@ -1747,19 +1044,19 @@
   {
    "away": "MIN",
    "home": "PHI",
-   "lam_away": 3.23,
-   "lam_home": 2.6,
-   "p_home": 0.344,
-   "p_away": 0.656,
+   "lam_away": 3.21,
+   "lam_home": 2.64,
+   "p_home": 0.345,
+   "p_away": 0.655,
    "p_ot": 0.222,
-   "p_home_reg": 0.248,
-   "p_away_reg": 0.53,
-   "exp_total": 5.99,
+   "p_home_reg": 0.247,
+   "p_away_reg": 0.531,
+   "exp_total": 6.02,
    "line": 5.5,
-   "p_over": 0.526,
-   "p_under": 0.474,
-   "fair_home": 2.91,
-   "fair_away": 1.52,
+   "p_over": 0.53,
+   "p_under": 0.47,
+   "fair_home": 2.9,
+   "fair_away": 1.53,
    "b2b_away": false,
    "b2b_home": false,
    "pacific_home": false,
@@ -1769,21 +1066,21 @@
    "out_away": false,
    "new_coach_home": false,
    "new_coach_away": false,
-   "p_ot_home": 0.433,
+   "p_ot_home": 0.44,
    "shares_home": [
-    0.463,
+    0.459,
     0.461
    ],
    "shares_away": [
     0.517,
-    0.504
+    0.502
    ],
-   "shares_adj": -0.061,
+   "shares_adj": -0.111,
    "goalie_away": {
     "name": null,
     "gsax_rate": 0.0,
     "talent": 0.89,
-    "team_level": 0.9032,
+    "team_level": 0.9042,
     "factor": 1.0,
     "sv": null,
     "gp": null,
@@ -1793,7 +1090,7 @@
     "name": null,
     "gsax_rate": 0.0,
     "talent": 0.89,
-    "team_level": 0.8984,
+    "team_level": 0.8983,
     "factor": 1.0,
     "sv": null,
     "gp": null,
@@ -1806,29 +1103,29 @@
      "toi": 20.5,
      "basis": "toi",
      "d_for": 0.016,
-     "d_against": 0.022
+     "d_against": 0.021
     }
    ],
    "inj_home": [],
    "inj_adj_away": 0.016,
    "inj_adj_home": 0.0,
-   "inj_def_away": 0.022,
+   "inj_def_away": 0.021,
    "inj_def_home": 0.0,
    "rating_away": {
-    "att": 1.073,
-    "dfn": 0.898
+    "att": 1.07,
+    "dfn": 0.899
    },
    "rating_home": {
-    "att": 0.881,
-    "dfn": 0.995
+    "att": 0.892,
+    "dfn": 0.994
    },
    "soft": [],
    "h2h": [],
    "id": 2026020241,
    "date": "2026-11-03",
    "start": "2026-11-04T00:00:00Z",
-   "p_home_reg_raw": 0.296,
-   "p_ot_home_raw": 0.433,
+   "p_home_reg_raw": 0.303,
+   "p_ot_home_raw": 0.44,
    "missing": [
     "goalie_away",
     "goalie_home",
@@ -1837,7 +1134,7 @@
    "incomplete": true,
    "verdict": {
     "fav": "away",
-    "p_fav": 0.656,
+    "p_fav": 0.655,
     "level": "noodds"
    }
   },
@@ -1846,15 +1143,15 @@
    "home": "PIT",
    "lam_away": 3.28,
    "lam_home": 3.19,
-   "p_home": 0.535,
-   "p_away": 0.465,
+   "p_home": 0.536,
+   "p_away": 0.464,
    "p_ot": 0.216,
    "p_home_reg": 0.426,
-   "p_away_reg": 0.358,
-   "exp_total": 6.63,
+   "p_away_reg": 0.357,
+   "exp_total": 6.62,
    "line": 5.5,
-   "p_over": 0.627,
-   "p_under": 0.373,
+   "p_over": 0.626,
+   "p_under": 0.374,
    "fair_home": 1.87,
    "fair_away": 2.15,
    "b2b_away": true,
@@ -1866,7 +1163,7 @@
    "out_away": false,
    "new_coach_home": false,
    "new_coach_away": false,
-   "p_ot_home": 0.505,
+   "p_ot_home": 0.506,
    "shares_home": [
     0.525,
     0.51
@@ -1875,7 +1172,7 @@
     0.508,
     0.52
    ],
-   "shares_adj": 0.204,
+   "shares_adj": 0.203,
    "goalie_away": {
     "name": null,
     "gsax_rate": 0.0,
@@ -1913,11 +1210,11 @@
    "inj_def_home": 0.04,
    "rating_away": {
     "att": 1.033,
-    "dfn": 0.934
+    "dfn": 0.933
    },
    "rating_home": {
-    "att": 1.042,
-    "dfn": 1.046
+    "att": 1.041,
+    "dfn": 1.045
    },
    "soft": [],
    "h2h": [
@@ -1933,7 +1230,7 @@
    "date": "2026-11-03",
    "start": "2026-11-04T00:00:00Z",
    "p_home_reg_raw": 0.379,
-   "p_ot_home_raw": 0.505,
+   "p_ot_home_raw": 0.506,
    "missing": [
     "goalie_away",
     "goalie_home",
@@ -1942,7 +1239,7 @@
    "incomplete": true,
    "verdict": {
     "fav": "home",
-    "p_fav": 0.535,
+    "p_fav": 0.536,
     "level": "noodds"
    }
   },
@@ -1951,17 +1248,17 @@
    "home": "WSH",
    "lam_away": 3.01,
    "lam_home": 3.11,
-   "p_home": 0.518,
-   "p_away": 0.482,
-   "p_ot": 0.222,
-   "p_home_reg": 0.4,
-   "p_away_reg": 0.377,
-   "exp_total": 6.29,
+   "p_home": 0.516,
+   "p_away": 0.484,
+   "p_ot": 0.223,
+   "p_home_reg": 0.398,
+   "p_away_reg": 0.38,
+   "exp_total": 6.28,
    "line": 5.5,
-   "p_over": 0.574,
-   "p_under": 0.426,
-   "fair_home": 1.93,
-   "fair_away": 2.08,
+   "p_over": 0.573,
+   "p_under": 0.427,
+   "fair_home": 1.94,
+   "fair_away": 2.07,
    "b2b_away": false,
    "b2b_home": false,
    "pacific_home": false,
@@ -1974,13 +1271,13 @@
    "p_ot_home": 0.531,
    "shares_home": [
     0.485,
-    0.49
+    0.492
    ],
    "shares_away": [
     0.492,
     0.489
    ],
-   "shares_adj": -0.042,
+   "shares_adj": -0.057,
    "goalie_away": {
     "name": null,
     "gsax_rate": 0.0,
@@ -2027,11 +1324,11 @@
    "inj_def_home": 0.013,
    "rating_away": {
     "att": 0.963,
-    "dfn": 0.896
+    "dfn": 0.897
    },
    "rating_home": {
-    "att": 1.058,
-    "dfn": 1.029
+    "att": 1.056,
+    "dfn": 1.027
    },
    "soft": [],
    "h2h": [],
@@ -2048,7 +1345,7 @@
    "incomplete": true,
    "verdict": {
     "fav": "home",
-    "p_fav": 0.518,
+    "p_fav": 0.516,
     "level": "noodds"
    }
   },
@@ -2057,8 +1354,8 @@
    "home": "CBJ",
    "lam_away": 3.37,
    "lam_home": 2.98,
-   "p_home": 0.355,
-   "p_away": 0.645,
+   "p_home": 0.356,
+   "p_away": 0.644,
    "p_ot": 0.216,
    "p_home_reg": 0.255,
    "p_away_reg": 0.529,
@@ -2077,7 +1374,7 @@
    "out_away": false,
    "new_coach_home": false,
    "new_coach_away": false,
-   "p_ot_home": 0.466,
+   "p_ot_home": 0.467,
    "shares_home": [
     0.481,
     0.501
@@ -2086,7 +1383,7 @@
     0.56,
     0.548
    ],
-   "shares_adj": -0.254,
+   "shares_adj": -0.255,
    "goalie_away": {
     "name": null,
     "gsax_rate": 0.0,
@@ -2115,10 +1412,10 @@
    "inj_def_home": 0.0,
    "rating_away": {
     "att": 1.127,
-    "dfn": 0.946
+    "dfn": 0.945
    },
    "rating_home": {
-    "att": 0.93,
+    "att": 0.929,
     "dfn": 1.025
    },
    "soft": [],
@@ -2126,8 +1423,8 @@
    "id": 2026020244,
    "date": "2026-11-03",
    "start": "2026-11-04T00:00:00Z",
-   "p_home_reg_raw": 0.335,
-   "p_ot_home_raw": 0.466,
+   "p_home_reg_raw": 0.336,
+   "p_ot_home_raw": 0.467,
    "missing": [
     "goalie_away",
     "goalie_home",
@@ -2136,7 +1433,7 @@
    "incomplete": true,
    "verdict": {
     "fav": "away",
-    "p_fav": 0.645,
+    "p_fav": 0.644,
     "level": "noodds"
    }
   },
@@ -2144,18 +1441,18 @@
    "away": "EDM",
    "home": "NJD",
    "lam_away": 2.9,
-   "lam_home": 3.43,
-   "p_home": 0.639,
-   "p_away": 0.361,
-   "p_ot": 0.215,
+   "lam_home": 3.39,
+   "p_home": 0.638,
+   "p_away": 0.362,
+   "p_ot": 0.216,
    "p_home_reg": 0.513,
-   "p_away_reg": 0.272,
-   "exp_total": 6.49,
+   "p_away_reg": 0.271,
+   "exp_total": 6.45,
    "line": 5.5,
-   "p_over": 0.605,
-   "p_under": 0.395,
+   "p_over": 0.599,
+   "p_under": 0.401,
    "fair_home": 1.57,
-   "fair_away": 2.77,
+   "fair_away": 2.76,
    "b2b_away": false,
    "b2b_home": false,
    "pacific_home": false,
@@ -2165,16 +1462,16 @@
    "out_away": false,
    "new_coach_home": false,
    "new_coach_away": false,
-   "p_ot_home": 0.585,
+   "p_ot_home": 0.581,
    "shares_home": [
     0.539,
     0.539
    ],
    "shares_away": [
-    0.492,
-    0.494
+    0.489,
+    0.493
    ],
-   "shares_adj": 0.067,
+   "shares_adj": 0.09,
    "goalie_away": {
     "name": null,
     "gsax_rate": 0.0,
@@ -2212,19 +1509,19 @@
    "inj_def_home": 0.0,
    "rating_away": {
     "att": 1.064,
-    "dfn": 0.972
+    "dfn": 0.962
    },
    "rating_home": {
-    "att": 1.031,
-    "dfn": 0.931
+    "att": 1.03,
+    "dfn": 0.93
    },
    "soft": [],
    "h2h": [],
    "id": 2026020239,
    "date": "2026-11-03",
    "start": "2026-11-04T00:30:00Z",
-   "p_home_reg_raw": 0.468,
-   "p_ot_home_raw": 0.585,
+   "p_home_reg_raw": 0.463,
+   "p_ot_home_raw": 0.581,
    "missing": [
     "goalie_away",
     "goalie_home",
@@ -2234,26 +1531,26 @@
    "incomplete": true,
    "verdict": {
     "fav": "home",
-    "p_fav": 0.639,
+    "p_fav": 0.638,
     "level": "noodds"
    }
   },
   {
    "away": "CAR",
    "home": "NSH",
-   "lam_away": 3.51,
+   "lam_away": 3.52,
    "lam_home": 2.83,
-   "p_home": 0.278,
-   "p_away": 0.722,
-   "p_ot": 0.212,
-   "p_home_reg": 0.188,
-   "p_away_reg": 0.601,
-   "exp_total": 6.49,
+   "p_home": 0.274,
+   "p_away": 0.726,
+   "p_ot": 0.211,
+   "p_home_reg": 0.184,
+   "p_away_reg": 0.605,
+   "exp_total": 6.51,
    "line": 5.5,
-   "p_over": 0.606,
-   "p_under": 0.394,
-   "fair_home": 3.59,
-   "fair_away": 1.39,
+   "p_over": 0.609,
+   "p_under": 0.391,
+   "fair_home": 3.65,
+   "fair_away": 1.38,
    "b2b_away": false,
    "b2b_home": false,
    "pacific_home": false,
@@ -2263,16 +1560,16 @@
    "out_away": false,
    "new_coach_home": false,
    "new_coach_away": false,
-   "p_ot_home": 0.429,
+   "p_ot_home": 0.428,
    "shares_home": [
     0.467,
     0.484
    ],
    "shares_away": [
     0.608,
-    0.597
+    0.594
    ],
-   "shares_adj": -0.345,
+   "shares_adj": -0.359,
    "goalie_away": {
     "name": null,
     "gsax_rate": 0.0,
@@ -2300,11 +1597,11 @@
    "inj_def_away": 0.0,
    "inj_def_home": 0.0,
    "rating_away": {
-    "att": 1.129,
-    "dfn": 0.884
+    "att": 1.134,
+    "dfn": 0.885
    },
    "rating_home": {
-    "att": 0.994,
+    "att": 0.993,
     "dfn": 1.011
    },
    "soft": [],
@@ -2312,8 +1609,8 @@
    "id": 2026020245,
    "date": "2026-11-03",
    "start": "2026-11-04T01:00:00Z",
-   "p_home_reg_raw": 0.297,
-   "p_ot_home_raw": 0.429,
+   "p_home_reg_raw": 0.296,
+   "p_ot_home_raw": 0.428,
    "missing": [
     "goalie_away",
     "goalie_home",
@@ -2322,26 +1619,26 @@
    "incomplete": true,
    "verdict": {
     "fav": "away",
-    "p_fav": 0.722,
+    "p_fav": 0.726,
     "level": "noodds"
    }
   },
   {
    "away": "ANA",
    "home": "VAN",
-   "lam_away": 3.79,
-   "lam_home": 3.19,
-   "p_home": 0.371,
-   "p_away": 0.629,
-   "p_ot": 0.203,
-   "p_home_reg": 0.281,
-   "p_away_reg": 0.516,
-   "exp_total": 7.13,
+   "lam_away": 3.83,
+   "lam_home": 3.18,
+   "p_home": 0.359,
+   "p_away": 0.641,
+   "p_ot": 0.202,
+   "p_home_reg": 0.271,
+   "p_away_reg": 0.527,
+   "exp_total": 7.16,
    "line": 5.5,
-   "p_over": 0.697,
-   "p_under": 0.303,
-   "fair_home": 2.69,
-   "fair_away": 1.59,
+   "p_over": 0.7,
+   "p_under": 0.3,
+   "fair_home": 2.78,
+   "fair_away": 1.56,
    "b2b_away": false,
    "b2b_home": false,
    "pacific_home": true,
@@ -2351,21 +1648,21 @@
    "out_away": false,
    "new_coach_home": false,
    "new_coach_away": false,
-   "p_ot_home": 0.442,
+   "p_ot_home": 0.436,
    "shares_home": [
     0.46,
     0.45
    ],
    "shares_away": [
-    0.515,
+    0.517,
     0.506
    ],
-   "shares_adj": -0.018,
+   "shares_adj": -0.024,
    "goalie_away": {
     "name": null,
     "gsax_rate": 0.0,
     "talent": 0.89,
-    "team_level": 0.8896,
+    "team_level": 0.8895,
     "factor": 1.0,
     "sv": null,
     "gp": null,
@@ -2406,11 +1703,11 @@
    "inj_def_away": 0.041,
    "inj_def_home": 0.025,
    "rating_away": {
-    "att": 1.025,
-    "dfn": 1.105
+    "att": 1.036,
+    "dfn": 1.098
    },
    "rating_home": {
-    "att": 0.913,
+    "att": 0.914,
     "dfn": 1.163
    },
    "soft": [],
@@ -2426,8 +1723,8 @@
    "id": 2026020246,
    "date": "2026-11-03",
    "start": "2026-11-04T02:00:00Z",
-   "p_home_reg_raw": 0.316,
-   "p_ot_home_raw": 0.442,
+   "p_home_reg_raw": 0.309,
+   "p_ot_home_raw": 0.436,
    "missing": [
     "goalie_away",
     "goalie_home",
@@ -2436,26 +1733,26 @@
    "incomplete": true,
    "verdict": {
     "fav": "away",
-    "p_fav": 0.629,
+    "p_fav": 0.641,
     "level": "noodds"
    }
   },
   {
    "away": "OTT",
    "home": "BUF",
-   "lam_away": 3.16,
-   "lam_home": 3.28,
-   "p_home": 0.554,
-   "p_away": 0.446,
-   "p_ot": 0.217,
-   "p_home_reg": 0.438,
-   "p_away_reg": 0.345,
-   "exp_total": 6.6,
+   "lam_away": 3.14,
+   "lam_home": 3.31,
+   "p_home": 0.567,
+   "p_away": 0.433,
+   "p_ot": 0.216,
+   "p_home_reg": 0.451,
+   "p_away_reg": 0.333,
+   "exp_total": 6.61,
    "line": 5.5,
-   "p_over": 0.622,
-   "p_under": 0.378,
-   "fair_home": 1.81,
-   "fair_away": 2.24,
+   "p_over": 0.623,
+   "p_under": 0.377,
+   "fair_home": 1.76,
+   "fair_away": 2.31,
    "b2b_away": false,
    "b2b_home": false,
    "pacific_home": false,
@@ -2465,21 +1762,21 @@
    "out_away": false,
    "new_coach_home": false,
    "new_coach_away": false,
-   "p_ot_home": 0.532,
+   "p_ot_home": 0.538,
    "shares_home": [
     0.512,
     0.505
    ],
    "shares_away": [
-    0.505,
-    0.512
+    0.502,
+    0.511
    ],
-   "shares_adj": 0.092,
+   "shares_adj": 0.099,
    "goalie_away": {
     "name": null,
     "gsax_rate": 0.0,
     "talent": 0.89,
-    "team_level": 0.892,
+    "team_level": 0.8917,
     "factor": 1.0,
     "sv": null,
     "gp": null,
@@ -2501,30 +1798,30 @@
      "ixg_pg": 0.347,
      "toi": 13.9,
      "basis": "xg",
-     "d_for": 0.031,
-     "d_against": 0.045
+     "d_for": 0.032,
+     "d_against": 0.044
     }
    ],
    "inj_home": [],
-   "inj_adj_away": 0.031,
+   "inj_adj_away": 0.032,
    "inj_adj_home": 0.0,
-   "inj_def_away": 0.045,
+   "inj_def_away": 0.044,
    "inj_def_home": 0.0,
    "rating_away": {
-    "att": 1.035,
-    "dfn": 0.969
+    "att": 1.03,
+    "dfn": 0.978
    },
    "rating_home": {
-    "att": 1.005,
-    "dfn": 1.027
+    "att": 1.004,
+    "dfn": 1.026
    },
    "soft": [],
    "h2h": [],
    "id": 2026020247,
    "date": "2026-11-04",
    "start": "2026-11-05T00:30:00Z",
-   "p_home_reg_raw": 0.408,
-   "p_ot_home_raw": 0.532,
+   "p_home_reg_raw": 0.416,
+   "p_ot_home_raw": 0.538,
    "missing": [
     "goalie_away",
     "goalie_home",
@@ -2533,7 +1830,7 @@
    "incomplete": true,
    "verdict": {
     "fav": "home",
-    "p_fav": 0.554,
+    "p_fav": 0.567,
     "level": "noodds"
    }
   },
@@ -2542,17 +1839,17 @@
    "home": "FLA",
    "lam_away": 2.78,
    "lam_home": 3.44,
-   "p_home": 0.69,
-   "p_away": 0.31,
+   "p_home": 0.691,
+   "p_away": 0.309,
    "p_ot": 0.214,
-   "p_home_reg": 0.561,
-   "p_away_reg": 0.225,
+   "p_home_reg": 0.562,
+   "p_away_reg": 0.224,
    "exp_total": 6.38,
    "line": 5.5,
    "p_over": 0.589,
    "p_under": 0.411,
    "fair_home": 1.45,
-   "fair_away": 3.22,
+   "fair_away": 3.24,
    "b2b_away": false,
    "b2b_home": false,
    "pacific_home": false,
@@ -2562,7 +1859,7 @@
    "out_away": false,
    "new_coach_home": false,
    "new_coach_away": false,
-   "p_ot_home": 0.602,
+   "p_ot_home": 0.603,
    "shares_home": [
     0.539,
     0.535
@@ -2571,7 +1868,7 @@
     0.449,
     0.451
    ],
-   "shares_adj": 0.167,
+   "shares_adj": 0.166,
    "goalie_away": {
     "name": null,
     "gsax_rate": 0.0,
@@ -2599,21 +1896,21 @@
      "ixg_pg": 0.343,
      "toi": 11.4,
      "basis": "xg",
-     "d_for": 0.03,
+     "d_for": 0.029,
      "d_against": 0.051
     }
    ],
    "inj_adj_away": 0.0,
-   "inj_adj_home": 0.03,
+   "inj_adj_home": 0.029,
    "inj_def_away": 0.0,
    "inj_def_home": 0.051,
    "rating_away": {
-    "att": 0.885,
+    "att": 0.884,
     "dfn": 1.086
    },
    "rating_home": {
-    "att": 1.012,
-    "dfn": 0.974
+    "att": 1.013,
+    "dfn": 0.973
    },
    "soft": [],
    "h2h": [
@@ -2628,8 +1925,8 @@
    "id": 2026020248,
    "date": "2026-11-04",
    "start": "2026-11-05T00:30:00Z",
-   "p_home_reg_raw": 0.488,
-   "p_ot_home_raw": 0.602,
+   "p_home_reg_raw": 0.489,
+   "p_ot_home_raw": 0.603,
    "missing": [
     "goalie_away",
     "goalie_home",
@@ -2638,7 +1935,7 @@
    "incomplete": true,
    "verdict": {
     "fav": "home",
-    "p_fav": 0.69,
+    "p_fav": 0.691,
     "level": "noodds"
    }
   },
@@ -2646,12 +1943,12 @@
    "away": "SJS",
    "home": "LAK",
    "lam_away": 3.0,
-   "lam_home": 3.25,
-   "p_home": 0.599,
-   "p_away": 0.401,
+   "lam_home": 3.26,
+   "p_home": 0.6,
+   "p_away": 0.4,
    "p_ot": 0.219,
-   "p_home_reg": 0.479,
-   "p_away_reg": 0.302,
+   "p_home_reg": 0.48,
+   "p_away_reg": 0.301,
    "exp_total": 6.42,
    "line": 5.5,
    "p_over": 0.594,
@@ -2667,7 +1964,7 @@
    "out_away": false,
    "new_coach_home": false,
    "new_coach_away": false,
-   "p_ot_home": 0.55,
+   "p_ot_home": 0.551,
    "shares_home": [
     0.512,
     0.511
@@ -2676,7 +1973,7 @@
     0.455,
     0.46
    ],
-   "shares_adj": 0.148,
+   "shares_adj": 0.147,
    "goalie_away": {
     "name": null,
     "gsax_rate": 0.0,
@@ -2738,7 +2035,7 @@
    "inj_def_away": 0.06,
    "inj_def_home": 0.075,
    "rating_away": {
-    "att": 0.939,
+    "att": 0.938,
     "dfn": 1.092
    },
    "rating_home": {
@@ -2758,8 +2055,8 @@
    "id": 2026020249,
    "date": "2026-11-04",
    "start": "2026-11-05T03:00:00Z",
-   "p_home_reg_raw": 0.427,
-   "p_ot_home_raw": 0.55,
+   "p_home_reg_raw": 0.428,
+   "p_ot_home_raw": 0.551,
    "missing": [
     "goalie_away",
     "goalie_home",
@@ -2768,7 +2065,7 @@
    "incomplete": true,
    "verdict": {
     "fav": "home",
-    "p_fav": 0.599,
+    "p_fav": 0.6,
     "level": "noodds"
    }
   },
@@ -2787,7 +2084,7 @@
    "p_over": 0.588,
    "p_under": 0.412,
    "fair_home": 1.81,
-   "fair_away": 2.23,
+   "fair_away": 2.24,
    "b2b_away": false,
    "b2b_home": false,
    "pacific_home": true,
@@ -2853,11 +2150,11 @@
    "inj_def_home": 0.043,
    "rating_away": {
     "att": 0.904,
-    "dfn": 1.036
+    "dfn": 1.035
    },
    "rating_home": {
     "att": 0.97,
-    "dfn": 1.056
+    "dfn": 1.055
    },
    "soft": [],
    "h2h": [
@@ -2886,7 +2183,7 @@
    "id": 2026020250,
    "date": "2026-11-04",
    "start": "2026-11-05T03:00:00Z",
-   "p_home_reg_raw": 0.397,
+   "p_home_reg_raw": 0.398,
    "p_ot_home_raw": 0.524,
    "missing": [
     "goalie_away",
@@ -2904,17 +2201,17 @@
    "away": "UTA",
    "home": "MTL",
    "lam_away": 3.33,
-   "lam_home": 3.21,
-   "p_home": 0.479,
-   "p_away": 0.521,
-   "p_ot": 0.215,
+   "lam_home": 3.25,
+   "p_home": 0.48,
+   "p_away": 0.52,
+   "p_ot": 0.214,
    "p_home_reg": 0.371,
    "p_away_reg": 0.414,
-   "exp_total": 6.7,
+   "exp_total": 6.75,
    "line": 5.5,
-   "p_over": 0.637,
-   "p_under": 0.363,
-   "fair_home": 2.09,
+   "p_over": 0.643,
+   "p_under": 0.357,
+   "fair_home": 2.08,
    "fair_away": 1.92,
    "b2b_away": false,
    "b2b_home": false,
@@ -2925,21 +2222,21 @@
    "out_away": false,
    "new_coach_home": false,
    "new_coach_away": false,
-   "p_ot_home": 0.501,
+   "p_ot_home": 0.507,
    "shares_home": [
     0.518,
     0.507
    ],
    "shares_away": [
-    0.546,
+    0.549,
     0.541
    ],
-   "shares_adj": 0.008,
+   "shares_adj": -0.026,
    "goalie_away": {
     "name": null,
     "gsax_rate": 0.0,
     "talent": 0.89,
-    "team_level": 0.8919,
+    "team_level": 0.8911,
     "factor": 1.0,
     "sv": null,
     "gp": null,
@@ -2962,7 +2259,7 @@
      "toi": 20.4,
      "basis": "toi",
      "d_for": 0.016,
-     "d_against": 0.017
+     "d_against": 0.016
     }
    ],
    "inj_home": [
@@ -2971,20 +2268,20 @@
      "ixg_pg": 0.239,
      "toi": 15.6,
      "basis": "xg",
-     "d_for": 0.023,
+     "d_for": 0.022,
      "d_against": 0.029
     }
    ],
    "inj_adj_away": 0.016,
-   "inj_adj_home": 0.023,
-   "inj_def_away": 0.017,
+   "inj_adj_home": 0.022,
+   "inj_def_away": 0.016,
    "inj_def_home": 0.029,
    "rating_away": {
-    "att": 1.058,
-    "dfn": 0.968
+    "att": 1.059,
+    "dfn": 0.979
    },
    "rating_home": {
-    "att": 1.036,
+    "att": 1.037,
     "dfn": 1.013
    },
    "soft": [],
@@ -2992,8 +2289,8 @@
    "id": 2026020251,
    "date": "2026-11-05",
    "start": "2026-11-06T00:00:00Z",
-   "p_home_reg_raw": 0.375,
-   "p_ot_home_raw": 0.501,
+   "p_home_reg_raw": 0.381,
+   "p_ot_home_raw": 0.507,
    "missing": [
     "goalie_away",
     "goalie_home",
@@ -3002,26 +2299,26 @@
    "incomplete": true,
    "verdict": {
     "fav": "away",
-    "p_fav": 0.521,
+    "p_fav": 0.52,
     "level": "noodds"
    }
   },
   {
    "away": "VGK",
    "home": "DET",
-   "lam_away": 3.24,
+   "lam_away": 3.23,
    "lam_home": 2.84,
-   "p_home": 0.423,
-   "p_away": 0.577,
+   "p_home": 0.424,
+   "p_away": 0.576,
    "p_ot": 0.221,
-   "p_home_reg": 0.32,
-   "p_away_reg": 0.459,
+   "p_home_reg": 0.321,
+   "p_away_reg": 0.458,
    "exp_total": 6.24,
    "line": 5.5,
    "p_over": 0.567,
    "p_under": 0.433,
    "fair_home": 2.36,
-   "fair_away": 1.73,
+   "fair_away": 1.74,
    "b2b_away": false,
    "b2b_home": false,
    "pacific_home": false,
@@ -3040,7 +2337,7 @@
     0.508,
     0.52
    ],
-   "shares_adj": 0.042,
+   "shares_adj": 0.041,
    "goalie_away": {
     "name": null,
     "gsax_rate": 0.0,
@@ -3078,7 +2375,7 @@
    "inj_def_home": 0.047,
    "rating_away": {
     "att": 1.033,
-    "dfn": 0.934
+    "dfn": 0.933
    },
    "rating_home": {
     "att": 0.982,
@@ -3089,7 +2386,7 @@
    "id": 2026020252,
    "date": "2026-11-05",
    "start": "2026-11-06T00:00:00Z",
-   "p_home_reg_raw": 0.331,
+   "p_home_reg_raw": 0.332,
    "p_ot_home_raw": 0.465,
    "missing": [
     "goalie_away",
@@ -3099,7 +2396,7 @@
    "incomplete": true,
    "verdict": {
     "fav": "away",
-    "p_fav": 0.577,
+    "p_fav": 0.576,
     "level": "noodds"
    }
   },
@@ -3108,8 +2405,8 @@
    "home": "TBL",
    "lam_away": 2.51,
    "lam_home": 4.05,
-   "p_home": 0.801,
-   "p_away": 0.199,
+   "p_home": 0.802,
+   "p_away": 0.198,
    "p_ot": 0.182,
    "p_home_reg": 0.673,
    "p_away_reg": 0.145,
@@ -3118,7 +2415,7 @@
    "p_over": 0.639,
    "p_under": 0.361,
    "fair_home": 1.25,
-   "fair_away": 5.03,
+   "fair_away": 5.05,
    "b2b_away": true,
    "b2b_home": false,
    "pacific_home": false,
@@ -3137,7 +2434,7 @@
     0.449,
     0.451
    ],
-   "shares_adj": -0.057,
+   "shares_adj": -0.058,
    "goalie_away": {
     "name": null,
     "gsax_rate": 0.0,
@@ -3165,7 +2462,7 @@
    "inj_def_away": 0.0,
    "inj_def_home": 0.0,
    "rating_away": {
-    "att": 0.885,
+    "att": 0.884,
     "dfn": 1.086
    },
    "rating_home": {
@@ -3177,7 +2474,7 @@
    "id": 2026020253,
    "date": "2026-11-05",
    "start": "2026-11-06T00:00:00Z",
-   "p_home_reg_raw": 0.62,
+   "p_home_reg_raw": 0.621,
    "p_ot_home_raw": 0.707,
    "missing": [
     "goalie_away",
@@ -3187,7 +2484,7 @@
    "incomplete": true,
    "verdict": {
     "fav": "home",
-    "p_fav": 0.801,
+    "p_fav": 0.802,
     "level": "noodds"
    }
   },
@@ -3196,15 +2493,15 @@
    "home": "NJD",
    "lam_away": 2.77,
    "lam_home": 3.23,
-   "p_home": 0.645,
-   "p_away": 0.355,
+   "p_home": 0.646,
+   "p_away": 0.354,
    "p_ot": 0.221,
    "p_home_reg": 0.517,
-   "p_away_reg": 0.262,
-   "exp_total": 6.17,
+   "p_away_reg": 0.261,
+   "exp_total": 6.16,
    "line": 5.5,
-   "p_over": 0.555,
-   "p_under": 0.445,
+   "p_over": 0.554,
+   "p_under": 0.446,
    "fair_home": 1.55,
    "fair_away": 2.82,
    "b2b_away": false,
@@ -3225,7 +2522,7 @@
     0.479,
     0.487
    ],
-   "shares_adj": 0.136,
+   "shares_adj": 0.135,
    "goalie_away": {
     "name": null,
     "gsax_rate": 0.0,
@@ -3257,8 +2554,8 @@
     "dfn": 0.973
    },
    "rating_home": {
-    "att": 1.031,
-    "dfn": 0.931
+    "att": 1.03,
+    "dfn": 0.93
    },
    "soft": [],
    "h2h": [],
@@ -3276,26 +2573,26 @@
    "incomplete": true,
    "verdict": {
     "fav": "home",
-    "p_fav": 0.645,
+    "p_fav": 0.646,
     "level": "noodds"
    }
   },
   {
    "away": "CAR",
    "home": "NYI",
-   "lam_away": 3.55,
-   "lam_home": 2.63,
-   "p_home": 0.279,
-   "p_away": 0.721,
+   "lam_away": 3.56,
+   "lam_home": 2.64,
+   "p_home": 0.275,
+   "p_away": 0.725,
    "p_ot": 0.208,
-   "p_home_reg": 0.196,
-   "p_away_reg": 0.596,
-   "exp_total": 6.33,
+   "p_home_reg": 0.193,
+   "p_away_reg": 0.6,
+   "exp_total": 6.35,
    "line": 5.5,
-   "p_over": 0.582,
-   "p_under": 0.418,
-   "fair_home": 3.58,
-   "fair_away": 1.39,
+   "p_over": 0.585,
+   "p_under": 0.415,
+   "fair_home": 3.63,
+   "fair_away": 1.38,
    "b2b_away": false,
    "b2b_home": false,
    "pacific_home": false,
@@ -3312,9 +2609,9 @@
    ],
    "shares_away": [
     0.608,
-    0.597
+    0.594
    ],
-   "shares_adj": -0.108,
+   "shares_adj": -0.123,
    "goalie_away": {
     "name": null,
     "gsax_rate": 0.0,
@@ -3351,12 +2648,12 @@
    "inj_def_away": 0.0,
    "inj_def_home": 0.029,
    "rating_away": {
-    "att": 1.129,
-    "dfn": 0.884
+    "att": 1.134,
+    "dfn": 0.885
    },
    "rating_home": {
     "att": 0.952,
-    "dfn": 0.993
+    "dfn": 0.992
    },
    "soft": [],
    "h2h": [],
@@ -3373,24 +2670,24 @@
    "incomplete": true,
    "verdict": {
     "fav": "away",
-    "p_fav": 0.721,
+    "p_fav": 0.725,
     "level": "noodds"
    }
   },
   {
    "away": "PHI",
    "home": "NYR",
-   "lam_away": 2.67,
-   "lam_home": 3.16,
+   "lam_away": 2.7,
+   "lam_home": 3.12,
    "p_home": 0.585,
    "p_away": 0.415,
-   "p_ot": 0.224,
-   "p_home_reg": 0.455,
-   "p_away_reg": 0.321,
+   "p_ot": 0.226,
+   "p_home_reg": 0.456,
+   "p_away_reg": 0.318,
    "exp_total": 5.99,
    "line": 5.5,
-   "p_over": 0.526,
-   "p_under": 0.474,
+   "p_over": 0.525,
+   "p_under": 0.475,
    "fair_home": 1.71,
    "fair_away": 2.41,
    "b2b_away": false,
@@ -3402,21 +2699,21 @@
    "out_away": false,
    "new_coach_home": false,
    "new_coach_away": false,
-   "p_ot_home": 0.582,
+   "p_ot_home": 0.573,
    "shares_home": [
-    0.465,
-    0.484
+    0.47,
+    0.485
    ],
    "shares_away": [
-    0.463,
+    0.459,
     0.461
    ],
-   "shares_adj": -0.144,
+   "shares_adj": -0.077,
    "goalie_away": {
     "name": null,
     "gsax_rate": 0.0,
     "talent": 0.89,
-    "team_level": 0.8984,
+    "team_level": 0.8983,
     "factor": 1.0,
     "sv": null,
     "gp": null,
@@ -3426,7 +2723,7 @@
     "name": null,
     "gsax_rate": 0.0,
     "talent": 0.89,
-    "team_level": 0.8967,
+    "team_level": 0.8964,
     "factor": 1.0,
     "sv": null,
     "gp": null,
@@ -3439,11 +2736,11 @@
    "inj_def_away": 0.0,
    "inj_def_home": 0.0,
    "rating_away": {
-    "att": 0.881,
-    "dfn": 0.995
+    "att": 0.892,
+    "dfn": 0.994
    },
    "rating_home": {
-    "att": 0.986,
+    "att": 0.973,
     "dfn": 0.987
    },
    "soft": [],
@@ -3451,8 +2748,8 @@
    "id": 2026020256,
    "date": "2026-11-05",
    "start": "2026-11-06T00:00:00Z",
-   "p_home_reg_raw": 0.46,
-   "p_ot_home_raw": 0.582,
+   "p_home_reg_raw": 0.449,
+   "p_ot_home_raw": 0.573,
    "missing": [
     "goalie_away",
     "goalie_home",
@@ -3470,16 +2767,16 @@
    "away": "BOS",
    "home": "PIT",
    "lam_away": 3.45,
-   "lam_home": 3.17,
-   "p_home": 0.482,
-   "p_away": 0.518,
+   "lam_home": 3.16,
+   "p_home": 0.483,
+   "p_away": 0.517,
    "p_ot": 0.213,
-   "p_home_reg": 0.38,
-   "p_away_reg": 0.407,
-   "exp_total": 6.78,
+   "p_home_reg": 0.381,
+   "p_away_reg": 0.406,
+   "exp_total": 6.77,
    "line": 5.5,
-   "p_over": 0.648,
-   "p_under": 0.352,
+   "p_over": 0.647,
+   "p_under": 0.353,
    "fair_home": 2.07,
    "fair_away": 1.93,
    "b2b_away": false,
@@ -3491,7 +2788,7 @@
    "out_away": false,
    "new_coach_home": false,
    "new_coach_away": false,
-   "p_ot_home": 0.48,
+   "p_ot_home": 0.481,
    "shares_home": [
     0.525,
     0.51
@@ -3528,29 +2825,29 @@
      "ixg_pg": 0.338,
      "toi": 17.4,
      "basis": "xg",
-     "d_for": 0.031,
+     "d_for": 0.032,
      "d_against": 0.04
     }
    ],
    "inj_adj_away": 0.0,
-   "inj_adj_home": 0.031,
+   "inj_adj_home": 0.032,
    "inj_def_away": 0.0,
    "inj_def_home": 0.04,
    "rating_away": {
-    "att": 1.034,
-    "dfn": 0.975
+    "att": 1.033,
+    "dfn": 0.974
    },
    "rating_home": {
-    "att": 1.042,
-    "dfn": 1.046
+    "att": 1.041,
+    "dfn": 1.045
    },
    "soft": [],
    "h2h": [],
    "id": 2026020257,
    "date": "2026-11-05",
    "start": "2026-11-06T00:00:00Z",
-   "p_home_reg_raw": 0.353,
-   "p_ot_home_raw": 0.48,
+   "p_home_reg_raw": 0.354,
+   "p_ot_home_raw": 0.481,
    "missing": [
     "goalie_away",
     "goalie_home",
@@ -3559,7 +2856,7 @@
    "incomplete": true,
    "verdict": {
     "fav": "away",
-    "p_fav": 0.518,
+    "p_fav": 0.517,
     "level": "noodds"
    }
   },
@@ -3568,11 +2865,11 @@
    "home": "CBJ",
    "lam_away": 2.96,
    "lam_home": 2.79,
-   "p_home": 0.442,
-   "p_away": 0.558,
+   "p_home": 0.443,
+   "p_away": 0.557,
    "p_ot": 0.23,
    "p_home_reg": 0.329,
-   "p_away_reg": 0.442,
+   "p_away_reg": 0.441,
    "exp_total": 5.92,
    "line": 5.5,
    "p_over": 0.513,
@@ -3588,7 +2885,7 @@
    "out_away": false,
    "new_coach_home": false,
    "new_coach_away": false,
-   "p_ot_home": 0.493,
+   "p_ot_home": 0.494,
    "shares_home": [
     0.481,
     0.501
@@ -3635,10 +2932,10 @@
    "inj_def_home": 0.0,
    "rating_away": {
     "att": 0.963,
-    "dfn": 0.896
+    "dfn": 0.897
    },
    "rating_home": {
-    "att": 0.93,
+    "att": 0.929,
     "dfn": 1.025
    },
    "soft": [],
@@ -3655,7 +2952,7 @@
    "date": "2026-11-05",
    "start": "2026-11-06T00:00:00Z",
    "p_home_reg_raw": 0.359,
-   "p_ot_home_raw": 0.493,
+   "p_ot_home_raw": 0.494,
    "missing": [
     "goalie_away",
     "goalie_home",
@@ -3664,26 +2961,26 @@
    "incomplete": true,
    "verdict": {
     "fav": "away",
-    "p_fav": 0.558,
+    "p_fav": 0.557,
     "level": "noodds"
    }
   },
   {
    "away": "VAN",
    "home": "WPG",
-   "lam_away": 2.89,
+   "lam_away": 2.91,
    "lam_home": 3.52,
-   "p_home": 0.636,
-   "p_away": 0.364,
+   "p_home": 0.628,
+   "p_away": 0.372,
    "p_ot": 0.211,
-   "p_home_reg": 0.509,
-   "p_away_reg": 0.279,
-   "exp_total": 6.56,
+   "p_home_reg": 0.502,
+   "p_away_reg": 0.287,
+   "exp_total": 6.59,
    "line": 5.5,
-   "p_over": 0.617,
-   "p_under": 0.383,
-   "fair_home": 1.57,
-   "fair_away": 2.75,
+   "p_over": 0.621,
+   "p_under": 0.379,
+   "fair_home": 1.59,
+   "fair_away": 2.69,
    "b2b_away": false,
    "b2b_home": false,
    "pacific_home": false,
@@ -3693,16 +2990,16 @@
    "out_away": false,
    "new_coach_home": false,
    "new_coach_away": false,
-   "p_ot_home": 0.598,
+   "p_ot_home": 0.597,
    "shares_home": [
-    0.486,
-    0.483
+    0.483,
+    0.484
    ],
    "shares_away": [
     0.46,
     0.45
    ],
-   "shares_adj": -0.045,
+   "shares_adj": -0.065,
    "goalie_away": {
     "name": null,
     "gsax_rate": 0.0,
@@ -3748,20 +3045,20 @@
    "inj_def_away": 0.028,
    "inj_def_home": 0.017,
    "rating_away": {
-    "att": 0.913,
+    "att": 0.914,
     "dfn": 1.163
    },
    "rating_home": {
-    "att": 0.927,
-    "dfn": 1.037
+    "att": 0.928,
+    "dfn": 1.043
    },
    "soft": [],
    "h2h": [],
    "id": 2026020259,
    "date": "2026-11-05",
    "start": "2026-11-06T00:00:00Z",
-   "p_home_reg_raw": 0.485,
-   "p_ot_home_raw": 0.598,
+   "p_home_reg_raw": 0.483,
+   "p_ot_home_raw": 0.597,
    "missing": [
     "goalie_away",
     "goalie_home",
@@ -3770,7 +3067,7 @@
    "incomplete": true,
    "verdict": {
     "fav": "home",
-    "p_fav": 0.636,
+    "p_fav": 0.628,
     "level": "noodds"
    }
   },
@@ -3778,18 +3075,18 @@
    "away": "ANA",
    "home": "EDM",
    "lam_away": 3.15,
-   "lam_home": 3.77,
-   "p_home": 0.599,
-   "p_away": 0.401,
-   "p_ot": 0.204,
-   "p_home_reg": 0.478,
-   "p_away_reg": 0.318,
-   "exp_total": 7.07,
+   "lam_home": 3.74,
+   "p_home": 0.588,
+   "p_away": 0.412,
+   "p_ot": 0.205,
+   "p_home_reg": 0.467,
+   "p_away_reg": 0.329,
+   "exp_total": 7.04,
    "line": 5.5,
-   "p_over": 0.688,
-   "p_under": 0.312,
-   "fair_home": 1.67,
-   "fair_away": 2.5,
+   "p_over": 0.685,
+   "p_under": 0.315,
+   "fair_home": 1.7,
+   "fair_away": 2.43,
    "b2b_away": false,
    "b2b_home": false,
    "pacific_home": false,
@@ -3799,21 +3096,21 @@
    "out_away": false,
    "new_coach_home": false,
    "new_coach_away": false,
-   "p_ot_home": 0.594,
+   "p_ot_home": 0.591,
    "shares_home": [
-    0.492,
-    0.494
+    0.489,
+    0.493
    ],
    "shares_away": [
-    0.515,
+    0.517,
     0.506
    ],
-   "shares_adj": -0.161,
+   "shares_adj": -0.19,
    "goalie_away": {
     "name": null,
     "gsax_rate": 0.0,
     "talent": 0.89,
-    "team_level": 0.8896,
+    "team_level": 0.8895,
     "factor": 1.0,
     "sv": null,
     "gp": null,
@@ -3854,12 +3151,12 @@
    "inj_def_away": 0.035,
    "inj_def_home": 0.062,
    "rating_away": {
-    "att": 1.025,
-    "dfn": 1.105
+    "att": 1.036,
+    "dfn": 1.098
    },
    "rating_home": {
     "att": 1.064,
-    "dfn": 0.972
+    "dfn": 0.962
    },
    "soft": [],
    "h2h": [
@@ -3874,8 +3171,8 @@
    "id": 2026020260,
    "date": "2026-11-05",
    "start": "2026-11-06T01:00:00Z",
-   "p_home_reg_raw": 0.483,
-   "p_ot_home_raw": 0.594,
+   "p_home_reg_raw": 0.48,
+   "p_ot_home_raw": 0.591,
    "missing": [
     "goalie_away",
     "goalie_home",
@@ -3885,26 +3182,26 @@
    "incomplete": true,
    "verdict": {
     "fav": "home",
-    "p_fav": 0.599,
+    "p_fav": 0.588,
     "level": "noodds"
    }
   },
   {
    "away": "NSH",
    "home": "COL",
-   "lam_away": 2.89,
+   "lam_away": 2.88,
    "lam_home": 3.67,
-   "p_home": 0.73,
-   "p_away": 0.27,
+   "p_home": 0.731,
+   "p_away": 0.269,
    "p_ot": 0.206,
-   "p_home_reg": 0.603,
-   "p_away_reg": 0.191,
+   "p_home_reg": 0.604,
+   "p_away_reg": 0.19,
    "exp_total": 6.71,
    "line": 5.5,
    "p_over": 0.639,
    "p_under": 0.361,
    "fair_home": 1.37,
-   "fair_away": 3.7,
+   "fair_away": 3.72,
    "b2b_away": false,
    "b2b_home": false,
    "pacific_home": false,
@@ -3914,7 +3211,7 @@
    "out_away": false,
    "new_coach_home": false,
    "new_coach_away": false,
-   "p_ot_home": 0.616,
+   "p_ot_home": 0.617,
    "shares_home": [
     0.56,
     0.548
@@ -3923,7 +3220,7 @@
     0.467,
     0.484
    ],
-   "shares_adj": 0.264,
+   "shares_adj": 0.263,
    "goalie_away": {
     "name": null,
     "gsax_rate": 0.0,
@@ -3951,12 +3248,12 @@
    "inj_def_away": 0.0,
    "inj_def_home": 0.0,
    "rating_away": {
-    "att": 0.994,
+    "att": 0.993,
     "dfn": 1.011
    },
    "rating_home": {
     "att": 1.127,
-    "dfn": 0.946
+    "dfn": 0.945
    },
    "soft": [],
    "h2h": [
@@ -3971,8 +3268,8 @@
    "id": 2026020261,
    "date": "2026-11-05",
    "start": "2026-11-06T02:30:00Z",
-   "p_home_reg_raw": 0.507,
-   "p_ot_home_raw": 0.616,
+   "p_home_reg_raw": 0.508,
+   "p_ot_home_raw": 0.617,
    "missing": [
     "goalie_away",
     "goalie_home",
@@ -3981,26 +3278,26 @@
    "incomplete": true,
    "verdict": {
     "fav": "home",
-    "p_fav": 0.73,
+    "p_fav": 0.731,
     "level": "noodds"
    }
   },
   {
    "away": "CBJ",
    "home": "BUF",
-   "lam_away": 2.79,
+   "lam_away": 2.78,
    "lam_home": 3.49,
-   "p_home": 0.69,
-   "p_away": 0.31,
+   "p_home": 0.692,
+   "p_away": 0.308,
    "p_ot": 0.212,
-   "p_home_reg": 0.561,
-   "p_away_reg": 0.227,
-   "exp_total": 6.44,
+   "p_home_reg": 0.563,
+   "p_away_reg": 0.226,
+   "exp_total": 6.43,
    "line": 5.5,
-   "p_over": 0.598,
-   "p_under": 0.402,
+   "p_over": 0.597,
+   "p_under": 0.403,
    "fair_home": 1.45,
-   "fair_away": 3.23,
+   "fair_away": 3.24,
    "b2b_away": true,
    "b2b_home": false,
    "pacific_home": false,
@@ -4010,7 +3307,7 @@
    "out_away": false,
    "new_coach_home": false,
    "new_coach_away": false,
-   "p_ot_home": 0.608,
+   "p_ot_home": 0.609,
    "shares_home": [
     0.512,
     0.505
@@ -4019,7 +3316,7 @@
     0.481,
     0.501
    ],
-   "shares_adj": 0.125,
+   "shares_adj": 0.124,
    "goalie_away": {
     "name": null,
     "gsax_rate": 0.0,
@@ -4047,12 +3344,12 @@
    "inj_def_away": 0.0,
    "inj_def_home": 0.0,
    "rating_away": {
-    "att": 0.93,
+    "att": 0.929,
     "dfn": 1.025
    },
    "rating_home": {
-    "att": 1.005,
-    "dfn": 1.027
+    "att": 1.004,
+    "dfn": 1.026
    },
    "soft": [],
    "h2h": [
@@ -4067,8 +3364,8 @@
    "id": 2026020262,
    "date": "2026-11-06",
    "start": "2026-11-07T00:00:00Z",
-   "p_home_reg_raw": 0.496,
-   "p_ot_home_raw": 0.608,
+   "p_home_reg_raw": 0.497,
+   "p_ot_home_raw": 0.609,
    "missing": [
     "goalie_away",
     "goalie_home",
@@ -4077,7 +3374,7 @@
    "incomplete": true,
    "verdict": {
     "fav": "home",
-    "p_fav": 0.69,
+    "p_fav": 0.692,
     "level": "noodds"
    }
   },
@@ -4085,18 +3382,18 @@
    "away": "SJS",
    "home": "MIN",
    "lam_away": 2.49,
-   "lam_home": 3.92,
+   "lam_home": 3.91,
    "p_home": 0.804,
    "p_away": 0.196,
    "p_ot": 0.188,
-   "p_home_reg": 0.673,
-   "p_away_reg": 0.139,
+   "p_home_reg": 0.674,
+   "p_away_reg": 0.138,
    "exp_total": 6.55,
    "line": 5.5,
-   "p_over": 0.618,
-   "p_under": 0.382,
+   "p_over": 0.617,
+   "p_under": 0.383,
    "fair_home": 1.24,
-   "fair_away": 5.1,
+   "fair_away": 5.11,
    "b2b_away": false,
    "b2b_home": false,
    "pacific_home": false,
@@ -4106,16 +3403,16 @@
    "out_away": false,
    "new_coach_home": false,
    "new_coach_away": false,
-   "p_ot_home": 0.696,
+   "p_ot_home": 0.695,
    "shares_home": [
     0.517,
-    0.504
+    0.502
    ],
    "shares_away": [
     0.455,
     0.46
    ],
-   "shares_adj": 0.05,
+   "shares_adj": 0.063,
    "goalie_away": {
     "name": null,
     "gsax_rate": 0.0,
@@ -4130,7 +3427,7 @@
     "name": null,
     "gsax_rate": 0.0,
     "talent": 0.89,
-    "team_level": 0.9032,
+    "team_level": 0.9042,
     "factor": 1.0,
     "sv": null,
     "gp": null,
@@ -4166,23 +3463,23 @@
    ],
    "inj_adj_away": 0.057,
    "inj_adj_home": 0.015,
-   "inj_def_away": 0.053,
+   "inj_def_away": 0.054,
    "inj_def_home": 0.021,
    "rating_away": {
-    "att": 0.939,
+    "att": 0.938,
     "dfn": 1.092
    },
    "rating_home": {
-    "att": 1.073,
-    "dfn": 0.898
+    "att": 1.07,
+    "dfn": 0.899
    },
    "soft": [],
    "h2h": [],
    "id": 2026020263,
    "date": "2026-11-06",
    "start": "2026-11-07T01:00:00Z",
-   "p_home_reg_raw": 0.605,
-   "p_ot_home_raw": 0.696,
+   "p_home_reg_raw": 0.603,
+   "p_ot_home_raw": 0.695,
    "missing": [
     "goalie_away",
     "goalie_home",
@@ -4198,19 +3495,19 @@
   {
    "away": "ANA",
    "home": "CGY",
-   "lam_away": 3.11,
-   "lam_home": 3.43,
-   "p_home": 0.514,
-   "p_away": 0.486,
+   "lam_away": 3.14,
+   "lam_home": 3.41,
+   "p_home": 0.502,
+   "p_away": 0.498,
    "p_ot": 0.214,
-   "p_home_reg": 0.395,
-   "p_away_reg": 0.392,
-   "exp_total": 6.7,
+   "p_home_reg": 0.384,
+   "p_away_reg": 0.403,
+   "exp_total": 6.71,
    "line": 5.5,
-   "p_over": 0.637,
-   "p_under": 0.363,
-   "fair_home": 1.95,
-   "fair_away": 2.06,
+   "p_over": 0.638,
+   "p_under": 0.362,
+   "fair_home": 1.99,
+   "fair_away": 2.01,
    "b2b_away": true,
    "b2b_home": false,
    "pacific_home": false,
@@ -4220,21 +3517,21 @@
    "out_away": false,
    "new_coach_home": false,
    "new_coach_away": false,
-   "p_ot_home": 0.559,
+   "p_ot_home": 0.553,
    "shares_home": [
     0.48,
     0.504
    ],
    "shares_away": [
-    0.515,
+    0.517,
     0.506
    ],
-   "shares_adj": -0.258,
+   "shares_adj": -0.264,
    "goalie_away": {
     "name": null,
     "gsax_rate": 0.0,
     "talent": 0.89,
-    "team_level": 0.8896,
+    "team_level": 0.8895,
     "factor": 1.0,
     "sv": null,
     "gp": null,
@@ -4275,12 +3572,12 @@
    "inj_def_away": 0.041,
    "inj_def_home": 0.033,
    "rating_away": {
-    "att": 1.025,
-    "dfn": 1.105
+    "att": 1.036,
+    "dfn": 1.098
    },
    "rating_home": {
     "att": 0.904,
-    "dfn": 1.036
+    "dfn": 1.035
    },
    "soft": [],
    "h2h": [
@@ -4302,8 +3599,8 @@
    "id": 2026020264,
    "date": "2026-11-06",
    "start": "2026-11-07T01:00:00Z",
-   "p_home_reg_raw": 0.439,
-   "p_ot_home_raw": 0.559,
+   "p_home_reg_raw": 0.433,
+   "p_ot_home_raw": 0.553,
    "missing": [
     "goalie_away",
     "goalie_home",
@@ -4312,26 +3609,26 @@
    "incomplete": true,
    "verdict": {
     "fav": "home",
-    "p_fav": 0.514,
+    "p_fav": 0.502,
     "level": "noodds"
    }
   },
   {
    "away": "FLA",
    "home": "WSH",
-   "lam_away": 3.14,
+   "lam_away": 3.13,
    "lam_home": 3.41,
-   "p_home": 0.522,
-   "p_away": 0.478,
+   "p_home": 0.519,
+   "p_away": 0.481,
    "p_ot": 0.214,
-   "p_home_reg": 0.404,
-   "p_away_reg": 0.382,
-   "exp_total": 6.71,
+   "p_home_reg": 0.401,
+   "p_away_reg": 0.385,
+   "exp_total": 6.7,
    "line": 5.5,
-   "p_over": 0.638,
-   "p_under": 0.362,
-   "fair_home": 1.92,
-   "fair_away": 2.09,
+   "p_over": 0.637,
+   "p_under": 0.363,
+   "fair_home": 1.93,
+   "fair_away": 2.08,
    "b2b_away": false,
    "b2b_home": false,
    "pacific_home": false,
@@ -4341,16 +3638,16 @@
    "out_away": false,
    "new_coach_home": false,
    "new_coach_away": false,
-   "p_ot_home": 0.552,
+   "p_ot_home": 0.553,
    "shares_home": [
     0.485,
-    0.49
+    0.492
    ],
    "shares_away": [
     0.539,
     0.535
    ],
-   "shares_adj": -0.181,
+   "shares_adj": -0.196,
    "goalie_away": {
     "name": null,
     "gsax_rate": 0.0,
@@ -4396,20 +3693,20 @@
    "inj_def_away": 0.042,
    "inj_def_home": 0.013,
    "rating_away": {
-    "att": 1.012,
-    "dfn": 0.974
+    "att": 1.013,
+    "dfn": 0.973
    },
    "rating_home": {
-    "att": 1.058,
-    "dfn": 1.029
+    "att": 1.056,
+    "dfn": 1.027
    },
    "soft": [],
    "h2h": [],
    "id": 2026020265,
    "date": "2026-11-07",
    "start": "2026-11-07T17:30:00Z",
-   "p_home_reg_raw": 0.432,
-   "p_ot_home_raw": 0.552,
+   "p_home_reg_raw": 0.433,
+   "p_ot_home_raw": 0.553,
    "missing": [
     "goalie_away",
     "goalie_home",
@@ -4418,26 +3715,26 @@
    "incomplete": true,
    "verdict": {
     "fav": "home",
-    "p_fav": 0.522,
+    "p_fav": 0.519,
     "level": "noodds"
    }
   },
   {
    "away": "STL",
    "home": "NSH",
-   "lam_away": 3.01,
-   "lam_home": 3.11,
-   "p_home": 0.515,
-   "p_away": 0.485,
+   "lam_away": 3.0,
+   "lam_home": 3.12,
+   "p_home": 0.516,
+   "p_away": 0.484,
    "p_ot": 0.223,
-   "p_home_reg": 0.397,
+   "p_home_reg": 0.398,
    "p_away_reg": 0.38,
    "exp_total": 6.28,
    "line": 5.5,
    "p_over": 0.573,
    "p_under": 0.427,
    "fair_home": 1.94,
-   "fair_away": 2.06,
+   "fair_away": 2.07,
    "b2b_away": false,
    "b2b_home": false,
    "pacific_home": false,
@@ -4447,7 +3744,7 @@
    "out_away": false,
    "new_coach_home": false,
    "new_coach_away": false,
-   "p_ot_home": 0.531,
+   "p_ot_home": 0.532,
    "shares_home": [
     0.467,
     0.484
@@ -4488,7 +3785,7 @@
     "dfn": 0.973
    },
    "rating_home": {
-    "att": 0.994,
+    "att": 0.993,
     "dfn": 1.011
    },
    "soft": [],
@@ -4505,7 +3802,7 @@
    "date": "2026-11-07",
    "start": "2026-11-07T18:00:00Z",
    "p_home_reg_raw": 0.405,
-   "p_ot_home_raw": 0.531,
+   "p_ot_home_raw": 0.532,
    "missing": [
     "goalie_away",
     "goalie_home",
@@ -4514,26 +3811,26 @@
    "incomplete": true,
    "verdict": {
     "fav": "home",
-    "p_fav": 0.515,
+    "p_fav": 0.516,
     "level": "noodds"
    }
   },
   {
    "away": "NYR",
    "home": "SEA",
-   "lam_away": 3.44,
+   "lam_away": 3.4,
    "lam_home": 2.88,
-   "p_home": 0.435,
-   "p_away": 0.565,
-   "p_ot": 0.214,
-   "p_home_reg": 0.339,
-   "p_away_reg": 0.447,
-   "exp_total": 6.49,
+   "p_home": 0.437,
+   "p_away": 0.563,
+   "p_ot": 0.216,
+   "p_home_reg": 0.34,
+   "p_away_reg": 0.445,
+   "exp_total": 6.44,
    "line": 5.5,
-   "p_over": 0.605,
-   "p_under": 0.395,
-   "fair_home": 2.3,
-   "fair_away": 1.77,
+   "p_over": 0.598,
+   "p_under": 0.402,
+   "fair_home": 2.29,
+   "fair_away": 1.78,
    "b2b_away": false,
    "b2b_home": false,
    "pacific_home": true,
@@ -4543,21 +3840,21 @@
    "out_away": false,
    "new_coach_home": false,
    "new_coach_away": false,
-   "p_ot_home": 0.444,
+   "p_ot_home": 0.45,
    "shares_home": [
     0.455,
     0.439
    ],
    "shares_away": [
-    0.465,
-    0.484
+    0.47,
+    0.485
    ],
-   "shares_adj": 0.236,
+   "shares_adj": 0.202,
    "goalie_away": {
     "name": null,
     "gsax_rate": 0.0,
     "talent": 0.89,
-    "team_level": 0.8967,
+    "team_level": 0.8964,
     "factor": 1.0,
     "sv": null,
     "gp": null,
@@ -4581,28 +3878,28 @@
      "toi": 16.1,
      "basis": "xg",
      "d_for": 0.031,
-     "d_against": 0.039
+     "d_against": 0.04
     }
    ],
    "inj_adj_away": 0.0,
    "inj_adj_home": 0.031,
    "inj_def_away": 0.0,
-   "inj_def_home": 0.039,
+   "inj_def_home": 0.04,
    "rating_away": {
-    "att": 0.986,
+    "att": 0.973,
     "dfn": 0.987
    },
    "rating_home": {
     "att": 0.97,
-    "dfn": 1.056
+    "dfn": 1.055
    },
    "soft": [],
    "h2h": [],
    "id": 2026020267,
    "date": "2026-11-07",
    "start": "2026-11-07T22:00:00Z",
-   "p_home_reg_raw": 0.312,
-   "p_ot_home_raw": 0.444,
+   "p_home_reg_raw": 0.318,
+   "p_ot_home_raw": 0.45,
    "missing": [
     "goalie_away",
     "goalie_home",
@@ -4612,7 +3909,7 @@
    "incomplete": true,
    "verdict": {
     "fav": "away",
-    "p_fav": 0.565,
+    "p_fav": 0.563,
     "level": "noodds"
    }
   },
@@ -4621,12 +3918,12 @@
    "home": "TOR",
    "lam_away": 3.53,
    "lam_home": 3.2,
-   "p_home": 0.408,
-   "p_away": 0.592,
+   "p_home": 0.409,
+   "p_away": 0.591,
    "p_ot": 0.21,
    "p_home_reg": 0.308,
    "p_away_reg": 0.481,
-   "exp_total": 6.88,
+   "exp_total": 6.89,
    "line": 5.5,
    "p_over": 0.663,
    "p_under": 0.337,
@@ -4641,7 +3938,7 @@
    "out_away": false,
    "new_coach_home": false,
    "new_coach_away": false,
-   "p_ot_home": 0.475,
+   "p_ot_home": 0.476,
    "shares_home": [
     0.462,
     0.457
@@ -4650,7 +3947,7 @@
     0.518,
     0.507
    ],
-   "shares_adj": -0.096,
+   "shares_adj": -0.097,
    "goalie_away": {
     "name": null,
     "gsax_rate": 0.0,
@@ -4704,7 +4001,7 @@
    "inj_def_away": 0.029,
    "inj_def_home": 0.083,
    "rating_away": {
-    "att": 1.036,
+    "att": 1.037,
     "dfn": 1.013
    },
    "rating_home": {
@@ -4724,8 +4021,8 @@
    "id": 2026020268,
    "date": "2026-11-07",
    "start": "2026-11-08T00:00:00Z",
-   "p_home_reg_raw": 0.348,
-   "p_ot_home_raw": 0.475,
+   "p_home_reg_raw": 0.349,
+   "p_ot_home_raw": 0.476,
    "missing": [
     "goalie_away",
     "goalie_home",
@@ -4734,26 +4031,26 @@
    "incomplete": true,
    "verdict": {
     "fav": "away",
-    "p_fav": 0.592,
+    "p_fav": 0.591,
     "level": "noodds"
    }
   },
   {
    "away": "UTA",
    "home": "OTT",
-   "lam_away": 3.23,
-   "lam_home": 3.17,
-   "p_home": 0.461,
-   "p_away": 0.539,
-   "p_ot": 0.217,
-   "p_home_reg": 0.35,
-   "p_away_reg": 0.432,
-   "exp_total": 6.57,
+   "lam_away": 3.26,
+   "lam_home": 3.2,
+   "p_home": 0.449,
+   "p_away": 0.551,
+   "p_ot": 0.216,
+   "p_home_reg": 0.339,
+   "p_away_reg": 0.444,
+   "exp_total": 6.62,
    "line": 5.5,
-   "p_over": 0.617,
-   "p_under": 0.383,
-   "fair_home": 2.17,
-   "fair_away": 1.85,
+   "p_over": 0.625,
+   "p_under": 0.375,
+   "fair_home": 2.22,
+   "fair_away": 1.82,
    "b2b_away": false,
    "b2b_home": false,
    "pacific_home": false,
@@ -4765,19 +4062,19 @@
    "new_coach_away": false,
    "p_ot_home": 0.509,
    "shares_home": [
-    0.505,
-    0.512
+    0.502,
+    0.511
    ],
    "shares_away": [
-    0.546,
+    0.549,
     0.541
    ],
-   "shares_adj": -0.119,
+   "shares_adj": -0.163,
    "goalie_away": {
     "name": null,
     "gsax_rate": 0.0,
     "talent": 0.89,
-    "team_level": 0.8919,
+    "team_level": 0.8911,
     "factor": 1.0,
     "sv": null,
     "gp": null,
@@ -4787,7 +4084,7 @@
     "name": null,
     "gsax_rate": 0.0,
     "talent": 0.89,
-    "team_level": 0.892,
+    "team_level": 0.8917,
     "factor": 1.0,
     "sv": null,
     "gp": null,
@@ -4799,8 +4096,8 @@
      "ixg_pg": 0.056,
      "toi": 20.4,
      "basis": "toi",
-     "d_for": 0.017,
-     "d_against": 0.017
+     "d_for": 0.016,
+     "d_against": 0.016
     }
    ],
    "inj_home": [
@@ -4809,21 +4106,21 @@
      "ixg_pg": 0.347,
      "toi": 13.9,
      "basis": "xg",
-     "d_for": 0.033,
+     "d_for": 0.032,
      "d_against": 0.043
     }
    ],
-   "inj_adj_away": 0.017,
-   "inj_adj_home": 0.033,
-   "inj_def_away": 0.017,
+   "inj_adj_away": 0.016,
+   "inj_adj_home": 0.032,
+   "inj_def_away": 0.016,
    "inj_def_home": 0.043,
    "rating_away": {
-    "att": 1.058,
-    "dfn": 0.968
+    "att": 1.059,
+    "dfn": 0.979
    },
    "rating_home": {
-    "att": 1.035,
-    "dfn": 0.969
+    "att": 1.03,
+    "dfn": 0.978
    },
    "soft": [],
    "h2h": [],
@@ -4840,26 +4137,26 @@
    "incomplete": true,
    "verdict": {
     "fav": "away",
-    "p_fav": 0.539,
+    "p_fav": 0.551,
     "level": "noodds"
    }
   },
   {
    "away": "NJD",
    "home": "NYI",
-   "lam_away": 3.25,
+   "lam_away": 3.24,
    "lam_home": 2.78,
-   "p_home": 0.406,
-   "p_away": 0.594,
+   "p_home": 0.407,
+   "p_away": 0.593,
    "p_ot": 0.221,
-   "p_home_reg": 0.305,
-   "p_away_reg": 0.474,
-   "exp_total": 6.19,
+   "p_home_reg": 0.306,
+   "p_away_reg": 0.473,
+   "exp_total": 6.18,
    "line": 5.5,
-   "p_over": 0.558,
-   "p_under": 0.442,
-   "fair_home": 2.47,
-   "fair_away": 1.68,
+   "p_over": 0.557,
+   "p_under": 0.443,
+   "fair_home": 2.46,
+   "fair_away": 1.69,
    "b2b_away": false,
    "b2b_home": false,
    "pacific_home": false,
@@ -4915,12 +4212,12 @@
    "inj_def_away": 0.0,
    "inj_def_home": 0.032,
    "rating_away": {
-    "att": 1.031,
-    "dfn": 0.931
+    "att": 1.03,
+    "dfn": 0.93
    },
    "rating_home": {
     "att": 0.952,
-    "dfn": 0.993
+    "dfn": 0.992
    },
    "soft": [],
    "h2h": [
@@ -4935,7 +4232,7 @@
    "id": 2026020270,
    "date": "2026-11-07",
    "start": "2026-11-08T00:00:00Z",
-   "p_home_reg_raw": 0.32,
+   "p_home_reg_raw": 0.321,
    "p_ot_home_raw": 0.455,
    "missing": [
     "goalie_away",
@@ -4946,7 +4243,7 @@
    "incomplete": true,
    "verdict": {
     "fav": "away",
-    "p_fav": 0.594,
+    "p_fav": 0.593,
     "level": "noodds"
    }
   },
@@ -4954,18 +4251,18 @@
    "away": "CHI",
    "home": "CAR",
    "lam_away": 2.4,
-   "lam_home": 3.95,
-   "p_home": 0.848,
-   "p_away": 0.152,
-   "p_ot": 0.184,
-   "p_home_reg": 0.718,
-   "p_away_reg": 0.099,
-   "exp_total": 6.49,
+   "lam_home": 3.97,
+   "p_home": 0.852,
+   "p_away": 0.148,
+   "p_ot": 0.183,
+   "p_home_reg": 0.722,
+   "p_away_reg": 0.095,
+   "exp_total": 6.51,
    "line": 5.5,
-   "p_over": 0.609,
-   "p_under": 0.391,
-   "fair_home": 1.18,
-   "fair_away": 6.59,
+   "p_over": 0.612,
+   "p_under": 0.388,
+   "fair_home": 1.17,
+   "fair_away": 6.76,
    "b2b_away": false,
    "b2b_home": false,
    "pacific_home": false,
@@ -4975,16 +4272,16 @@
    "out_away": false,
    "new_coach_home": false,
    "new_coach_away": false,
-   "p_ot_home": 0.71,
+   "p_ot_home": 0.712,
    "shares_home": [
     0.608,
-    0.597
+    0.594
    ],
    "shares_away": [
     0.449,
     0.451
    ],
-   "shares_adj": 0.235,
+   "shares_adj": 0.248,
    "goalie_away": {
     "name": null,
     "gsax_rate": 0.0,
@@ -5012,12 +4309,12 @@
    "inj_def_away": 0.0,
    "inj_def_home": 0.0,
    "rating_away": {
-    "att": 0.885,
+    "att": 0.884,
     "dfn": 1.086
    },
    "rating_home": {
-    "att": 1.129,
-    "dfn": 0.884
+    "att": 1.134,
+    "dfn": 0.885
    },
    "soft": [],
    "h2h": [
@@ -5032,8 +4329,8 @@
    "id": 2026020271,
    "date": "2026-11-07",
    "start": "2026-11-08T01:00:00Z",
-   "p_home_reg_raw": 0.623,
-   "p_ot_home_raw": 0.71,
+   "p_home_reg_raw": 0.626,
+   "p_ot_home_raw": 0.712,
    "missing": [
     "goalie_away",
     "goalie_home",
@@ -5042,26 +4339,26 @@
    "incomplete": true,
    "verdict": {
     "fav": "home",
-    "p_fav": 0.848,
+    "p_fav": 0.852,
     "level": "noodds"
    }
   },
   {
    "away": "SJS",
    "home": "DAL",
-   "lam_away": 2.41,
-   "lam_home": 3.69,
-   "p_home": 0.772,
-   "p_away": 0.228,
+   "lam_away": 2.4,
+   "lam_home": 3.7,
+   "p_home": 0.773,
+   "p_away": 0.227,
    "p_ot": 0.197,
-   "p_home_reg": 0.637,
-   "p_away_reg": 0.166,
+   "p_home_reg": 0.638,
+   "p_away_reg": 0.165,
    "exp_total": 6.25,
    "line": 5.5,
    "p_over": 0.57,
    "p_under": 0.43,
-   "fair_home": 1.3,
-   "fair_away": 4.38,
+   "fair_home": 1.29,
+   "fair_away": 4.4,
    "b2b_away": true,
    "b2b_home": false,
    "pacific_home": false,
@@ -5071,7 +4368,7 @@
    "out_away": false,
    "new_coach_home": false,
    "new_coach_away": false,
-   "p_ot_home": 0.683,
+   "p_ot_home": 0.684,
    "shares_home": [
     0.492,
     0.489
@@ -5080,7 +4377,7 @@
     0.455,
     0.46
    ],
-   "shares_adj": -0.041,
+   "shares_adj": -0.042,
    "goalie_away": {
     "name": null,
     "gsax_rate": 0.0,
@@ -5131,15 +4428,15 @@
    ],
    "inj_adj_away": 0.057,
    "inj_adj_home": 0.023,
-   "inj_def_away": 0.06,
+   "inj_def_away": 0.059,
    "inj_def_home": 0.038,
    "rating_away": {
-    "att": 0.939,
+    "att": 0.938,
     "dfn": 1.092
    },
    "rating_home": {
     "att": 0.963,
-    "dfn": 0.896
+    "dfn": 0.897
    },
    "soft": [],
    "h2h": [
@@ -5154,8 +4451,8 @@
    "id": 2026020272,
    "date": "2026-11-07",
    "start": "2026-11-08T01:00:00Z",
-   "p_home_reg_raw": 0.586,
-   "p_ot_home_raw": 0.683,
+   "p_home_reg_raw": 0.587,
+   "p_ot_home_raw": 0.684,
    "missing": [
     "goalie_away",
     "goalie_home",
@@ -5164,7 +4461,7 @@
    "incomplete": true,
    "verdict": {
     "fav": "home",
-    "p_fav": 0.772,
+    "p_fav": 0.773,
     "level": "noodds"
    }
   },
@@ -5172,13 +4469,13 @@
    "away": "TBL",
    "home": "MIN",
    "lam_away": 3.25,
-   "lam_home": 3.14,
-   "p_home": 0.512,
-   "p_away": 0.488,
+   "lam_home": 3.13,
+   "p_home": 0.513,
+   "p_away": 0.487,
    "p_ot": 0.218,
-   "p_home_reg": 0.403,
-   "p_away_reg": 0.379,
-   "exp_total": 6.55,
+   "p_home_reg": 0.404,
+   "p_away_reg": 0.378,
+   "exp_total": 6.54,
    "line": 5.5,
    "p_over": 0.614,
    "p_under": 0.386,
@@ -5193,16 +4490,16 @@
    "out_away": false,
    "new_coach_home": false,
    "new_coach_away": false,
-   "p_ot_home": 0.503,
+   "p_ot_home": 0.502,
    "shares_home": [
     0.517,
-    0.504
+    0.502
    ],
    "shares_away": [
     0.526,
     0.537
    ],
-   "shares_adj": 0.129,
+   "shares_adj": 0.142,
    "goalie_away": {
     "name": null,
     "gsax_rate": 0.0,
@@ -5217,7 +4514,7 @@
     "name": null,
     "gsax_rate": 0.0,
     "talent": 0.89,
-    "team_level": 0.9032,
+    "team_level": 0.9042,
     "factor": 1.0,
     "sv": null,
     "gp": null,
@@ -5243,8 +4540,8 @@
     "dfn": 0.972
    },
    "rating_home": {
-    "att": 1.073,
-    "dfn": 0.898
+    "att": 1.07,
+    "dfn": 0.899
    },
    "soft": [],
    "h2h": [
@@ -5259,8 +4556,8 @@
    "id": 2026020273,
    "date": "2026-11-07",
    "start": "2026-11-08T01:00:00Z",
-   "p_home_reg_raw": 0.376,
-   "p_ot_home_raw": 0.503,
+   "p_home_reg_raw": 0.374,
+   "p_ot_home_raw": 0.502,
    "missing": [
     "goalie_away",
     "goalie_home",
@@ -5269,7 +4566,7 @@
    "incomplete": true,
    "verdict": {
     "fav": "home",
-    "p_fav": 0.512,
+    "p_fav": 0.513,
     "level": "noodds"
    }
   },
@@ -5277,18 +4574,18 @@
    "away": "DET",
    "home": "COL",
    "lam_away": 2.74,
-   "lam_home": 3.68,
-   "p_home": 0.74,
-   "p_away": 0.26,
+   "lam_home": 3.69,
+   "p_home": 0.741,
+   "p_away": 0.259,
    "p_ot": 0.204,
    "p_home_reg": 0.611,
-   "p_away_reg": 0.186,
+   "p_away_reg": 0.185,
    "exp_total": 6.58,
    "line": 5.5,
    "p_over": 0.62,
    "p_under": 0.38,
    "fair_home": 1.35,
-   "fair_away": 3.85,
+   "fair_away": 3.86,
    "b2b_away": false,
    "b2b_home": false,
    "pacific_home": false,
@@ -5307,7 +4604,7 @@
     0.495,
     0.508
    ],
-   "shares_adj": 0.16,
+   "shares_adj": 0.159,
    "goalie_away": {
     "name": null,
     "gsax_rate": 0.0,
@@ -5349,14 +4646,14 @@
    },
    "rating_home": {
     "att": 1.127,
-    "dfn": 0.946
+    "dfn": 0.945
    },
    "soft": [],
    "h2h": [],
    "id": 2026020274,
    "date": "2026-11-07",
    "start": "2026-11-08T02:00:00Z",
-   "p_home_reg_raw": 0.531,
+   "p_home_reg_raw": 0.532,
    "p_ot_home_raw": 0.637,
    "missing": [
     "goalie_away",
@@ -5366,25 +4663,25 @@
    "incomplete": true,
    "verdict": {
     "fav": "home",
-    "p_fav": 0.74,
+    "p_fav": 0.741,
     "level": "noodds"
    }
   },
   {
    "away": "PIT",
    "home": "LAK",
-   "lam_away": 3.38,
+   "lam_away": 3.37,
    "lam_home": 3.06,
-   "p_home": 0.424,
-   "p_away": 0.576,
-   "p_ot": 0.215,
+   "p_home": 0.425,
+   "p_away": 0.575,
+   "p_ot": 0.216,
    "p_home_reg": 0.322,
-   "p_away_reg": 0.463,
+   "p_away_reg": 0.462,
    "exp_total": 6.59,
    "line": 5.5,
-   "p_over": 0.621,
-   "p_under": 0.379,
-   "fair_home": 2.36,
+   "p_over": 0.62,
+   "p_under": 0.38,
+   "fair_home": 2.35,
    "fair_away": 1.74,
    "b2b_away": false,
    "b2b_home": false,
@@ -5404,7 +4701,7 @@
     0.525,
     0.51
    ],
-   "shares_adj": -0.031,
+   "shares_adj": -0.032,
    "goalie_away": {
     "name": null,
     "gsax_rate": 0.0,
@@ -5458,8 +4755,8 @@
    "inj_def_away": 0.043,
    "inj_def_home": 0.068,
    "rating_away": {
-    "att": 1.042,
-    "dfn": 1.046
+    "att": 1.041,
+    "dfn": 1.045
    },
    "rating_home": {
     "att": 0.951,
@@ -5470,7 +4767,7 @@
    "id": 2026020275,
    "date": "2026-11-07",
    "start": "2026-11-08T02:00:00Z",
-   "p_home_reg_raw": 0.346,
+   "p_home_reg_raw": 0.347,
    "p_ot_home_raw": 0.476,
    "missing": [
     "goalie_away",
@@ -5480,26 +4777,26 @@
    "incomplete": true,
    "verdict": {
     "fav": "away",
-    "p_fav": 0.576,
+    "p_fav": 0.575,
     "level": "noodds"
    }
   },
   {
    "away": "VAN",
    "home": "EDM",
-   "lam_away": 2.84,
+   "lam_away": 2.82,
    "lam_home": 3.93,
-   "p_home": 0.71,
-   "p_away": 0.29,
-   "p_ot": 0.195,
+   "p_home": 0.711,
+   "p_away": 0.289,
+   "p_ot": 0.194,
    "p_home_reg": 0.583,
    "p_away_reg": 0.222,
-   "exp_total": 6.92,
+   "exp_total": 6.89,
    "line": 5.5,
-   "p_over": 0.669,
-   "p_under": 0.331,
+   "p_over": 0.666,
+   "p_under": 0.334,
    "fair_home": 1.41,
-   "fair_away": 3.45,
+   "fair_away": 3.46,
    "b2b_away": false,
    "b2b_home": false,
    "pacific_home": false,
@@ -5509,16 +4806,16 @@
    "out_away": false,
    "new_coach_home": false,
    "new_coach_away": false,
-   "p_ot_home": 0.652,
+   "p_ot_home": 0.656,
    "shares_home": [
-    0.492,
-    0.494
+    0.489,
+    0.493
    ],
    "shares_away": [
     0.46,
     0.45
    ],
-   "shares_adj": -0.107,
+   "shares_adj": -0.131,
    "goalie_away": {
     "name": null,
     "gsax_rate": 0.0,
@@ -5564,12 +4861,12 @@
    "inj_def_away": 0.024,
    "inj_def_home": 0.07,
    "rating_away": {
-    "att": 0.913,
+    "att": 0.914,
     "dfn": 1.163
    },
    "rating_home": {
     "att": 1.064,
-    "dfn": 0.972
+    "dfn": 0.962
    },
    "soft": [],
    "h2h": [
@@ -5591,8 +4888,8 @@
    "id": 2026020276,
    "date": "2026-11-07",
    "start": "2026-11-08T03:00:00Z",
-   "p_home_reg_raw": 0.553,
-   "p_ot_home_raw": 0.652,
+   "p_home_reg_raw": 0.557,
+   "p_ot_home_raw": 0.656,
    "missing": [
     "goalie_away",
     "goalie_home",
@@ -5602,23 +4899,622 @@
    "incomplete": true,
    "verdict": {
     "fav": "home",
-    "p_fav": 0.71,
+    "p_fav": 0.711,
+    "level": "noodds"
+   }
+  },
+  {
+   "away": "FLA",
+   "home": "BOS",
+   "lam_away": 2.78,
+   "lam_home": 3.56,
+   "p_home": 0.638,
+   "p_away": 0.362,
+   "p_ot": 0.209,
+   "p_home_reg": 0.509,
+   "p_away_reg": 0.281,
+   "exp_total": 6.49,
+   "line": 5.5,
+   "p_over": 0.607,
+   "p_under": 0.393,
+   "fair_home": 1.57,
+   "fair_away": 2.77,
+   "b2b_away": true,
+   "b2b_home": false,
+   "pacific_home": false,
+   "playoff": false,
+   "neutral": false,
+   "out_home": false,
+   "out_away": false,
+   "new_coach_home": false,
+   "new_coach_away": false,
+   "p_ot_home": 0.617,
+   "shares_home": [
+    0.495,
+    0.488
+   ],
+   "shares_away": [
+    0.539,
+    0.535
+   ],
+   "shares_adj": -0.172,
+   "goalie_away": {
+    "name": null,
+    "gsax_rate": 0.0,
+    "talent": 0.89,
+    "team_level": 0.8925,
+    "factor": 1.0,
+    "sv": null,
+    "gp": null,
+    "last": null
+   },
+   "goalie_home": {
+    "name": null,
+    "gsax_rate": 0.0,
+    "talent": 0.89,
+    "team_level": 0.9009,
+    "factor": 1.0,
+    "sv": null,
+    "gp": null,
+    "last": null
+   },
+   "inj_away": [
+    {
+     "name": "Brad Marchand",
+     "ixg_pg": 0.343,
+     "toi": 11.4,
+     "basis": "xg",
+     "d_for": 0.033,
+     "d_against": 0.043
+    }
+   ],
+   "inj_home": [],
+   "inj_adj_away": 0.033,
+   "inj_adj_home": 0.0,
+   "inj_def_away": 0.043,
+   "inj_def_home": 0.0,
+   "rating_away": {
+    "att": 1.013,
+    "dfn": 0.973
+   },
+   "rating_home": {
+    "att": 1.033,
+    "dfn": 0.974
+   },
+   "soft": [],
+   "h2h": [],
+   "id": 2026020277,
+   "date": "2026-11-08",
+   "start": "2026-11-08T18:00:00Z",
+   "p_home_reg_raw": 0.507,
+   "p_ot_home_raw": 0.617,
+   "missing": [
+    "goalie_away",
+    "goalie_home",
+    "odds"
+   ],
+   "incomplete": true,
+   "verdict": {
+    "fav": "home",
+    "p_fav": 0.638,
+    "level": "noodds"
+   }
+  },
+  {
+   "away": "VGK",
+   "home": "BUF",
+   "lam_away": 3.25,
+   "lam_home": 3.02,
+   "p_home": 0.49,
+   "p_away": 0.51,
+   "p_ot": 0.219,
+   "p_home_reg": 0.384,
+   "p_away_reg": 0.397,
+   "exp_total": 6.44,
+   "line": 5.5,
+   "p_over": 0.598,
+   "p_under": 0.402,
+   "fair_home": 2.04,
+   "fair_away": 1.96,
+   "b2b_away": false,
+   "b2b_home": false,
+   "pacific_home": false,
+   "playoff": false,
+   "neutral": false,
+   "out_home": false,
+   "out_away": false,
+   "new_coach_home": false,
+   "new_coach_away": false,
+   "p_ot_home": 0.487,
+   "shares_home": [
+    0.512,
+    0.505
+   ],
+   "shares_away": [
+    0.508,
+    0.52
+   ],
+   "shares_adj": 0.155,
+   "goalie_away": {
+    "name": null,
+    "gsax_rate": 0.0,
+    "talent": 0.89,
+    "team_level": 0.8895,
+    "factor": 1.0,
+    "sv": null,
+    "gp": null,
+    "last": null
+   },
+   "goalie_home": {
+    "name": null,
+    "gsax_rate": 0.0,
+    "talent": 0.89,
+    "team_level": 0.8957,
+    "factor": 1.0,
+    "sv": null,
+    "gp": null,
+    "last": null
+   },
+   "inj_away": [],
+   "inj_home": [],
+   "inj_adj_away": 0.0,
+   "inj_adj_home": 0.0,
+   "inj_def_away": 0.0,
+   "inj_def_home": 0.0,
+   "rating_away": {
+    "att": 1.033,
+    "dfn": 0.933
+   },
+   "rating_home": {
+    "att": 1.004,
+    "dfn": 1.026
+   },
+   "soft": [],
+   "h2h": [],
+   "id": 2026020278,
+   "date": "2026-11-08",
+   "start": "2026-11-08T20:30:00Z",
+   "p_home_reg_raw": 0.357,
+   "p_ot_home_raw": 0.487,
+   "missing": [
+    "goalie_away",
+    "goalie_home",
+    "odds"
+   ],
+   "incomplete": true,
+   "verdict": {
+    "fav": "away",
+    "p_fav": 0.51,
+    "level": "noodds"
+   }
+  },
+  {
+   "away": "TBL",
+   "home": "WPG",
+   "lam_away": 3.39,
+   "lam_home": 3.01,
+   "p_home": 0.424,
+   "p_away": 0.576,
+   "p_ot": 0.215,
+   "p_home_reg": 0.323,
+   "p_away_reg": 0.462,
+   "exp_total": 6.56,
+   "line": 5.5,
+   "p_over": 0.616,
+   "p_under": 0.384,
+   "fair_home": 2.36,
+   "fair_away": 1.73,
+   "b2b_away": true,
+   "b2b_home": false,
+   "pacific_home": false,
+   "playoff": false,
+   "neutral": false,
+   "out_home": false,
+   "out_away": false,
+   "new_coach_home": false,
+   "new_coach_away": false,
+   "p_ot_home": 0.468,
+   "shares_home": [
+    0.483,
+    0.484
+   ],
+   "shares_away": [
+    0.526,
+    0.537
+   ],
+   "shares_adj": 0.022,
+   "goalie_away": {
+    "name": null,
+    "gsax_rate": 0.0,
+    "talent": 0.89,
+    "team_level": 0.9007,
+    "factor": 1.0,
+    "sv": null,
+    "gp": null,
+    "last": null
+   },
+   "goalie_home": {
+    "name": null,
+    "gsax_rate": 0.0,
+    "talent": 0.89,
+    "team_level": 0.891,
+    "factor": 1.0,
+    "sv": null,
+    "gp": null,
+    "last": null
+   },
+   "inj_away": [],
+   "inj_home": [
+    {
+     "name": "Josh Morrissey",
+     "ixg_pg": 0.12,
+     "toi": 20.1,
+     "basis": "toi",
+     "d_for": 0.017,
+     "d_against": 0.014
+    }
+   ],
+   "inj_adj_away": 0.0,
+   "inj_adj_home": 0.017,
+   "inj_def_away": 0.0,
+   "inj_def_home": 0.014,
+   "rating_away": {
+    "att": 1.099,
+    "dfn": 0.972
+   },
+   "rating_home": {
+    "att": 0.928,
+    "dfn": 1.043
+   },
+   "soft": [],
+   "h2h": [
+    {
+     "date": "2026-10-29",
+     "away": "WPG",
+     "home": "TBL",
+     "score": "4:6",
+     "end": "REG"
+    }
+   ],
+   "id": 2026020280,
+   "date": "2026-11-08",
+   "start": "2026-11-08T23:00:00Z",
+   "p_home_reg_raw": 0.338,
+   "p_ot_home_raw": 0.468,
+   "missing": [
+    "goalie_away",
+    "goalie_home",
+    "odds"
+   ],
+   "incomplete": true,
+   "verdict": {
+    "fav": "away",
+    "p_fav": 0.576,
+    "level": "noodds"
+   }
+  },
+  {
+   "away": "NJD",
+   "home": "TOR",
+   "lam_away": 3.58,
+   "lam_home": 2.84,
+   "p_home": 0.332,
+   "p_away": 0.668,
+   "p_ot": 0.209,
+   "p_home_reg": 0.244,
+   "p_away_reg": 0.547,
+   "exp_total": 6.58,
+   "line": 5.5,
+   "p_over": 0.62,
+   "p_under": 0.38,
+   "fair_home": 3.01,
+   "fair_away": 1.5,
+   "b2b_away": true,
+   "b2b_home": true,
+   "pacific_home": false,
+   "playoff": false,
+   "neutral": false,
+   "out_home": false,
+   "out_away": false,
+   "new_coach_home": false,
+   "new_coach_away": false,
+   "p_ot_home": 0.421,
+   "shares_home": [
+    0.462,
+    0.457
+   ],
+   "shares_away": [
+    0.539,
+    0.539
+   ],
+   "shares_adj": -0.032,
+   "goalie_away": {
+    "name": null,
+    "gsax_rate": 0.0,
+    "talent": 0.89,
+    "team_level": 0.8952,
+    "factor": 1.0,
+    "sv": null,
+    "gp": null,
+    "last": null
+   },
+   "goalie_home": {
+    "name": null,
+    "gsax_rate": 0.0,
+    "talent": 0.89,
+    "team_level": 0.8904,
+    "factor": 1.0,
+    "sv": null,
+    "gp": null,
+    "last": null
+   },
+   "inj_away": [],
+   "inj_home": [
+    {
+     "name": "Kirill Marchenko",
+     "ixg_pg": 0.311,
+     "toi": 17.6,
+     "basis": "xg",
+     "d_for": 0.031,
+     "d_against": 0.037
+    },
+    {
+     "name": "John Tavares",
+     "ixg_pg": 0.388,
+     "toi": 16.5,
+     "basis": "xg",
+     "d_for": 0.039,
+     "d_against": 0.046
+    }
+   ],
+   "inj_adj_away": 0.0,
+   "inj_adj_home": 0.07,
+   "inj_def_away": 0.0,
+   "inj_def_home": 0.083,
+   "rating_away": {
+    "att": 1.03,
+    "dfn": 0.93
+   },
+   "rating_home": {
+    "att": 1.018,
+    "dfn": 1.045
+   },
+   "soft": [],
+   "h2h": [],
+   "id": 2026020279,
+   "date": "2026-11-08",
+   "start": "2026-11-09T00:00:00Z",
+   "p_home_reg_raw": 0.289,
+   "p_ot_home_raw": 0.421,
+   "missing": [
+    "goalie_away",
+    "goalie_home",
+    "injuries_unmatched",
+    "odds"
+   ],
+   "incomplete": true,
+   "verdict": {
+    "fav": "away",
+    "p_fav": 0.668,
+    "level": "noodds"
+   }
+  },
+  {
+   "away": "PHI",
+   "home": "CGY",
+   "lam_away": 2.94,
+   "lam_home": 2.81,
+   "p_home": 0.47,
+   "p_away": 0.53,
+   "p_ot": 0.23,
+   "p_home_reg": 0.355,
+   "p_away_reg": 0.415,
+   "exp_total": 5.93,
+   "line": 5.5,
+   "p_over": 0.514,
+   "p_under": 0.486,
+   "fair_home": 2.13,
+   "fair_away": 1.89,
+   "b2b_away": false,
+   "b2b_home": false,
+   "pacific_home": false,
+   "playoff": false,
+   "neutral": false,
+   "out_home": false,
+   "out_away": false,
+   "new_coach_home": false,
+   "new_coach_away": false,
+   "p_ot_home": 0.5,
+   "shares_home": [
+    0.48,
+    0.504
+   ],
+   "shares_away": [
+    0.459,
+    0.461
+   ],
+   "shares_adj": -0.016,
+   "goalie_away": {
+    "name": null,
+    "gsax_rate": 0.0,
+    "talent": 0.89,
+    "team_level": 0.8983,
+    "factor": 1.0,
+    "sv": null,
+    "gp": null,
+    "last": null
+   },
+   "goalie_home": {
+    "name": null,
+    "gsax_rate": 0.0,
+    "talent": 0.89,
+    "team_level": 0.8973,
+    "factor": 1.0,
+    "sv": null,
+    "gp": null,
+    "last": null
+   },
+   "inj_away": [],
+   "inj_home": [
+    {
+     "name": "Jonathan Huberdeau",
+     "ixg_pg": 0.273,
+     "toi": null,
+     "basis": "xg",
+     "d_for": 0.029,
+     "d_against": 0.038
+    }
+   ],
+   "inj_adj_away": 0.0,
+   "inj_adj_home": 0.029,
+   "inj_def_away": 0.0,
+   "inj_def_home": 0.038,
+   "rating_away": {
+    "att": 0.892,
+    "dfn": 0.994
+   },
+   "rating_home": {
+    "att": 0.904,
+    "dfn": 1.035
+   },
+   "soft": [],
+   "h2h": [],
+   "id": 2026020281,
+   "date": "2026-11-08",
+   "start": "2026-11-09T00:00:00Z",
+   "p_home_reg_raw": 0.366,
+   "p_ot_home_raw": 0.5,
+   "missing": [
+    "goalie_away",
+    "goalie_home",
+    "odds"
+   ],
+   "incomplete": true,
+   "verdict": {
+    "fav": "away",
+    "p_fav": 0.53,
+    "level": "noodds"
+   }
+  },
+  {
+   "away": "PIT",
+   "home": "ANA",
+   "lam_away": 3.48,
+   "lam_home": 3.58,
+   "p_home": 0.519,
+   "p_away": 0.481,
+   "p_ot": 0.207,
+   "p_home_reg": 0.409,
+   "p_away_reg": 0.384,
+   "exp_total": 7.21,
+   "line": 5.5,
+   "p_over": 0.706,
+   "p_under": 0.294,
+   "fair_home": 1.93,
+   "fair_away": 2.08,
+   "b2b_away": true,
+   "b2b_home": false,
+   "pacific_home": true,
+   "playoff": false,
+   "neutral": false,
+   "out_home": false,
+   "out_away": false,
+   "new_coach_home": false,
+   "new_coach_away": false,
+   "p_ot_home": 0.53,
+   "shares_home": [
+    0.517,
+    0.506
+   ],
+   "shares_away": [
+    0.525,
+    0.51
+   ],
+   "shares_adj": -0.032,
+   "goalie_away": {
+    "name": null,
+    "gsax_rate": 0.0,
+    "talent": 0.89,
+    "team_level": 0.8908,
+    "factor": 1.0,
+    "sv": null,
+    "gp": null,
+    "last": null
+   },
+   "goalie_home": {
+    "name": null,
+    "gsax_rate": 0.0,
+    "talent": 0.89,
+    "team_level": 0.8895,
+    "factor": 1.0,
+    "sv": null,
+    "gp": null,
+    "last": null
+   },
+   "inj_away": [
+    {
+     "name": "Bryan Rust",
+     "ixg_pg": 0.338,
+     "toi": 17.4,
+     "basis": "xg",
+     "d_for": 0.028,
+     "d_against": 0.039
+    }
+   ],
+   "inj_home": [
+    {
+     "name": "Troy Terry",
+     "ixg_pg": 0.325,
+     "toi": null,
+     "basis": "xg",
+     "d_for": 0.028,
+     "d_against": 0.036
+    }
+   ],
+   "inj_adj_away": 0.028,
+   "inj_adj_home": 0.028,
+   "inj_def_away": 0.039,
+   "inj_def_home": 0.036,
+   "rating_away": {
+    "att": 1.041,
+    "dfn": 1.045
+   },
+   "rating_home": {
+    "att": 1.036,
+    "dfn": 1.098
+   },
+   "soft": [],
+   "h2h": [],
+   "id": 2026020282,
+   "date": "2026-11-08",
+   "start": "2026-11-09T01:00:00Z",
+   "p_home_reg_raw": 0.411,
+   "p_ot_home_raw": 0.53,
+   "missing": [
+    "goalie_away",
+    "goalie_home",
+    "odds"
+   ],
+   "incomplete": true,
+   "verdict": {
+    "fav": "home",
+    "p_fav": 0.519,
     "level": "noodds"
    }
   }
  ],
  "teams": {
   "ANA": {
-   "gp": 13,
-   "gf_pg": 3.31,
-   "ga_pg": 3.85,
-   "sf_pg": 24.3,
-   "sa_pg": 27.8,
-   "ppg": 12,
+   "gp": 14,
+   "gf_pg": 3.5,
+   "ga_pg": 3.79,
+   "sf_pg": 24.9,
+   "sa_pg": 27.5,
+   "ppg": 16,
    "ppga": 13,
-   "att": 1.025,
-   "dfn": 1.105,
-   "power": 0.928
+   "att": 1.036,
+   "dfn": 1.098,
+   "power": 0.944
   },
   "BOS": {
    "gp": 15,
@@ -5628,9 +5524,9 @@
    "sa_pg": 28.2,
    "ppg": 9,
    "ppga": 12,
-   "att": 1.034,
-   "dfn": 0.975,
-   "power": 1.06
+   "att": 1.033,
+   "dfn": 0.974,
+   "power": 1.061
   },
   "BUF": {
    "gp": 14,
@@ -5640,8 +5536,8 @@
    "sa_pg": 26.9,
    "ppg": 8,
    "ppga": 16,
-   "att": 1.005,
-   "dfn": 1.027,
+   "att": 1.004,
+   "dfn": 1.026,
    "power": 0.979
   },
   "CAR": {
@@ -5652,9 +5548,9 @@
    "sa_pg": 22.4,
    "ppg": 14,
    "ppga": 9,
-   "att": 1.129,
-   "dfn": 0.884,
-   "power": 1.277
+   "att": 1.134,
+   "dfn": 0.885,
+   "power": 1.281
   },
   "CBJ": {
    "gp": 12,
@@ -5664,7 +5560,7 @@
    "sa_pg": 26.8,
    "ppg": 4,
    "ppga": 10,
-   "att": 0.93,
+   "att": 0.929,
    "dfn": 1.025,
    "power": 0.907
   },
@@ -5677,8 +5573,8 @@
    "ppg": 11,
    "ppga": 8,
    "att": 0.904,
-   "dfn": 1.036,
-   "power": 0.872
+   "dfn": 1.035,
+   "power": 0.873
   },
   "CHI": {
    "gp": 14,
@@ -5688,7 +5584,7 @@
    "sa_pg": 30.1,
    "ppg": 5,
    "ppga": 9,
-   "att": 0.885,
+   "att": 0.884,
    "dfn": 1.086,
    "power": 0.814
   },
@@ -5701,7 +5597,7 @@
    "ppg": 9,
    "ppga": 10,
    "att": 1.127,
-   "dfn": 0.946,
+   "dfn": 0.945,
    "power": 1.192
   },
   "DAL": {
@@ -5713,7 +5609,7 @@
    "ppg": 7,
    "ppga": 3,
    "att": 0.963,
-   "dfn": 0.896,
+   "dfn": 0.897,
    "power": 1.074
   },
   "DET": {
@@ -5729,16 +5625,16 @@
    "power": 1.008
   },
   "EDM": {
-   "gp": 14,
-   "gf_pg": 4.29,
-   "ga_pg": 3.07,
+   "gp": 15,
+   "gf_pg": 4.27,
+   "ga_pg": 2.93,
    "sf_pg": 25.9,
-   "sa_pg": 26.2,
-   "ppg": 16,
+   "sa_pg": 26.4,
+   "ppg": 17,
    "ppga": 10,
    "att": 1.064,
-   "dfn": 0.972,
-   "power": 1.095
+   "dfn": 0.962,
+   "power": 1.106
   },
   "FLA": {
    "gp": 14,
@@ -5748,9 +5644,9 @@
    "sa_pg": 23.9,
    "ppg": 16,
    "ppga": 9,
-   "att": 1.012,
-   "dfn": 0.974,
-   "power": 1.039
+   "att": 1.013,
+   "dfn": 0.973,
+   "power": 1.04
   },
   "LAK": {
    "gp": 13,
@@ -5762,7 +5658,7 @@
    "ppga": 15,
    "att": 0.951,
    "dfn": 0.985,
-   "power": 0.966
+   "power": 0.965
   },
   "MIN": {
    "gp": 16,
@@ -5772,9 +5668,9 @@
    "sa_pg": 25.1,
    "ppg": 14,
    "ppga": 9,
-   "att": 1.073,
-   "dfn": 0.898,
-   "power": 1.196
+   "att": 1.07,
+   "dfn": 0.899,
+   "power": 1.19
   },
   "MTL": {
    "gp": 14,
@@ -5784,7 +5680,7 @@
    "sa_pg": 27.6,
    "ppg": 4,
    "ppga": 10,
-   "att": 1.036,
+   "att": 1.037,
    "dfn": 1.013,
    "power": 1.023
   },
@@ -5796,9 +5692,9 @@
    "sa_pg": 24.6,
    "ppg": 8,
    "ppga": 9,
-   "att": 1.031,
-   "dfn": 0.931,
-   "power": 1.108
+   "att": 1.03,
+   "dfn": 0.93,
+   "power": 1.107
   },
   "NSH": {
    "gp": 14,
@@ -5808,7 +5704,7 @@
    "sa_pg": 29.0,
    "ppg": 15,
    "ppga": 5,
-   "att": 0.994,
+   "att": 0.993,
    "dfn": 1.011,
    "power": 0.983
   },
@@ -5821,44 +5717,44 @@
    "ppg": 7,
    "ppga": 7,
    "att": 0.952,
-   "dfn": 0.993,
+   "dfn": 0.992,
    "power": 0.959
   },
   "NYR": {
-   "gp": 14,
-   "gf_pg": 3.14,
-   "ga_pg": 3.0,
-   "sf_pg": 24.4,
-   "sa_pg": 26.5,
+   "gp": 15,
+   "gf_pg": 3.0,
+   "ga_pg": 3.07,
+   "sf_pg": 24.7,
+   "sa_pg": 26.4,
    "ppg": 8,
-   "ppga": 4,
-   "att": 0.986,
+   "ppga": 5,
+   "att": 0.973,
    "dfn": 0.987,
-   "power": 0.998
+   "power": 0.986
   },
   "OTT": {
-   "gp": 15,
-   "gf_pg": 3.27,
-   "ga_pg": 3.0,
-   "sf_pg": 25.6,
-   "sa_pg": 26.6,
+   "gp": 16,
+   "gf_pg": 3.25,
+   "ga_pg": 3.19,
+   "sf_pg": 25.4,
+   "sa_pg": 27.0,
    "ppg": 8,
-   "ppga": 11,
-   "att": 1.035,
-   "dfn": 0.969,
-   "power": 1.068
+   "ppga": 15,
+   "att": 1.03,
+   "dfn": 0.978,
+   "power": 1.053
   },
   "PHI": {
-   "gp": 15,
-   "gf_pg": 1.93,
-   "ga_pg": 3.4,
-   "sf_pg": 23.3,
-   "sa_pg": 30.3,
+   "gp": 16,
+   "gf_pg": 2.19,
+   "ga_pg": 3.38,
+   "sf_pg": 23.2,
+   "sa_pg": 29.8,
    "ppg": 8,
-   "ppga": 9,
-   "att": 0.881,
-   "dfn": 0.995,
-   "power": 0.886
+   "ppga": 10,
+   "att": 0.892,
+   "dfn": 0.994,
+   "power": 0.897
   },
   "PIT": {
    "gp": 14,
@@ -5868,8 +5764,8 @@
    "sa_pg": 27.7,
    "ppg": 8,
    "ppga": 5,
-   "att": 1.042,
-   "dfn": 1.046,
+   "att": 1.041,
+   "dfn": 1.045,
    "power": 0.996
   },
   "SEA": {
@@ -5881,8 +5777,8 @@
    "ppg": 11,
    "ppga": 14,
    "att": 0.97,
-   "dfn": 1.056,
-   "power": 0.918
+   "dfn": 1.055,
+   "power": 0.919
   },
   "SJS": {
    "gp": 15,
@@ -5892,7 +5788,7 @@
    "sa_pg": 30.6,
    "ppg": 12,
    "ppga": 8,
-   "att": 0.939,
+   "att": 0.938,
    "dfn": 1.092,
    "power": 0.859
   },
@@ -5906,7 +5802,7 @@
    "ppga": 6,
    "att": 0.968,
    "dfn": 0.973,
-   "power": 0.995
+   "power": 0.994
   },
   "TBL": {
    "gp": 13,
@@ -5930,19 +5826,19 @@
    "ppga": 5,
    "att": 1.018,
    "dfn": 1.045,
-   "power": 0.974
+   "power": 0.973
   },
   "UTA": {
-   "gp": 14,
-   "gf_pg": 3.64,
-   "ga_pg": 3.29,
-   "sf_pg": 30.4,
-   "sa_pg": 24.5,
-   "ppg": 16,
+   "gp": 15,
+   "gf_pg": 3.6,
+   "ga_pg": 3.47,
+   "sf_pg": 29.8,
+   "sa_pg": 24.3,
+   "ppg": 17,
    "ppga": 15,
-   "att": 1.058,
-   "dfn": 0.968,
-   "power": 1.093
+   "att": 1.059,
+   "dfn": 0.979,
+   "power": 1.081
   },
   "VAN": {
    "gp": 16,
@@ -5952,9 +5848,9 @@
    "sa_pg": 31.9,
    "ppg": 10,
    "ppga": 18,
-   "att": 0.913,
+   "att": 0.914,
    "dfn": 1.163,
-   "power": 0.785
+   "power": 0.786
   },
   "VGK": {
    "gp": 15,
@@ -5965,7 +5861,7 @@
    "ppg": 12,
    "ppga": 11,
    "att": 1.033,
-   "dfn": 0.934,
+   "dfn": 0.933,
    "power": 1.107
   },
   "WPG": {
@@ -5976,9 +5872,9 @@
    "sa_pg": 29.7,
    "ppg": 7,
    "ppga": 13,
-   "att": 0.927,
-   "dfn": 1.037,
-   "power": 0.894
+   "att": 0.928,
+   "dfn": 1.043,
+   "power": 0.89
   },
   "WSH": {
    "gp": 13,
@@ -5988,8 +5884,8 @@
    "sa_pg": 28.2,
    "ppg": 6,
    "ppga": 9,
-   "att": 1.058,
-   "dfn": 1.029,
+   "att": 1.056,
+   "dfn": 1.027,
    "power": 1.028
   }
  },
