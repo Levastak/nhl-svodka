@@ -1,7 +1,7 @@
 {
  "version": 4.4,
  "xg_used": true,
- "generated": "2026-11-05T20:46Z",
+ "generated": "2026-11-06T00:58Z",
  "league": {
   "goals_pg": 3.148,
   "home_adv": 0.02,
@@ -1323,7 +1323,7 @@
    ],
    "shares_adj": -0.228,
    "goalie_away": {
-    "name": "Laurent Brossoit (не подтв.)",
+    "name": "Laurent Brossoit (подтв.)",
     "gsax_rate": 0.0189,
     "talent": 0.8863,
     "team_level": 0.8892,
@@ -1378,26 +1378,33 @@
     "att": 1.057,
     "dfn": 0.963
    },
-   "mkt_home": 0.632,
-   "mkt_away": 0.368,
-   "edge_home": -0.061,
-   "edge_away": 0.061,
+   "mkt_home": 0.633,
+   "mkt_away": 0.367,
+   "edge_home": -0.062,
+   "edge_away": 0.062,
    "p_home_blend": 0.608,
    "p_away_blend": 0.392,
    "fatigue_edge": false,
    "value": "away",
-   "mkt_over": 0.476,
-   "edge_over": -0.005,
-   "p_over_blend": 0.474,
-   "p_under_blend": 0.526,
+   "mkt_over": 0.465,
+   "edge_over": 0.006,
+   "p_over_blend": 0.468,
+   "p_under_blend": 0.532,
    "value_total": null,
    "soft": [
     {
      "book": "1xBet",
      "bet": "П2 ANA (осн. время)",
-     "odds": 3.39,
-     "fair": 3.26,
-     "ev": 0.041
+     "odds": 3.4,
+     "fair": 3.25,
+     "ev": 0.047
+    },
+    {
+     "book": "Марафон",
+     "bet": "П2 ANA (осн. время)",
+     "odds": 3.38,
+     "fair": 3.28,
+     "ev": 0.032
     }
    ],
    "h2h": [
@@ -1415,7 +1422,6 @@
    "p_home_reg_raw": 0.475,
    "p_ot_home_raw": 0.587,
    "missing": [
-    "goalie_away_unconfirmed",
     "injuries_unmatched"
    ],
    "incomplete": true,
@@ -1426,14 +1432,14 @@
     "vs_market": false,
     "level": "bet",
     "edge_side": "away",
-    "edge": 0.061,
+    "edge": 0.062,
     "fatigue": false,
     "bet": {
      "kind": "win",
      "side": "away",
-     "odds": 2.65,
+     "odds": 2.66,
      "p_model": 0.429,
-     "p_mkt": 0.368,
+     "p_mkt": 0.367,
      "src": "Pinnacle"
     },
     "total": {
@@ -1523,18 +1529,18 @@
     "att": 1.124,
     "dfn": 0.96
    },
-   "mkt_home": 0.659,
-   "mkt_away": 0.341,
-   "edge_home": 0.054,
-   "edge_away": -0.054,
-   "p_home_blend": 0.68,
-   "p_away_blend": 0.32,
+   "mkt_home": 0.661,
+   "mkt_away": 0.339,
+   "edge_home": 0.052,
+   "edge_away": -0.052,
+   "p_home_blend": 0.682,
+   "p_away_blend": 0.318,
    "fatigue_edge": false,
    "value": "home",
-   "mkt_over": 0.5,
-   "edge_over": 0.028,
-   "p_over_blend": 0.511,
-   "p_under_blend": 0.489,
+   "mkt_over": 0.497,
+   "edge_over": 0.031,
+   "p_over_blend": 0.509,
+   "p_under_blend": 0.491,
    "value_total": null,
    "soft": [],
    "h2h": [
@@ -1562,29 +1568,29 @@
     "vs_market": false,
     "level": "bet",
     "edge_side": "home",
-    "edge": 0.054,
+    "edge": 0.052,
     "fatigue": false,
     "sure": {
      "side": "home",
      "p": 0.713,
-     "mkt": 0.659,
-     "edge": 0.054,
-     "odds": 1.48
+     "mkt": 0.661,
+     "edge": 0.052,
+     "odds": 1.47
     },
     "bet": {
      "kind": "win",
      "side": "home",
-     "odds": 1.48,
+     "odds": 1.47,
      "p_model": 0.713,
-     "p_mkt": 0.659,
+     "p_mkt": 0.661,
      "src": "Pinnacle"
     },
     "total": {
      "side": "over",
      "line": 6.5,
      "p": 0.528,
-     "mkt_side": "over",
-     "vs_market": false,
+     "mkt_side": "under",
+     "vs_market": true,
      "value": null
     }
    }
@@ -1660,35 +1666,20 @@
     "att": 0.989,
     "dfn": 1.017
    },
-   "mkt_home": 0.603,
-   "mkt_away": 0.397,
-   "edge_home": 0.067,
-   "edge_away": -0.067,
-   "p_home_blend": 0.63,
-   "p_away_blend": 0.37,
+   "mkt_home": 0.61,
+   "mkt_away": 0.39,
+   "edge_home": 0.06,
+   "edge_away": -0.06,
+   "p_home_blend": 0.634,
+   "p_away_blend": 0.366,
    "fatigue_edge": true,
    "value": "home",
-   "mkt_over": 0.474,
-   "edge_over": 0.007,
-   "p_over_blend": 0.477,
-   "p_under_blend": 0.523,
+   "mkt_over": 0.484,
+   "edge_over": -0.003,
+   "p_over_blend": 0.483,
+   "p_under_blend": 0.517,
    "value_total": null,
-   "soft": [
-    {
-     "book": "1xBet",
-     "bet": "П1 BUF (осн. время)",
-     "odds": 2.11,
-     "fair": 2.02,
-     "ev": 0.046
-    },
-    {
-     "book": "Марафон",
-     "bet": "П1 BUF (осн. время)",
-     "odds": 2.08,
-     "fair": 2.02,
-     "ev": 0.032
-    }
-   ],
+   "soft": [],
    "h2h": [
     {
      "date": "2026-10-01",
@@ -1715,22 +1706,22 @@
     "vs_market": false,
     "level": "bet",
     "edge_side": "home",
-    "edge": 0.067,
+    "edge": 0.06,
     "fatigue": true,
     "sure": {
      "side": "home",
      "p": 0.67,
-     "mkt": 0.603,
-     "edge": 0.067,
-     "odds": 1.57
+     "mkt": 0.61,
+     "edge": 0.06,
+     "odds": 1.59
     },
     "bet": {
      "kind": "win",
      "side": "home",
-     "odds": 1.57,
+     "odds": 1.59,
      "p_model": 0.67,
-     "p_mkt": 0.603,
-     "src": "williamhill"
+     "p_mkt": 0.61,
+     "src": "betonlineag"
     },
     "total": {
      "side": "under",
@@ -1983,26 +1974,26 @@
     "att": 0.893,
     "dfn": 1.016
    },
-   "mkt_home": 0.526,
-   "mkt_away": 0.474,
-   "edge_home": -0.02,
-   "edge_away": 0.02,
-   "p_home_blend": 0.518,
-   "p_away_blend": 0.482,
+   "mkt_home": 0.53,
+   "mkt_away": 0.47,
+   "edge_home": -0.024,
+   "edge_away": 0.024,
+   "p_home_blend": 0.52,
+   "p_away_blend": 0.48,
    "fatigue_edge": true,
    "value": null,
-   "mkt_over": 0.474,
-   "edge_over": 0.041,
-   "p_over_blend": 0.491,
-   "p_under_blend": 0.509,
+   "mkt_over": 0.473,
+   "edge_over": 0.042,
+   "p_over_blend": 0.49,
+   "p_under_blend": 0.51,
    "value_total": null,
    "soft": [
     {
      "book": "1xBet",
      "bet": "П2 ANA (осн. время)",
-     "odds": 2.72,
-     "fair": 2.61,
-     "ev": 0.042
+     "odds": 2.76,
+     "fair": 2.62,
+     "ev": 0.052
     }
    ],
    "h2h": [
@@ -2036,17 +2027,17 @@
     "p_fav": 0.506,
     "mkt_fav": "home",
     "vs_market": false,
-    "level": "lean",
+    "level": "bet",
     "edge_side": "away",
-    "edge": 0.02,
+    "edge": 0.024,
     "fatigue": false,
     "bet": {
      "kind": "soft",
      "book": "1xBet",
      "bet": "П2 ANA (осн. время)",
-     "odds": 2.72,
-     "fair": 2.61,
-     "ev": 0.042
+     "odds": 2.76,
+     "fair": 2.62,
+     "ev": 0.052
     },
     "total": {
      "side": "over",
