@@ -1,7 +1,7 @@
 {
  "version": 4.4,
  "xg_used": true,
- "generated": "2026-11-07T23:18Z",
+ "generated": "2026-11-07T23:38Z",
  "league": {
   "goals_pg": 3.15,
   "home_adv": 0.021,
@@ -592,14 +592,14 @@
     "att": 1.007,
     "dfn": 1.049
    },
-   "mkt_home": 0.473,
-   "mkt_away": 0.527,
-   "edge_home": 0.049,
-   "edge_away": -0.049,
-   "p_home_blend": 0.493,
-   "p_away_blend": 0.507,
+   "mkt_home": 0.461,
+   "mkt_away": 0.539,
+   "edge_home": 0.061,
+   "edge_away": -0.061,
+   "p_home_blend": 0.485,
+   "p_away_blend": 0.515,
    "fatigue_edge": false,
-   "value": null,
+   "value": "home",
    "mkt_over": 0.521,
    "edge_over": 0.034,
    "p_over_blend": 0.535,
@@ -627,16 +627,16 @@
     "p_fav": 0.522,
     "mkt_fav": "away",
     "vs_market": true,
-    "level": "lean",
+    "level": "bet",
     "edge_side": "home",
-    "edge": 0.049,
+    "edge": 0.061,
     "fatigue": false,
     "bet": {
      "kind": "win",
      "side": "home",
-     "odds": 2.06,
+     "odds": 2.12,
      "p_model": 0.522,
-     "p_mkt": 0.473,
+     "p_mkt": 0.461,
      "src": "Pinnacle"
     },
     "total": {
@@ -744,12 +744,12 @@
     "att": 1.024,
     "dfn": 0.965
    },
-   "mkt_home": 0.478,
-   "mkt_away": 0.522,
-   "edge_home": -0.029,
-   "edge_away": 0.029,
-   "p_home_blend": 0.466,
-   "p_away_blend": 0.534,
+   "mkt_home": 0.481,
+   "mkt_away": 0.519,
+   "edge_home": -0.032,
+   "edge_away": 0.032,
+   "p_home_blend": 0.468,
+   "p_away_blend": 0.532,
    "fatigue_edge": false,
    "value": null,
    "mkt_over": 0.514,
@@ -773,10 +773,18 @@
     "p_fav": 0.551,
     "mkt_fav": "away",
     "vs_market": false,
-    "level": "pass",
+    "level": "lean",
     "edge_side": "away",
-    "edge": 0.029,
+    "edge": 0.032,
     "fatigue": false,
+    "bet": {
+     "kind": "win",
+     "side": "away",
+     "odds": 1.88,
+     "p_model": 0.551,
+     "p_mkt": 0.519,
+     "src": "Pinnacle"
+    },
     "total": {
      "side": "over",
      "line": 6.5,
@@ -837,7 +845,7 @@
     ]
    },
    "goalie_home": {
-    "name": "Ilya Sorokin (не подтв.)",
+    "name": "Ilya Sorokin (подтв.)",
     "gsax_rate": 0.0804,
     "talent": 0.9023,
     "team_level": 0.8983,
@@ -910,7 +918,6 @@
    "p_home_reg_raw": 0.306,
    "p_ot_home_raw": 0.441,
    "missing": [
-    "goalie_home_unconfirmed",
     "injuries_unmatched"
    ],
    "incomplete": true,
@@ -1197,18 +1204,18 @@
     "att": 0.966,
     "dfn": 0.902
    },
-   "mkt_home": 0.736,
-   "mkt_away": 0.264,
-   "edge_home": 0.021,
-   "edge_away": -0.021,
-   "p_home_blend": 0.744,
-   "p_away_blend": 0.256,
+   "mkt_home": 0.732,
+   "mkt_away": 0.268,
+   "edge_home": 0.025,
+   "edge_away": -0.025,
+   "p_home_blend": 0.742,
+   "p_away_blend": 0.258,
    "fatigue_edge": true,
    "value": null,
-   "mkt_over": 0.512,
-   "edge_over": -0.004,
-   "p_over_blend": 0.51,
-   "p_under_blend": 0.49,
+   "mkt_over": 0.506,
+   "edge_over": 0.002,
+   "p_over_blend": 0.507,
+   "p_under_blend": 0.493,
    "value_total": null,
    "soft": [],
    "h2h": [
@@ -1234,14 +1241,14 @@
     "vs_market": false,
     "level": "bet",
     "edge_side": "home",
-    "edge": 0.021,
+    "edge": 0.025,
     "fatigue": true,
     "bet": {
      "kind": "win",
      "side": "home",
-     "odds": 1.32,
+     "odds": 1.33,
      "p_model": 0.757,
-     "p_mkt": 0.736,
+     "p_mkt": 0.732,
      "src": "Pinnacle"
     },
     "total": {
@@ -1340,12 +1347,12 @@
     "att": 1.077,
     "dfn": 0.894
    },
-   "mkt_home": 0.442,
-   "mkt_away": 0.558,
-   "edge_home": 0.063,
-   "edge_away": -0.063,
-   "p_home_blend": 0.467,
-   "p_away_blend": 0.533,
+   "mkt_home": 0.439,
+   "mkt_away": 0.561,
+   "edge_home": 0.066,
+   "edge_away": -0.066,
+   "p_home_blend": 0.465,
+   "p_away_blend": 0.535,
    "fatigue_edge": true,
    "value": "home",
    "mkt_over": 0.509,
@@ -1377,14 +1384,14 @@
     "vs_market": true,
     "level": "bet",
     "edge_side": "home",
-    "edge": 0.063,
+    "edge": 0.066,
     "fatigue": false,
     "bet": {
      "kind": "win",
      "side": "home",
-     "odds": 2.21,
+     "odds": 2.22,
      "p_model": 0.505,
-     "p_mkt": 0.442,
+     "p_mkt": 0.439,
      "src": "Pinnacle"
     },
     "total": {
@@ -2357,16 +2364,16 @@
     {
      "book": "1xBet",
      "bet": "П2 NJD (осн. время)",
-     "odds": 2.32,
+     "odds": 2.29,
      "fair": 2.1,
-     "ev": 0.103
+     "ev": 0.093
     },
     {
      "book": "Марафон",
      "bet": "П2 NJD (осн. время)",
-     "odds": 2.28,
+     "odds": 2.26,
      "fair": 2.1,
-     "ev": 0.084
+     "ev": 0.078
     }
    ],
    "h2h": [],
@@ -2650,9 +2657,9 @@
     {
      "book": "1xBet",
      "bet": "П2 PIT (осн. время)",
-     "odds": 2.69,
+     "odds": 2.7,
      "fair": 2.59,
-     "ev": 0.04
+     "ev": 0.043
     }
    ],
    "h2h": [],
@@ -2679,9 +2686,9 @@
      "kind": "soft",
      "book": "1xBet",
      "bet": "П2 PIT (осн. время)",
-     "odds": 2.69,
+     "odds": 2.7,
      "fair": 2.59,
-     "ev": 0.04
+     "ev": 0.043
     },
     "total": {
      "side": "over",
