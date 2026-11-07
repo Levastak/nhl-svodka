@@ -1,10 +1,14 @@
 {
- "t": "2026-11-07T09:18:27Z",
+ "t": "2026-11-07T09:28:28Z",
  "mode": "auto",
  "ok": [
-  "video:2026-11-06:russian_goal:6408046333112"
+  "лента: 250 историй, новых 0; Sportsnet 86, NHL.com 60, Daily Faceoff 29, ESPN 26, ProHockeyRumors 24, The Hockey News 14, RMNB 10, nhl.com 1"
  ],
  "fail": [],
+ "warn": [
+  "лента Bing: ParseError('not well-formed (invalid token): line 1, column 41')",
+  "лента Bing: ParseError('not well-formed (invalid token): line 1, column 41')"
+ ],
  "plan": [
   {
    "key": "am:2026-11-06",
@@ -69,7 +73,7 @@
   {
    "key": "video:2026-11-06:russian_goal:6408046333112",
    "due": "07.11 11:00",
-   "done": false
+   "done": true
   },
   {
    "key": "feed:sportsnet:nhl-article-stars-miro-heiskanen-exits-vs-capitals-with-upper-body-injury",
