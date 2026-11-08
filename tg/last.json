@@ -1,10 +1,15 @@
 {
- "t": "2026-11-08T08:51:50Z",
+ "t": "2026-11-08T09:01:47Z",
  "mode": "auto",
  "ok": [
-  "feed:sportsnet:nhl-article-oilers-nugent-hopkins-exits-early-vs-canucks-after-taking-puck-to-head"
+  "лента: 250 историй, новых 0; Sportsnet 87, NHL.com 64, Daily Faceoff 27, ProHockeyRumors 24, ESPN 18, RMNB 15, The Hockey News 13, nhl.com 1"
  ],
  "fail": [],
+ "warn": [
+  "лента Bing: ParseError('not well-formed (invalid token): line 1, column 41')",
+  "лента Bing: ParseError('not well-formed (invalid token): line 1, column 41')",
+  "лента Bing: ParseError('not well-formed (invalid token): line 1, column 41')"
+ ],
  "plan": [
   {
    "key": "am:2026-11-07",
@@ -109,7 +114,7 @@
   {
    "key": "feed:sportsnet:nhl-article-oilers-nugent-hopkins-exits-early-vs-canucks-after-taking-puck-to-head",
    "due": "08.11 11:10",
-   "done": false
+   "done": true
   }
  ]
 }
