@@ -1,8 +1,14 @@
 {
- "t": "2026-11-08T09:11:49Z",
+ "t": "2026-11-08T09:19:52Z",
  "mode": "auto",
- "ok": [],
- "fail": [],
+ "ok": [
+  "rus:2026-11-07",
+  "оповещение Льву: 1"
+ ],
+ "fail": [
+  "личка бота: The read operation timed out",
+  "картинка не ушла, шлю текстом: The read operation timed out"
+ ],
  "plan": [
   {
    "key": "am:2026-11-07",
@@ -108,6 +114,16 @@
    "key": "feed:sportsnet:nhl-article-oilers-nugent-hopkins-exits-early-vs-canucks-after-taking-puck-to-head",
    "due": "08.11 11:10",
    "done": true
+  },
+  {
+   "key": "feed:sportsnet:nhl-article-canadiens-expect-hage-zharovsky-to-join-team-at-end-of-season",
+   "due": "08.11 12:18",
+   "done": false
+  },
+  {
+   "key": "feed:sportsnet:nhl-article-trade-noise-getting-louder-around-blues-binnington",
+   "due": "08.11 12:58",
+   "done": false
   }
  ]
 }
