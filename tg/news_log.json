@@ -1,67 +1,6 @@
 {
   "runs": [
     {
-      "t": "2026-11-03T03:18:58Z",
-      "status": "ok",
-      "picked": [
-        "nhl:connor-hellebuyck-praises-teammates-ahead-of-likely-home-debut"
-      ],
-      "skipped": [
-        {
-          "id": "sportsnet:nhl-video-i-would-play-a-hard-card-brian-burkes-advice-to-lightning-for-kucherov",
-          "why": "Мнение или пересказ уже освещённого запроса Кучерова; нового решения нет."
-        },
-        {
-          "id": "sportsnet:nhl-video-a-tough-spot-what-is-best-outcome-for-player-team-in-kucherov-dilemma",
-          "why": "Мнение или пересказ уже освещённого запроса Кучерова; нового решения нет."
-        },
-        {
-          "id": "sportsnet:nhl-article-nhl-rumour-roundup-breaking-down-the-nikita-kucherov-situation",
-          "why": "Мнение или пересказ уже освещённого запроса Кучерова; нового решения нет."
-        },
-        {
-          "id": "espn:50360065",
-          "why": "Мнение или пересказ уже освещённого запроса Кучерова; нового решения нет."
-        },
-        {
-          "id": "thehockeynews:l-trade-destinations-for-lightning-star-nikita-kucherov-the-hockey-news-big-show",
-          "why": "Мнение или пересказ уже освещённого запроса Кучерова; нового решения нет."
-        },
-        {
-          "id": "sportsnet:nhl-video-leafs-stolarz-talks-preparation-mentorship-from-veteran-bobrovsky",
-          "why": "Комментарий о подготовке Бобровского без нового события; его старт и веха уже освещены."
-        },
-        {
-          "id": "thehockeynews:ews-kucherov-poor-communication-and-respect-were-issues-leading-to-trade-request",
-          "why": "Мнение или пересказ уже освещённого запроса Кучерова; нового решения нет."
-        },
-        {
-          "id": "sportsnet:hl-video-everyone-takes-discount-in-tampa-friedman-talks-kucherov-lightning-saga",
-          "why": "Мнение или пересказ уже освещённого запроса Кучерова; нового решения нет."
-        },
-        {
-          "id": "dailyfaceoff:-bay-lightning-nikita-kucherov-trade-request-poor-communication-respect-nhl-news",
-          "why": "Мнение или пересказ уже освещённого запроса Кучерова; нового решения нет."
-        },
-        {
-          "id": "sportsnet:nhl-video-lightnings-kucherov-on-trade-request-never-about-the-money",
-          "why": "Мнение или пересказ уже освещённого запроса Кучерова; нового решения нет."
-        },
-        {
-          "id": "dailyfaceoff:s-nikita-kucherov-tampa-bay-lightning-trade-request-rumors-brisebois-hart-trophy",
-          "why": "Мнение или пересказ уже освещённого запроса Кучерова; нового решения нет."
-        },
-        {
-          "id": "sportsnet:nhl-video-whos-more-in-the-wrong-between-the-lightning-and-kucherov",
-          "why": "Мнение или пересказ уже освещённого запроса Кучерова; нового решения нет."
-        },
-        {
-          "id": "sportsnet:nhl-article-golden-knights-bowman-ejected-for-elbowing-bruins-poitras",
-          "why": "Полная статья: Пойтрас вернулся уже в первом периоде; нового решения лиги или тяжёлой травмы не сообщается. Игровой эпизод без отдельного повода."
-        }
-      ]
-    },
-    {
       "t": "2026-11-03T07:49:06Z",
       "status": "ok",
       "picked": [],
@@ -1649,6 +1588,65 @@
         }
       ],
       "note": "Начато после триггера 20:29 МСК, фактический первый контекст 21:17. Проверены 12 кандидатов, затем свежие заголовки feed за четыре часа: вне списка обнаружены Баль и возвращение Ульмарка. Прочитаны body обоих источников и полные Sportsnet; подтверждены операция до конца сезона и вывод из IR, без гарантии старта Ульмарка. Первая загрузка страниц/фото зависла и завершилась сетевым таймаутом; повтор с общим ограничением времени успешен. После перерыва вновь синхронизирован main, проверены дубли и актуальность: фактическое время 00:30 МСК 9 ноября, оба источника моложе 18 часов, оба элемента строго tg:false. Фото просмотрены, снимок Ульмарка отличается от прошлого сообщения; Justin Tang/CP, у снимка Баля автор в источнике не указан. Имена по словарю, новых нет. ID/времена старых материалов сохранены, новые live.time=written. Утренняя страховка вне окна не выполнялась."
+    },
+    {
+      "t": "2026-11-08T21:35:50Z",
+      "status": "ok",
+      "picked": [
+        "sportsnet:nhl-article-islanders-logan-stanley-fined-for-slashing-devils-nico-hischier",
+        "rmnb:wilson-no-hearing-nhl-player-safety-hit-sandis-vilmanis-capitals-panthers-report"
+      ],
+      "skipped": [
+        {
+          "id": "sportsnet:nhl-video-brady-tkachuk-drops-mitts-with-bruins-zadorov-after-opening-draw",
+          "why": "Драка в уже идущем/прошедшем матче без отдельного решения лиги, травмы или рекорда; не hot."
+        },
+        {
+          "id": "sportsnet:nhl-video-lightnings-kucherov-snipes-overtime-winner-vs-wild",
+          "why": "Разбор, реакция или видео без нового самостоятельного события."
+        },
+        {
+          "id": "thehockeynews:e-ottawa-senators-playing-with-fire-or-found-money-with-goaltender-samuel-ersson",
+          "why": "Мнение о вратарях «Оттавы» устарело после уже опубликованного возвращения Ульмарка."
+        },
+        {
+          "id": "dailyfaceoff:news-minnesota-wild-joel-eriksson-ek-hot-start-legit-nhl-news-goal-scoring",
+          "why": "Разбор, реакция или видео без нового самостоятельного события."
+        },
+        {
+          "id": "nhl:joe-vanella-talks-islanders-fandom-during-the-traitors",
+          "why": "Развлекательный сюжет или курьёз, не приоритет ленты."
+        },
+        {
+          "id": "dailyfaceoff:montreal-canadiens-jacob-fowler-apple-thrown-during-game-toronto-maple-leafs-nhl",
+          "why": "Развлекательный сюжет или курьёз, не приоритет ленты."
+        },
+        {
+          "id": "dailyfaceoff:ill-nhl-star-player-trade-requests-eventually-balance-out-sign-of-a-bigger-trend",
+          "why": "Разбор, реакция или видео без нового самостоятельного события."
+        },
+        {
+          "id": "sportsnet:nhl-video-senators-depth-delivers-in-big-win-over-mammoth",
+          "why": "Разбор, реакция или видео без нового самостоятельного события."
+        },
+        {
+          "id": "sportsnet:nhl-video-is-mcdavid-on-pace-to-break-gretzkys-single-season-points-record",
+          "why": "Серия передач опубликована, рассуждение о будущем темпе не новое достижение."
+        },
+        {
+          "id": "espn:41589293",
+          "why": "Справочная статья, не новое событие Овечкина."
+        },
+        {
+          "id": "dailyfaceoff:ttsburgh-penguins-nhl-record-all-time-scoring-points-dionne-gretzky-jagr-francis",
+          "why": "Разбор, реакция или видео без нового самостоятельного события."
+        },
+        {
+          "id": "nhl:islanders-logan-stanley-fined-maximum-for-slashing",
+          "why": "Первичное сообщение НХЛ прочитано для проверки суммы и эпизода; выбран один материал Sportsnet с подходящим фото, второго поста об этом штрафе нет."
+        }
+      ],
+      "note": "Ночной проход 00:33 МСК: сначала компактный контекст без article, затем точечные body рассматриваемых событий и свежие заголовки feed за четыре часа. Выбраны новые решения по дисциплине, а не повтор игр. Штраф Стэнли сверен с сообщением НХЛ: $3865.98, эпизод против Хишира; полный Sportsnet подтверждает два малых штрафа. Полный RMNB прочитан, отсутствие дополнительного наказания Уилсону оставлено с явной атрибуцией Фридману; диагноз/срок Вилманиса не добавлены. Обе фотографии просмотрены, авторство сохранено: Adam Hunger/AP и Katie Adler/RMNB, без видимой рекламы букмекеров; повторов фото/событий нет. Имена по словарю. Ночью оба строго tg:false, отложенных утренних публикаций не создаём. Старые live.time сохранены, новые равны written. Баль и возвращение Ульмарка из предыдущего завершённого прохода повторно не публикуются. Утренняя страховка вне окна не запускалась."
     }
   ]
 }
