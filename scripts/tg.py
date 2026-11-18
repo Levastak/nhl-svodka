@@ -511,13 +511,12 @@ def build(D, A, M, E, S, N, *, reuse_number=False):
                 L.append(e(rev))
         L += ["", f"<a href=\"{URL}#results\">Протоколы всех матчей</a>"]
         txt = "\n".join(L)
-        if len(re.sub("<[^>]+>", "", txt + FOOT)) > 4000:  # длинно (запасные разборы) — по одному предложению на матч
-            L2 = []
-            for x in L:
-                if x and not x.startswith("<") and x != e(lead or ""):
-                    x = re.split(r"(?<=[.!?…])\s+", x)[0]
-                L2.append(x)
-            txt = "\n".join(L2)
+        if len(re.sub("<[^>]+>", "", html.unescape(txt + FOOT))) > 1024:
+            card = tgv(D, "night_card", rd) or lead
+            compact = "\n\n".join(filter(None, (L[0], e(card), L[-1])))
+            if len(re.sub("<[^>]+>", "", html.unescape(compact + FOOT))) > 1024:
+                compact = "\n\n".join(filter(None, (L[0], e(lead), L[-1])))
+            txt = compact
         out.append(dict(key=f"am:{rd}", due=msk(rd, 9, 45) + dt.timedelta(days=1),
                         text=txt + FOOT, specs=[dict(kind="scores", date=ru_date(rd), games=gs_sorted)], needs_tg=True))
     # 2. Три звезды — фото из матча первой звезды
