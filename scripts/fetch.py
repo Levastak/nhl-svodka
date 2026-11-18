@@ -139,6 +139,10 @@ def build_game(g):
         start = dt.datetime.fromisoformat(g["startTimeUTC"].replace("Z", "+00:00"))
         if dt.timedelta() <= now - start <= dt.timedelta(hours=5):
             rec["collected_at"] = iso(now)
+            rec["goal_clips"] = {
+                f"{(x.get('periodDescriptor') or {}).get('number') or x.get('period')}:{x.get('timeInPeriod')}": x["highlightClip"]
+                for x in g.get("goals", []) if x.get("highlightClip")
+            }
     if g.get("threeMinRecap"):
         rec["video"] = "https://www.nhl.com" + g["threeMinRecap"]
     if g.get("gameCenterLink"):

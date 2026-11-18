@@ -148,6 +148,11 @@ class PublicationRules(unittest.TestCase):
         self.assertIn("«Вегас» — «Даллас» 3:4", post["text"])
         self.assertIn("Рантанен сравнял счёт за 5 секунд", post["text"])
         self.assertIn("Хейсканен в овертайме", post["text"])
+        self.assertIsNone(post["video"])
+        self.assertEqual(post["specs"][0]["kind"], "scores")
+        game["goal_clips"] = {"3:18:42": 11, "3:19:55": 12, "4:03:36": 13}
+        with_video, = tg.recent_match_posts(archive, names, now)
+        self.assertEqual(with_video["video"]["clips"], [{"id": 11}, {"id": 12}, {"id": 13}])
         self.assertEqual(list(tg.recent_match_posts(archive, names, now + dt.timedelta(hours=2))), [])
         game["goals"].pop()
         self.assertEqual(list(tg.recent_match_posts(archive, names, now)), [])

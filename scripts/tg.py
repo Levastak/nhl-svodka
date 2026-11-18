@@ -225,6 +225,7 @@ def video_upload(text, c):
 
 def send_video(chat, text, c):
     fields, files_up = video_upload(text, c)
+    fields["supports_streaming"] = "true"
     r = _call("sendVideo", dict(chat_id=chat, **fields), files_up)
     return [r["message_id"]]
 
@@ -394,12 +395,16 @@ def match_report(game, names):
     score = dict.fromkeys(final, 0)
     third_period_deficit = 0
     winner_goals, tying_goals, scorers = [], [], {}
+    comeback_start = None
     for goal in game.get("goals") or []:
         surname, team, _, period, clock = goal[:5]
         if team not in score:
             return None
         if period == 3:
-            third_period_deficit = max(third_period_deficit, score[loser] - score[winner])
+            deficit = score[loser] - score[winner]
+            if deficit > 0 and deficit >= third_period_deficit:
+                third_period_deficit = deficit
+                comeback_start = len(winner_goals)
         score[team] += 1
         if team == winner:
             winner_goals.append(goal)
@@ -439,7 +444,8 @@ def match_report(game, names):
         if late_tie and third_period_deficit >= 2 and (name := player(late_tie)):
             left = seconds_left(late_tie)
             start += f" {name} сравнял счёт за {left} {plural(left, 'секунду', 'секунды', 'секунд')} до сирены."
-        return headline, " ".join(filter(None, (start, deciding_sentence)))
+        decisive_goals = (winner_goals[comeback_start:final[loser] + 1] if third_period_deficit >= 2 else [late_tie, decider])
+        return headline, " ".join(filter(None, (start, deciding_sentence))), decisive_goals
 
     most = max(scorers.values(), key=len, default=[])
     if len(most) >= 3 and (name := player(most[0])):
@@ -450,12 +456,12 @@ def match_report(game, names):
             extra = last or (deciding_sentence if decider_name != name else "Одна из его шайб стала победной.")
         else:
             extra = deciding_sentence
-        return "Хет-трик" if len(most) == 3 else "Больше трёх шайб за матч", f"{name} {feat}. {extra}".strip()
+        return "Хет-трик" if len(most) == 3 else "Больше трёх шайб за матч", f"{name} {feat}. {extra}".strip(), most
     if decider[3] == 3 and seconds_left(decider) <= 60 and decider_name:
         left = seconds_left(decider)
         return "Решающий гол в концовке", (
             f"{decider_name} забросил победную шайбу за {left} {plural(left, 'секунду', 'секунды', 'секунд')} до сирены."
-        )
+        ), [decider]
     return None
 
 
@@ -470,15 +476,15 @@ def recent_match_posts(archive, names, now):
         report = match_report(game, names)
         if not report:
             continue
-        headline, body = report
+        headline, body, goals = report
         end = {"OT": " в овертайме", "SO": " по буллитам"}.get(game.get("end"), "")
         score = f"{T(game['home'])} — {T(game['away'])} {game['hs']}:{game['as']}{end}"
-        link = game.get("gc") or f"{URL}#results"
-        text = f"<b>{e(headline)}. {e(score)}</b>\n\n{e(body)}\n\n<a href=\"{html.escape(link, quote=True)}\">Протокол матча</a>"
-        if game.get("video"):
-            text += f'\n<a href="{html.escape(game["video"], quote=True)}">Видеообзор НХЛ</a>'
+        text = f"<b>{e(headline)}. {e(score)}</b>\n\n{e(body)}\n\n<a href=\"{URL}#results\">Итоги и протоколы</a>"
+        goal_clips = game.get("goal_clips") or {}
+        clips = [goal_clips.get(f"{g[3]}:{g[4]}") for g in goals if g[3] in (1, 2, 3, 4)]
+        video = dict(clips=[dict(id=clip) for clip in clips]) if 0 < len(clips) <= 4 and all(clips) else None
         yield dict(key=f"result:{game['id']}", results_date=game["date"], due=due, expires=due + MATCH_REPORT_TTL, text=text + FOOT,
-                   specs=[dict(kind="scores", date=ru_date(game["date"]), games=[game])])
+                   video=video, specs=[dict(kind="scores", date=ru_date(game["date"]), games=[game])])
 
 
 def build(D, A, M, E, S, N, *, reuse_number=False):
@@ -921,6 +927,7 @@ def main(mode, arg=None):
     state = load(f"{TG}/state.json", {"posted": {}}) or {"posted": {}}
     P = state.setdefault("posted", {})
     MSG = state.setdefault("messages", {})
+    covered_clips = state.get("video_clips") or {}
     D = load(f"{SITE}/data.json", {}) or {}
     A = load(f"{SITE}/archive.json", {"games": []}) or {"games": []}
     M = load(f"{SITE}/model.json", {}) or {}
@@ -968,9 +975,19 @@ def main(mode, arg=None):
 
     def post(x):
         try:
-            if x.get("video"):
-                ids = send_video(chat, x["text"], x["video"])
-            else:
+            ids = None
+            if video := x.get("video"):
+                try:
+                    text = x["text"]
+                    if x["key"].startswith("result:"):
+                        text = text.removesuffix(FOOT) + "\n\n<i>Кадры трансляции: НХЛ</i>" + FOOT
+                    ids = send_video(chat, text, video)
+                    covered_clips.update({str(clip["id"]): LOG["t"] for clip in video["clips"]})
+                except Exception as ex:
+                    if not x.get("specs"):
+                        raise
+                    LOG["fail"].append(f"{x['key']}: видео недоступно, отправляю карточку: {ex}"[:250])
+            if ids is None:
                 imgs = cards([s for s in x.get("specs") or [] if s], D) if x.get("specs") else []
                 ids = send(chat, x["text"], images=imgs[:1], photo_url=None if imgs and imgs[0] else x.get("photo"))
             P[x["key"]] = LOG["t"]
@@ -1011,6 +1028,7 @@ def main(mode, arg=None):
                     if "thumbnail" in files:
                         media["thumbnail"] = "attach://thumbnail"
                     _call("editMessageMedia", dict(chat_id=chat, message_id=MSG[x["key"]][0], media=media), files)
+                    covered_clips.update({str(clip["id"]): LOG["t"] for clip in x["video"]["clips"]})
                     LOG["ok"].append(f"видео обновлено {x['key']}")
                 except Exception as ex:
                     LOG["fail"].append(f"{x['key']}: не удалось прикрепить видео: {ex}"[:300])
@@ -1099,6 +1117,8 @@ def main(mode, arg=None):
                and (not x.get("needs_tg") or tg_ready or late)]
         # дневные посты, у которых прошло больше 8 часов от срока, не догоняем
         due = [x for x in due if x.get("expires") or (now - x["due"]).total_seconds() < 8 * 3600]
+        due = [x for x in due if not (x["key"].startswith("video:") and
+               all(str(clip["id"]) in covered_clips for clip in x["video"]["clips"]))]
         # лента новостей (решение Льва 17.10): не больше FEED_CAP в день ВСЕГО, включая горячие; hot — только первыми в очереди;
         # между новостями ленты — не меньше FEED_GAP минут
         today = now.astimezone(MSK).date()
@@ -1115,6 +1135,8 @@ def main(mode, arg=None):
     cut = (now - dt.timedelta(days=30)).strftime("%Y-%m-%d")
     state["posted"] = {k: v for k, v in P.items() if v[:10] >= cut}
     state["messages"] = {k: v for k, v in MSG.items() if k in state["posted"]}
+    if covered_clips:
+        state["video_clips"] = {k: v for k, v in covered_clips.items() if v[:10] >= cut}
     save(f"{TG}/state.json", state)
 
 
