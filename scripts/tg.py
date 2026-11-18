@@ -19,6 +19,7 @@ import mimetypes
 import os
 import subprocess
 import sys
+import tempfile
 import time
 import urllib.parse
 import urllib.request
@@ -784,7 +785,7 @@ def build(D, A, M, E, S, N, *, reuse_number=False):
         if q.get("video_url"):
             txt += f'\n<a href="{html.escape(q["video_url"], quote=True)}">Видеообзор НХЛ</a>'
         out.append(dict(key=f"feed:{q['id']}", due=ready, expires=ready + dt.timedelta(hours=10), text=txt + FOOT, photo=q.get("image"),
-                        hot=bool(q.get("hot"))))
+                        video_preview=q.get("video_url"), hot=bool(q.get("hot"))))
     # 8. Вечером передумали
     fin = D.get("final") or {}
     pf = p_final(D) if fin.get("t") else None
@@ -1002,7 +1003,16 @@ def main(mode, arg=None):
                     vis = len(re.sub("<[^>]+>", "", html.unescape(x["text"])))
                     if x.get("photo") and vis <= 1024:
                         media = dict(type="photo", media=x["photo"], caption=x["text"], parse_mode="HTML")
-                        _call("editMessageMedia", dict(chat_id=chat, message_id=MSG[x["key"]][0], media=media))
+                        fields = dict(chat_id=chat, message_id=MSG[x["key"]][0], media=media)
+                        if x.get("video_preview"):
+                            with tempfile.TemporaryDirectory() as folder:
+                                path = os.path.join(folder, "frame.jpg")
+                                with urllib.request.urlopen(x["photo"], timeout=15) as response, open(path, "wb") as file:
+                                    file.write(response.read(10 * 1024 * 1024))
+                                media["media"] = "attach://photo"
+                                _call("editMessageMedia", fields, {"photo": path})
+                        else:
+                            _call("editMessageMedia", fields)
                         LOG["ok"].append(f"фото обновлено {x['key']}")
                     elif x.get("photo"):
                         _call("editMessageText", dict(chat_id=chat, message_id=MSG[x["key"]][0], text=x["text"], parse_mode="HTML",
@@ -1013,9 +1023,10 @@ def main(mode, arg=None):
                         LOG["ok"].append(f"подпись обновлена {x['key']}")
                 except Exception as ex:
                     try:
+                        preview = x.get("video_preview") or x.get("photo")
                         _call("editMessageText", dict(chat_id=chat, message_id=MSG[x["key"]][0], text=x["text"], parse_mode="HTML",
-                                                      link_preview_options={"url": x.get("photo"), "prefer_large_media": True, "show_above_text": True} if x.get("photo") else {"is_disabled": True}))
-                        LOG["ok"].append(f"текст обновлён {x['key']}")
+                                                      link_preview_options={"url": preview, "prefer_large_media": True, "show_above_text": True} if preview else {"is_disabled": True}))
+                        LOG["ok"].append(f"превью обновлено {x['key']}" if preview else f"текст обновлён {x['key']}")
                     except Exception as ex2:
                         LOG["fail"].append(f"{x['key']}: {ex} / {ex2}"[:300])
                 continue
