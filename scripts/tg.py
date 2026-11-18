@@ -19,7 +19,6 @@ import mimetypes
 import os
 import subprocess
 import sys
-import tempfile
 import time
 import urllib.parse
 import urllib.request
@@ -199,8 +198,8 @@ def host(path):
         return None
 
 
-def send_video(chat, text, c):
-    """Скачать клипы (склеить, если несколько) и отправить видео с подписью."""
+def video_upload(text, c):
+    """Подготовить ролик и обложку для новой публикации или редактирования."""
     sys.path.insert(0, os.path.join(ROOT, "scripts"))
     import media
     if not media.tools(LOG):
@@ -208,8 +207,8 @@ def send_video(chat, text, c):
     wd = os.path.join(TG, "_video")
     os.makedirs(wd, exist_ok=True)
     files = [f for f in (media.clip(k["id"], wd) for k in c["clips"]) if f]
-    if not files:
-        raise RuntimeError("клипы не скачались")
+    if len(files) != len(c["clips"]) or not files:
+        raise RuntimeError("не все клипы скачались")
     path = files[0] if len(files) == 1 else media.concat(files, os.path.join(wd, f"cut_{c['clips'][0]['id']}.mp4"))
     if not path:
         raise RuntimeError("склейка не удалась")
@@ -220,7 +219,13 @@ def send_video(chat, text, c):
     files_up = {"video": path}
     if th:
         files_up["thumbnail"] = th
-    r = _call("sendVideo", dict(chat_id=chat, caption=text, parse_mode="HTML", supports_streaming="true", width=w, height=h, duration=d), files_up)
+    fields = dict(caption=text, parse_mode="HTML", supports_streaming=True, width=w, height=h, duration=d)
+    return fields, files_up
+
+
+def send_video(chat, text, c):
+    fields, files_up = video_upload(text, c)
+    r = _call("sendVideo", dict(chat_id=chat, **fields), files_up)
     return [r["message_id"]]
 
 
@@ -779,13 +784,14 @@ def build(D, A, M, E, S, N, *, reuse_number=False):
         if not q.get("id") or not q.get("text") or q.get("tg") is False:  # tg = false — только для сайта
             continue
         ready = dt.datetime.fromisoformat(str(q.get("ready") or q.get("time") or now_iso()).replace("Z", "+00:00"))
+        clips = [dict(id=clip) for clip in q.get("video_clips") or []]
         credit = f"<i>{e(q.get('image_source') or 'Фото: ' + (q.get('source') or ''))}</i>\n" if q.get("image") else ""
         txt = (f"<b>{e(q.get('title'))}</b>\n\n{e(q['text'])}\n\n{credit}"
                f"<a href=\"{e(q.get('url'))}\">Источник: {e(q.get('source') or 'статья')}</a>")
-        if q.get("video_url"):
-            txt += f'\n<a href="{html.escape(q["video_url"], quote=True)}">Видеообзор НХЛ</a>'
+        if clips:
+            txt = f"<b>{e(q.get('title'))}</b>\n\n{e(q['text'])}\n\n<i>Кадры трансляции: НХЛ / ТНТ Спортс</i>"
         out.append(dict(key=f"feed:{q['id']}", due=ready, expires=ready + dt.timedelta(hours=10), text=txt + FOOT, photo=q.get("image"),
-                        video_preview=q.get("video_url"), hot=bool(q.get("hot"))))
+                        video=dict(clips=clips) if clips else None, hot=bool(q.get("hot"))))
     # 8. Вечером передумали
     fin = D.get("final") or {}
     pf = p_final(D) if fin.get("t") else None
@@ -997,22 +1003,25 @@ def main(mode, arg=None):
         for x in items:
             if not pre or not x["key"].startswith(pre) or not MSG.get(x["key"]):
                 continue
+            if x.get("video"):
+                try:
+                    fields, files = video_upload(x["text"], x["video"])
+                    media = {k: v for k, v in fields.items() if v is not None}
+                    media.update(type="video", media="attach://video")
+                    if "thumbnail" in files:
+                        media["thumbnail"] = "attach://thumbnail"
+                    _call("editMessageMedia", dict(chat_id=chat, message_id=MSG[x["key"]][0], media=media), files)
+                    LOG["ok"].append(f"видео обновлено {x['key']}")
+                except Exception as ex:
+                    LOG["fail"].append(f"{x['key']}: не удалось прикрепить видео: {ex}"[:300])
+                continue
             if not x.get("specs"):
                 # Новостное фото заменяем на месте; длинные посты используют превью.
                 try:
                     vis = len(re.sub("<[^>]+>", "", html.unescape(x["text"])))
                     if x.get("photo") and vis <= 1024:
                         media = dict(type="photo", media=x["photo"], caption=x["text"], parse_mode="HTML")
-                        fields = dict(chat_id=chat, message_id=MSG[x["key"]][0], media=media)
-                        if x.get("video_preview"):
-                            with tempfile.TemporaryDirectory() as folder:
-                                path = os.path.join(folder, "frame.jpg")
-                                with urllib.request.urlopen(x["photo"], timeout=15) as response, open(path, "wb") as file:
-                                    file.write(response.read(10 * 1024 * 1024))
-                                media["media"] = "attach://photo"
-                                _call("editMessageMedia", fields, {"photo": path})
-                        else:
-                            _call("editMessageMedia", fields)
+                        _call("editMessageMedia", dict(chat_id=chat, message_id=MSG[x["key"]][0], media=media))
                         LOG["ok"].append(f"фото обновлено {x['key']}")
                     elif x.get("photo"):
                         _call("editMessageText", dict(chat_id=chat, message_id=MSG[x["key"]][0], text=x["text"], parse_mode="HTML",
@@ -1023,7 +1032,7 @@ def main(mode, arg=None):
                         LOG["ok"].append(f"подпись обновлена {x['key']}")
                 except Exception as ex:
                     try:
-                        preview = x.get("video_preview") or x.get("photo")
+                        preview = x.get("photo")
                         _call("editMessageText", dict(chat_id=chat, message_id=MSG[x["key"]][0], text=x["text"], parse_mode="HTML",
                                                       link_preview_options={"url": preview, "prefer_large_media": True, "show_above_text": True} if preview else {"is_disabled": True}))
                         LOG["ok"].append(f"превью обновлено {x['key']}" if preview else f"текст обновлён {x['key']}")
