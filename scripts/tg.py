@@ -469,7 +469,10 @@ def recent_match_posts(archive, names, now):
         score = f"{T(game['home'])} — {T(game['away'])} {game['hs']}:{game['as']}{end}"
         link = game.get("gc") or f"{URL}#results"
         text = f"<b>{e(headline)}. {e(score)}</b>\n\n{e(body)}\n\n<a href=\"{html.escape(link, quote=True)}\">Протокол матча</a>"
-        yield dict(key=f"result:{game['id']}", results_date=game["date"], due=due, expires=due + MATCH_REPORT_TTL, text=text + FOOT)
+        if game.get("video"):
+            text += f'\n<a href="{html.escape(game["video"], quote=True)}">Видеообзор НХЛ</a>'
+        yield dict(key=f"result:{game['id']}", results_date=game["date"], due=due, expires=due + MATCH_REPORT_TTL, text=text + FOOT,
+                   specs=[dict(kind="scores", date=ru_date(game["date"]), games=[game])])
 
 
 def build(D, A, M, E, S, N, *, reuse_number=False):
@@ -775,9 +778,11 @@ def build(D, A, M, E, S, N, *, reuse_number=False):
         if not q.get("id") or not q.get("text") or q.get("tg") is False:  # tg = false — только для сайта
             continue
         ready = dt.datetime.fromisoformat(str(q.get("ready") or q.get("time") or now_iso()).replace("Z", "+00:00"))
-        credit = f"<i>Фото: {e(q.get('source') or '')}</i>\n" if q.get("image") else ""
+        credit = f"<i>{e(q.get('image_source') or 'Фото: ' + (q.get('source') or ''))}</i>\n" if q.get("image") else ""
         txt = (f"<b>{e(q.get('title'))}</b>\n\n{e(q['text'])}\n\n{credit}"
                f"<a href=\"{e(q.get('url'))}\">Источник: {e(q.get('source') or 'статья')}</a>")
+        if q.get("video_url"):
+            txt += f'\n<a href="{html.escape(q["video_url"], quote=True)}">Видеообзор НХЛ</a>'
         out.append(dict(key=f"feed:{q['id']}", due=ready, expires=ready + dt.timedelta(hours=10), text=txt + FOOT, photo=q.get("image"),
                         hot=bool(q.get("hot"))))
     # 8. Вечером передумали
