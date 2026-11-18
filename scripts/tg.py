@@ -484,7 +484,7 @@ def recent_match_posts(archive, names, now):
         clips = [goal_clips.get(f"{g[3]}:{g[4]}") for g in goals if g[3] in (1, 2, 3, 4)]
         video = dict(clips=[dict(id=clip) for clip in clips]) if 0 < len(clips) <= 4 and all(clips) else None
         yield dict(key=f"result:{game['id']}", results_date=game["date"], due=due, expires=due + MATCH_REPORT_TTL, text=text + FOOT,
-                   video=video, specs=[dict(kind="scores", date=ru_date(game["date"]), games=[game])])
+                   video=video, specs=[dict(kind="scores", date=ru_date(game["date"]), games=[game], single=True)])
 
 
 def build(D, A, M, E, S, N, *, reuse_number=False):

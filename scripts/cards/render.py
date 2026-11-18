@@ -247,8 +247,9 @@ def card_scores(spec, logos):
         out.append(f'<div class="row">{logo(g["home"], logos, lsz)}<span class="n {"w" if hw else ""}">{e(RU.get(g["home"]))}</span>'
                    f'<span class="sc">{g["hs"]}:{g["as"]}{f"<small>{end}</small>" if end else ""}</span>'
                    f'<span class="n r {"" if hw else "w"}">{e(RU.get(g["away"]))}</span>{logo(g["away"], logos, lsz)}</div>')
+    kicker = "Итог <b>матча</b>" if spec.get("single") else "Итоги <b>ночи</b>"
     return page(f'<div class="list" style="--fs:{fs}px;--l:{lsz}px;--cols:{cols};--rows:{rows}">{"".join(out)}</div>'
-                f'<div class="legend">хозяева слева · гости справа</div>', "Итоги <b>ночи</b>", spec.get("date", ""))
+                f'<div class="legend">хозяева слева · гости справа</div>', kicker, spec.get("date", ""))
 
 
 def card_stars(spec, logos, kicker="Три <b>звезды</b>"):
