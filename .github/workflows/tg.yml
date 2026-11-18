@@ -6,7 +6,7 @@ on:
     branches: [main]
     paths: ["trigger/tg"]
   schedule:
-    - cron: "*/15 6-21 * * *"   # каждые 15 минут с 09:00 до 00:59 по Москве — посты выходят по расписанию дня
+    - cron: "*/15 * * * *"   # круглосуточный резерв к «Пульсу канала»
   workflow_run:
     workflows: ["Сводка НХЛ"]
     types: [completed]

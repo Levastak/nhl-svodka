@@ -134,6 +134,11 @@ def build_game(g):
         goals.append([(w[-1][0] if w else ""), win, "ev", 5, "00:00", "", (w[-1][6] if w else ""), ""])
     rec = dict(id=g["id"], date=g.get("gameDate"), away=a["abbrev"], home=h["abbrev"], **{"as": a["score"], "hs": h["score"]},
                end=end, sog=[a.get("sog"), h.get("sog")], goals=goals)
+    if g.get("startTimeUTC"):
+        now = now_utc()
+        start = dt.datetime.fromisoformat(g["startTimeUTC"].replace("Z", "+00:00"))
+        if dt.timedelta() <= now - start <= dt.timedelta(hours=5):
+            rec["collected_at"] = iso(now)
     if g.get("threeMinRecap"):
         rec["video"] = "https://www.nhl.com" + g["threeMinRecap"]
     if g.get("gameCenterLink"):

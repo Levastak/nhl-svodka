@@ -90,13 +90,13 @@ class PublicationRules(unittest.TestCase):
                 after = json.loads((queue / "state.json").read_text())
                 return send.call_count, after
 
-    def test_news_waits_during_quiet_hours_even_when_already_due(self):
+    def test_news_can_go_out_overnight(self):
         for time in ["2026-10-18T23:00:00+03:00", "2026-10-19T00:30:00+03:00",
                      "2026-10-19T07:59:59+03:00"]:
             with self.subTest(time=time):
                 calls, state = self.run_auto(time)
-                self.assertEqual(calls, 0)
-                self.assertNotIn("feed:new", state["posted"])
+                self.assertEqual(calls, 1)
+                self.assertIn("feed:new", state["posted"])
 
     def test_news_allowed_at_daytime_boundaries(self):
         for time in ["2026-10-19T08:00:00+03:00", "2026-10-18T22:59:59+03:00"]:
@@ -124,6 +124,40 @@ class PublicationRules(unittest.TestCase):
         self.assertEqual(calls, 0)
         calls, state = self.run_auto("2026-10-18T18:15:00+03:00", posted=posted, hot=True)
         self.assertEqual(calls, 1)
+
+    def test_match_report_respects_global_gap_even_at_night(self):
+        for gap, expected in [(19, 0), (20, 1)]:
+            calls, _ = self.run_auto("2026-11-18T03:00:00+03:00", key="result:2026020342", gap_minutes=gap)
+            self.assertEqual(calls, expected)
+
+    def test_recent_comeback_uses_goal_order_and_expires(self):
+        names = tg.Names()
+        game = {"id": 2026020342, "date": "2026-11-17", "home": "VGK", "away": "DAL",
+                "hs": 3, "as": 4, "end": "OT", "collected_at": "2026-11-18T06:00:00Z",
+                "goals": [["Karlsson", "VGK", "ev", 2, "00:40"],
+                          ["Karlsson", "VGK", "ev", 3, "10:27"],
+                          ["Lundkvist", "DAL", "ev", 3, "10:59"],
+                          ["Howden", "VGK", "ev", 3, "12:43"],
+                          ["Johnston", "DAL", "ev", 3, "18:42"],
+                          ["Rantanen", "DAL", "ev", 3, "19:55"],
+                          ["Heiskanen", "DAL", "ev", 4, "03:36"]]}
+        archive = {"games": [game]}
+        now = dt.datetime.fromisoformat("2026-11-18T06:05:00+00:00")
+        post, = tg.recent_match_posts(archive, names, now)
+        self.assertEqual(post["key"], "result:2026020342")
+        self.assertIn("«Вегас» — «Даллас» 3:4", post["text"])
+        self.assertIn("Рантанен сравнял счёт за 5 секунд", post["text"])
+        self.assertIn("Хейсканен в овертайме", post["text"])
+        self.assertEqual(list(tg.recent_match_posts(archive, names, now + dt.timedelta(hours=2))), [])
+        game["goals"].pop()
+        self.assertEqual(list(tg.recent_match_posts(archive, names, now)), [])
+
+    def test_ordinary_win_does_not_make_a_match_report(self):
+        game = {"home": "VGK", "away": "DAL", "hs": 2, "as": 1,
+                "goals": [["Karlsson", "VGK", "ev", 1, "12:10"],
+                          ["Howden", "VGK", "ev", 2, "01:34"],
+                          ["Rantanen", "DAL", "ev", 3, "10:00"]]}
+        self.assertIsNone(tg.match_report(game, tg.Names()))
 
 
 if __name__ == "__main__":

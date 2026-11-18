@@ -374,6 +374,104 @@ def head_path(D, name):
     return (D.get("heads") or {}).get(name)
 
 
+MATCH_REPORT_TTL = dt.timedelta(minutes=90)
+
+
+def match_report(game, names):
+    """Подтверждённый сюжет по последовательности голов завершённого матча."""
+    home, away = game["home"], game["away"]
+    final = {home: game.get("hs"), away: game.get("as")}
+    if None in final.values() or final[home] == final[away]:
+        return None
+    winner = max(final, key=final.get)
+    loser = away if winner == home else home
+    score = dict.fromkeys(final, 0)
+    third_period_deficit = 0
+    winner_goals, tying_goals, scorers = [], [], {}
+    for goal in game.get("goals") or []:
+        surname, team, _, period, clock = goal[:5]
+        if team not in score:
+            return None
+        if period == 3:
+            third_period_deficit = max(third_period_deficit, score[loser] - score[winner])
+        score[team] += 1
+        if team == winner:
+            winner_goals.append(goal)
+            if period == 3 and score[winner] == score[loser]:
+                tying_goals.append(goal)
+        if surname and period in (1, 2, 3, 4):
+            identity = goal[6] if len(goal) > 6 and goal[6] else surname
+            scorers.setdefault((team, identity), []).append(goal)
+    if score != final:
+        return None
+
+    def player(goal):
+        last = goal[0]
+        return next((names.last(name) for name in names.d if name.endswith(f" {last}")), "")
+
+    def seconds_left(goal):
+        minutes, seconds = map(int, goal[4].split(":"))
+        return 1200 - 60 * minutes - seconds
+
+    decider = winner_goals[final[loser]]
+    decider_name = player(decider)
+    deciding_sentence = (
+        f"Победную шайбу забросил {decider_name}" + (" в овертайме." if decider[3] == 4 else ".")
+        if decider_name and decider[3] != 5 else ""
+    )
+    late_tie = tying_goals[-1] if tying_goals and seconds_left(tying_goals[-1]) <= 60 else None
+    if third_period_deficit >= 2 or late_tie:
+        if third_period_deficit >= 2:
+            goals_back = "две шайбы" if third_period_deficit == 2 else (
+                f"{third_period_deficit} {plural(third_period_deficit, 'шайбу', 'шайбы', 'шайб')}"
+            )
+            start = f"{T(winner)} отыграл {goals_back} по ходу третьего периода."
+            headline = "Камбэк в третьем периоде"
+        else:
+            start = f"{T(winner)} сравнял счёт в последнюю минуту и выиграл матч."
+            headline = "Спасение в концовке"
+        if late_tie and third_period_deficit >= 2 and (name := player(late_tie)):
+            left = seconds_left(late_tie)
+            start += f" {name} сравнял счёт за {left} {plural(left, 'секунду', 'секунды', 'секунд')} до сирены."
+        return headline, " ".join(filter(None, (start, deciding_sentence)))
+
+    most = max(scorers.values(), key=len, default=[])
+    if len(most) >= 3 and (name := player(most[0])):
+        team = most[0][1]
+        feat = "оформил хет-трик" if len(most) == 3 else f"забросил {len(most)} {plural(len(most), 'шайбу', 'шайбы', 'шайб')}"
+        last = f"Последний гол {name} забил в пустые ворота." if most[-1][2] == "en" else ""
+        if team == winner:
+            extra = last or (deciding_sentence if decider_name != name else "Одна из его шайб стала победной.")
+        else:
+            extra = deciding_sentence
+        return "Хет-трик" if len(most) == 3 else "Больше трёх шайб за матч", f"{name} {feat}. {extra}".strip()
+    if decider[3] == 3 and seconds_left(decider) <= 60 and decider_name:
+        left = seconds_left(decider)
+        return "Решающий гол в концовке", (
+            f"{decider_name} забросил победную шайбу за {left} {plural(left, 'секунду', 'секунды', 'секунд')} до сирены."
+        )
+    return None
+
+
+def recent_match_posts(archive, names, now):
+    for game in archive.get("games", []):
+        collected = game.get("collected_at")
+        if not collected:
+            continue
+        due = dt.datetime.fromisoformat(collected.replace("Z", "+00:00"))
+        if not due <= now < due + MATCH_REPORT_TTL:
+            continue
+        report = match_report(game, names)
+        if not report:
+            continue
+        headline, body = report
+        end = {"OT": " в овертайме", "SO": " по буллитам"}.get(game.get("end"), "")
+        score = f"{T(game['home'])} — {T(game['away'])} {game['hs']}:{game['as']}{end}"
+        link = game.get("gc") or f"{URL}#results"
+        text = f"<b>{e(headline)}. {e(score)}</b>\n\n{e(body)}\n\n<a href=\"{html.escape(link, quote=True)}\">Протокол матча</a>"
+        yield dict(key=f"result:{game['id']}", results_date=game["date"], due=due, expires=due + MATCH_REPORT_TTL, text=text + FOOT)
+
+
 def build(D, A, M, E, S, N, *, reuse_number=False):
     out = []
     rd, ud = D.get("results_date"), D.get("upcoming_date")
@@ -677,13 +775,8 @@ def build(D, A, M, E, S, N, *, reuse_number=False):
         if not q.get("id") or not q.get("text") or q.get("tg") is False:  # tg = false — только для сайта
             continue
         ready = dt.datetime.fromisoformat(str(q.get("ready") or q.get("time") or now_iso()).replace("Z", "+00:00"))
-        # тихие часы ленты: с 23:00 до 08:00 по Москве новости ждут утра
-        rm = ready.astimezone(MSK)
-        if rm.hour >= 23:
-            ready = msk((rm.date() + dt.timedelta(days=1)).isoformat(), 8, 0)
-        elif rm.hour < 8:
-            ready = msk(rm.date().isoformat(), 8, 0)
-        txt = (f"<b>{e(q.get('title'))}</b>\n\n{e(q['text'])}\n\n<i>Фото: {e(q.get('source') or '')}</i>\n"
+        credit = f"<i>Фото: {e(q.get('source') or '')}</i>\n" if q.get("image") else ""
+        txt = (f"<b>{e(q.get('title'))}</b>\n\n{e(q['text'])}\n\n{credit}"
                f"<a href=\"{e(q.get('url'))}\">Источник: {e(q.get('source') or 'статья')}</a>")
         out.append(dict(key=f"feed:{q['id']}", due=ready, expires=ready + dt.timedelta(hours=10), text=txt + FOOT, photo=q.get("image"),
                         hot=bool(q.get("hot"))))
@@ -833,6 +926,8 @@ def main(mode, arg=None):
         if mode == "feed":
             return
     items = build(D, A, M, E, S, N, reuse_number=(mode == "recard"))
+    if mode == "auto":
+        items.extend(x for x in recent_match_posts(A, N, now) if f"am:{x['results_date']}" not in P)
     LOG["plan"] = [dict(key=x["key"], due=x["due"].astimezone(MSK).strftime("%d.%m %H:%M"), done=x["key"] in P) for x in items]
 
     if mode == "preview":
@@ -980,16 +1075,14 @@ def main(mode, arg=None):
         # дневные посты, у которых прошло больше 8 часов от срока, не догоняем
         due = [x for x in due if x.get("expires") or (now - x["due"]).total_seconds() < 8 * 3600]
         # лента новостей (решение Льва 17.10): не больше FEED_CAP в день ВСЕГО, включая горячие; hot — только первыми в очереди;
-        # между новостями ленты — не меньше FEED_GAP минут, чтобы утром после тихих часов не было залпа
+        # между новостями ленты — не меньше FEED_GAP минут
         today = now.astimezone(MSK).date()
         feed_t = [dt.datetime.fromisoformat(v.replace("Z", "+00:00")) for k, v in P.items() if k.startswith("feed:")]
         fed = sum(1 for t in feed_t if t.astimezone(MSK).date() == today)
         feed_gap = min(((now - t).total_seconds() / 60 for t in feed_t), default=999)
-        # Проверяем время отправки, а не только ready: дневная очередь могла задержаться до ночи.
-        quiet = not 8 <= now.astimezone(MSK).hour < 23
-        if quiet or fed >= FEED_CAP or feed_gap < FEED_GAP:
+        if fed >= FEED_CAP or feed_gap < FEED_GAP:
             due = [x for x in due if not x["key"].startswith("feed:")]
-        due.sort(key=lambda x: (not x.get("hot"), x["due"]))
+        due.sort(key=lambda x: (not x.get("hot"), not x["key"].startswith("result:"), x["due"]))
         if due and not state.get("paused"):
             x = due[0]
             if gap >= 20:
