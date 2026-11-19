@@ -1,8 +1,13 @@
 {
- "t": "2026-11-19T22:48:18Z",
+ "t": "2026-11-19T22:55:45Z",
  "mode": "auto",
  "ok": [],
- "fail": [],
+ "fail": [
+  "личка бота: getUpdates: 502 Bad Gateway",
+  "картинка не ушла, шлю текстом: sendPhoto: 502 Bad Gateway",
+  "feed:nhl:blackhawks-connor-bedard-may-need-shoulder-surgery: sendMessage: 502 Bad Gateway",
+  "оповещение: sendMessage: 502 Bad Gateway"
+ ],
  "plan": [
   {
    "key": "am:2026-11-18",
@@ -70,11 +75,6 @@
    "done": true
   },
   {
-   "key": "feed:dailyfaceoff:gm-general-manager-john-chayka-head-coach-jim-hiller-vote-of-confidence-nhl-news",
-   "due": "16.11 21:06",
-   "done": true
-  },
-  {
    "key": "feed:nhl:gamecenter-2026020342-comeback",
    "due": "18.11 09:31",
    "done": true
@@ -108,6 +108,11 @@
    "key": "feed:sportsnet:nhl-article-wild-keep-winning-big-with-best-start-in-franchise-history",
    "due": "19.11 04:20",
    "done": true
+  },
+  {
+   "key": "feed:nhl:blackhawks-connor-bedard-may-need-shoulder-surgery",
+   "due": "20.11 01:54",
+   "done": false
   }
  ]
 }
