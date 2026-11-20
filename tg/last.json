@@ -1,10 +1,14 @@
 {
- "t": "2026-11-20T11:30:37Z",
+ "t": "2026-11-20T11:40:42Z",
  "mode": "auto",
  "ok": [
-  "video:2026-11-19:ot_winner:6408632164112"
+  "лента: 250 историй, новых 0; Sportsnet 98, NHL.com 59, ESPN 26, Daily Faceoff 25, ProHockeyRumors 17, RMNB 15, The Hockey News 8, dazn.com 1"
  ],
  "fail": [],
+ "warn": [
+  "лента Bing: ParseError('not well-formed (invalid token): line 1, column 41')",
+  "лента Bing: ParseError('not well-formed (invalid token): line 1, column 41')"
+ ],
  "plan": [
   {
    "key": "am:2026-11-19",
@@ -69,7 +73,7 @@
   {
    "key": "video:2026-11-19:ot_winner:6408632164112",
    "due": "20.11 14:30",
-   "done": false
+   "done": true
   },
   {
    "key": "video:2026-11-19:ot_winner:6408631155112",
