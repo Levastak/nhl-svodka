@@ -1,7 +1,7 @@
 {
  "version": 4.4,
  "xg_used": true,
- "generated": "2026-11-25T20:48Z",
+ "generated": "2026-11-26T02:51Z",
  "league": {
   "goals_pg": 3.144,
   "home_adv": 0.008,
@@ -2040,18 +2040,18 @@
     "att": 1.046,
     "dfn": 1.088
    },
-   "mkt_home": 0.548,
-   "mkt_away": 0.452,
-   "edge_home": 0.051,
-   "edge_away": -0.051,
-   "p_home_blend": 0.569,
-   "p_away_blend": 0.431,
+   "mkt_home": 0.552,
+   "mkt_away": 0.448,
+   "edge_home": 0.047,
+   "edge_away": -0.047,
+   "p_home_blend": 0.571,
+   "p_away_blend": 0.429,
    "fatigue_edge": false,
-   "value": "home",
-   "mkt_over": 0.537,
-   "edge_over": 0.039,
-   "p_over_blend": 0.552,
-   "p_under_blend": 0.448,
+   "value": null,
+   "mkt_over": 0.543,
+   "edge_over": 0.033,
+   "p_over_blend": 0.556,
+   "p_under_blend": 0.444,
    "value_total": null,
    "soft": [],
    "h2h": [],
@@ -2069,16 +2069,16 @@
     "p_fav": 0.599,
     "mkt_fav": "home",
     "vs_market": false,
-    "level": "bet",
+    "level": "lean",
     "edge_side": "home",
-    "edge": 0.051,
+    "edge": 0.047,
     "fatigue": false,
     "bet": {
      "kind": "win",
      "side": "home",
-     "odds": 1.78,
+     "odds": 1.77,
      "p_model": 0.599,
-     "p_mkt": 0.548,
+     "p_mkt": 0.552,
      "src": "Pinnacle"
     },
     "total": {
@@ -2104,9 +2104,9 @@
    "p_home_reg": 0.521,
    "p_away_reg": 0.269,
    "exp_total": 6.64,
-   "line": 5.5,
-   "p_over": 0.628,
-   "p_under": 0.372,
+   "line": 6.5,
+   "p_over": 0.518,
+   "p_under": 0.482,
    "fair_home": 1.55,
    "fair_away": 2.83,
    "b2b_away": false,
@@ -2180,6 +2180,19 @@
     "att": 1.037,
     "dfn": 0.98
    },
+   "mkt_home": 0.603,
+   "mkt_away": 0.397,
+   "edge_home": 0.043,
+   "edge_away": -0.043,
+   "p_home_blend": 0.62,
+   "p_away_blend": 0.38,
+   "fatigue_edge": false,
+   "value": null,
+   "mkt_over": 0.526,
+   "edge_over": -0.008,
+   "p_over_blend": 0.523,
+   "p_under_blend": 0.477,
+   "value_total": null,
    "soft": [],
    "h2h": [],
    "id": 2026020400,
@@ -2189,14 +2202,34 @@
    "p_ot_home_raw": 0.595,
    "missing": [
     "goalie_away",
-    "goalie_home",
-    "odds"
+    "goalie_home"
    ],
    "incomplete": true,
    "verdict": {
     "fav": "home",
     "p_fav": 0.646,
-    "level": "noodds"
+    "mkt_fav": "home",
+    "vs_market": false,
+    "level": "lean",
+    "edge_side": "home",
+    "edge": 0.043,
+    "fatigue": false,
+    "bet": {
+     "kind": "win",
+     "side": "home",
+     "odds": 1.57,
+     "p_model": 0.646,
+     "p_mkt": 0.603,
+     "src": "williamhill"
+    },
+    "total": {
+     "side": "over",
+     "line": 6.5,
+     "p": 0.518,
+     "mkt_side": "over",
+     "vs_market": false,
+     "value": null
+    }
    }
   },
   {
@@ -2285,6 +2318,14 @@
     "att": 1.067,
     "dfn": 0.96
    },
+   "mkt_home": 0.674,
+   "mkt_away": 0.326,
+   "edge_home": 0.083,
+   "edge_away": -0.083,
+   "p_home_blend": 0.707,
+   "p_away_blend": 0.293,
+   "fatigue_edge": false,
+   "value": "home",
    "soft": [],
    "h2h": [],
    "id": 2026020401,
@@ -2295,14 +2336,33 @@
    "missing": [
     "goalie_away",
     "goalie_home",
-    "injuries_unmatched",
-    "odds"
+    "injuries_unmatched"
    ],
    "incomplete": true,
    "verdict": {
     "fav": "home",
     "p_fav": 0.757,
-    "level": "noodds"
+    "mkt_fav": "home",
+    "vs_market": false,
+    "level": "bet",
+    "edge_side": "home",
+    "edge": 0.083,
+    "fatigue": false,
+    "sure": {
+     "side": "home",
+     "p": 0.757,
+     "mkt": 0.674,
+     "edge": 0.083,
+     "odds": 1.4
+    },
+    "bet": {
+     "kind": "win",
+     "side": "home",
+     "odds": 1.4,
+     "p_model": 0.757,
+     "p_mkt": 0.674,
+     "src": "williamhill"
+    }
    }
   },
   {
@@ -2391,7 +2451,22 @@
     "att": 0.998,
     "dfn": 0.987
    },
-   "soft": [],
+   "soft": [
+    {
+     "book": "1xBet",
+     "bet": "П2 UTA (осн. время)",
+     "odds": 2.59,
+     "fair": 2.32,
+     "ev": 0.118
+    },
+    {
+     "book": "Марафон",
+     "bet": "П2 UTA (осн. время)",
+     "odds": 2.55,
+     "fair": 2.32,
+     "ev": 0.101
+    }
+   ],
    "h2h": [],
    "id": 2026020402,
    "date": "2026-11-27",
@@ -2497,7 +2572,15 @@
     "att": 0.995,
     "dfn": 1.0
    },
-   "soft": [],
+   "soft": [
+    {
+     "book": "1xBet",
+     "bet": "ТБ 5.5",
+     "odds": 1.91,
+     "fair": 1.85,
+     "ev": 0.03
+    }
+   ],
    "h2h": [
     {
      "date": "2026-10-02",
@@ -2611,7 +2694,29 @@
     "att": 1.083,
     "dfn": 0.953
    },
-   "soft": [],
+   "soft": [
+    {
+     "book": "1xBet",
+     "bet": "П2 OTT (осн. время)",
+     "odds": 2.99,
+     "fair": 2.7,
+     "ev": 0.107
+    },
+    {
+     "book": "Марафон",
+     "bet": "П2 OTT (осн. время)",
+     "odds": 2.95,
+     "fair": 2.7,
+     "ev": 0.092
+    },
+    {
+     "book": "1xBet",
+     "bet": "ТБ 5.5",
+     "odds": 1.78,
+     "fair": 1.66,
+     "ev": 0.069
+    }
+   ],
    "h2h": [],
    "id": 2026020404,
    "date": "2026-11-27",
@@ -2795,7 +2900,22 @@
     "att": 1.061,
     "dfn": 1.083
    },
-   "soft": [],
+   "soft": [
+    {
+     "book": "1xBet",
+     "bet": "ТБ 6.5",
+     "odds": 2.2,
+     "fair": 2.05,
+     "ev": 0.076
+    },
+    {
+     "book": "Марафон",
+     "bet": "ТБ 6.5",
+     "odds": 2.12,
+     "fair": 2.05,
+     "ev": 0.037
+    }
+   ],
    "h2h": [
     {
      "date": "2026-11-07",
@@ -2891,7 +3011,22 @@
     "att": 0.932,
     "dfn": 1.018
    },
-   "soft": [],
+   "soft": [
+    {
+     "book": "1xBet",
+     "bet": "П2 DET (осн. время)",
+     "odds": 2.74,
+     "fair": 2.58,
+     "ev": 0.064
+    },
+    {
+     "book": "Марафон",
+     "bet": "П2 DET (осн. время)",
+     "odds": 2.7,
+     "fair": 2.58,
+     "ev": 0.048
+    }
+   ],
    "h2h": [],
    "id": 2026020407,
    "date": "2026-11-27",
@@ -3103,7 +3238,22 @@
     "att": 1.046,
     "dfn": 1.088
    },
-   "soft": [],
+   "soft": [
+    {
+     "book": "1xBet",
+     "bet": "П2 LAK (осн. время)",
+     "odds": 2.61,
+     "fair": 2.37,
+     "ev": 0.1
+    },
+    {
+     "book": "Марафон",
+     "bet": "П2 LAK (осн. время)",
+     "odds": 2.57,
+     "fair": 2.37,
+     "ev": 0.083
+    }
+   ],
    "h2h": [],
    "id": 2026020409,
    "date": "2026-11-27",
@@ -3209,7 +3359,22 @@
     "att": 0.935,
     "dfn": 1.099
    },
-   "soft": [],
+   "soft": [
+    {
+     "book": "1xBet",
+     "bet": "П2 VGK (осн. время)",
+     "odds": 1.96,
+     "fair": 1.76,
+     "ev": 0.111
+    },
+    {
+     "book": "Марафон",
+     "bet": "П2 VGK (осн. время)",
+     "odds": 1.93,
+     "fair": 1.76,
+     "ev": 0.095
+    }
+   ],
    "h2h": [],
    "id": 2026020410,
    "date": "2026-11-27",
@@ -3413,7 +3578,22 @@
     "att": 0.972,
     "dfn": 0.994
    },
-   "soft": [],
+   "soft": [
+    {
+     "book": "1xBet",
+     "bet": "П2 WPG (осн. время)",
+     "odds": 2.82,
+     "fair": 2.63,
+     "ev": 0.073
+    },
+    {
+     "book": "Марафон",
+     "bet": "П2 WPG (осн. время)",
+     "odds": 2.78,
+     "fair": 2.63,
+     "ev": 0.058
+    }
+   ],
    "h2h": [
     {
      "date": "2026-11-19",
@@ -3518,7 +3698,15 @@
     "att": 0.997,
     "dfn": 1.032
    },
-   "soft": [],
+   "soft": [
+    {
+     "book": "1xBet",
+     "bet": "ТБ 6.5",
+     "odds": 2.27,
+     "fair": 2.12,
+     "ev": 0.072
+    }
+   ],
    "h2h": [],
    "id": 2026020413,
    "date": "2026-11-27",
