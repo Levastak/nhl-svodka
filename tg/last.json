@@ -1,10 +1,12 @@
 {
- "t": "2026-11-27T18:07:07Z",
+ "t": "2026-11-27T18:17:05Z",
  "mode": "auto",
  "ok": [
-  "gl:2026-11-27:2"
+  "оповещение Льву: 1"
  ],
- "fail": [],
+ "fail": [
+  "личка бота: <urlopen error [Errno 104] Connection reset by peer>"
+ ],
  "plan": [
   {
    "key": "number:2026-11-26",
@@ -44,7 +46,7 @@
   {
    "key": "gl:2026-11-27:2",
    "due": "27.11 19:30",
-   "done": false
+   "done": true
   },
   {
    "key": "vsm:2026-11-27",
